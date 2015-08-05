@@ -15,5 +15,5 @@ class Propietario extends Model{
 
     protected $table = 'propietarios';
 
-    protected $fillable = [];
+    protected $fillable = ['DNI','Domicilio','Piso','Puerta','Conyuge','N-Padre','N-Madre','Localidad','Provincia','id-sucesion'];
 }

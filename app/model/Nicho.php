@@ -15,5 +15,5 @@ class Nicho extends Model{
 
     protected $table = 'nichos';
 
-    protected $fillable = [];
+    protected $fillable = ['Grupo/calle','Fila','Estado1','id-propietario','id-cedido','id-enterramiento'];
 }

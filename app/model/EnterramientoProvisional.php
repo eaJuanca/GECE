@@ -15,5 +15,5 @@ class EnterramientoProvisional extends Model{
 
     protected $table = 'enterramientos-provisional';
 
-    protected $fillable = [];
+    protected $fillable = ['id-nicho','DNI','Funeral'];
 }

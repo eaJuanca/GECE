@@ -15,5 +15,5 @@ class Sucesion extends Model{
 
     protected $table = 'sucesiones';
 
-    protected $fillable = [];
+    protected $fillable = ['DNI','Domicilio','Piso','Puerta','Localidad','Provincia','id-propietario','id-propiedad','id-nicho'];
 }

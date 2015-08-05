@@ -15,5 +15,8 @@ class Enterramientos extends Model{
 
     protected $table = 'enterramientos';
 
-    protected $fillable = [];
+    protected $fillable = ['NOMBRE_APELLIDOS_DIFUNTO','EDAD','DNI','FECHAENTERRAMIENTO','FECHADEFUNCION','HORADEFUNCION','CAUSEFALLECIMIENTO','TIPOFERETRO','FUNERAL','ID-NICHO'];
 }
+
+
+

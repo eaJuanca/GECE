@@ -15,5 +15,5 @@ class ReciboMantenimiento extends Model{
 
     protected $table = 'recibo_mantenimiento';
 
-    protected $fillable = [];
+    protected $fillable = ['Fechapago','Anyopagado','Pagador','Importe','Id-nicho','id-propietario'];
 }

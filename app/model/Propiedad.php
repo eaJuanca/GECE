@@ -15,5 +15,5 @@ class Propiedad extends Model{
 
     protected $table = 'propiedades';
 
-    protected $fillable = [];
+    protected $fillable = ['ID-Nicho','Escritura','Voluntad','id-sucesion','id-propietario'];
 }
