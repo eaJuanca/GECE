@@ -19,7 +19,7 @@
 
 <body>
 
-<div class="container">
+<div class="container well-material-teal">
 
     <!-- Include de la cabezera-->
 

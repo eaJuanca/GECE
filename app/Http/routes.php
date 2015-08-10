@@ -11,6 +11,16 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::group(['prefix' => '/'], function()
+{
+
+    Route::get('/', function() {
+
+        return view('home');
+    });
+
+    Route::get('nichos', ['as' => 'nichos', function()
+    {
+        return view('nichos');
+    }]);
 });

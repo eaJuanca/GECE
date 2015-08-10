@@ -1,0 +1,49 @@
+.gc_icons
+{
+    font:normal normal normal 40px/1 'Material-Design-Icons' !important
+}
+
+.btn_show{
+    display: none;
+}
+
+@media (min-width:300px) and (max-width: 650px) {
+    .text_hidden {
+        display: none;
+    }
+}
+
+.gc_h_serparator{
+    height: 60px;
+}
+
+.gc_header{
+    margin-bottom: 20px;
+}
+
+
+.gc_Pheading{
+    background-color: paleturquoise !important;
+}
+
+.gc_Ptitle{
+    color: #000000 !important;
+}
+
+
+@media (min-width:300px) and (max-width: 530px) {
+
+    .gc_title{
+        font-size: 10px;
+    }
+
+    .btn_hidden{
+        display: none;
+    }
+    .btn_show{
+        display: inline;
+    }
+    .gc_module{
+        height: 280px;
+    }
+}

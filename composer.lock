@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5c6026b96e6fa11a641b51a6ba976f5e",
+    "hash": "2d72f184a154e67e918459b33b57f4ac",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -569,6 +569,45 @@
                 "storage"
             ],
             "time": "2015-07-28 20:41:58"
+        },
+        {
+            "name": "mervick/material-design-icons",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mervick/material-design-icons.git",
+                "reference": "7f883c9b9ddd2fd0b863d1ca0b54b63fc00c3d6a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mervick/material-design-icons/zipball/7f883c9b9ddd2fd0b863d1ca0b54b63fc00c3d6a",
+                "reference": "7f883c9b9ddd2fd0b863d1ca0b54b63fc00c3d6a",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT",
+                "CC-BY-4.0"
+            ],
+            "authors": [
+                {
+                    "name": "Andrey Izman",
+                    "email": "izmanw@gmail.com"
+                }
+            ],
+            "description": "Google Material Design Icons For Using With Bootstrap",
+            "homepage": "http://github.com/mervick/material-design-icons",
+            "keywords": [
+                "bootstrap",
+                "google",
+                "icons",
+                "icons-web-font",
+                "material",
+                "material-design",
+                "web-font"
+            ],
+            "time": "2015-07-04 09:38:31"
         },
         {
             "name": "monolog/monolog",
