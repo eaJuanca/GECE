@@ -38,18 +38,17 @@
 
     <!-- Includes comunes Jquery -->
 
-        <script src="{{ URL::asset('assets/js/jquery-2.1.4.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/ripples.js') }}"></script>
 
     <!-- Fin includes comunes Jquery-- >
+        @yield('jquery')
 
-    @yield('jquery')
 
     <script type="text/javascript">
-        $.material.init();
+
     </script>
 
 </html>

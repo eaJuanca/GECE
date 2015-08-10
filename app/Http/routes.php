@@ -19,8 +19,8 @@ Route::group(['prefix' => '/'], function()
         return view('home');
     });
 
-    Route::get('nichos', ['as' => 'nichos', function()
+    Route::get('calles', ['as' => 'calles', function()
     {
-        return view('nichos');
+        return view('calles');
     }]);
 });
