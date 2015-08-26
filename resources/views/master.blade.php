@@ -37,11 +37,11 @@
 </body>
 
     <!-- Includes comunes Jquery -->
-
         <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/ripples.js') }}"></script>
+
 
     <!-- Fin includes comunes Jquery-- >
         @yield('jquery')
