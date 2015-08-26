@@ -23,4 +23,9 @@ Route::group(['prefix' => '/'], function()
     {
         return view('calles');
     }]);
+
+    Route::get('difunto', ['as' => 'difunto', function()
+    {
+        return view('alta_difunto');
+    }]);
 });

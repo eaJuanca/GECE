@@ -48,7 +48,7 @@
                 </div>
                 <p class="text-center gc_title"><strong>DIFUNTOS</strong></p>
                 <p class="text-center text_hidden">Módulo para la gestión de difuntos</p>
-                <p class="text-center btn_hidden"><button class="btn btn-md" style="background-color:#FFECB3">Entrar</button></p>
+                <p class="text-center btn_hidden"><a href="{{ URL::route('difunto') }}" class="btn btn-md btn-material-amber">Entrar</a></p>
                 <p class="text-center btn_show">
                     <button class="btn btn-md" style="background-color:#FFECB3">
                         <i class="glyphicon glyphicon-share-alt"></i>
