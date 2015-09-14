@@ -26,6 +26,13 @@ Route::group(['prefix' => '/'], function()
 
     Route::get('difunto', ['as' => 'difunto', function()
     {
+        return view('difunto');
+    }]);
+
+    Route::get('nuevo-difunto', ['as' => 'nuevo-difunto', function()
+    {
         return view('alta_difunto');
     }]);
+
+
 });
