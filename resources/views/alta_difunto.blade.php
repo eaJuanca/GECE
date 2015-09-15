@@ -213,9 +213,7 @@
                     </section>
                 </div>
 
-
                 <button class="btn btn-success btn-raised">Añadir nuevo difunto</button>
-                <button class="btn btn-danger btn-raised">Cancelar</button>
             </form>
         </div>
     </div>
