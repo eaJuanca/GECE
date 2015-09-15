@@ -36,3 +36,5 @@ Route::group(['prefix' => '/'], function()
 
 
 });
+
+Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
