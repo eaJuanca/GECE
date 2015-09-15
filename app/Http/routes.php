@@ -33,3 +33,6 @@ Route::group(['prefix' => '/'], function()
 
 //
 Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
+
+Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
+
