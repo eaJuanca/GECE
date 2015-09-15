@@ -161,7 +161,8 @@
 
 @section('jquery')
 
-    <script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
+
+<script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/bootstrapvalidator/bootstrapValidator.min.js') }}"></script>
 <script src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
 
