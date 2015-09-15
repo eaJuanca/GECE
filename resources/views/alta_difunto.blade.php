@@ -138,7 +138,7 @@
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Medico nº</label>
+                                    <label class="control-label" for="inputWarning">Medico nÂº</label>
                                     <input type="text" class="form-control" id="inputWarning">
                                 </div>
                             </div>
@@ -210,7 +210,7 @@
                 </div>
 
 
-                <button class="btn btn-success btn-raised">Añadir nuevo difunto</button>
+                <button class="btn btn-success btn-raised">AÃ±adir nuevo difunto</button>
                 <button class="btn btn-danger btn-raised">Cancelar</button>
             </form>
         </div>

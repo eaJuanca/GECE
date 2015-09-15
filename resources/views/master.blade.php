@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>Gestión Cementerio</title>
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+
 
 
     <!-- Includes CSS comunes a todas las interfaces -->
@@ -37,18 +39,15 @@
 </body>
 
     <!-- Includes comunes Jquery -->
+        <script src="{{ URL::asset('assets/js/jquery-2.1.4.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/ripples.js') }}"></script>
 
 
-    <!-- Fin includes comunes Jquery-- >
+    <!-- Fin includes comunes Jquery-->
         @yield('jquery')
 
-
-    <script type="text/javascript">
-
-    </script>
 
 </html>

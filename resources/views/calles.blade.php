@@ -82,12 +82,19 @@
                     <h4 class="modal-title" id="myModalLabel">Nueva Calle del Cementerio Parroquial</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" id="form-alta">
+
                         <fieldset>
+                            <div class="form-group">
+                                <label for="inputFile" class="col-lg-2 ">Código</label>
+                                <div class="col-lg-3">
+                                    <input type="text" name="id" class="form-control" id="inputEmail" placeholder="Código" required>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="inputFile" class="col-lg-2 ">Nombre</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="inputEmail" placeholder="Nombre de la calle">
+                                    <input type="text" name="nombre" class="form-control" id="inputEmail" placeholder="Nombre de la calle" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -116,7 +123,7 @@
                             <div class="form-group">
                                 <label for="select" class="col-lg-2">Tramada</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" id="select">
+                                    <select class="form-control" id="select" name="num_tramadas">
                                         <option>- Selecciona número de tramadas -</option>
                                         <option>1</option>
                                         <option>2</option>
@@ -136,11 +143,13 @@
                                 </div>
                             </div>
                         </fieldset>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Aceptar</button>
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -150,43 +159,71 @@
 
 @endsection
 
-<script src="{{ URL::asset('assets/js/jquery-2.1.4.min.js') }}"></script>
-<script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
+@section('jquery')
+
+    <script src="{{ URL::asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/bootstrapvalidator/bootstrapValidator.min.js') }}"></script>
 <script src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
+
+
 
 <script type="text/javascript">
 
+
     $(document).ready(function(){
 
+        $(document).ajaxStop($.unblockUI);
+
+
         $.material.init();
-            $('#example').DataTable();
 
-            $('#select').on("change",function(){
+        $('#example').DataTable();
 
-                if($.isNumeric(this.value)){
-                    $(".inputs").html('');
+        var token = "{{ csrf_token()}}";
 
-                    //hacemos visible lo de nº de nichos
-                    $(".n_nichos").css("display",'block');
+        $("#form-alta").submit(function(e){
 
-                    var imprimir = "";
+            e.preventDefault();
 
-                    for(var i = 1; i <= this.value; i++)
-                    {
-                        imprimir += "<input type='text' class='col-lg-3 t_margin' id='tramada " + i + " ' placeholder='Tramada "+ i +"'>"
-
-                    }
-
-                    $(".inputs").html(imprimir);
-                }else{
-                    $(".n_nichos").css("display",'none');
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::route('altaCalle') }}",
+                data: $("#form-alta").serialize(),
+                dataType: "html",
+                error: function () {
+                    alert("entra en error");
+                },
+                success: function (data) {
+                    alert("entra en acierto");
                 }
-
             });
 
+        });
 
+        $('#select').on("change",function(){
+
+            if($.isNumeric(this.value)){
+                $(".inputs").html('');
+
+                //hacemos visible lo de nº de nichos
+                $(".n_nichos").css("display",'block');
+
+                var imprimir = "";
+
+                for(var i = 1; i <= this.value; i++)
+                {
+                    imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada " + i + " ' id='tramada " + i + " ' placeholder='Tramada "+ i +"' required>"
+                }
+
+                $(".inputs").html(imprimir);
+            }else{
+                $(".n_nichos").css("display",'none');
+            }
+
+        });
 
     });
 
 </script>
 
+@endsection

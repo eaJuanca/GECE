@@ -28,4 +28,7 @@ Route::group(['prefix' => '/'], function()
     {
         return view('alta_difunto');
     }]);
+
 });
+
+Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
