@@ -13,6 +13,8 @@
     <link href="{{ URL::asset('assets/css/material.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ URL::asset('lolibox/dist/css/LobiBox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('DataTables/datatables.min.css')}}"/>
+
 
 
     <!-- Fin include comunes -->
@@ -50,6 +52,8 @@
         <script src="{{ URL::asset('lolibox/dist/js/lobibox.min.js') }}"></script>
         <script src="{{ asset('datepickersandbox/js/bootstrap-datepicker.min.js') }}"></script>
         <script src="{{ asset('datepickersandbox/locales/bootstrap-datepicker.es.min.js') }}"></script>
+        <script type="text/javascript" src=" {{ URL::asset('DataTables/datatables.min.js')}}"></script>
+
 
 
 

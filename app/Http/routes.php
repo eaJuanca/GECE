@@ -24,7 +24,10 @@ Route::group(['prefix' => '/'], function()
         return view('calles');
     }]);
 
-    Route::get('difunto', ['as' => 'difunto', function()
+    Route::get('difunto', ['as' => 'difunto', 'uses' => 'WebController@DifuntoIndex']);
+
+
+    Route::get('alta-difunto', ['as' => 'alta-difunto', function()
     {
         return view('alta_difunto');
     }]);

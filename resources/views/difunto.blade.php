@@ -73,7 +73,7 @@
         </div>
 
     <h3 style="color: white">Difuntos</h3>
-    <a href="{{ URL::route('nuevo-difunto') }}"><button class="btn btn-primary btn-raised" style="background-color: #ad1457">Añadir difunto</button></a>
+    <a href="{{ URL::route('alta-difunto') }}"><button class="btn btn-primary btn-raised" style="background-color: #ad1457">Añadir difunto</button></a>
 
 
     <div class="row" style="margin-top: 1%">
@@ -81,10 +81,10 @@
         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
             <div class="panel panel-default">
-                <div class="panel-heading">Difuntos registrados en el sistema</div>
+                <div class="panel-heading"><span style="font-weight: bold">Difuntos registrados en el sistema</span></div>
                 <div class="panel-body">
 
-                    <table class="table table-bordered table-responsive">
+                    <table class="table table-bordered table-difuntos table-responsive display compact" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>Cod</th>
@@ -97,15 +97,32 @@
                         </tr>
                         </thead>
                         <tbody>
+
+                        @foreach($difuntos as $difunto)
                         <tr>
-                            <td>cell is row 0, column 0</td>
-                            <td>cell is row 0, column 1</td>
-                            <td>cell is row 0, column 2</td>
-                            <td>cell is row 0, column 3</td>
-                            <td>cell is row 0, column 4</td>
-                            <td>cell is row 0, column 5</td>
-                            <td>cell is row 0, column 6</td>
+                            <td>{{$difunto->id}}</td>
+                            <td>{{$difunto->nom_difunto}}</td>
+                            <td>{{$difunto->fec_fall_difunto}}</td>
+                            <td>{{$difunto->pob_difunto}}</td>
+                            <td>@if($difunto->sex_difunto == 1)
+                                    Mujer
+                                    @else
+                                    Hombre
+                                @endif</td>
+                            <td><select><option>Documento para el juzgado</option></select>
+                            <div>
+                                <a href="http:\\www.google.es" style="margin-right: 10px"><i class="fa fa-print fa-lg fa-border"></i></a>
+                                <a style="margin-right: 10px"><i class="fa fa-eye  fa-lg fa-border"></i></a>
+                                <a style="margin-right: 10px"><i class="fa fa-floppy-o  fa-lg fa-border"></i></a>
+                                <a style="margin-right: 10px"><i class="fa fa-envelope-o  fa-lg fa-border"></i></a>
+                            </div></td>
+                            <td> <div style="float: right">
+                                    <a style="margin-right: 10px; color:#03A9F4;"><i class="fa fa-pencil-square-o  fa-lg fa-border"></i></a>
+                                    <a style="margin-right: 10px; color: #F44336"><i class="fa fa-eraser  fa-lg fa-border "></i></a>
+                                </div></td>
                         </tr>
+
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -116,4 +133,14 @@
     </div>
 
 
+@endsection
+
+@section('js')
+    <script>
+
+        $('.table-difuntos').DataTable( {
+            responsive: true
+        } );
+
+    </script>
 @endsection
