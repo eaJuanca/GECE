@@ -15,9 +15,15 @@ class WebController extends Controller
      */
     public function DifuntoIndex()
     {
-        $difuntos = Difunto::all()->take(10);
 
-        return view('difunto', compact('difuntos'));
+        $total = Difunto::count();
+        $difuntos = Difunto::take(10)->get();
+
+        return view('difunto', compact('difuntos','total'));
+    }
+
+    public function DifuntosPagination(Request $r){
+
     }
 
 

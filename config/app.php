@@ -139,6 +139,7 @@ return [
 
         //añadido
         Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         //fin añadido
 
         /*

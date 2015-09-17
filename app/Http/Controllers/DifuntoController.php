@@ -38,8 +38,10 @@ class DifuntoController extends Controller
      */
     public function store(Request $request)
     {
-        $difunto = new Difunto($request->all());
-        $difunto->save();
+
+            $difunto = new Difunto($request->all());
+            $difunto->save();
+
 
     }
 

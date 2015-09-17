@@ -25,6 +25,7 @@ Route::group(['prefix' => '/'], function()
     }]);
 
     Route::get('difunto', ['as' => 'difunto', 'uses' => 'WebController@DifuntoIndex']);
+    Route::post('difuntosJSON', ['as' => 'difuntosJSON', 'uses' => 'WebController@DifuntosJSON']);
 
 
     Route::get('alta-difunto', ['as' => 'alta-difunto', function()
@@ -38,4 +39,6 @@ Route::group(['prefix' => '/'], function()
 Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
 Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
+
+Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice']);
 
