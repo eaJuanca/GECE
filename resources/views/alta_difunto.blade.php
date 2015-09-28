@@ -142,7 +142,7 @@
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Medico nº</label>
+                                    <label class="control-label" for="inputWarning">Medico nï¿½</label>
                                     <input type="text" class="form-control" name="med_difunto">
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                     </section>
                 </div>
 
-                <button class="btn btn-success btn-raised">Añadir nuevo difunto</button>
+                <button class="btn btn-success btn-raised">AÃ±adir nuevo difunto</button>
             </form>
         </div>
     </div>
@@ -254,19 +254,19 @@
                     error: function () {
 
                         Lobibox.notify('error', {
-                            title: 'No se ha podido añadir el difunto',
+                            title: 'No se ha podido aÃ±adir el difunto',
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexión a internet'
+                            msg: 'Compruebe la conexiï¿½n a internet'
                         });
                     },
                     success: function (data) {
 
                         Lobibox.notify('success', {
-                            title: 'Difunto añadido',
+                            title: 'Difunto aï¿½adido',
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,

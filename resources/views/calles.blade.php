@@ -42,32 +42,26 @@
 
                 <tbody>
 
-                    <tr role="row" class="odd">
-                        <td class="sorting_1">1</td>
-                        <td>Calle San Antonio</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>Panteón</td>
-                        <td>Acciones</td>
-                    </tr>
+                @if(!$calles->isEmpty())
 
-                    <tr role="row" class="even">
-                        <td class="sorting_1">2</td>
-                        <td>Calle sal si puedes</td>
-                        <td>2</td>
-                        <td>4</td>
-                        <td>Panteón</td>
-                        <td>Acciones</td>
-                    </tr>
+                    @foreach($calles as $calle)
 
-                    <tr role="row" class="odd">
-                        <td class="sorting_1">3</td>
-                        <td>Calle Dr. Fleming</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>Panteón</td>
-                        <td>Acciones</td>
-                    </tr>
+                        <tr role="row" class="odd">
+                            <td class="sorting_1">{{$calle->id}}</td>
+                            <td>{{$calle->nombre}}</td>
+                            <td>{{$calle->num_tramadas}}</td>
+                            <td>{{$calle->total}}</td>
+                                @if($calle->tipo_calle == 1)
+                                    <td>Calle</td>
+                                @else
+                                    <td>Panteón</td>
+                                @endif
+                            <td>Acciones</td>
+                        </tr>
+
+                    @endforeach
+                @endif
+
                 </tbody>
             </table>
         </div>
@@ -84,13 +78,9 @@
                 <div class="modal-body">
                     <form class="form-horizontal" id="form-alta">
 
+                        <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
                         <fieldset>
-                            <div class="form-group">
-                                <label for="inputFile" class="col-lg-2 ">Código</label>
-                                <div class="col-lg-3">
-                                    <input type="text" name="id" class="form-control" id="inputEmail" placeholder="Código" required>
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label for="inputFile" class="col-lg-2 ">Nombre</label>
                                 <div class="col-lg-10">
@@ -102,44 +92,128 @@
                                 <div class="col-lg-7">
                                     <div class="radio radio-primary">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
-                                                Ninguno
+                                            <input id="tipo1" name="tipo_calle" type="radio" name="optionsRadios" class="tipo" value="1" checked>
+                                                Calle
                                         </label>
                                     </div>
                                     <div class="radio radio-primary">
                                         <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                Panteón
-                                        </label>
-                                    </div>
-                                    <div class="radio radio-primary">
-                                        <label>
-                                            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-                                                Capilla
+                                            <input id="tipo2" name="tipo_calle" type="radio" name="optionsRadios" class="tipo" value="2">
+                                                Panteón/Capilla
                                         </label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="select" class="col-lg-2">Tramada</label>
-                                <div class="col-lg-10">
-                                    <select class="form-control" id="select" name="num_tramadas">
-                                        <option>- Selecciona número de tramadas -</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                        <option>6</option>
-                                        <option>7</option>
-                                        <option>8</option>
-                                        <option>9</option>
-                                    </select>
+
+                            <div class="parte_parcelas" style="display: none;">
+                                <div class="form-group parcelas" >
+                                    <label for="select" class="col-lg-2">Parcelas</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control parcelas" id="parcelas" name="num_parcelas">
+                                            <option>- ¿Cuántas parcelas tiene el panteón? -</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                        </select>
+                                    </div>
                                 </div>
+
+
+                                <!--<div class="n_parcelas" style="display: none;">
+
+                                    <div class="form-group" id="parcela1">
+                                        <label class="col-lg-12">Configuración parcela 1:</label>
+                                        <hr>
+
+                                        <div class="row">
+                                            <label class="col-lg-4 margin">Tamaño parcela 1</label>
+                                            <input class='col-lg-3' name='parcela2' placeholder='Tamaño parcela' required>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row">
+                                            <label class="col-lg-4 margin">Tramadas parcela 1</label>
+                                            <div class="col-lg-7">
+                                                <select class="form-control" id="tram_parc_1" name="tram_parc_1">
+                                                    <option>- ¿Cuántas parcelas tiene el panteón? -</option>
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                    <option>6</option>
+                                                    <option>7</option>
+                                                    <option>8</option>
+                                                    <option>9</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <br>
+
+                                        <div class="row" hidden>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 1</label>
+                                            <div class="row col-lg-9 inputs">
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row col-lg-9 inputs">
+
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela2' id='parcela2' placeholder='Parcela 2' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela3' id='parcela3' placeholder='Parcela 3' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela4' id='parcela4' placeholder='Parcela 4' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela5' id='parcela5' placeholder='Parcela 5' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela6' id='parcela6' placeholder='Parcela 6' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela7' id='parcela7' placeholder='Parcela 7' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela8' id='parcela8' placeholder='Parcela 8' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela9' id='parcela9' placeholder='Parcela 9' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='parcela10' id='parcela10' placeholder='Parcela 10' required>
+                                    </div>
+                                </div>-->
                             </div>
-                            <div class="form-group n_nichos" >
-                                <label for="select" class="col-lg-2">Nº nichos</label>
-                                <div class="row col-lg-10 inputs">
+
+
+                            <div class="parte_tramadas">
+                                <div class="form-group">
+                                    <label for="select" class="col-lg-2">Altura</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="tramadas" name="num_tramadas">
+                                            <option>- Selecciona número de tramadas -</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group n_nichos" >
+                                    <label for="select" class="col-lg-3">Nº nichos por tramada</label>
+                                    <div class="row col-lg-9 inputs">
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada1' id='tramada1' placeholder='Tramada 1' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada2' id='tramada2' placeholder='Tramada 2' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada3' id='tramada3' placeholder='Tramada 3' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada4' id='tramada4' placeholder='Tramada 4' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada5' id='tramada5' placeholder='Tramada 5' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada6' id='tramada6' placeholder='Tramada 6' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada7' id='tramada7' placeholder='Tramada 7' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada8' id='tramada8' placeholder='Tramada 8' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada9' id='tramada9' placeholder='Tramada 9' required>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -180,48 +254,146 @@
 
         $('#example').DataTable();
 
-        var token = "{{ csrf_token()}}";
-
+        /*
+            Función ajax para dar de alta una calle
+         */
         $("#form-alta").submit(function(e){
 
-            e.preventDefault();
+            //obtenemos el num de tramadas
+            var tramadas = $("#tramadas").val();
 
-            $.ajax({
-                type: "POST",
-                url: "{{ URL::route('altaCalle') }}",
-                data: $("#form-alta").serialize(),
-                dataType: "html",
-                error: function () {
-                    alert("entra en error");
-                },
-                success: function (data) {
-                    alert("entra en acierto");
-                }
-            });
+            if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9) {
+
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ URL::route('altaCalle') }}",
+                    data: $("#form-alta").serialize(),
+                    dataType: "html",
+                    error: function () {
+                        alert("entra en error");
+                    },
+                    success: function (data) {
+
+                        Lobibox.notify('success', {
+                            title: 'Calle añadida',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left'
+                        });
+
+                        location.reload();
+                    }
+                });
+            }else
+            {
+                alert("Selecciona nº de tramdas");
+            }
 
         });
 
-        $('#select').on("change",function(){
+
+        /*
+            Función para imprimir una parte u otra del form en funcion del tipo de calle
+        */
+        $(".tipo").on("change",function(){
+
+            if($('#tipo1').is(':checked')){
+                //si es calle entramos aquí
+
+                //Ocultamos la parte de las parcelas
+                $(".parte_parcelas").css("display",'none');
+                $(".parte_tramadas").css("display",'block');
+                //Al cambiar ocultamos todas
+
+            }else{
+                //si es pantenon aqui
+                $(".parte_parcelas").css("display",'block');
+                $(".parte_tramadas").css("display",'none');
+            }
+        });
+
+        /*
+            Función para imprimir los tamaños de las parcelas.
+        */
+
+        $('#parcelas').on("change",function() {
 
             if($.isNumeric(this.value)){
-                $(".inputs").html('');
+
+
+                    //Al cambiar ocultamos todas
+
+                    for(var i = 1; i <= 10; i++)
+                    {
+                        //imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada" + i + " ' id='tramada" + i + " ' placeholder='Tramada "+ i +"' required>"
+
+                        $('#parcela'+i)[0].setAttribute("type", "hidden");
+                    }
+
+                    //hacemos visible lo de nº de parcelas
+                    $(".n_parcelas").css("display",'block');
+
+                    //var imprimir = "";
+
+                    for(var i = 1; i <= this.value; i++)
+                    {
+                        //imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada" + i + " ' id='tramada" + i + " ' placeholder='Tramada "+ i +"' required>"
+
+                        $('#parcela'+i)[0].setAttribute("type", "text");
+                    }
+
+                    //$(".inputs").html(imprimir);
+                }else{
+
+                    $(".n_parcelas").css("display",'none');
+                }
+
+        });
+
+        /*
+         Función para imprimir las tramadas
+         */
+        $('#tramadas').on("change",function(){
+
+            if($.isNumeric(this.value)){
+
+                //Al cambiar ocultamos todas
+
+                for(var i = 1; i <= 9; i++)
+                {
+                    //imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada" + i + " ' id='tramada" + i + " ' placeholder='Tramada "+ i +"' required>"
+
+                    $('#tramada'+i)[0].setAttribute("type", "hidden");
+                }
 
                 //hacemos visible lo de nº de nichos
                 $(".n_nichos").css("display",'block');
 
-                var imprimir = "";
+                //var imprimir = "";
 
                 for(var i = 1; i <= this.value; i++)
                 {
-                    imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada " + i + " ' id='tramada " + i + " ' placeholder='Tramada "+ i +"' required>"
+                    //imprimir += "<input type='text' class='col-lg-3 t_margin' name='tramada" + i + " ' id='tramada" + i + " ' placeholder='Tramada "+ i +"' required>"
+
+                    $('#tramada'+i)[0].setAttribute("type", "text");
                 }
 
-                $(".inputs").html(imprimir);
+                //$(".inputs").html(imprimir);
             }else{
                 $(".n_nichos").css("display",'none');
             }
 
         });
+
+
+        $('#tram_parc_1').on("change",function() {
+            alert("entra");
+        });
+
+
 
     });
 

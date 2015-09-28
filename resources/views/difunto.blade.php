@@ -55,7 +55,7 @@
                                 <div class="row">
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Código</label>
+                                            <label class="control-label" for="inputWarning">CÃ³digo</label>
                                             <input type="text" class="form-control" id="inputWarning">
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
 
 
     <a href="{{ URL::route('alta-difunto') }}">
-        <button class="btn btn-warning btn-raised">Añadir difunto</button>
+        <button class="btn btn-warning btn-raised">AÃ±adir difunto</button>
     </a>
 
 
@@ -168,12 +168,12 @@
 
     <script type="text/javascript">
 
-        var count = "{{ $total }}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
+        var count = "{{ $total }}"; //variable para contar el total de franquicias y mostrar en relacion con el nï¿½ de paginas
         var paginas = 0;
         if (count % 10 != 0) {
             paginas = Math.floor(count / 10) + 1;
         } else {
-            paginas = count / 10; //4 es el número de items que queremos que aparezcan.
+            paginas = count / 10; //4 es el nï¿½mero de items que queremos que aparezcan.
         }
         $(document).ready(function () {
 
@@ -207,7 +207,7 @@
                     dataType: "html",
                     error: function () {
                         //$('#loading').show();
-                        alert("Error en la petición");
+                        alert("Error en la peticiï¿½n");
                     },
                     success: function (data) {
 
@@ -224,7 +224,7 @@
 
         function borrar(id) {
 
-            if (confirm(' ¿Realmente desea borrar el difunto con id ' + id + '?')) {
+            if (confirm(' ï¿½Realmente desea borrar el difunto con id ' + id + '?')) {
                 $(".difunto" + id).hide();
             }
         }

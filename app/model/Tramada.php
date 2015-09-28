@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,8 +9,9 @@ class Tramada extends Model
     protected $table = 'GC_Tramada';
 
     protected $fillable = [
+        'id',
         'tramada',
-        'total',
+        'nichos',
         'GC_CALLE'
     ];
 }

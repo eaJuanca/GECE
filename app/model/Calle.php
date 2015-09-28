@@ -16,8 +16,10 @@ class Calle extends Model{
     protected $table = 'GC_CALLE';
 
     protected $fillable = [
+        'id',
         'nombre',
         'num_tramadas',
-        'tipo_calle'
+        'tipo_calle',
+        'total'
     ];
 }

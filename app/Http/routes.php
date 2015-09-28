@@ -19,10 +19,7 @@ Route::group(['prefix' => '/'], function()
         return view('home');
     });
 
-    Route::get('calles', ['as' => 'calles', function()
-    {
-        return view('calles');
-    }]);
+    Route::get('calles', ['as' => 'calles', 'uses' => 'callesController@index']);
 
     Route::get('difunto', ['as' => 'difunto', 'uses' => 'WebController@DifuntoIndex']);
     Route::post('difuntosJSON', ['as' => 'difuntosJSON', 'uses' => 'WebController@DifuntosJSON']);

@@ -4,8 +4,6 @@
     <title>Gestión Cementerio</title>
     <meta name="_token" content="{!! csrf_token() !!}"/>
 
-
-
     <!-- Includes CSS comunes a todas las interfaces -->
 
 
