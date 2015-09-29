@@ -33,6 +33,12 @@ Route::group(['prefix' => '/'], function()
     Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
 
 
+    Route::get('modificar-nicho-{id}', ['as' => 'modificar-nichos', function($id){
+        $controller = App::make(\App\Http\Controllers\NichoController::class);
+        return $controller->callAction('indexModify', array('tipo' => $id));
+    }]);
+
+
 });
 
 //

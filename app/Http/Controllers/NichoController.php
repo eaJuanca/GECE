@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\model\Nicho;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class NichoController extends Controller
 {
@@ -19,6 +18,14 @@ class NichoController extends Controller
 
         $nichos = Nicho::take(10)->get();
         return view('nichos', compact('nichos'));
+
+        //
+    }
+
+    public function indexModify($id)
+    {
+
+        return view('modificar-nicho',compact('id'));
 
         //
     }
@@ -88,4 +95,5 @@ class NichoController extends Controller
     {
         //
     }
+
 }

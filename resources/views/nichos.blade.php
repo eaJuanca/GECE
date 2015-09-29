@@ -90,7 +90,7 @@
         </div>
     </div>
     <br>
-    <ul class="nav nav-tabs" style="margin-bottom: 15px; background-color: #00BCD4;">
+    <ul class="nav nav-tabs" style="margin-bottom: 15px;">
         <li class="active"><a href="#home" data-toggle="tab"><span>Nichos disponibles (1222)</span></a></li>
         <li><a href="#profile" data-toggle="tab"><span>Nichos no disponibles (3234)</span></a></li>
     </ul>
@@ -134,7 +134,7 @@
                                                    {{$nicho->banco}}
                                                 @endif
                                             </td>
-                                            <td> <a><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-nichos',[$nicho->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
 
