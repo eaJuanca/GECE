@@ -14,10 +14,10 @@
 Route::group(['prefix' => '/'], function()
 {
 
-    Route::get('/', function() {
+    Route::get('/', ['as' => 'home', function() {
 
         return view('home');
-    });
+    }]);
 
     Route::get('calles', ['as' => 'calles', 'uses' => 'callesController@index']);
 

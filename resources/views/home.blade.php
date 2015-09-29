@@ -4,6 +4,11 @@
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
 @endsection
 
+@section('title')
+
+    <h2 style="color: white; font-weight: bold; margin-left:10px; "> Inicio </h2>
+@endsection
+
 @section('contenido')
     <div class="row" >
         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
