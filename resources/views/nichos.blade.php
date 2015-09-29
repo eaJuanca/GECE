@@ -126,8 +126,14 @@
                                             <td> {{$nicho->tipo}}</td>
                                             <td> {{$nicho->id}}</td>
                                             <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
+                                            <td> {{$nicho->tarifa}}</td>
+                                            <td>
+                                                @if($nicho->banco == null)
+                                                    <i class="fa fa-lg fa-times" style="color:red"></i>
+                                                @else
+                                                   {{$nicho->banco}}
+                                                @endif
+                                            </td>
                                             <td> <a><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
@@ -173,8 +179,14 @@
                                             <td> {{$nicho->tipo}}</td>
                                             <td> {{$nicho->id}}</td>
                                             <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
+                                            <td> {{$nicho->tarifa}}</td>
+                                            <td>
+                                                @if($nicho->banco == null)
+                                                    <i class="fa fa-lg fa-times" style="color:red"></i>
+                                                @else
+                                                    {{$nicho->banco}}
+                                                @endif
+                                            </td>
                                             <td> <a><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
