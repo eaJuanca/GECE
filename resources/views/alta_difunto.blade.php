@@ -1,5 +1,10 @@
 @extends('master')
 
+@section('title')
+    <h2 style="color: white; font-weight: bold; margin-left:10px; ">Nuevo Difunto</h2>
+    @endsection
+
+
 @section('css')
 
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
@@ -12,7 +17,7 @@
 
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading">
-            <h3 class="panel-title" style="color: white">Modificar datos del difunto</h3>
+            <h3 class="panel-title" style="color: white">Cumplimentacion datos difunto</h3>
         </div>
         <div class="panel-body">
 

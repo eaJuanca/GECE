@@ -30,6 +30,9 @@ Route::group(['prefix' => '/'], function()
         return view('alta_difunto');
     }]);
 
+    Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
+
+
 });
 
 //

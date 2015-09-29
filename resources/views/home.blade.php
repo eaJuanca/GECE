@@ -14,7 +14,7 @@
                 </div>
                 <p class="text-center gc_title"><strong>NICHOS</strong></p>
                 <p class="text-center text_hidden">Módulo para la gestión de nichos</p>
-                <p class="text-center btn_hidden"><button class="btn btn-md btn-material-orange">Entrar</button></p>
+                <p class="text-center btn_hidden"><a href="{{ URL::route('nichos') }}" class="btn btn-md btn-material-amber">Entrar</a></p>
                 <p class="text-center btn_show">
                     <button class="btn btn-md btn-material-orange">
                         <i class="glyphicon glyphicon-share-alt"></i>
@@ -29,8 +29,8 @@
                 <div class="alert alert-material-amber text-center">
                     <img src="{{ asset('street.png') }}" width="41"/>
                 </div>
-                <p class="text-center gc_title"><strong>CEMENTERIO</strong></p>
-                <p class="text-center text_hidden">Módulo para la configuración del cementerio</p>
+                <p class="text-center gc_title"><strong>CALLES</strong></p>
+                <p class="text-center text_hidden">Módulo para la gestión de nichos</p>
                 <p class="text-center btn_hidden"><a href="{{ URL::route('calles') }}" class="btn btn-md btn-material-amber">Entrar</a></p>
                 <p class="text-center btn_show">
                     <button class="btn btn-md btn-material-amber">

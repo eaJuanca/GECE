@@ -6,16 +6,11 @@
 
     <!-- Includes CSS comunes a todas las interfaces -->
 
-
     <link href="//fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
     <link href="{{ URL::asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/material.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{{ URL::asset('lolibox/dist/css/LobiBox.min.css') }}">
-
-
-
-
 
 
     <!-- Fin include comunes -->
@@ -55,12 +50,7 @@
         <script src="{{ asset('datepickersandbox/js/bootstrap-datepicker.min.js') }}"></script>
         <script src="{{ asset('datepickersandbox/locales/bootstrap-datepicker.es.min.js') }}"></script>
 
-
-
-
     <!-- Fin includes comunes Jquery-->
         @yield('jquery')
         @yield('js')
-
-
 </html>
