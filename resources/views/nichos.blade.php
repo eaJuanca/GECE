@@ -15,10 +15,15 @@
             cursor: pointer;
         }
 
-        .active span{
 
-            font-weight: bold;
-            font-size: 16px;
+        .disabled{
+
+            cursor: pointer !important;
+        }
+
+        .bold{
+        color: white;
+                font-size: 12px;
         }
 
     </style>
@@ -91,8 +96,8 @@
     </div>
     <br>
     <ul class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active"><a href="#home" data-toggle="tab"><span>Nichos disponibles (1222)</span></a></li>
-        <li><a href="#profile" data-toggle="tab"><span>Nichos no disponibles (3234)</span></a></li>
+        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles (1222)</span></button></a></li>
+        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles (3234)</span></button></a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -210,6 +215,23 @@
 
 @section('jquery')
     <script src="{{ asset('assets/js/bootpag.min.js') }}"></script>
+
+    <script>
+
+        $(".button2").click(function(){
+
+
+            $("#button2").removeClass('disabled');
+            $("#button1").addClass('disabled');
+        });
+
+        $(".button1").click(function(){
+
+
+            $("#button1").removeClass('disabled');
+            $("#button2").addClass('disabled');
+        });
+    </script>
 
     <script type="text/javascript">
 
