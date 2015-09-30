@@ -111,7 +111,7 @@
                                     <thead>
                                     <tr>
                                         <th>Tipo</th>
-                                        <th>Cód.</th>
+                                        <th>Cod.</th>
                                         <th>Datos del nicho</th>
                                         <th>Tarifa</th>
                                         <th>Banco</th>

@@ -44,6 +44,8 @@ Route::group(['prefix' => '/'], function()
 //
 Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
+Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);
+
 Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
 
 Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice']);

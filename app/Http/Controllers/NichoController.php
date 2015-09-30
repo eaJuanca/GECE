@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\model\Nicho;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Mockery\Exception;
 
 class NichoController extends Controller
 {
@@ -25,7 +26,9 @@ class NichoController extends Controller
     public function indexModify($id)
     {
 
-        return view('modificar-nicho',compact('id'));
+
+        $nicho = Nicho::find($id);
+        return view('modificar-nicho',compact('id','nicho'));
 
         //
     }
@@ -68,9 +71,11 @@ class NichoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $nichoU = new Nicho($request->all());
+        $nicho = Nicho::find($request->input('id'));
+        $nicho->update($nichoU->attributesToArray());
     }
 
     /**
