@@ -103,6 +103,10 @@
                         <h3 style="font-weight: bold">Situacion del nicho</h3>
                         <br>
 
+                        <span style="font-weight: bold">Calle:</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->nombre_calle}}</span> <br><br>
+                        <span style="font-weight: bold">Altura</span><br>  <span style="font-weight: bold; color: #1c84c6">{{$info->altura}} </span><br><br>
+                        <span style="font-weight: bold">Numero</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->numero}} </span><br>
+
                     </section>
 
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">

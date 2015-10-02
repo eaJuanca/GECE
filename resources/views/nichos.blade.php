@@ -26,6 +26,7 @@
                 font-size: 12px;
         }
 
+
     </style>
 
 @endsection
@@ -40,23 +41,27 @@
                 <div class="panel-heading">Formulario de busqueda</div>
                 <div class="panel-body">
 
-                    <form>
+                    <form method="POST" action="{{URL::route('busquedaNichos')}}">
 
                         <div class="row">
                             <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                <input type="hidden"  id="activa" name="activa" value="1">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 
                                 <div class="row">
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de titular</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control" name="titular">
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre del difunto</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control" name="difunto">
                                         </div>
                                     </div>
 
@@ -66,7 +71,7 @@
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de calle</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control" name="nombrecalle">
                                         </div>
                                     </div>
 
@@ -74,7 +79,7 @@
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Numero de calle</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control" name="numero">
                                         </div>
                                     </div>
 
@@ -95,9 +100,9 @@
         </div>
     </div>
     <br>
-    <ul class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles (1222)</span></button></a></li>
-        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles (3234)</span></button></a></li>
+    <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles ({{$td}})</span></button></a></li>
+        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles ({{$tnd}})</span></button></a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -112,7 +117,7 @@
                         <div class="panel-body">
                             <div class="table-responsive">
 
-                                <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0">
+                                <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
                                         <th>Tipo</th>
@@ -123,23 +128,25 @@
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="tdisponibles">
 
-                                    @foreach($nichos as $nicho)
+                                    @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td> {{$nicho->tipo}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->tarifa}}</td>
+                                            <td> {{$disponible->tipo}}</td>
+                                            <td> {{$disponible->id}}</td>
+                                            <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
+                                                 Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
+                                                 Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
+                                            <td> {{$disponible->tarifa}}</td>
                                             <td>
-                                                @if($nicho->banco == null)
+                                                @if($disponible->banco == null)
                                                     <i class="fa fa-lg fa-times" style="color:red"></i>
                                                 @else
-                                                   {{$nicho->banco}}
+                                                   {{$disponible->banco}}
                                                 @endif
                                             </td>
-                                            <td> <a href="{{ route('modificar-nichos',[$nicho->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
 
@@ -165,38 +172,40 @@
                         <div class="panel-body">
                             <div class="table-responsive">
 
-                                <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0">
+                                <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
                                         <th>Tipo</th>
-                                        <th>Cód.</th>
-                                        <th>Datos del nicho</th>
-                                        <th>Tarifa</th>
+                                        <th>Cod.</th>
+                                        <th>Titular</th>
+                                        <th>Telefono</th>
+                                        <th>Expediente</th>
                                         <th>Banco</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    @foreach($nichos as $nicho)
+                                    @foreach($nodisponibles as $nodisponible)
 
                                         <tr>
-                                            <td> {{$nicho->tipo}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->id}}</td>
-                                            <td> {{$nicho->tarifa}}</td>
+                                            <td> {{$nodisponible->tipo}}</td>
+                                            <td> {{$nodisponible->id}}</td>
+                                            <td> {{$nodisponible->nombre_titular}}</td>
+                                            <td> {{$nodisponible->telefono}}</td>
+                                            <td> {{$nodisponible->expediente}}</td>
                                             <td>
-                                                @if($nicho->banco == null)
+                                                @if($nodisponible->banco == null)
                                                     <i class="fa fa-lg fa-times" style="color:red"></i>
                                                 @else
-                                                    {{$nicho->banco}}
+                                                    {{$nodisponible->banco}}
                                                 @endif
                                             </td>
-                                            <td> <a><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
 
-                                    @endforeach
+                                        @endforeach
 
 
                                     </tbody>
@@ -217,25 +226,19 @@
     <script src="{{ asset('assets/js/bootpag.min.js') }}"></script>
 
     <script>
-
-        $(".button2").click(function(){
-
-
-            $("#button2").removeClass('disabled');
-            $("#button1").addClass('disabled');
-        });
-
-        $(".button1").click(function(){
-
-
-            $("#button1").removeClass('disabled');
-            $("#button2").addClass('disabled');
-        });
+        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); });
+        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);});
     </script>
 
     <script type="text/javascript">
 
-        var count = "{{1 }}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
+
+
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+        });
+
+        var count = "{{$td}}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
         var paginas = 0;
         if (count % 10 != 0) {
             paginas = Math.floor(count / 10) + 1;
@@ -244,14 +247,21 @@
         }
         $(document).ready(function () {
 
+            var tab = "{{$tab}}";
+
+            if(tab==2) {
+                $('#myTab a[href="#profile"]').tab('show');// Select tab by name
+                $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2);
+            }
+
             $('.paginacion').bootpag({
                 total: paginas,
                 page: 1,
-                maxVisible: 3,
+                maxVisible: 5,
                 leaps: true,
                 firstLastUse: true,
-                first: '?',
-                last: '?',
+                first: 'Primero',
+                last: 'Ultimo',
                 wrapClass: 'pagination',
                 activeClass: 'active',
                 disabledClass: 'disabled',
@@ -262,24 +272,33 @@
 
             }).on("page", function (event, num) {
 
-                var ruta = "";
+                var ruta = "{{ URL::route('paginateDisponibles') }}";
 
-                var html = "";
+                //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
+                var httpR;
 
                 $.ajax({
 
-                    type: "get",
+                    type: "post",
                     url: ruta,
                     data: {page: num},
                     dataType: "html",
+
+                    beforeSend: function(data2){
+                        /*httpR es la variable global donde guardamos la conexion*/
+                        if(httpR){
+                            /*Si habia alguna conexion anterior, la cancelamos*/
+                            httpR.abort();
+                        }
+                        /*Guardamos la nueva conexion*/
+                        httpR = data2;
+                    },
                     error: function () {
                         //$('#loading').show();
                         alert("Error en la petición");
                     },
                     success: function (data) {
-
-                        $(".noticias").html(data)
-
+                        $(".tdisponibles").html(data);
                     }
                 });
             });
