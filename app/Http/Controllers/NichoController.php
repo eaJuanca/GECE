@@ -275,7 +275,7 @@ class NichoController extends Controller
 }
 
 /**
-select n.id, n.nombre_titular, n.banco, n.tipo, n.numero, n.tel_titular as telefono,
+create view infonicho as select n.id, n.nombre_titular, n.banco, n.tipo, n.numero, n.tel_titular as telefono,
 n.exp_titular as expediente, t.tramada as altura, c.nombre as nombre_calle, d.nom_difunto from gc_nichos n
 left join gc_tramada t on n.GC_Tramada_id = t.id left join gc_calle c on t.GC_CALLE_id = c.id
 left join gc_difuntos d on d.GC_NICHOS_id = n.id
