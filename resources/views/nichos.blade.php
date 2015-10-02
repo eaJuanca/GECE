@@ -177,12 +177,14 @@
                                         <th>Cod.</th>
                                         <th>Titular</th>
                                         <th>Telefono</th>
-                                        <th>Expediente</th>
+                                        <th>Calle</th>
+                                        <th>Tarifa</th>
+
                                         <th>Banco</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="tndisponibles">
 
                                     @foreach($nodisponibles as $nodisponible)
 
@@ -191,14 +193,18 @@
                                             <td> {{$nodisponible->id}}</td>
                                             <td> {{$nodisponible->nombre_titular}}</td>
                                             <td> {{$nodisponible->telefono}}</td>
-                                            <td> {{$nodisponible->expediente}}</td>
-                                            <td>
+                                            <td> {{$nodisponible->tarifa}}</td>
+
+                                            <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
+                                                Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
+                                                Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>                                            <td>
                                                 @if($nodisponible->banco == null)
                                                     <i class="fa fa-lg fa-times" style="color:red"></i>
                                                 @else
                                                     {{$nodisponible->banco}}
                                                 @endif
                                             </td>
+
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
                                                  <a title="Añadir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
@@ -225,14 +231,8 @@
 @section('jquery')
     <script src="{{ asset('assets/js/bootpag.min.js') }}"></script>
 
-    <script>
-        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); });
-        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide();});
-    </script>
 
     <script type="text/javascript">
-
-
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
@@ -245,7 +245,21 @@
         } else {
             paginas = count / 10; //4 es el número de items que queremos que aparezcan.
         }
+
+        var count2 = "{{$tnd}}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
+        var paginas2 = 0;
+        if (count2 % 10 != 0) {
+            paginas2 = Math.floor(count2 / 10) + 1;
+        } else {
+            paginas2 = count2 / 10; //4 es el número de items que queremos que aparezcan.
+        }
+
+
+        var state1 = $(".tdisponibles").html();
+        var state2 = $(".tndisponibles").html();
+
         $(document).ready(function () {
+
 
             var tab = "{{$tab}}";
             var search = "{{$search}}";
@@ -254,6 +268,8 @@
             var difunto = "{{$difunto}}";
             var numero = "{{$numero}}";
             var calle = "{{$calle}}";
+
+
 
 
             if(search == 1){
@@ -294,13 +310,22 @@
             }).on("page", function (event, num) {
 
 
+
                 var ruta = "";
                 var data = "";
 
                 //si no es una busqueda paginamos to-do
 
                 if(search==0) {
-                    ruta = "{{ URL::route('paginateDisponibles') }}";
+
+                    //si esta activa la tab 1
+                    if($('#activa').val()==1){
+                        ruta = "{{ URL::route('paginateDisponibles') }}";
+                        //si esta activa la tab 2
+                    }else {
+                        ruta = "{{ URL::route('paginateNoDisponibles') }}";
+
+                    }
                     data = {page: num};
                 }
                 //si es una busqueda, paginamos los resultados
@@ -334,11 +359,20 @@
                         alert("Error en la petición");
                     },
                     success: function (data) {
+
+                        if($('#activa').val()==1){
                         $(".tdisponibles").html(data);
+                        }else{
+                            $(".tndisponibles").html(data);
+
+                        }
                     }
                 });
             });
         });
+
+        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); $('.paginacion').bootpag({total: paginas2, page:1}); $(".tdisponibles").html(state1) });
+        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); $('.paginacion').bootpag({total: paginas, page:1}); $(".tndisponibles").html(state2)});
 
     </script>
 

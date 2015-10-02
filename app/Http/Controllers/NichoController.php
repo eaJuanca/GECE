@@ -86,6 +86,41 @@ class NichoController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     */
+
+    public function paginateNoDisponibles(Request $request){
+
+        $Nodisponibles = InfoNicho::where('nombre_titular','not', null)->orWhere('nombre_titular', '!=','')->skip(10 * ($request->input('page') - 1))->take(10)->get();
+
+        foreach ($Nodisponibles as $Nodisponible) {
+
+            $ruta = route('modificar-nichos', [$Nodisponible->id]);
+
+            echo '<tr>';
+            echo '<td>' . $Nodisponible->tipo . '</td>';
+            echo '<td>' . $Nodisponible->id . '</td>';
+            echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->telefono . '</td>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
+                       Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
+                       Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
+
+            echo '<td >' . $Nodisponible->tarifa . '</td>';
+
+            echo '<td>';
+            if ($Nodisponible->banco == null)
+                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
+            else echo $Nodisponible->banco . '</td >';
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+        }
+
+
+    }
+
 
     /**
      * Realiza una busqueda de nichos disponibles o no disponibles en funcion de la tab que habia activada
