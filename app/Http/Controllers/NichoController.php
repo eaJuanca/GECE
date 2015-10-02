@@ -90,9 +90,10 @@ class NichoController extends Controller
      * @param Request $request
      */
 
-    public function paginateNoDisponibles(Request $request){
+    public function paginateNoDisponibles(Request $request)
+    {
 
-        $Nodisponibles = InfoNicho::where('nombre_titular','not', null)->orWhere('nombre_titular', '!=','')->skip(10 * ($request->input('page') - 1))->take(10)->get();
+        $Nodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->skip(10 * ($request->input('page') - 1))->take(10)->get();
 
         foreach ($Nodisponibles as $Nodisponible) {
 
@@ -133,7 +134,7 @@ class NichoController extends Controller
 
         $titular = $request->input('titular');
         $difunto = $request->input('difunto');
-        $calle = $request->input('nombrecalle');
+        $calle = $request->input('calle');
         $numero = $request->input('numero');
         $activo = $request->input('activa'); // tab activa
         $search = 1; //busqueda activa
@@ -153,13 +154,16 @@ class NichoController extends Controller
                 if ($numero != '') $Qdisponibles->where('numero', $numero);
             });
 
-            $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '');
 
+            $disponibles = $Qdisponibles->take(10)->get();
+            $td = $Qdisponibles->count(); //total con respecto a la busqueda
             $tab = 1; //se debe activar el tab 1
+
+            return view('nichos', compact('disponibles', 'td', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
+
 
         } else {
 
-            $Qdisponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '');
 
             $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
 
@@ -174,18 +178,12 @@ class NichoController extends Controller
             });
 
             $tab = 2; // se debe activar el tab 2
+            $nodisponibles = $Qnodisponibles->take(10)->get();
+
+            $tnd = $Qnodisponibles->count(); // total con respecto a la busqueda
+            return view('nichos', compact('nodisponibles', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
+
         }
-
-        $disponibles = $Qdisponibles->take(10)->get();
-        $nodisponibles = $Qnodisponibles->take(10)->get();
-
-        $td = $Qdisponibles->count(); //total con respecto a la busqueda
-        $tnd = $Qnodisponibles->count(); // total con respecto a la busqueda
-
-
-        return view('nichos', compact('disponibles', 'nodisponibles', 'td', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
-
-
     }
 
 
@@ -236,6 +234,59 @@ class NichoController extends Controller
             echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
 
         }
+
+    }
+
+
+    public function paginateNoDisponiblesBusqueda(Request $request)
+    {
+
+        $titular = $request->input('titular');
+        $difunto = $request->input('difunto');
+        $calle = $request->input('nombrecalle');
+        $numero = $request->input('numero');
+        $activo = $request->input('activa'); // tab activa
+        $search = 1; //busqueda activa
+        $page = $request->input('page');
+
+        $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
+
+            $Qnodisponibles->where('nombre_titular', 'not', null);
+            $Qnodisponibles->orWhere('nombre_titular', '!=', '');
+
+        })->where(function ($Qnodisponibles) use ($titular, $calle, $numero) {
+
+            if ($titular != '') $Qnodisponibles->where('nombre_titular', 'like', "%$titular%");
+            if ($calle != '') $Qnodisponibles->where('nombre_calle', 'like', "%$calle%");
+            if ($numero != '') $Qnodisponibles->where('numero', $numero);
+        });
+
+        $Nodisponibles = $Qnodisponibles->skip(10 * ($page - 1))->take(10)->get();
+
+        foreach ($Nodisponibles as $Nodisponible) {
+
+            $ruta = route('modificar-nichos', [$Nodisponible->id]);
+
+            echo '<tr>';
+            echo '<td>' . $Nodisponible->tipo . '</td>';
+            echo '<td>' . $Nodisponible->id . '</td>';
+            echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->telefono . '</td>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
+                       Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
+                       Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
+
+            echo '<td >' . $Nodisponible->tarifa . '</td>';
+
+            echo '<td>';
+            if ($Nodisponible->banco == null)
+                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
+            else echo $Nodisponible->banco . '</td >';
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+        }
+
 
     }
 
@@ -310,9 +361,9 @@ class NichoController extends Controller
 }
 
 /**
-create view infonicho as select n.id, n.nombre_titular, n.banco, n.tipo, n.numero, n.tel_titular as telefono,
-n.exp_titular as expediente, t.tramada as altura, c.nombre as nombre_calle, d.nom_difunto from gc_nichos n
-left join gc_tramada t on n.GC_Tramada_id = t.id left join gc_calle c on t.GC_CALLE_id = c.id
-left join gc_difuntos d on d.GC_NICHOS_id = n.id
+ * create view infonicho as select n.id, n.nombre_titular, n.banco, n.tipo, n.numero, n.tel_titular as telefono,
+ * n.exp_titular as expediente, t.tramada as altura, c.nombre as nombre_calle, d.nom_difunto from gc_nichos n
+ * left join gc_tramada t on n.GC_Tramada_id = t.id left join gc_calle c on t.GC_CALLE_id = c.id
+ * left join gc_difuntos d on d.GC_NICHOS_id = n.id
  *
  */

@@ -64,11 +64,13 @@
 
                                 </div>
 
+
+
                                 <div class="row">
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de calle</label>
-                                            <input type="text" class="form-control" name="nombrecalle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
+                                            <input type="text" class="form-control" name="calle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
                                         </div>
                                     </div>
 
@@ -84,10 +86,18 @@
                                         <div class="form-group">
                                             <br>
                                             <button type="submit" class="btn btn-primary btn-raised">Buscar</button>
-                                            <a id='search' href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised" style="visibility: hidden">Inicio</a>
+                                            <a id='search' href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised" style="visibility: hidden">Terminar</a>
                                         </div>
                                     </div>
 
+                                </div>
+
+                                <div class="row" id="nota" style="display: none">
+                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                    <span style="font-weight: bold; font-size: 16px">A continuacion se muestran los resultados de busqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
+
+                                        </div>
                                 </div>
 
                             </section>
@@ -99,8 +109,8 @@
     </div>
     <br>
     <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles ({{$td}})</span></button></a></li>
-        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles ({{$tnd}})</span></button></a></li>
+        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles (<?php if(isset($td)) echo $td; else $td=0 ?>)</span></button></a></li>
+        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles ( <?php if(isset($tnd)) echo $tnd; else $tnd=0 ?>)</span></button></a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -128,6 +138,8 @@
                                     </thead>
                                     <tbody class="tdisponibles">
 
+                                    <?php if(isset($disponibles)) { ?>
+
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
@@ -149,6 +161,8 @@
                                         </tr>
 
                                     @endforeach
+
+                                    <?php } ?>
 
                                     </tbody>
                                 </table>
@@ -179,12 +193,13 @@
                                         <th>Telefono</th>
                                         <th>Calle</th>
                                         <th>Tarifa</th>
-
                                         <th>Banco</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
                                     <tbody class="tndisponibles">
+
+                                    <?php if(isset($nodisponibles)) { ?>
 
                                     @foreach($nodisponibles as $nodisponible)
 
@@ -193,17 +208,17 @@
                                             <td> {{$nodisponible->id}}</td>
                                             <td> {{$nodisponible->nombre_titular}}</td>
                                             <td> {{$nodisponible->telefono}}</td>
-                                            <td> {{$nodisponible->tarifa}}</td>
-
-                                            <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
-                                                Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
-                                                Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>                                            <td>
+                                            <td> Calle: <span style="font-weight: bold">{{$nodisponible->nombre_calle}}, </span>
+                                                Altura, <span style="font-weight: bold">{{$nodisponible->altura}} </span>
+                                                Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
+                                            <td>
                                                 @if($nodisponible->banco == null)
                                                     <i class="fa fa-lg fa-times" style="color:red"></i>
                                                 @else
                                                     {{$nodisponible->banco}}
                                                 @endif
                                             </td>
+                                            <td> {{$nodisponible->tarifa}}</td>
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
@@ -213,13 +228,14 @@
 
                                         @endforeach
 
+                                    <?php } ?>
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="paginacion" style="float: right"></div>
+                    <div class="paginacion2" style="float: right"></div>
                 </div>
             </div>
         </div>
@@ -254,15 +270,20 @@
             paginas2 = count2 / 10; //4 es el número de items que queremos que aparezcan.
         }
 
+        var tab = "{{$tab}}";
+        var search = "{{$search}}";
 
-        var state1 = $(".tdisponibles").html();
-        var state2 = $(".tndisponibles").html();
+        if(search == 1){
+            if(tab==1){
+                $('.button2').hide();
+            }
+            else{
+                $('.button1').hide();
+            }
+        }
 
         $(document).ready(function () {
 
-
-            var tab = "{{$tab}}";
-            var search = "{{$search}}";
 
             var titular = "{{$titular}}";
             var difunto = "{{$difunto}}";
@@ -270,15 +291,10 @@
             var calle = "{{$calle}}";
 
 
-
-
-            if(search == 1){
-                $('#search').css('visibility','visible');
-            }
-
-
+            if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
 
             if(tab==2) {
+
                 $('#myTab a[href="#profile"]').tab('show');// Select tab by name
                 $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2);
 
@@ -309,8 +325,6 @@
 
             }).on("page", function (event, num) {
 
-
-
                 var ruta = "";
                 var data = "";
 
@@ -318,16 +332,10 @@
 
                 if(search==0) {
 
-                    //si esta activa la tab 1
-                    if($('#activa').val()==1){
-                        ruta = "{{ URL::route('paginateDisponibles') }}";
-                        //si esta activa la tab 2
-                    }else {
-                        ruta = "{{ URL::route('paginateNoDisponibles') }}";
-
-                    }
+                    ruta = "{{ URL::route('paginateDisponibles') }}";
                     data = {page: num};
-                }
+                 }
+
                 //si es una busqueda, paginamos los resultados
                 else{
 
@@ -355,24 +363,91 @@
                         httpR = data2;
                     },
                     error: function () {
-                        //$('#loading').show();
                         alert("Error en la petición");
                     },
                     success: function (data) {
 
-                        if($('#activa').val()==1){
                         $(".tdisponibles").html(data);
-                        }else{
-                            $(".tndisponibles").html(data);
 
+
+                    }
+                });
+            });
+
+
+            $('.paginacion2').bootpag({
+                total: paginas2,
+                page: 1,
+                maxVisible: 5,
+                leaps: true,
+                firstLastUse: true,
+                first: 'Primero',
+                last: 'Ultimo',
+                wrapClass: 'pagination',
+                activeClass: 'active',
+                disabledClass: 'disabled',
+                nextClass: 'next',
+                prevClass: 'prev',
+                lastClass: 'last',
+                firstClass: 'first'
+
+            }).on("page", function (event, num) {
+
+
+
+                var ruta = "";
+                var data = "";
+
+                //si no es una busqueda paginamos to-do
+
+                if(search==0) {
+
+                    data = {page: num};
+                    ruta = "{{ URL::route('paginateNoDisponibles') }}";
+                }
+
+                //si es una busqueda, paginamos los resultados
+                else{
+
+                    ruta = "{{ URL::route('paginateNoDisponiblesBusqueda') }}";
+                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                }
+
+                //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
+                var httpR;
+
+                $.ajax({
+
+                    type: "post",
+                    url: ruta,
+                    data: data,
+                    dataType: "html",
+
+                    beforeSend: function(data2){
+                        /*httpR es la variable global donde guardamos la conexion*/
+                        if(httpR){
+                            /*Si habia alguna conexion anterior, la cancelamos*/
+                            httpR.abort();
                         }
+                        /*Guardamos la nueva conexion*/
+                        httpR = data2;
+                    },
+
+                    error: function () {
+                        alert("Error en la petición");
+                    },
+
+                    success: function (data) {
+                        $(".tndisponibles").html(data);
                     }
                 });
             });
         });
 
-        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); $('.paginacion').bootpag({total: paginas2, page:1}); $(".tdisponibles").html(state1) });
-        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); $('.paginacion').bootpag({total: paginas, page:1}); $(".tndisponibles").html(state2)});
+        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show();  });
+        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); });
+
+
 
     </script>
 

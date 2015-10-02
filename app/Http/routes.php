@@ -60,6 +60,9 @@ Route::post('paginateNoDisponibles', ['as' => 'paginateNoDisponibles', 'uses' =>
 //Paginacion dedicado al apartado de los nichos disponibles cuando es una busqueda
 Route::post('paginateDisponiblesBusqueda', ['as' => 'paginateDisponiblesBusqueda', 'uses' => 'NichoController@paginateDisponiblesBusqueda']);
 
+//Paginacion dedicado al apartado de los nichos NO disponibles cuando es una busqueda
+Route::post('paginateNoDisponiblesBusqueda', ['as' => 'paginateNoDisponiblesBusqueda', 'uses' => 'NichoController@paginateNoDisponiblesBusqueda']);
+
 //busqueda de nichos a traves del formulario
 Route::post('busquedaNichos', ['as' => 'busquedaNichos', 'uses' => 'NichoController@busquedaNicho']);
 
