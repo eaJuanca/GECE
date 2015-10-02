@@ -1,9 +1,6 @@
 @extends('master')
 
-@section('title')
-
-    <h2 style="color: white; font-weight: bold; margin-left:10px; "> Nichos </h2>
-@endsection
+@section('title') <h2 style="color: white; font-weight: bold; margin-left:10px; "> Nichos </h2> @endsection
 
 @section('css')
 
@@ -51,17 +48,17 @@
 
 
                                 <div class="row">
-                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div  id="titular" class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de titular</label>
-                                            <input type="text" class="form-control" name="titular">
+                                            <input type="text" class="form-control" name="titular" value="<?php if(isset($titular)) echo $titular; else $titular=''; ?>">
                                         </div>
                                     </div>
 
-                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div id="difunto" class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre del difunto</label>
-                                            <input type="text" class="form-control" name="difunto">
+                                            <input type="text" class="form-control"  name="difunto" value="<?php if(isset($difunto)) echo $difunto; else $difunto=''; ?>">
                                         </div>
                                     </div>
 
@@ -71,7 +68,7 @@
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de calle</label>
-                                            <input type="text" class="form-control" name="nombrecalle">
+                                            <input type="text" class="form-control" name="nombrecalle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
                                         </div>
                                     </div>
 
@@ -79,14 +76,15 @@
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Numero de calle</label>
-                                            <input type="text" class="form-control" name="numero">
+                                            <input type="text" class="form-control" name="numero" value="<?php if(isset($numero)) echo $numero; else $numero=''; ?>">
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <br>
-                                            <button class="btn btn-primary btn-raised">Buscar</button>
+                                            <button type="submit" class="btn btn-primary btn-raised">Buscar</button>
+                                            <a id='search' href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised" style="visibility: hidden">Inicio</a>
                                         </div>
                                     </div>
 
@@ -201,7 +199,9 @@
                                                     {{$nodisponible->banco}}
                                                 @endif
                                             </td>
-                                            <td> <a href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+                                                 <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
+                                                 <a title="Añadir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
 
                                         </tr>
 
@@ -226,8 +226,8 @@
     <script src="{{ asset('assets/js/bootpag.min.js') }}"></script>
 
     <script>
-        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); });
-        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);});
+        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); });
+        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide();});
     </script>
 
     <script type="text/javascript">
@@ -248,10 +248,31 @@
         $(document).ready(function () {
 
             var tab = "{{$tab}}";
+            var search = "{{$search}}";
+
+            var titular = "{{$titular}}";
+            var difunto = "{{$difunto}}";
+            var numero = "{{$numero}}";
+            var calle = "{{$calle}}";
+
+
+            if(search == 1){
+                $('#search').css('visibility','visible');
+            }
+
+
 
             if(tab==2) {
                 $('#myTab a[href="#profile"]').tab('show');// Select tab by name
                 $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2);
+
+                $("#titular").show();
+                $("#difunto").show();
+
+            }else{
+
+                $("#titular").hide();
+                $("#difunto").hide();
             }
 
             $('.paginacion').bootpag({
@@ -272,7 +293,22 @@
 
             }).on("page", function (event, num) {
 
-                var ruta = "{{ URL::route('paginateDisponibles') }}";
+
+                var ruta = "";
+                var data = "";
+
+                //si no es una busqueda paginamos to-do
+
+                if(search==0) {
+                    ruta = "{{ URL::route('paginateDisponibles') }}";
+                    data = {page: num};
+                }
+                //si es una busqueda, paginamos los resultados
+                else{
+
+                    ruta = "{{ URL::route('paginateDisponiblesBusqueda') }}";
+                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
                 var httpR;
@@ -281,7 +317,7 @@
 
                     type: "post",
                     url: ruta,
-                    data: {page: num},
+                    data: data,
                     dataType: "html",
 
                     beforeSend: function(data2){

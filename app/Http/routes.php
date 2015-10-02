@@ -54,6 +54,9 @@ Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice
 //Paginacion dedicado al apartado de los nichos disponibles
 Route::post('paginateDisponibles', ['as' => 'paginateDisponibles', 'uses' => 'NichoController@paginateDisponibles']);
 
+//Paginacion dedicado al apartado de los nichos disponibles cuando es una busqueda
+Route::post('paginateDisponiblesBusqueda', ['as' => 'paginateDisponiblesBusqueda', 'uses' => 'NichoController@paginateDisponiblesBusqueda']);
+
 //busqueda de nichos a traves del formulario
 Route::post('busquedaNichos', ['as' => 'busquedaNichos', 'uses' => 'NichoController@busquedaNicho']);
 

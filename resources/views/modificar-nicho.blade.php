@@ -247,6 +247,7 @@
                 </div>
 
                 <button class="btn btn-success btn-raised">Modificar nicho</button>
+                <button class="btn btn-warning btn-raised">Modificar y enterrar difunto</button>
             </form>
         </div>
     </div>

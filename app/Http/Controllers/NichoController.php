@@ -11,12 +11,14 @@ use Mockery\Exception;
 class NichoController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Pagina principal de nichos, con todos los resultados paginados a 10
+     * es un mero inicio
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+
 
         $Qdisponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '');
         $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '');
@@ -24,24 +26,36 @@ class NichoController extends Controller
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
 
-        $td = $Qdisponibles->count();
-        $tnd = $Qnodisponibles->count();
+        $td = $Qdisponibles->count(); // total de nichos disponibles
+        $tnd = $Qnodisponibles->count(); // total de nichos no disponibles
 
-        $tab = 1;
+        $tab = 1; // tab activa
+        $search = 0; // busqueda inactica
 
 
-        return view('nichos', compact('disponibles', 'nodisponibles', 'td', 'tnd','tab'));
+        return view('nichos', compact('disponibles', 'nodisponibles', 'td', 'tnd', 'tab', 'search'));
 
         //
     }
 
-    public function indexModify($id) {
+    /**
+     * Devuelve la pagina inicial para modificar un nicho con el nicho ya cargado
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function indexModify($id)
+    {
 
         $nicho = Nicho::find($id);
         $info = InfoNicho::find($id);
         return view('modificar-nicho', compact('id', 'nicho', 'info'));
 
     }
+
+    /**
+     * Pagina los resultados de los nichos disponibles cuando no se está dentro de una busqueda
+     * @param Request $request
+     */
 
     public function paginateDisponibles(Request $request)
     {
@@ -72,6 +86,12 @@ class NichoController extends Controller
         //
     }
 
+
+    /**
+     * Realiza una busqueda de nichos disponibles o no disponibles en funcion de la tab que habia activada
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function busquedaNicho(Request $request)
     {
 
@@ -80,7 +100,9 @@ class NichoController extends Controller
         $difunto = $request->input('difunto');
         $calle = $request->input('nombrecalle');
         $numero = $request->input('numero');
-        $activo = $request->input('activa');
+        $activo = $request->input('activa'); // tab activa
+        $search = 1; //busqueda activa
+
 
         if ($activo == 1) {
 
@@ -98,7 +120,7 @@ class NichoController extends Controller
 
             $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '');
 
-            $tab = 1;
+            $tab = 1; //se debe activar el tab 1
 
         } else {
 
@@ -106,8 +128,8 @@ class NichoController extends Controller
 
             $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
 
-                $Qnodisponibles->where('nombre_titular','not', null);
-                $Qnodisponibles->orWhere('nombre_titular','!=', '');
+                $Qnodisponibles->where('nombre_titular', 'not', null);
+                $Qnodisponibles->orWhere('nombre_titular', '!=', '');
 
             })->where(function ($Qnodisponibles) use ($titular, $calle, $numero) {
 
@@ -116,19 +138,69 @@ class NichoController extends Controller
                 if ($numero != '') $Qnodisponibles->where('numero', $numero);
             });
 
-            $tab = 2;
+            $tab = 2; // se debe activar el tab 2
         }
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
 
-        $td = $Qdisponibles->count();
-        $tnd = $Qnodisponibles->count();
+        $td = $Qdisponibles->count(); //total con respecto a la busqueda
+        $tnd = $Qnodisponibles->count(); // total con respecto a la busqueda
 
 
+        return view('nichos', compact('disponibles', 'nodisponibles', 'td', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
 
-        return view('nichos', compact('disponibles', 'nodisponibles', 'td', 'tnd','tab'));
 
+    }
+
+
+    /**
+     * Pagina los resultados de ua busqueda realizada
+     * @param Request $request
+     */
+    public function paginateDisponiblesBusqueda(Request $request)
+    {
+
+        $calle = $request->input('calle');
+        $numero = $request->input('numero');
+        $page = $request->input('page');
+
+
+        $Qdisponibles = InfoNicho::where(function ($Qdisponibles) {
+
+            $Qdisponibles->where('nombre_titular', null);
+            $Qdisponibles->orWhere('nombre_titular', '');
+
+        })->where(function ($Qdisponibles) use ($calle, $numero) {
+
+            if ($calle != '') $Qdisponibles->where('nombre_calle', 'like', "%$calle%");
+            if ($numero != '') $Qdisponibles->where('numero', $numero);
+        });
+
+
+        $disponibles = $Qdisponibles->skip(10 * ($page - 1))->take(10)->get();
+
+        foreach ($disponibles as $disponible) {
+
+            $ruta = route('modificar-nichos', [$disponible->id]);
+
+            echo '<tr>';
+            echo '<td>' . $disponible->tipo . '</td>';
+            echo '<td>' . $disponible->id . '</td>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->nombre_calle . ',</span >
+                       Altura, <span style = "font-weight: bold" >' . $disponible->altura . '</span >
+                       Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
+
+            echo '<td >' . $disponible->tarifa . '</td>';
+
+            echo '<td>';
+            if ($disponible->banco == null)
+                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
+            else echo $disponible->banco . '</td >';
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+        }
 
     }
 
@@ -165,7 +237,7 @@ class NichoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Modifica el nicho en la base de datos
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
@@ -201,3 +273,11 @@ class NichoController extends Controller
     }
 
 }
+
+/**
+select n.id, n.nombre_titular, n.banco, n.tipo, n.numero, n.tel_titular as telefono,
+n.exp_titular as expediente, t.tramada as altura, c.nombre as nombre_calle, d.nom_difunto from gc_nichos n
+left join gc_tramada t on n.GC_Tramada_id = t.id left join gc_calle c on t.GC_CALLE_id = c.id
+left join gc_difuntos d on d.GC_NICHOS_id = n.id
+ *
+ */
