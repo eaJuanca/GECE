@@ -12,6 +12,7 @@ class Tramada extends Model
         'id',
         'tramada',
         'nichos',
-        'GC_CALLE'
+        'GC_CALLE_id',
+        'GC_PARCELA_id'
     ];
 }

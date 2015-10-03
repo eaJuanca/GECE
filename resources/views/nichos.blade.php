@@ -222,7 +222,7 @@
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="Añadir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
+                                                 <a title="Aï¿½adir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
 
                                         </tr>
 
@@ -254,20 +254,20 @@
             headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
         });
 
-        var count = "{{$td}}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
+        var count = "{{$td}}"; //variable para contar el total de franquicias y mostrar en relacion con el nï¿½ de paginas
         var paginas = 0;
         if (count % 10 != 0) {
             paginas = Math.floor(count / 10) + 1;
         } else {
-            paginas = count / 10; //4 es el número de items que queremos que aparezcan.
+            paginas = count / 10; //4 es el nï¿½mero de items que queremos que aparezcan.
         }
 
-        var count2 = "{{$tnd}}"; //variable para contar el total de franquicias y mostrar en relacion con el nº de paginas
+        var count2 = "{{$tnd}}"; //variable para contar el total de franquicias y mostrar en relacion con el nï¿½ de paginas
         var paginas2 = 0;
         if (count2 % 10 != 0) {
             paginas2 = Math.floor(count2 / 10) + 1;
         } else {
-            paginas2 = count2 / 10; //4 es el número de items que queremos que aparezcan.
+            paginas2 = count2 / 10; //4 es el nÃºmero de items que queremos que aparezcan.
         }
 
         var tab = "{{$tab}}";
@@ -363,7 +363,7 @@
                         httpR = data2;
                     },
                     error: function () {
-                        alert("Error en la petición");
+                        alert("Error en la peticiÃ³n");
                     },
                     success: function (data) {
 
@@ -434,7 +434,7 @@
                     },
 
                     error: function () {
-                        alert("Error en la petición");
+                        alert("Error en la peticiÃ³n");
                     },
 
                     success: function (data) {
@@ -455,7 +455,7 @@
 
         function borrar(id) {
 
-            if (confirm(' ¿Realmente desea borrar el difunto con id ' + id + '?')) {
+            if (confirm('Realmente desea borrar el difunto con id ' + id + '?')) {
                 $(".difunto" + id).hide();
             }
         }
