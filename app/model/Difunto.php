@@ -29,7 +29,7 @@ class Difunto extends Model{
         'cau_fall_difunto',
         'med_difunto',
         'loc_fall_difunto',
-        'fecha_inh_difunto',
+        'fec_inh_difunto',
         'tip_inh_difunto',
         'exp_inh_difunto',
         'fun_inh_difunto',

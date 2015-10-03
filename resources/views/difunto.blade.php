@@ -8,6 +8,8 @@
 @section('css')
 
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
+
 
     <style>
 
@@ -28,25 +30,28 @@
                 <div class="panel-heading">Formulario de busqueda</div>
                 <div class="panel-body">
 
-                    <form>
+                    <form method="POST" action="{{URL::route('BusquedaDifunto')}}">
 
                         <div class="row">
                             <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
 
+                                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
                                 <div class="row">
                                     <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Difunto</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control" name="difunto" value="<?php  if(isset($difunto)) echo $difunto ?>">
                                         </div>
                                     </div>
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Sexo</label>
-                                            <select class="form-control" id="select">
-                                                <option>Hombre</option>
-                                                <option>Mujer</option>
+                                            <select class="form-control" name="sexo">
+                                                <option value="2">Cualquiera</option>
+                                                <option value="0">Hombre</option>
+                                                <option value="1">Mujer</option>
 
                                             </select></div>
                                     </div>
@@ -55,15 +60,15 @@
                                 <div class="row">
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Código</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <label class="control-label" for="inputWarning">Codigo</label>
+                                            <input type="text" class="form-control" name="codigo" value="<?php  if(isset($codigo)) echo $codigo ?>">
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Fecha</label>
-                                            <input type="text" class="form-control" id="inputWarning">
+                                            <input type="text" class="form-control fecha" name="fecha" value="<?php  if(isset($fecha)) echo $fecha ?>">
                                         </div>
                                     </div>
 
@@ -71,9 +76,19 @@
                                         <div class="form-group">
                                             <br>
                                             <button class="btn btn-primary btn-raised">Buscar</button>
+                                            <a id='search' href="{{URL::route('difunto')}}" class="btn btn-danger btn-raised" style="visibility: hidden">Terminar</a>
+
                                         </div>
                                     </div>
 
+                                </div>
+
+                                <div class="row" id="nota" style="display: none">
+                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                                        <span style="font-weight: bold; font-size: 16px">A continuacion se muestran los resultados de busqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
+
+                                    </div>
                                 </div>
 
                             </section>
@@ -108,11 +123,10 @@
                                 <th>Fecha defuncion</th>
                                 <th>Localidad</th>
                                 <th>Sexo</th>
-                                <th>Extraer</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="difuntos">
 
                             @foreach($difuntos as $difunto)
                                 <tr class="difunto{{$difunto->id}} ">
@@ -126,20 +140,6 @@
                                             @else
                                                 Hombre
                                             @endif</span></td>
-                                    <td width="210px"><select>
-                                            <option>Documento para el juzgado</option>
-                                        </select>
-
-                                        <div>
-                                            <a href="{{ URL::route('pdfjuzgado') }}" style="margin-right: 10px"><i
-                                                        class="fa fa-print fa-lg fa-border"></i></a>
-                                            <a style="margin-right: 10px"><i class="fa fa-eye  fa-lg fa-border"></i></a>
-                                            <a style="margin-right: 10px"><i
-                                                        class="fa fa-floppy-o  fa-lg fa-border"></i></a>
-                                            <a style="margin-right: 10px"><i
-                                                        class="fa fa-envelope-o  fa-lg fa-border"></i></a>
-                                        </div>
-                                    </td>
                                     <td style="width: 100px">
                                         <div style="float: right">
                                             <a data-toggle="tooltip" title="Editar" onclick="alert('hola')" style="margin-right: 10px; color:#03A9F4;"><i
@@ -175,6 +175,25 @@
         } else {
             paginas = count / 10; //4 es el n�mero de items que queremos que aparezcan.
         }
+
+        var search = "{{$search}}";
+        if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
+
+
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+        });
+
+
+        $('.fecha').datepicker({
+
+            format: "yyyy-mm-dd",
+            language: "es",
+            multidate: false,
+            autoclose: true,
+            todayHighlight: true
+        });
+
         $(document).ready(function () {
 
             $('.paginacion').bootpag({
@@ -183,8 +202,8 @@
                 maxVisible: 3,
                 leaps: true,
                 firstLastUse: true,
-                first: '?',
-                last: '?',
+                first: 'Primero',
+                last: 'Ultimo',
                 wrapClass: 'pagination',
                 activeClass: 'active',
                 disabledClass: 'disabled',
@@ -195,23 +214,23 @@
 
             }).on("page", function (event, num) {
 
-                var ruta = "";
+                var ruta = "{{ URL::route('paginateDifunto') }}";
 
                 var html = "";
 
                 $.ajax({
 
-                    type: "get",
+                    type: "post",
                     url: ruta,
                     data: {page: num},
                     dataType: "html",
                     error: function () {
                         //$('#loading').show();
-                        alert("Error en la petici�n");
+                        alert("Error en la peticion");
                     },
                     success: function (data) {
 
-                        $(".noticias").html(data)
+                        $(".difuntos").html(data)
 
                     }
                 });

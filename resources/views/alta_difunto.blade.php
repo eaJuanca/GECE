@@ -24,6 +24,7 @@
             <form id="nuevo-difunto">
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="row">
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">

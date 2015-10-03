@@ -66,3 +66,9 @@ Route::post('paginateNoDisponiblesBusqueda', ['as' => 'paginateNoDisponiblesBusq
 //busqueda de nichos a traves del formulario
 Route::post('busquedaNichos', ['as' => 'busquedaNichos', 'uses' => 'NichoController@busquedaNicho']);
 
+//paginacion de los difuntos en el sistema
+Route::post('paginateDifunto', ['as' => 'paginateDifunto', 'uses' => 'DifuntoController@paginateDifunto']);
+
+//Resultados de busqueda difuntos
+Route::post('BusquedaDifunto', ['as' => 'BusquedaDifunto', 'uses' => 'DifuntoController@busqueda']);
+
