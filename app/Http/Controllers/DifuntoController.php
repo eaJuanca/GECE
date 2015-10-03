@@ -20,6 +20,8 @@ class DifuntoController extends Controller
         //
     }
 
+
+
     public function busqueda(Request $request){
 
         $difunto = $request->input('difunto');
@@ -103,6 +105,52 @@ class DifuntoController extends Controller
 
     }
 
+    public function busquedaPaginada(Request $request){
+
+        $page = $request->input('page');
+        $difunto = $request->input('difunto');
+        $fecha = $request->input('fecha');
+        $codigo = $request->input('codigo');
+        $sexo = $request->input('sexo');
+
+        $query = Difunto::where('nom_difunto','!=','')->where(function($query) use ($difunto,$fecha,$codigo,$sexo){
+
+            if($difunto!='') $query->where('nom_difunto','like',"%$difunto%");
+            if($fecha!='') $query->where('fec_fall_difunto',$fecha);
+            if($codigo!='') $query->where('id',$codigo);
+            if($sexo!=2) $query->where('sex_difunto',$sexo);
+        });
+
+        $difuntos = $query->skip(10 * ($page - 1))->take(10)->get();
+
+        foreach ($difuntos as $difunto){
+
+            echo'  <tr class="difunto'.$difunto->id.'">';
+            echo '<td >'. $difunto->id.' </td >';
+            echo '<td >'.  $difunto->nom_difunto.' </td >';
+            echo '<td style = "width: 100px" > '.$difunto->fec_fall_difunto.'</td >';
+            echo '<td >'.$difunto->pob_difunto.'</td >';
+            echo ' <td style = "width: 100px; text-align: center" ><span >';
+            if ($difunto->sex_difunto == 1)
+                echo 'Mujer'; else
+                echo 'Hombre</span ></td >';
+
+
+            echo '<td style = "width: 100px" > <div style = "float: right" >
+                            <a data - toggle = "tooltip" title = "Editar" onclick = "" style = "margin-right: 10px; color:#03A9F4;" >
+                            <i class="fa fa-pencil-square-o  fa-lg fa-border" ></i ></a >
+                            <a data - toggle = "tooltip" title = "Borrar" style = "margin-right: 10px; color: #F44336"
+                               onclick = "borrar('.$difunto->id.')" ><i
+                                        class="fa fa-eraser  fa-lg fa-border " ></i ></a >
+                        </div >
+                    </td >
+                </tr >';
+        }
+
+
+
+    }
+
     /**
      * Display the specified resource.
      *
@@ -122,7 +170,8 @@ class DifuntoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $difunto = Difunto::find($id);
+        return view('modificar_difunto',compact('difunto'));
     }
 
     /**
@@ -132,9 +181,11 @@ class DifuntoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $difuntoU = new Difunto($request->all());
+        $difunto = Difunto::find($request->input('id'));
+        $difunto->update($difuntoU->attributesToArray());
     }
 
     /**
@@ -143,9 +194,11 @@ class DifuntoController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->input('id');
+        Difunto::find($id)->delete();
+
     }
 
 

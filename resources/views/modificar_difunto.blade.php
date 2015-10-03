@@ -1,8 +1,8 @@
 @extends('master')
 
 @section('title')
-    <h2 style="color: white; font-weight: bold; margin-left:10px; ">Nuevo Difunto</h2>
-    @endsection
+    <h2 style="color: white; font-weight: bold; margin-left:10px; ">Modificar Difunto</h2>
+@endsection
 
 
 @section('css')
@@ -21,10 +21,11 @@
         </div>
         <div class="panel-body">
 
-            <form id="nuevo-difunto">
+            <form id="modificar-difunto">
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+
+                <input type="hidden" name="id" value="{{ $difunto->id }}">
 
                 <div class="row">
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -34,19 +35,19 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Nombre y apellidos del difunto</label>
-                            <input type="text" class="form-control" name="nom_difunto" required>
+                            <input type="text" class="form-control" name="nom_difunto" required value="{{$difunto->nom_difunto}}">
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Domicilio habitual</label>
-                            <input type="text" class="form-control" name="dom_difunto">
+                            <input type="text" class="form-control" name="dom_difunto" value="{{ $difunto->dom_difunto }}">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" class="form-control" name="pob_difunto">
+                                    <input type="text" class="form-control" name="pob_difunto" value="{{ $difunto->pob_difunto }}">
                                 </div>
                             </div>
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
@@ -54,14 +55,14 @@
                                     <label class="control-label" for="inputWarning">Sexo</label>
                                     <select class="form-control" name="sex_difunto">
                                         <option value="0">Hombre</option>
-                                        <option value="1">Mujer</option>
+                                        <option value="1" <?php if($difunto->sex_difunto==1) echo 'selected' ?> >Mujer</option>
 
                                     </select></div>
                             </div>
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Edad</label>
-                                    <input type="text" class="form-control" name="eda_difunto">
+                                    <input type="text" class="form-control" name="eda_difunto" value="{{ $difunto->eda_difunto }}">
                                 </div>
                             </div>
                         </div>
@@ -70,18 +71,19 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" class="form-control" name="dni_difunto">
+                                    <input type="text" class="form-control" name="dni_difunto" value="{{ $difunto->dni_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Estado civil</label>
+
                                     <select type="text" class="form-control" name="est_difunto">
-                                        <option value="1">Soltero</option>
-                                        <option value="2">Casado</option>
-                                        <option value="3">Divorciado</option>
-                                        <option value="4">Otro</option>
+                                        <option value="1" @if($difunto->est_difunto==1) selected @endif >Soltero</option>
+                                        <option value="2" @if($difunto->est_difunto==2) selected @endif>Casado</option>
+                                        <option value="3" @if($difunto->est_difunto==3) selected @endif>Divorciado</option>
+                                        <option value="4" @if($difunto->est_difunto==4) selected @endif>Otro</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,21 +97,21 @@
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha</label>
-                                    <input type="text" class="form-control fecha_inh" name="fec_inh_difunto">
+                                    <input type="text" class="form-control fecha_inh" name="fec_inh_difunto" value="{{ $difunto->fec_inh_difunto}}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Tipo</label>
-                                    <input type="text" class="form-control" name="tip_inh_difunto">
+                                    <input type="text" class="form-control" name="tip_inh_difunto" value="{{ $difunto->tip_inh_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Expediente</label>
-                                    <input type="text" class="form-control" name="exp_inh_difunto">
+                                    <input type="text" class="form-control" name="exp_inh_difunto" value="{{ $difunto->exp_inh_difunto }}">
                                 </div>
                             </div>
 
@@ -117,7 +119,7 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Empresa funeraria</label>
-                            <input type="text" class="form-control" name="emp_funeraria">
+                            <input type="text" class="form-control" name="fun_inh_difunto" value="{{ $difunto->fun_inh_difunto }}">
                         </div>
 
 
@@ -133,35 +135,35 @@
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha</label>
-                                    <input type="text" class="form-control fecha_inh" name="fec_fall_difunto">
+                                    <input type="text" class="form-control fecha_inh" name="fec_fall_difunto" value="{{ $difunto->fec_fall_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Lugar</label>
-                                    <input type="text" class="form-control" name="lug_fall_difunto">
+                                    <input type="text" class="form-control" name="lug_fall_difunto" value="{{ $difunto->lug_fall_difunto }}">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Causa</label>
-                            <input type="text" class="form-control" name="cau_fall_difunto">
+                            <input type="text" class="form-control" name="cau_fall_difunto" value="{{ $difunto->cau_fall_difunto }}">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Medico n�</label>
-                                    <input type="text" class="form-control" name="med_difunto">
+                                    <label class="control-label" for="inputWarning">Medico n</label>
+                                    <input type="text" class="form-control" name="med_difunto" value="{{ $difunto->med_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Localidad</label>
-                                    <input type="text" class="form-control" name="loc_fall_difunto">
+                                    <input type="text" class="form-control" name="loc_fall_difunto" value="{{ $difunto->loc_fall_difunto }}">
                                 </div>
                             </div>
                         </div>
@@ -171,21 +173,21 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Apellidos, nombre</label>
-                            <input type="text" class="form-control" name="nom_sol_difunto">
+                            <input type="text" class="form-control" name="nom_sol_difunto" value="{{ $difunto->nom_sol_difunto }}">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Domicilio</label>
-                                    <input type="text" class="form-control" name="dom_sol_difunto">
+                                    <input type="text" class="form-control" name="dom_sol_difunto" value="{{ $difunto->dom_sol_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Localidad</label>
-                                    <input type="text" class="form-control" name="loc_sol_difunto">
+                                    <input type="text" class="form-control" name="loc_sol_difunto" value="{{ $difunto->loc_sol_difunto }}">
                                 </div>
                             </div>
                         </div>
@@ -194,14 +196,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" class="form-control" name="dni_sol_difunto">
+                                    <input type="text" class="form-control" name="dni_sol_difunto" value="{{ $difunto->dni_sol_difunto }}">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Telefono</label>
-                                    <input type="text" class="form-control" name="tel_sol_difunto">
+                                    <input type="text" class="form-control" name="tel_sol_difunto" value="{{ $difunto->tel_sol_difunto}}">
                                 </div>
                             </div>
                         </div>
@@ -219,12 +221,12 @@
 
 
                         <div class="form-group">
-                            <textarea class="form-control" name="obs_difunto"></textarea>
+                            <textarea class="form-control" name="obs_difunto">{{$difunto->obs_difunto}}</textarea>
                         </div>
                     </section>
                 </div>
 
-                <button class="btn btn-success btn-raised boton21">Añadir nuevo difunto</button>
+                <button class="btn btn-success btn-raised">Modificar difunto</button>
             </form>
         </div>
     </div>
@@ -252,50 +254,41 @@
 
             var token = "{{ csrf_token()}}";
 
-            $('#nuevo-difunto').submit(function (e) {
+            $('#modificar-difunto').submit(function (e) {
 
                 e.preventDefault();
 
                 $.ajax({
 
                     type: "POST",
-                    url: "{{ URL::route('nuevo-difunto') }}",
-                    data: $('#nuevo-difunto').serialize(),
+                    url: "{{ URL::route('ModifyDifunto') }}",
+                    data: $('#modificar-difunto').serialize(),
                     dataType: "html",
                     error: function () {
 
                         Lobibox.notify('error', {
-                            title: 'No se ha podido añadir el difunto',
+                            title: 'No se ha podido modificar el difunto',
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexi�n a internet'
+                            msg: 'Compruebe la conexion a internet'
                         });
                     },
                     success: function (data) {
 
                         Lobibox.notify('success', {
-                            title: 'Difunto a�adido<br> Espere...',
+                            title: 'Difunto modificado',
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
                             position: 'bottom left'
                         });
-
-                        $('.boton21').hide();
-                        setTimeout(explode, 2000);
-
-
                     }
                 });
             });
         });
-
-        function explode(){
-            window.location.href = "{{ URL::route('difunto') }}";
-        }
 
 
     </script>

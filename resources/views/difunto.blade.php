@@ -42,16 +42,17 @@
                                     <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Difunto</label>
-                                            <input type="text" class="form-control" name="difunto" value="<?php  if(isset($difunto)) echo $difunto ?>">
+                                            <input type="text" class="form-control" name="difunto" value="<?php  if(isset($difunto)) echo $difunto; else $difunto="" ?>">
                                         </div>
                                     </div>
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Sexo</label>
                                             <select class="form-control" name="sexo">
+                                                <?php  if(!isset($sexo)) $sexo = 2 ?>
                                                 <option value="2">Cualquiera</option>
-                                                <option value="0">Hombre</option>
-                                                <option value="1">Mujer</option>
+                                                <option value="0"  <?php if($sexo==0) echo 'selected' ?> >Hombre</option>
+                                                <option value="1"  <?php if($sexo==1) echo 'selected' ?>>Mujer</option>
 
                                             </select></div>
                                     </div>
@@ -61,14 +62,14 @@
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Codigo</label>
-                                            <input type="text" class="form-control" name="codigo" value="<?php  if(isset($codigo)) echo $codigo ?>">
+                                            <input type="text" class="form-control" name="codigo" value="<?php  if(isset($codigo)) echo $codigo; else $codigo='' ?>">
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Fecha</label>
-                                            <input type="text" class="form-control fecha" name="fecha" value="<?php  if(isset($fecha)) echo $fecha ?>">
+                                            <input type="text" class="form-control fecha" name="fecha" value="<?php  if(isset($fecha)) echo $fecha ; else $fecha=''?>">
                                         </div>
                                     </div>
 
@@ -94,6 +95,13 @@
                             </section>
                         </div>
                     </form>
+
+                    <script>
+                        var difunto = "{{ $difunto }}";
+                        var sexo = "{{ $sexo }}";
+                        var fecha = "{{ $fecha }}";
+                        var codigo = "{{ $codigo }}";
+                    </script>
                 </div>
             </div>
         </div>
@@ -142,7 +150,7 @@
                                             @endif</span></td>
                                     <td style="width: 100px">
                                         <div style="float: right">
-                                            <a data-toggle="tooltip" title="Editar" onclick="alert('hola')" style="margin-right: 10px; color:#03A9F4;"><i
+                                            <a data-toggle="tooltip" title="Editar" href="{{ route('modificar-difunto',[$difunto->id])}}" style="margin-right: 10px; color:#03A9F4;"><i
                                                         class="fa fa-pencil-square-o  fa-lg fa-border"></i></a>
                                             <a data-toggle="tooltip" title="Borrar" style="margin-right: 10px; color: #F44336"
                                                onclick="borrar({{$difunto->id}})"><i
@@ -180,6 +188,8 @@
         if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
 
 
+
+
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
         });
@@ -199,7 +209,7 @@
             $('.paginacion').bootpag({
                 total: paginas,
                 page: 1,
-                maxVisible: 3,
+                maxVisible: 5,
                 leaps: true,
                 firstLastUse: true,
                 first: 'Primero',
@@ -214,15 +224,27 @@
 
             }).on("page", function (event, num) {
 
-                var ruta = "{{ URL::route('paginateDifunto') }}";
 
-                var html = "";
+                var ruta;
+                var data;
+
+
+
+                if(search==0) {
+                    ruta = "{{ URL::route('paginateDifunto') }}";
+                    data = {page: num};
+                } else{
+
+                    ruta = "{{ URL::route('paginateBusquedaDifunto') }}";
+                    data = {page: num, difunto: difunto, sexo: sexo, fecha: fecha, codigo: codigo};
+                }
+
 
                 $.ajax({
 
                     type: "post",
                     url: ruta,
-                    data: {page: num},
+                    data: data,
                     dataType: "html",
                     error: function () {
                         //$('#loading').show();
@@ -243,8 +265,25 @@
 
         function borrar(id) {
 
-            if (confirm(' �Realmente desea borrar el difunto con id ' + id + '?')) {
+            if (confirm('¿'+'Realmente desea borrar el difunto con id ' + id + '?')) {
                 $(".difunto" + id).hide();
+
+                $.ajax({
+
+                    type: "post",
+                    url: "{{ URL::route('EliminarDifunto')}}",
+                    data: {id: id},
+                    dataType: "html",
+                    error: function () {
+                        //$('#loading').show();
+                        alert("Error en la peticion");
+                    },
+                    success: function (data) {
+
+                        $(".difuntos").html(data)
+
+                    }
+                });
             }
         }
     </script>

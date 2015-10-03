@@ -72,3 +72,19 @@ Route::post('paginateDifunto', ['as' => 'paginateDifunto', 'uses' => 'DifuntoCon
 //Resultados de busqueda difuntos
 Route::post('BusquedaDifunto', ['as' => 'BusquedaDifunto', 'uses' => 'DifuntoController@busqueda']);
 
+//Resultados de busqueda difuntos paginados en la busqueda
+Route::post('paginateBusquedaDifunto', ['as' => 'paginateBusquedaDifunto', 'uses' => 'DifuntoController@busquedaPaginada']);
+
+//eliminar difunto
+Route::post('EliminarDifunto', ['as' => 'EliminarDifunto', 'uses' => 'DifuntoController@destroy']);
+
+//modificar difunto
+Route::get('modificar-difunto-{id}', ['as' => 'modificar-difunto', function($id){
+    $controller = App::make(\App\Http\Controllers\DifuntoController::class);
+    return $controller->callAction('edit', array('tipo' => $id));
+}]);
+
+Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
+
+
+
