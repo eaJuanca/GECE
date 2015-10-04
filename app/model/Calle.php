@@ -20,7 +20,6 @@ class Calle extends Model{
         'nombre',
         'num_tramadas',
         'tipo_calle',
-        'total',
-        'panteones'
+        'total'
     ];
 }

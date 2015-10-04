@@ -173,6 +173,8 @@ class DifuntoController extends Controller
                 echo 'Mujer'; else
                 echo 'Hombre</span ></td >';
 
+            echo '<td>'.$difunto->GC_NICHOS_id.'</td>';
+
 
             echo '<td style = "width: 100px" > <div style = "float: right" >
                             <a data - toggle = "tooltip" title = "Editar" onclick = "" style = "margin-right: 10px; color:#03A9F4;" >

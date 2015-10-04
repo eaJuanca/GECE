@@ -2,7 +2,8 @@
 <html>
 <head>
     <title>Gestión Cementerio</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="_token" content="{!! csrf_token() !!}"/>
+
     <!-- Includes CSS comunes a todas las interfaces -->
 
     <link href="//fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">

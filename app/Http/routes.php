@@ -48,9 +48,7 @@ Route::group(['prefix' => '/'], function()
 });
 
 //
-Route::GET('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
-
-Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@delete']);
+Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
 Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);
 
@@ -92,13 +90,9 @@ Route::get('modificar-difunto-{id}', ['as' => 'modificar-difunto', function($id)
     return $controller->callAction('edit', array('tipo' => $id));
 }]);
 
-//modificar difunto
-Route::get('modificar-calle-{id}', ['as' => 'modificar-calle', function($id){
-    $controller = App::make(\App\Http\Controllers\callesController::class);
-    return $controller->callAction('edit', array('tipo' => $id));
-}]);
-
 Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
+
+Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData']);
 
 
 

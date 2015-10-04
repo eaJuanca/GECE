@@ -7,6 +7,8 @@ use App\model\Nicho;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Mockery\Exception;
+use App\model\TotalNicho;
+use Carbon\Carbon;
 
 class NichoController extends Controller
 {
@@ -101,6 +103,8 @@ class NichoController extends Controller
         foreach ($Nodisponibles as $Nodisponible) {
 
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
+            $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
+
 
             echo '<tr>';
             echo '<td>' . $Nodisponible->tipo . '</td>';
@@ -118,7 +122,9 @@ class NichoController extends Controller
                 echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
             else echo $Nodisponible->banco . '</td >';
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
+            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
 
@@ -236,6 +242,7 @@ class NichoController extends Controller
 
             echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
 
+
         }
 
     }
@@ -269,6 +276,7 @@ class NichoController extends Controller
         foreach ($Nodisponibles as $Nodisponible) {
 
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
+            $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
 
             echo '<tr>';
             echo '<td>' . $Nodisponible->tipo . '</td>';
@@ -286,7 +294,9 @@ class NichoController extends Controller
                 echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
             else echo $Nodisponible->banco . '</td >';
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
+            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
 
@@ -359,6 +369,48 @@ class NichoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getData(Request $request){
+
+        $nichoid = $request->input('id');
+
+        $TN = TotalNicho::where('GC_NICHOS_id',$nichoid)->get();
+
+        $total = 0;
+        $fecha = 0;
+        $cumplefecha = true;
+        $cumpletotal= true;
+
+        if(count($TN) > 0) {
+
+            $total = $TN[0]->total;
+            $fecha = $TN[0]->ultimo;
+
+            $fecha_ultimo = new Carbon($fecha);
+            $fecha_ultimo->addYears(4);
+            $hoy = Carbon::now();
+
+            $cumpletotal = true;
+            if ($total >= 4) {
+                $cumpletotal = false;
+            }
+
+            $cumplefecha = true;
+            if ($fecha_ultimo > $hoy) {
+                $cumplefecha = false;
+            }
+        }
+
+
+
+
+            $data['total'] = $total;
+        $data['fecha'] = $fecha;
+        $data['cumpletotal'] = $cumpletotal;
+        $data['cumplefecha'] = $cumplefecha;
+
+        return json_encode($data);
     }
 
 }

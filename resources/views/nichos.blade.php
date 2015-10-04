@@ -221,8 +221,9 @@
                                             <td> {{$nodisponible->tarifa}}</td>
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
-                                                 <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="A�adir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
+                                                 <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search"></i></a>
+                                                 <a title="A�adir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a>
+                                            </td>
 
                                         </tr>
 
@@ -236,6 +237,31 @@
                         </div>
                     </div>
                     <div class="paginacion2" style="float: right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="complete-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Condiciones</h4>
+                </div>
+                <div class="modal-body">
+
+                    <p id="cargando">Espere...</p>
+                    <p id="modalfras1" style="font-size: 20px; display: none">No se puede enterrar mas difuntos en este nicho</p>
+
+                    <p id="modalfras2" style="font-size: 20px; display: none; color: green">Se cumplen las condiciones para enterrar un nuevo difunto </p> <br>
+
+                    <span id="modalfras3" style="font-weight: bold; color: red ; display: none" > Se ha llegado al total de difuntos por nicho</span> <br>
+
+                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 4 años desde la ultima inhumacion</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -459,6 +485,57 @@
                 $(".difunto" + id).hide();
             }
         }
+
+        function modal(id){
+
+            var httpR;
+
+            $.ajax({
+
+                type: "post",
+                url: "{{ URL::route('getData') }}",
+                data: {id: id},
+                dataType: "json",
+
+                beforeSend: function(data2){
+                    /*httpR es la variable global donde guardamos la conexion*/
+                    if(httpR){
+                        /*Si habia alguna conexion anterior, la cancelamos*/
+                        httpR.abort();
+                    }
+                    /*Guardamos la nueva conexion*/
+                    httpR = data2;
+                },
+                error: function () {
+                    alert("Error en la petición");
+                },
+                success: function (data) {
+
+                    $('#cargando').hide();
+
+                    var total = data['total'];
+                    var fecha = data['fecha'];
+                    var cumplefecha = data['cumplefecha'];
+                    var cumpletotal = data['cumpletotal'];
+
+                    if(!cumplefecha || !cumpletotal){ $('#modalfras1').css('display','block'); }
+                    if(cumplefecha && cumpletotal){ $('#modalfras2').css('display','block'); }
+                    if(!cumpletotal){ $('#modalfras3').css('display','block'); }
+                    if(!cumplefecha){ $('#modalfras4').css('display','block'); }
+
+                }
+            });
+        }
+
+        $('#complete-dialog').on('hidden.bs.modal', function () {
+
+            $('#modalfras1').css('display','none');
+            $('#modalfras2').css('display','none');
+            $('#modalfras3').css('display','none');
+            $('#modalfras4').css('display','none');
+            $('#cargando').show();
+
+        })
     </script>
 
 @endsection
