@@ -77,7 +77,7 @@ class callesController extends Controller {
                     $tramada->save();
 
                     //Guardamos los x nichos de la tramada $i
-                    $this->guardarNichos($numNichos,$tramada->id);
+                    $this->guardarNichos($numNichos,$tramada->id,1);
 
                 }
 
@@ -105,6 +105,11 @@ class callesController extends Controller {
                 $panteon->GC_CALLE_id = $r->input('iexistente');
                 $panteon->save();
 
+                //Aumentamos el numero de panteones
+                $updateCalle = Calle::find($r->input('iexistente'));
+                $updateCalle->panteones = (int) Calle::where('id' , '=' , $r->input('iexistente'))->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->save();
+
                 //Insertamos parcelas
                 $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
 
@@ -121,10 +126,15 @@ class callesController extends Controller {
                 $panteon->GC_CALLE_id = $calle->id;
                 $panteon->save();
 
+
+                //Aumentamos el numero de panteones
+                $updateCalle = Calle::find($calle->id);
+                $updateCalle->panteones = (int) Calle::where('id' , '=' , $calle->id)->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->save();
+
                 //Insertamos parcelas
                 $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
             }
-
 
         }
 
@@ -136,9 +146,9 @@ class callesController extends Controller {
      * @param int $idTramada es el id de la tramada en la que se ubican los nichos
      */
 
-    function guardarNichos($numNichosTramada,$idTramada){
+    function guardarNichos($numNichosTramada,$idTramada,$inicio){
 
-        for($i = 1; $i <= $numNichosTramada; $i++){
+        for($i = $inicio; $i <= $numNichosTramada; $i++){
 
             //Creamos el objeto nicho.
             $nicho = new Nicho();
@@ -179,11 +189,144 @@ class callesController extends Controller {
                 $tramada->save();
 
                 //Guardamos los x nichos de la tramada $i
-                $this->guardarNichos($numNichos,$tramada->id);
+                $this->guardarNichos($numNichos,$tramada->id,1);
 
             }
 
         }
+    }
+
+    /**
+     * @param Request $r funcion para borrar una calle normal o de panteones
+     */
+    function delete(Request $r){
+
+        //1º saber ver que tipo de calle es si es panteon o calle normal
+
+        if($r->input('tipo') == 1){
+            //es calle normal
+
+            //2º obtenemos  tramadas de esta calle.
+
+            $Tramdas = Tramada::where('GC_CALLE_id', '=', $r->input('id'))->get();
+
+            foreach($Tramdas as $id){
+
+            //3º borramos los nichos que están en esa tramada.
+                Nicho::where('GC_Tramada_id' , '=' , $id->id)->delete();
+            }
+            //4º borramos las tramadas
+
+            Tramada::where('GC_CALLE_id', '=', $r->input('id'))->delete();
+
+            //5º borramos la calle
+
+            Calle::find($r->input('id'))->delete();
+
+
+        }else{
+            //es panteon
+
+            //2º Obtenemos los panteones que hay en la callae
+
+            $Panteones = Panteon::where('GC_CALLE_id' , '=' , $r->input('id'))->get();
+
+            foreach ($Panteones as $panteon){
+                //3º Obtenemos los ids de las parcelas de cada panteon
+                $parcelas = Parcela::where('GC_PANTEON_id' , '=' , $panteon->id)->get();
+
+                foreach($parcelas as $parcela){
+
+                    //4º obtenemos las tramadas de cada parcela
+
+                    $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela->id)->get();
+
+                    foreach($tramadas as $tramada){
+
+                        //5º borramos los nichos
+                        Nicho::where('GC_Tramada_id' , '=' , $tramada->id)->delete();
+
+                        //6º borramos la tramada
+                       Tramada::find($tramada->id)->delete();
+                    }
+
+                    //7º borramos las parcelas
+                    Parcela::find($parcela->id)->delete();
+                }
+
+                //8ºborramos los panteones
+                Panteon::find($panteon->id)->delete();
+            }
+
+            //9º borramos la calle
+            Calle::find($r->input('id'))->delete();
+        }
+    }
+
+    function editarView($idCalle){
+
+        $calle = Calle::find($idCalle);
+
+        $tramadas = Tramada::where('GC_CALLE_id' , "=", $idCalle)->get();
+
+        return view('modificar_calle',compact('calle','tramadas'));
+
+    }
+
+    function edit(Request $r){
+
+        $calle = Calle::find($r->input('idCalle'));
+        $calle->nombre = $r->input('nombre');
+        $calle->save();
+
+        $totalNichos = 0;
+
+        for($i = 1; $i <= $r->input('tramadas'); $i++) {
+
+            //Creamos un objeto tramada
+            $tramada = Tramada::where('GC_CALLE_id' , '=',$r->input('idCalle'))
+                                ->where('tramada' , '=', $r->input('tra') . $i)->get();
+
+
+            if($tramada->isEmpty()) {
+
+                $tramada = new Tramada();
+
+                $tramada->tramada = $i;
+
+            }else{
+                $tramada = $tramada[0];
+            }
+
+
+            //obtemos el número de nichos de cada tramada
+            $numNichos = $r->input("tramada" . $i);
+
+            //En caso de ser un numero menor estamos quitando nichos ¿qué nichos? hay
+            //que comprobar que no tengan muertos ni titular
+            //$this->sePuedeCambiar();
+
+            //Asignamos las propiedades del objeto
+            $tramada->nichos = $numNichos;
+            $totalNichos += $numNichos;
+            $tramada->save();
+
+
+
+            //Guardamos los x nichos de la tramada $i (solo cuando metemos más de los que hay)
+            $ultimo = Nicho::where('GC_Tramada_id' , '=', $tramada->id)->get(array('id'));
+            $this->guardarNichos($numNichos,$tramada->id,count($ultimo)+1);
+        }
+
+        //Una vez sumado el total de los nichos actualizamos la calle insertada
+        $updateCalle = Calle::find($calle->id);
+        $updateCalle->total = $totalNichos;
+        $updateCalle->save();
+
+    }
+
+    function sePuedeCambiar(){
+
     }
 
 }

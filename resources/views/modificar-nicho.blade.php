@@ -10,6 +10,7 @@
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
 
+
 @endsection
 
 @section('contenido')
@@ -85,7 +86,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Teléfono</label>
+                                    <label class="control-label" for="inputWarning">Telï¿½fono</label>
                                     <input type="text" class="form-control" value="{{$nicho->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
@@ -105,16 +106,6 @@
                         <span style="font-weight: bold">Calle:</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->nombre_calle}}</span> <br><br>
                         <span style="font-weight: bold">Altura</span><br>  <span style="font-weight: bold; color: #1c84c6">{{$info->altura}} </span><br><br>
                         <span style="font-weight: bold">Numero</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->numero}} </span><br>
-
-                        <br>
-
-                        <div class="sample1">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" class="enterrar"> <span style="font-weight: bold"> Enterrar difunto despues de modificar el nicho</span>
-                                </label>
-                            </div>
-                        </div>
 
                     </section>
 
@@ -167,7 +158,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Código postal</label>
+                                    <label class="control-label" for="inputWarning">Cï¿½digo postal</label>
                                     <input type="text" class="form-control" value="{{$nicho->cp_facturado}}" name="cp_facturado">
                                 </div>
                             </div>
@@ -254,8 +245,11 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-success btn-raised" id="submit">Modificar nicho</button>
+
+                <button class="btn btn-success btn-raised">Modificar nicho</button>
+                <button class="btn btn-warning btn-raised">Modificar y enterrar difunto</button>
             </form>
+
         </div>
     </div>
 
@@ -279,17 +273,6 @@
 
         $(document).ready(function () {
 
-            $.material.init();
-
-            $(".enterrar").change(function() {
-                if(this.checked) {
-                    $('#submit').text('Modificar nicho y enterrar');
-                } else{
-                    $('#submit').text('Modificar nicho');
-
-                }
-            });
-
 
             var token = "{{ csrf_token()}}";
 
@@ -312,47 +295,22 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexión a internet'
+                            msg: 'Compruebe la conexiï¿½n a internet'
                         });
                     },
                     success: function (data) {
 
-
-                        if( $('.enterrar').is(':checked')){
-
-                            Lobibox.notify('success', {
-                                title: 'Nicho modificado correctamente<br>Preparando inhumacion...',
-                                showClass: 'flipInX',
-                                delay: 3000,
-                                delayIndicator: false,
-                                position: 'bottom left'
-                            });
-
-                            $('#submit').hide();
-                            setTimeout(explode, 2000);
-
-
-                        } else{
-
-                            Lobibox.notify('success', {
-                                title: 'Nicho modificado correctamente',
-                                showClass: 'flipInX',
-                                delay: 3000,
-                                delayIndicator: false,
-                                position: 'bottom left'
-                            });
-
-                        }
-
+                        Lobibox.notify('success', {
+                            title: 'Nicho modificado correctamente',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left'
+                        });
                     }
                 });
             });
         });
-
-        function explode(){
-
-            window.location.href = "{{ route('alta-difunto-nicho',[$id])}}";
-        }
 
 
     </script>

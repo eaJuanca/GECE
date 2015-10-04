@@ -25,16 +25,10 @@ Route::group(['prefix' => '/'], function()
     Route::post('difuntosJSON', ['as' => 'difuntosJSON', 'uses' => 'WebController@DifuntosJSON']);
 
 
-    Route::get('alta-difunto', ['as' => 'alta-difunto', 'uses' => 'DifuntoController@index']);
-
-
-
-    //Añadir un difunto desde la vista nicho
-    Route::get('alta-difunto-{nichoid}', ['as' => 'alta-difunto-nicho', 'uses' => 'DifuntoController@DifuntoNicho']);
-
-
-
-
+    Route::get('alta-difunto', ['as' => 'alta-difunto', function()
+    {
+        return view('alta_difunto');
+    }]);
 
     Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
 
@@ -48,7 +42,11 @@ Route::group(['prefix' => '/'], function()
 });
 
 //
-Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
+Route::get('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
+
+Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@delete']);
+
+Route::get('editarCalle',  ['as' => 'editarCalle', 'uses' => 'callesController@edit']);
 
 Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);
 
@@ -90,9 +88,13 @@ Route::get('modificar-difunto-{id}', ['as' => 'modificar-difunto', function($id)
     return $controller->callAction('edit', array('tipo' => $id));
 }]);
 
-Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
+//modificar calle
+Route::get('modificar-calle-{id}', ['as' => 'modificar-calle', function($id){
+    $controller = App::make(\App\Http\Controllers\callesController::class);
+    return $controller->callAction('editarView', array('tipo' => $id));
+}]);
 
-Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData']);
+Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
 
 
 

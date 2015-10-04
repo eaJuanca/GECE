@@ -1,7 +1,5 @@
 @extends('master')
 
-
-
 @section('title')
     <h2 style="color: white; font-weight: bold; margin-left:10px; ">Nuevo Difunto</h2>
     @endsection
@@ -12,30 +10,21 @@
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
 
+
 @endsection
 
 @section('contenido')
 
-
-    @if(!isset($total))  <?php $total = 0 ?> @endif
-    @if(!isset($fecha))  <?php $fecha = 0 ?> @endif
-    @if(!isset($cumpletotal))  <?php $cumpletotal = true ?>  @endif
-    @if(!isset($cumplefecha))  <?php $cumplefecha = true ?> @endif
-
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading">
-            <h3 class="panel-title" style="color: white">
-                @if($cumplefecha && $cumpletotal)Cumplimentacion datos difunto
-                @else Error en requisitos @endif</h3>
+            <h3 class="panel-title" style="color: white">Cumplimentacion datos difunto</h3>
         </div>
         <div class="panel-body">
 
-                @if($cumplefecha && $cumpletotal)
-               <form id="nuevo-difunto">
+            <form id="nuevo-difunto">
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
-               @if(isset($nichoid)) <input type="hidden" name="GC_NICHOS_id" value="{{$nichoid}}">@endif
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                 <div class="row">
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -106,7 +95,7 @@
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha</label>
-                                    <input required type="text" class="form-control fecha_inh" name="fec_inh_difunto">
+                                    <input type="text" class="form-control fecha_inh" name="fec_inh_difunto">
                                 </div>
                             </div>
 
@@ -237,20 +226,6 @@
 
                 <button class="btn btn-success btn-raised boton21">Añadir nuevo difunto</button>
             </form>
-                    @else
-
-                    <div class="row">
-                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                            <H2>No es posible enterrar un difunto en este nicho</H2><br>
-
-                            @if(!$cumpletotal) <span style="font-weight: bold; color: red; font-size: 20px">Hay 4 difuntos en este nicho</span><br>@endif
-                            <hr>
-                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado mas de 4 años desde la ultima inhumacion</span>@endif
-
-                        </div>
-                    </div>
-                @endif
         </div>
     </div>
 
