@@ -30,6 +30,9 @@ Route::group(['prefix' => '/'], function()
         return view('alta_difunto');
     }]);
 
+    //A�adir un difunto desde la vista nicho
+    Route::get('alta-difunto-{nichoid}', ['as' => 'alta-difunto-nicho', 'uses' => 'DifuntoController@DifuntoNicho']);
+
     Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
 
 
@@ -96,5 +99,5 @@ Route::get('modificar-calle-{id}', ['as' => 'modificar-calle', function($id){
 
 Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
 
-
+Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData']);
 

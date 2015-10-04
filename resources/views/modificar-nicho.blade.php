@@ -10,7 +10,6 @@
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
 
-
 @endsection
 
 @section('contenido')
@@ -106,6 +105,16 @@
                         <span style="font-weight: bold">Calle:</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->nombre_calle}}</span> <br><br>
                         <span style="font-weight: bold">Altura</span><br>  <span style="font-weight: bold; color: #1c84c6">{{$info->altura}} </span><br><br>
                         <span style="font-weight: bold">Numero</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->numero}} </span><br>
+
+                        <br>
+
+                        <div class="sample1">
+                            <div class="checkbox">
+                                <label>
+                                    <input type ="checkbox" class="enterrar"> <span style="font-weight: bold"> Enterrar difunto despues de modificar el nicho</span>
+                                </label>
+                            </div>
+                        </div>
 
                     </section>
 
@@ -245,11 +254,8 @@
 
 
                 </div>
-
-                <button class="btn btn-success btn-raised">Modificar nicho</button>
-                <button class="btn btn-warning btn-raised">Modificar y enterrar difunto</button>
+                <button type="submit" class="btn btn-success btn-raised" id="submit">Modificar nicho</button>
             </form>
-
         </div>
     </div>
 
@@ -272,6 +278,17 @@
 
 
         $(document).ready(function () {
+
+            $.material.init();
+
+            $(".enterrar").change(function() {
+                if(this.checked) {
+                    $('#submit').text('Modificar nicho y enterrar');
+                } else{
+                    $('#submit').text('Modificar nicho');
+
+                }
+            });
 
 
             var token = "{{ csrf_token()}}";
@@ -300,17 +317,42 @@
                     },
                     success: function (data) {
 
-                        Lobibox.notify('success', {
-                            title: 'Nicho modificado correctamente',
-                            showClass: 'flipInX',
-                            delay: 3000,
-                            delayIndicator: false,
-                            position: 'bottom left'
-                        });
+
+                        if( $('.enterrar').is(':checked')){
+
+                            Lobibox.notify('success', {
+                                title: 'Nicho modificado correctamente<br>Preparando inhumacion...',
+                                showClass: 'flipInX',
+                                delay: 3000,
+                                delayIndicator: false,
+                                position: 'bottom left'
+                            });
+
+                            $('#submit').hide();
+                            setTimeout(explode, 2000);
+
+
+                        } else{
+
+                            Lobibox.notify('success', {
+                                title: 'Nicho modificado correctamente',
+                                showClass: 'flipInX',
+                                delay: 3000,
+                                delayIndicator: false,
+                                position: 'bottom left'
+                            });
+
+                        }
+
                     }
                 });
             });
         });
+
+        function explode(){
+
+            window.location.href = "{{ route('alta-difunto-nicho',[$id])}}";
+        }
 
 
     </script>

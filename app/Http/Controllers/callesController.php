@@ -279,6 +279,8 @@ class callesController extends Controller {
         $calle->nombre = $r->input('nombre');
         $calle->save();
 
+        $updateCalle = Calle::find($calle->id);
+
         $totalNichos = 0;
 
         for($i = 1; $i <= $r->input('tramadas'); $i++) {
@@ -294,6 +296,8 @@ class callesController extends Controller {
 
                 $tramada->tramada = $i;
 
+                $updateCalle->num_tramadas += 1;
+
             }else{
                 $tramada = $tramada[0];
             }
@@ -308,6 +312,7 @@ class callesController extends Controller {
 
             //Asignamos las propiedades del objeto
             $tramada->nichos = $numNichos;
+            $tramada->GC_CALLE_id = $calle->id;
             $totalNichos += $numNichos;
             $tramada->save();
 
@@ -319,7 +324,6 @@ class callesController extends Controller {
         }
 
         //Una vez sumado el total de los nichos actualizamos la calle insertada
-        $updateCalle = Calle::find($calle->id);
         $updateCalle->total = $totalNichos;
         $updateCalle->save();
 

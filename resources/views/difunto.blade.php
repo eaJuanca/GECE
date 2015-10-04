@@ -108,9 +108,9 @@
     </div>
 
 
-    <a href="{{ URL::route('alta-difunto') }}">
+   <!-- <a href="{{ URL::route('alta-difunto') }}">
         <button class="btn btn-warning btn-raised">Añadir difunto</button>
-    </a>
+    </a> -->
 
 
     <div class="row" style="margin-top: 1%">
@@ -131,6 +131,7 @@
                                 <th>Fecha defuncion</th>
                                 <th>Localidad</th>
                                 <th>Sexo</th>
+                                <th>Nicho</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -149,6 +150,8 @@
                                             @else
                                                 Hombre
                                             @endif</span></td>
+
+                                    <td>{{$difunto->GC_NICHOS_id}}</td>
                                     <td style="width: 100px">
                                         <div style="float: right">
                                             <a data-toggle="tooltip" title="Editar" href="{{ route('modificar-difunto',[$difunto->id])}}" style="margin-right: 10px; color:#03A9F4;"><i

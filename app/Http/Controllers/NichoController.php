@@ -58,7 +58,7 @@ class NichoController extends Controller
     }
 
     /**
-     * Pagina los resultados de los nichos disponibles cuando no se está dentro de una busqueda
+     * Pagina los resultados de los nichos disponibles cuando no se estï¿½ dentro de una busqueda
      * @param Request $request
      */
 
@@ -124,7 +124,7 @@ class NichoController extends Controller
 
             echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
+            echo "<a title='Aï¿½adir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
 
@@ -296,7 +296,7 @@ class NichoController extends Controller
 
             echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
+            echo "<a title='Aï¿½adir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
 
@@ -403,9 +403,7 @@ class NichoController extends Controller
         }
 
 
-
-
-            $data['total'] = $total;
+        $data['total'] = $total;
         $data['fecha'] = $fecha;
         $data['cumpletotal'] = $cumpletotal;
         $data['cumplefecha'] = $cumplefecha;
