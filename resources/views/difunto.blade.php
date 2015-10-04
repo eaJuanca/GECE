@@ -87,7 +87,7 @@
                                 <div class="row" id="nota" style="display: none">
                                     <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                        <span style="font-weight: bold; font-size: 16px">A continuacion se muestran los resultados de busqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
+                                        <span style="font-weight: bold; font-size: 16px">A continuación se muestran los resultados de búsqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
 
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                             <tr>
                                 <th>Cod</th>
                                 <th>Difunto</th>
-                                <th>Fecha defuncion</th>
+                                <th>Fecha defunción</th>
                                 <th>Localidad</th>
                                 <th>Sexo</th>
                                 <th>Nicho</th>

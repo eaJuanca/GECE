@@ -51,7 +51,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Codigo postal</label>
+                                    <label class="control-label" for="inputWarning">Código postal</label>
                                     <input type="text" class="form-control" value="{{$nicho->cp_titular}}" name="cp_titular">
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Tel�fono</label>
+                                    <label class="control-label" for="inputWarning">Teléfono</label>
                                     <input type="text" class="form-control" value="{{$nicho->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
@@ -167,14 +167,14 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">C�digo postal</label>
+                                    <label class="control-label" for="inputWarning">Código postal</label>
                                     <input type="text" class="form-control" value="{{$nicho->cp_facturado}}" name="cp_facturado">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Telefono</label>
+                                    <label class="control-label" for="inputWarning">Teléfono</label>
                                     <input type="text" class="form-control" value="{{$nicho->tel_facturado}}" name="tel_facturado">
                                 </div>
                             </div>

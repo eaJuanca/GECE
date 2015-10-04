@@ -35,7 +35,7 @@
         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
             <div class="panel panel-default">
-                <div class="panel-heading">Formulario de busqueda</div>
+                <div class="panel-heading">Formulario de búsqueda</div>
                 <div class="panel-body">
 
                     <form method="POST" action="{{URL::route('busquedaNichos')}}">
@@ -77,7 +77,7 @@
 
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Numero de calle</label>
+                                            <label class="control-label" for="inputWarning">Número de calle</label>
                                             <input type="text" class="form-control" name="numero" value="<?php if(isset($numero)) echo $numero; else $numero=''; ?>">
                                         </div>
                                     </div>
@@ -95,7 +95,7 @@
                                 <div class="row" id="nota" style="display: none">
                                     <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                    <span style="font-weight: bold; font-size: 16px">A continuacion se muestran los resultados de busqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
+                                    <span style="font-weight: bold; font-size: 16px">A continuación se muestran los resultados de búsqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
 
                                         </div>
                                 </div>

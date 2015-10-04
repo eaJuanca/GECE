@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Medico n</label>
+                                    <label class="control-label" for="inputWarning">Médico nº</la1bel>
                                     <input type="text" class="form-control" name="med_difunto" value="{{ $difunto->med_difunto }}">
                                 </div>
                             </div>
@@ -202,7 +202,7 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Telefono</label>
+                                    <label class="control-label" for="inputWarning">Teléfono</label>
                                     <input type="text" class="form-control" name="tel_sol_difunto" value="{{ $difunto->tel_sol_difunto}}">
                                 </div>
                             </div>

@@ -246,7 +246,7 @@
 
                             @if(!$cumpletotal) <span style="font-weight: bold; color: red; font-size: 20px">Hay 4 difuntos en este nicho</span><br>@endif
                             <hr>
-                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado más de 4 años desde la última inhumació</span>@endif
+                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado más de 4 años desde la última inhumación</span>@endif
 
                         </div>
                     </div>
