@@ -110,7 +110,7 @@
     <br>
     <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 15px;">
         <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles (<?php if(isset($td)) echo $td; else $td=0 ?>)</span></button></a></li>
-        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles ( <?php if(isset($tnd)) echo $tnd; else $tnd=0 ?>)</span></button></a></li>
+        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles (<?php if(isset($tnd)) echo $tnd; else $tnd=0 ?>)</span></button></a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -222,7 +222,7 @@
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="A�adir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
+                                                 <a title="A�adir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
 
                                         </tr>
 

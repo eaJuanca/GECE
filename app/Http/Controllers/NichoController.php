@@ -20,14 +20,17 @@ class NichoController extends Controller
     {
 
 
-        $Qdisponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '');
-        $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '');
+        $Qdisponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '')->groupby('id');
+        $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->groupby('id');
+
+
+        $td = count($Qdisponibles->get()); // total de nichos disponibles
+        $tnd = count($Qnodisponibles->get()); // total de nichos no disponibles
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
 
-        $td = $Qdisponibles->count(); // total de nichos disponibles
-        $tnd = $Qnodisponibles->count(); // total de nichos no disponibles
+
 
         $tab = 1; // tab activa
         $search = 0; // busqueda inactica
@@ -60,7 +63,7 @@ class NichoController extends Controller
     public function paginateDisponibles(Request $request)
     {
 
-        $disponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '')->skip(10 * ($request->input('page') - 1))->take(10)->get();
+        $disponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '')->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
 
         foreach ($disponibles as $disponible) {
 
@@ -93,7 +96,7 @@ class NichoController extends Controller
     public function paginateNoDisponibles(Request $request)
     {
 
-        $Nodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->skip(10 * ($request->input('page') - 1))->take(10)->get();
+        $Nodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
 
         foreach ($Nodisponibles as $Nodisponible) {
 
@@ -131,7 +134,6 @@ class NichoController extends Controller
     public function busquedaNicho(Request $request)
     {
 
-
         $titular = $request->input('titular');
         $difunto = $request->input('difunto');
         $calle = $request->input('calle');
@@ -155,8 +157,9 @@ class NichoController extends Controller
             });
 
 
-            $disponibles = $Qdisponibles->take(10)->get();
-            $td = $Qdisponibles->count(); //total con respecto a la busqueda
+            $td = count($Qdisponibles->groupby('id')->get()); //total con respecto a la busqueda
+
+            $disponibles = $Qdisponibles->groupby('id')->take(10)->get();
             $tab = 1; //se debe activar el tab 1
 
             return view('nichos', compact('disponibles', 'td', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
@@ -178,9 +181,9 @@ class NichoController extends Controller
             });
 
             $tab = 2; // se debe activar el tab 2
-            $nodisponibles = $Qnodisponibles->take(10)->get();
+            $tnd = count($Qnodisponibles->groupby('id')->get());
+            $nodisponibles = $Qnodisponibles->groupby('id')->take(10)->get();
 
-            $tnd = $Qnodisponibles->count(); // total con respecto a la busqueda
             return view('nichos', compact('nodisponibles', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
 
         }
@@ -211,7 +214,7 @@ class NichoController extends Controller
         });
 
 
-        $disponibles = $Qdisponibles->skip(10 * ($page - 1))->take(10)->get();
+        $disponibles = $Qdisponibles->skip(10 * ($page - 1))->groupby('id')->take(10)->get();
 
         foreach ($disponibles as $disponible) {
 
@@ -261,7 +264,7 @@ class NichoController extends Controller
             if ($numero != '') $Qnodisponibles->where('numero', $numero);
         });
 
-        $Nodisponibles = $Qnodisponibles->skip(10 * ($page - 1))->take(10)->get();
+        $Nodisponibles = $Qnodisponibles->skip(10 * ($page - 1))->groupby('id')->take(10)->get();
 
         foreach ($Nodisponibles as $Nodisponible) {
 

@@ -25,10 +25,16 @@ Route::group(['prefix' => '/'], function()
     Route::post('difuntosJSON', ['as' => 'difuntosJSON', 'uses' => 'WebController@DifuntosJSON']);
 
 
-    Route::get('alta-difunto', ['as' => 'alta-difunto', function()
-    {
-        return view('alta_difunto');
-    }]);
+    Route::get('alta-difunto', ['as' => 'alta-difunto', 'uses' => 'DifuntoController@index']);
+
+
+
+    //Añadir un difunto desde la vista nicho
+    Route::get('alta-difunto-{nichoid}', ['as' => 'alta-difunto-nicho', 'uses' => 'DifuntoController@DifuntoNicho']);
+
+
+
+
 
     Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
 

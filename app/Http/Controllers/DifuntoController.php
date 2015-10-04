@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\model\Difunto;
+use App\model\TotalNicho;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -17,9 +19,42 @@ class DifuntoController extends Controller
      */
     public function index()
     {
-        //
+        return view('alta_difunto');
     }
 
+
+    //Añadir un difunto desde la vista nicho
+
+    public function DifuntoNicho($nichoid){
+
+        $TN = TotalNicho::where('GC_NICHOS_id',$nichoid)->get();
+
+        if(count($TN) > 0){;
+        $total = $TN[0]->total;
+        $fecha = $TN[0]->ultimo;
+
+        $fecha_ultimo = new Carbon($fecha);
+        $fecha_ultimo->addYears(4);
+        $hoy = Carbon::now();
+
+        $cumpletotal = true;
+        if ($total >= 4) {
+            $cumpletotal = false;
+        }
+
+        $cumplefecha = true;
+        if ($fecha_ultimo > $hoy) {
+            $cumplefecha = false;
+        }
+
+
+        return view('alta_difunto', compact('nichoid', 'total', 'fecha', 'cumpletotal', 'cumplefecha'));
+    }
+
+        return view('alta_difunto', compact('nichoid'));
+
+
+    }
 
 
     public function busqueda(Request $request){
@@ -86,10 +121,13 @@ class DifuntoController extends Controller
             echo '<td >'.  $difunto->nom_difunto.' </td >';
             echo '<td style = "width: 100px" > '.$difunto->fec_fall_difunto.'</td >';
             echo '<td >'.$difunto->pob_difunto.'</td >';
+
             echo ' <td style = "width: 100px; text-align: center" ><span >';
                 if ($difunto->sex_difunto == 1)
                     echo 'Mujer'; else
                     echo 'Hombre</span ></td >';
+            echo '<td>'.$difunto->GC_NICHOS_id.'</td>';
+
 
 
             echo '<td style = "width: 100px" > <div style = "float: right" >
