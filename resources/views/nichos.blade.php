@@ -277,7 +277,7 @@
     <script type="text/javascript">
 
         $.ajaxSetup({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content') }
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
 
         var count = "{{$td}}"; //variable para contar el total de franquicias y mostrar en relacion con el n� de paginas
@@ -539,6 +539,8 @@
 
         /**
          * Comentario cambios
+         *
+         *
          */
     </script>
 
