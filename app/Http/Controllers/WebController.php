@@ -26,6 +26,8 @@ class WebController extends Controller
     public function DifuntosPagination(Request $r){
 
     }
-
+    /**
+     * Comentario cambios
+     */
 
 }

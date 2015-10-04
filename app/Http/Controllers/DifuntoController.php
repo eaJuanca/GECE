@@ -23,7 +23,7 @@ class DifuntoController extends Controller
     }
 
 
-    //Añadir un difunto desde la vista nicho
+    //Aï¿½adir un difunto desde la vista nicho
 
     public function DifuntoNicho($nichoid){
 
@@ -241,5 +241,8 @@ class DifuntoController extends Controller
 
     }
 
+    /**
+     * Comentario cambios
+     */
 
 }

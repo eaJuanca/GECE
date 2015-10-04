@@ -322,8 +322,12 @@
             window.location.href = "{{ URL::route('difunto') }}";
         }
 
+        /**
+         * Comentario cambios
+         */
 
     </script>
+
 
 @endsection
 

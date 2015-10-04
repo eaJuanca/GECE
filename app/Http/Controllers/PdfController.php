@@ -30,4 +30,8 @@ class PdfController extends Controller
         ];
         return $data;
     }
+
+    /**
+     * Comentario cambios
+     */
 }

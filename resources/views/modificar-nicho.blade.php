@@ -353,7 +353,9 @@
 
             window.location.href = "{{ route('alta-difunto-nicho',[$id])}}";
         }
-
+        /**
+         * Comentario cambios
+         */
 
     </script>
 

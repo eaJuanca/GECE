@@ -411,6 +411,10 @@ class NichoController extends Controller
         return json_encode($data);
     }
 
+    /**
+     * Comentario cambios
+     */
+
 }
 
 /**
