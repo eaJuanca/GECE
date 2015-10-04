@@ -1,5 +1,6 @@
 @extends('master')
 
+
 @section('css')
 
     <link href="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js" rel="stylesheet">
@@ -35,12 +36,15 @@
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 74px;">Nombre</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 171px;">Tramadas</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 79px;">Nichos</th>
+                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 79px;">Panteones</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 28px;">Tipo</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending" style="width: 71px;">Acciones</th>
                 </tr>
                 </thead>
 
                 <tbody>
+
+                <div class="paginacion" style="float: right"></div>
 
                 @if(!$calles->isEmpty())
 
@@ -51,12 +55,22 @@
                             <td>{{$calle->nombre}}</td>
                             <td>{{$calle->num_tramadas}}</td>
                             <td>{{$calle->total}}</td>
+                            <td>{{$calle->panteones}}</td>
                                 @if($calle->tipo_calle == 1)
                                     <td>Calle</td>
                                 @else
                                     <td>Panteón</td>
                                 @endif
-                            <td>Acciones</td>
+                            <td>
+                                <a href="{{URL::to('modificar-calle-'. $calle->id)}}" data-toggle="tooltip" title="Editar" onclick="" style="margin-right: 10px; color:#03A9F4;" >
+                                    <i class="fa fa-pencil-square-o  fa-lg fa-border" ></i >
+                                </a>
+                                <a class="borrar" data-toggle="tooltip" title=Borrar" style="margin-right: 10px; color:#F44336" onclick="borrar('{{$calle->id}}','{{$calle->tipo_calle}}')">
+                                    <i class="fa fa-eraser  fa-lg fa-border " ></i >
+                                </a>
+
+                            </td>
+
                         </tr>
 
                     @endforeach
@@ -392,7 +406,7 @@
 
                                         <div class="row">
                                             <label class="col-lg-4 margin">Tamaño parcela 5</label>
-                                            <input type="hidden" class='col-lg-3 i5' name='parcela2' placeholder='Tamaño parcela' required>
+                                            <input type="hidden" class='col-lg-3 i5' name='parcela5' placeholder='Tamaño parcela' required>
                                         </div>
 
                                         <br>
@@ -795,8 +809,50 @@
 <script src="//cdn.datatables.net/responsive/1.0.6/js/dataTables.responsive.min.js"></script>
 
 
-
 <script type="text/javascript">
+
+    function borrar(idCalle,tipoCalle,e){
+
+        $(document).ajaxStop($.unblockUI);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "{{ URL::route('borrarCalle') }}",
+            data: {id : idCalle, tipo: tipoCalle},
+            dataType: "html",
+            success: function (data) {
+
+                Lobibox.notify('success', {
+                    title: 'Calle añadida',
+                    showClass: 'flipInX',
+                    delay: 3000,
+                    delayIndicator: false,
+                    position: 'bottom left'
+                });
+
+                location.reload();
+            },
+            error: function () {
+
+                Lobibox.notify('error', {
+                    title: 'No se ha podido borrar la calle',
+                    showClass: 'flipInX',
+                    delay: 3000,
+                    delayIndicator: false,
+
+                    position: 'bottom left',
+                    msg: 'Compruebe la conexión a internet'
+                });
+            }
+        });
+    }
+
 
 
     $(document).ready(function(){
@@ -807,6 +863,12 @@
         $.material.init();
 
         $('#example').DataTable();
+
+        /*$(".borrar").on('click',function(e){
+            alert("entra");
+        });*/
+
+
 
         //Function para recorrer array
         function recorrerArray(value, index, ar){
@@ -827,7 +889,7 @@
                 e.preventDefault();
 
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     url: "{{ URL::route('altaCalle') }}",
                     data: $("#form-alta").serialize(),
                     dataType: "html",
@@ -1045,6 +1107,8 @@
             }
 
         }
+
+
     });
 
 </script>

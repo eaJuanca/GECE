@@ -86,7 +86,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Teléfono</label>
+                                    <label class="control-label" for="inputWarning">Telï¿½fono</label>
                                     <input type="text" class="form-control" value="{{$nicho->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
@@ -158,7 +158,7 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Código postal</label>
+                                    <label class="control-label" for="inputWarning">Cï¿½digo postal</label>
                                     <input type="text" class="form-control" value="{{$nicho->cp_facturado}}" name="cp_facturado">
                                 </div>
                             </div>
@@ -249,6 +249,7 @@
                 <button class="btn btn-success btn-raised">Modificar nicho</button>
                 <button class="btn btn-warning btn-raised">Modificar y enterrar difunto</button>
             </form>
+
         </div>
     </div>
 
@@ -294,7 +295,7 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexión a internet'
+                            msg: 'Compruebe la conexiï¿½n a internet'
                         });
                     },
                     success: function (data) {

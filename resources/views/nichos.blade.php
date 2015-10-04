@@ -222,7 +222,7 @@
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="A�adir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
+                                                 <a title="Añadir Difunto" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a></td>
 
                                         </tr>
 

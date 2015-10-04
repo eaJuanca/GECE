@@ -105,6 +105,11 @@ class callesController extends Controller {
                 $panteon->GC_CALLE_id = $r->input('iexistente');
                 $panteon->save();
 
+                //Aumentamos el numero de panteones
+                $updateCalle = Calle::find($r->input('iexistente'));
+                $updateCalle->panteones = (int) Calle::where('id' , '=' , $r->input('iexistente'))->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->save();
+
                 //Insertamos parcelas
                 $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
 
@@ -121,10 +126,15 @@ class callesController extends Controller {
                 $panteon->GC_CALLE_id = $calle->id;
                 $panteon->save();
 
+
+                //Aumentamos el numero de panteones
+                $updateCalle = Calle::find($calle->id);
+                $updateCalle->panteones = (int) Calle::where('id' , '=' , $calle->id)->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->save();
+
                 //Insertamos parcelas
                 $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
             }
-
 
         }
 
@@ -184,6 +194,83 @@ class callesController extends Controller {
             }
 
         }
+    }
+
+    /**
+     * @param Request $r funcion para borrar una calle normal o de panteones
+     */
+    function delete(Request $r){
+
+        //1º saber ver que tipo de calle es si es panteon o calle normal
+
+        if($r->input('tipo') == 1){
+            //es calle normal
+
+            //2º obtenemos  tramadas de esta calle.
+
+            $Tramdas = Tramada::where('GC_CALLE_id', '=', $r->input('id'))->get();
+
+            foreach($Tramdas as $id){
+
+            //3º borramos los nichos que están en esa tramada.
+                Nicho::where('GC_Tramada_id' , '=' , $id->id)->delete();
+            }
+            //4º borramos las tramadas
+
+            Tramada::where('GC_CALLE_id', '=', $r->input('id'))->delete();
+
+            //5º borramos la calle
+
+            Calle::find($r->input('id'))->delete();
+
+
+        }else{
+            //es panteon
+
+            //2º Obtenemos los panteones que hay en la callae
+
+            $Panteones = Panteon::where('GC_CALLE_id' , '=' , $r->input('id'))->get();
+
+            foreach ($Panteones as $panteon){
+                //3º Obtenemos los ids de las parcelas de cada panteon
+                $parcelas = Parcela::where('GC_PANTEON_id' , '=' , $panteon->id)->get();
+
+                foreach($parcelas as $parcela){
+
+                    //4º obtenemos las tramadas de cada parcela
+
+                    $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela->id)->get();
+
+                    foreach($tramadas as $tramada){
+
+                        //5º borramos los nichos
+                        Nicho::where('GC_Tramada_id' , '=' , $tramada->id)->delete();
+
+                        //6º borramos la tramada
+                       Tramada::find($tramada->id)->delete();
+                    }
+
+                    //7º borramos las parcelas
+                    Parcela::find($parcela->id)->delete();
+                }
+
+                //8ºborramos los panteones
+                Panteon::find($panteon->id)->delete();
+            }
+
+            //9º borramos la calle
+            Calle::find($r->input('id'))->delete();
+        }
+    }
+
+    function edit($idCalle){
+
+
+        $calle = Calle::find($idCalle);
+
+        Tramada
+        return view('modificar_calle',compact('calle'));
+
     }
 
 }
