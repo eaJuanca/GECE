@@ -137,6 +137,7 @@
                             <tbody class="difuntos">
 
                             @foreach($difuntos as $difunto)
+
                                 <tr class="difunto{{$difunto->id}} ">
 
                                     <td>{{$difunto->id}}</td>
@@ -266,6 +267,7 @@
         function borrar(id) {
 
             if (confirm('¿'+'Realmente desea borrar el difunto con id ' + id + '?')) {
+
                 $(".difunto" + id).hide();
 
                 $.ajax({
@@ -279,8 +281,6 @@
                         alert("Error en la peticion");
                     },
                     success: function (data) {
-
-                        $(".difuntos").html(data)
 
                     }
                 });

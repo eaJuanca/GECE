@@ -111,7 +111,7 @@
 
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
-                        <h3 style="font-weight: bold">Fcturado a</h3>
+                        <h3 style="font-weight: bold">Facturado a</h3>
                         <br>
 
 
