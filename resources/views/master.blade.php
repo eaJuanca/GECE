@@ -43,7 +43,7 @@
         <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
         <script src="{{ URL::asset('assets/js/material.js') }}"></script>
         <script src="{{ URL::asset('assets/js/ripples.js') }}"></script>
-<!-- <script type="text/javascript" src=" {{ URL::asset('DataTables/datatables.min.js')}}"></script> -->
+    <!-- <script type="text/javascript" src=" {{ URL::asset('DataTables/datatables.min.js')}}"></script> -->
 
         <script src="{{ URL::asset('lolibox/dist/js/lobibox.min.js') }}"></script>
         <script src="{{ asset('datepickersandbox/js/bootstrap-datepicker.min.js') }}"></script>

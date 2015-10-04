@@ -306,8 +306,8 @@ class callesController extends Controller {
             //obtemos el número de nichos de cada tramada
             $numNichos = $r->input("tramada" . $i);
 
-            //En caso de ser un numero menor estamos quitando nichos ¿qué nichos? hay
-            //que comprobar que no tengan muertos ni titular
+            //En caso de ser un numero menor estamos quitando nichos ¿qué nichos? o quitando tramadas
+            //hay que comprobar que no tengan muertos ni titular
             //$this->sePuedeCambiar();
 
             //Asignamos las propiedades del objeto

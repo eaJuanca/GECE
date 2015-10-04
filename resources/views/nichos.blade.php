@@ -258,7 +258,7 @@
 
                     <span id="modalfras3" style="font-weight: bold; color: red ; display: none" > Se ha llegado al total de difuntos por nicho</span> <br>
 
-                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 4 años desde la ultima inhumacion</span>
+                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 4 años desde la última inhumación</span>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>

@@ -312,7 +312,7 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexi�n a internet'
+                            msg: 'Compruebe la conexión a internet'
                         });
                     },
                     success: function (data) {
@@ -321,7 +321,7 @@
                         if( $('.enterrar').is(':checked')){
 
                             Lobibox.notify('success', {
-                                title: 'Nicho modificado correctamente<br>Preparando inhumacion...',
+                                title: 'Nicho modificado correctamente<br>Preparando inhumación...',
                                 showClass: 'flipInX',
                                 delay: 3000,
                                 delayIndicator: false,

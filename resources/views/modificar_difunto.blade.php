@@ -90,7 +90,7 @@
 
                         </div>
 
-                        <h3 style="font-weight: bold">Inhumacion</h3>
+                        <h3 style="font-weight: bold">Inhumación</h3>
                         <br>
 
                         <div class="row">
@@ -168,7 +168,7 @@
                             </div>
                         </div>
 
-                        <h3 style="font-weight: bold">Solicitante inhumacion</h3>
+                        <h3 style="font-weight: bold">Solicitante inhumación</h3>
                         <br>
 
                         <div class="form-group">

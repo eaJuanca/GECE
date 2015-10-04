@@ -99,7 +99,7 @@
 
                         </div>
 
-                        <h3 style="font-weight: bold">Inhumacion</h3>
+                        <h3 style="font-weight: bold">Inhumación</h3>
                         <br>
 
                         <div class="row">
@@ -177,7 +177,7 @@
                             </div>
                         </div>
 
-                        <h3 style="font-weight: bold">Solicitante inhumacion</h3>
+                        <h3 style="font-weight: bold">Solicitante inhumación</h3>
                         <br>
 
                         <div class="form-group">
@@ -246,7 +246,7 @@
 
                             @if(!$cumpletotal) <span style="font-weight: bold; color: red; font-size: 20px">Hay 4 difuntos en este nicho</span><br>@endif
                             <hr>
-                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado mas de 4 años desde la ultima inhumacion</span>@endif
+                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado más de 4 años desde la última inhumació</span>@endif
 
                         </div>
                     </div>
