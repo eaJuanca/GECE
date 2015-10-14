@@ -55,7 +55,7 @@
                             <td>{{$calle->nombre}}</td>
                             <td>{{$calle->num_tramadas}}</td>
                             <td>{{$calle->total}}</td>
-                            <td>{{$calle->panteones}}</td>
+                            <td>{{$calle->num_panteones}}</td>
                                 @if($calle->tipo_calle == 1)
                                     <td>Calle</td>
                                 @else
@@ -95,19 +95,19 @@
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
                         <fieldset>
-                            <div class="form-group">
+                            <div class="form-group nombre">
                                 <label for="inputFile" class="col-lg-2 ">Nombre</label>
                                 <div class="col-lg-10">
-                                    <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Nombre de la calle" required>
+                                    <input type="text" name="nombre" class="form-control inombre" id="inputNombre" placeholder="Nombre de la nueva calle" required>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-lg-5">¿Es un panteón o una Capilla?</label>
+                                <label class="col-lg-5">¿Es un panteón o una grupo?</label>
                                 <div class="col-lg-7">
                                     <div class="radio radio-primary">
                                         <label>
                                             <input id="tipo1" name="tipo_calle" type="radio" name="optionsRadios" class="tipo" value="1" checked>
-                                                Calle
+                                                Calle/Grupo
                                         </label>
                                     </div>
                                     <div class="radio radio-primary">
@@ -123,13 +123,13 @@
                                 <label for="select" class="col-lg-3">Calle Existente</label>
                                 <div class="col-lg-9">
                                     <select class="form-control iexistente" id="iexistente" name="iexistente">
-                                        <option value="-1">- Selecciona la calle -</option>
+                                        <option value="">- Selecciona la calle -</option>
                                         @if(!$calles->isEmpty())
 
                                             @foreach($calles as $calle)
-
-                                                <option value='{{$calle->id}}'>{{$calle->nombre}}</option>
-
+                                                @if($calle->tipo_calle == 2 )
+                                                    <option value='{{$calle->id}}'>{{$calle->nombre}}</option>
+                                                @endif
                                             @endforeach
                                         @endif
 
@@ -140,7 +140,7 @@
                             <div class="form-group numero" style="display: none">
                                 <label for="inputFile" class="col-lg-2 ">Número</label>
                                 <div class="col-lg-10">
-                                    <input type="hidden" name="numero" class="form-control inumero" id="inputNumero" placeholder="Número de panteón" required>
+                                    <input type="hidden" name="numero" class="form-control inumero" id="inputNumero"  required>
                                 </div>
                             </div>
 
@@ -149,7 +149,7 @@
                                     <label for="select" class="col-lg-2">Parcelas</label>
                                     <div class="col-lg-10">
                                         <select class="form-control parcelas" id="parcelas" name="num_parcelas">
-                                            <option>- ¿Cuántas parcelas tiene el panteón? -</option>
+                                            <option>- ¿Cuántas parcelas hay? -</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -750,13 +750,12 @@
                                 </div>
                             </div>
 
-
                             <div class="parte_tramadas">
                                 <div class="form-group">
                                     <label for="select" class="col-lg-2">Altura</label>
                                     <div class="col-lg-10">
-                                        <select class="form-control" id="tramadas" name="num_tramadas">
-                                            <option>- Selecciona número de tramadas -</option>
+                                        <select class="form-control tramadas" id="tramadas" name="num_tramadas" required>
+                                            <option value="">- Selecciona número de tramadas -</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -781,6 +780,48 @@
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada7' id='tramada7' placeholder='Tramada 7' required>
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada8' id='tramada8' placeholder='Tramada 8' required>
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada9' id='tramada9' placeholder='Tramada 9' required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="parcela_individual" style="display: none">
+                                <div class="form-group">
+
+                                    <label for="inputFile" class="col-lg-3 ">Tamaño Parcela</label>
+                                    <div class="col-lg-8">
+                                        <input type="hidden" name="tam_ind" class="form-control tam_ind" id="tam_ind" placeholder="Tamaño de la parcela" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="select" class="col-lg-2">Tramadas</label>
+                                    <div class="col-lg-10">
+                                        <select class="form-control" id="tramadas_parcela" name="tramadas_parcela">
+                                            <option>- Selecciona número de tramadas de la parcela -</option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group n_nichos_parcela_ind" style="display:none">
+                                    <label for="select" class="col-lg-3">Nº nichos por tramada</label>
+                                    <div class="row col-lg-9 inputs">
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada1_ind' id='tramada1_ind' placeholder='Tramada 1' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada2_ind' id='tramada2_ind' placeholder='Tramada 2' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada3_ind' id='tramada3_ind' placeholder='Tramada 3' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada4_ind' id='tramada4_ind' placeholder='Tramada 4' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada5_ind' id='tramada5_ind' placeholder='Tramada 5' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada6_ind' id='tramada6_ind' placeholder='Tramada 6' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada7_ind' id='tramada7_ind' placeholder='Tramada 7' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada8_ind' id='tramada8_ind' placeholder='Tramada 8' required>
+                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada9_ind' id='tramada9_ind' placeholder='Tramada 9' required>
                                     </div>
                                 </div>
                             </div>
@@ -829,7 +870,7 @@
             success: function (data) {
 
                 Lobibox.notify('success', {
-                    title: 'Calle añadida',
+                    title: 'Calle borrada',
                     showClass: 'flipInX',
                     delay: 3000,
                     delayIndicator: false,
@@ -864,11 +905,6 @@
 
         $('#example').DataTable();
 
-        /*$(".borrar").on('click',function(e){
-            alert("entra");
-        });*/
-
-
 
         //Function para recorrer array
         function recorrerArray(value, index, ar){
@@ -882,14 +918,16 @@
 
             //obtenemos el num de tramadas
             var tramadas = $("#tramadas").val();
-            var parcelas = $("#parcelas").val()
+            var parcelas = $("#parcelas").val();
+            var tramadas_parcela = $("#tramadas_parcela").val();
 
-            if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 || parseInt(parcelas) > 0 && parseInt(parcelas)) {
+            if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 || parseInt(parcelas) > 0 && parseInt(parcelas)
+                    || parseInt(tramadas_parcela) > 0 && parseInt(tramadas_parcela) ) {
 
                 e.preventDefault();
 
                 $.ajax({
-                    type: "GET",
+                    type: "POST",
                     url: "{{ URL::route('altaCalle') }}",
                     data: $("#form-alta").serialize(),
                     dataType: "html",
@@ -904,6 +942,7 @@
                             delay: 3000,
                             delayIndicator: false,
                             position: 'bottom left'
+
                         });
 
                         location.reload();
@@ -911,7 +950,7 @@
                 });
             }else
             {
-                alert("Selecciona nº de tramdas");
+                alert("Selecciona nº de tramdas/parcelas");
             }
 
         });
@@ -929,33 +968,57 @@
                 $(".parte_parcelas").css("display",'none');
                 $(".parte_tramadas").css("display",'block');
 
-                //Ocultamos el input del numero
-                $(".numero").css("display",'none');
-                $(".inumero")[0].setAttribute('type','hidden');
-
                 //Ocultamos el select de calle existente
                 $(".existente").css("display",'none');
 
-                //hacemos que el inputNombre sea required
-                $("#inputNombre").setAttribute("required","");
+                //ocultamos el input de nombre nueva calle
+                $(".nombre").css("display",'block');
 
+                //hacemos que el inputNombre sea required
+                $(".inombre")[0].setAttribute("required","");
+
+                //Obligamos al que el campo calle existente no sea required
+                $(".iexistente")[0].removeAttribute("required");
+
+                //Hacemos el nº de tramadas sea required
+                $(".tramadas")[0].setAttribute("required","");
+
+                //Ocultamos la parte de parcela individual
+                $(".numero").css("display",'none');
+                $(".parcela_individual").css("display","none")
+                $(".tam_ind")[0].removeAttribute("required");
+                $(".inumero")[0].setAttribute('type','hidden');
+
+                //Ocultamos todas las parcelas por si se han quedado desplegadas
+                ocultarParcelas();
             }else{
                 //si es pantenon aqui
                 $(".parte_parcelas").css("display",'block');
                 $(".parte_tramadas").css("display",'none');
 
                 //Mostramos el input del numero
-                $(".numero").css("display",'block');
-                $(".inumero")[0].setAttribute('type','text');
+                //$(".numero").css("display",'block');
+                //$(".inumero")[0].setAttribute('type','text');
 
 
                 //Mostramos el select de calle existente
                 $(".existente").css("display",'block');
+
                 //hacemos que el input nombre no se necesario
-                $("#inputNombre")[0].removeAttribute("required");
+                $(".inombre")[0].removeAttribute("required");
 
                 //Si cambiamos de un tipo a otro hay que ocultar todos los inputs que había antes
                 var inputs = $(".n_nichos").find('input');
+
+                //Obligamos al que el campo calle existente no sea required
+                $(".iexistente")[0].setAttribute("required","");
+
+                //Hacemos el nº de tramadas no se required
+                $(".tramadas")[0].removeAttribute("required");
+
+                //Mostramos la parte parcela individual
+                //$(".numero").css("display",'block');
+                $(".tam_ind")[0].removeAttribute("required");
 
                 for(var i = 0; i < inputs.length; i++ ){
                     inputs[i].setAttribute('type','hidden');
@@ -965,6 +1028,84 @@
             }
         });
 
+        /**
+         * Para mostrar el numero de parcela o las parcelas en caso de dar
+         * de alta una parcela individual a una calle existente o una nueva.
+         * */
+        $('.existente').on('change',function()
+        {
+            var existente = $(".iexistente").val();
+
+            if(existente > 0){
+                //ocultamos el input de nombre nueva
+                $(".nombre").css("display",'none');
+
+                //Mostramos el input del numero
+                $(".numero").css("display",'block');
+                $(".inumero")[0].setAttribute('type','text');
+
+                //Ocultamos la parte de las parcelas y mostramos la parte para una idividual
+                $(".parte_parcelas").css("display",'none');
+                $(".parcela_individual").css("display",'block')
+                $(".tam_ind")[0].setAttribute("required","");
+                $(".tam_ind")[0].setAttribute("type","text");
+
+                //Peticion ajax para obtener el número.
+                $.ajax({
+                    type: "GET",
+                    url: "{{ URL::route('ultimoPanteon') }}",
+                    data: { id:existente },
+                    dataType: "html",
+                    error: function () {
+
+                    },
+                    success: function (data) {
+                        $(".inumero")[0].setAttribute("placeholder", "Ultimo número de parcela insertada: " + data);
+                    }
+
+                    });
+                //Ocultamos todas las parcelas por si se han quedado desplegadas
+                ocultarParcelas();
+
+            }else{
+                //ocultamos el input de nombre nueva calle
+                $(".nombre").css("display",'block');
+
+                //Ocultamos el input del numero
+                $(".numero").css("display",'none');
+                $(".inumero")[0].setAttribute('type','hidden');
+
+                //Mostramo la parte de varias parcelas a la vez
+                $(".parte_parcelas").css("display",'block');
+
+                //Ocultamo la parte de la parcela individual
+                $(".parcela_individual").css("display",'none')
+                $(".tam_ind")[0].removeAttribute("required","");
+
+            }
+        });
+
+        /**
+         * Evento para controlar si es panteon nuevo o no
+         * */
+
+         $('.inombre').on("keyup",function(){
+
+             //Si no hay nada en el input habilitamos el select para elegir calle existente
+             if(this.value == ""){
+                 $(".existente").css("display","block");
+                 $(".iexistente")[0].setAttribute("type",'text');
+                 $(".iexistente")[0].setAttribute("required","");
+             }else{
+                 $(".existente").css("display", "none");
+                 $(".iexistente")[0].setAttribute("type",'hidden');
+                 $(".iexistente")[0].removeAttribute("required");
+             }
+
+         });
+
+
+
         /*
         *   Función para imprimir los tamaños de las parcelas.
         */
@@ -973,37 +1114,29 @@
 
             if($.isNumeric(this.value)){
 
-                //Al cambiar ocultamos todas para más comidad, estén o no visible
-                for(var i = 1; i <= 10; i++)
-                    {
-                        $('#parcela'+i).css("display", "none");
+            //Al cambiar ocultamos todas para más comodidad, estén o no visible
+                ocultarParcelas();
 
-                        //ocultamos los inputs visibles
-                        var input = $(".n_parcelas").find(".i"+i);
-                        input[0].setAttribute("type", "hidden");
-
-                    }
-
-                    //hacemos visible lo de nº de parcelas
-                    $(".n_parcelas").css("display",'block');
+                //hacemos visible lo de nº de parcelas
+                $(".n_parcelas").css("display",'block');
 
 
-                    for(var i = 1; i <= this.value; i++)
-                    {
-                        $('#parcela'+i).css("display", "block");
+                for(var i = 1; i <= this.value; i++)
+                {
+                    $('#parcela'+i).css("display", "block");
 
-                        //Hacemos visibles todos los inputs de parcela i
+                    //Hacemos visibles todos los inputs de parcela i
 
-                        var input = $(".n_parcelas").find(".i"+i);
-                        input[0].setAttribute("type", "text");
+                    var input = $(".n_parcelas").find(".i"+i);
+                    input[0].setAttribute("type", "text");
 
-                    }
-
-                    //$(".inputs").html(imprimir);
-                }else{
-
-                    $(".n_parcelas").css("display",'none');
                 }
+
+                //$(".inputs").html(imprimir);
+            }else{
+
+                $(".n_parcelas").css("display",'none');
+            }
 
         });
 
@@ -1031,6 +1164,12 @@
                 //$(".inputs").html(imprimir);
             }else{
                 $(".n_nichos").css("display",'none');
+
+                //Reseteamos todos porque podemos haber escojido otra vez la opcion de eliger num tramadas
+                for(var i = 1; i <= 9; i++)
+                {
+                    $('#tramada'+i)[0].setAttribute("type", "hidden");
+                }
             }
 
         });
@@ -1108,8 +1247,55 @@
 
         }
 
+        //Tramadas para la parcela individual
+        $('#tramadas_parcela').on("change",function(){
+
+
+            if($.isNumeric(this.value)){
+
+                //Al cambiar ocultamos todas
+                for(var i = 1; i <= 9; i++)
+                {
+                    $('#tramada'+ i + "_ind")[0].setAttribute("type", "hidden");
+                }
+
+                //hacemos visible lo de nº de nichos
+                $(".n_nichos_parcela_ind").css("display",'block');
+
+                for(var i = 1; i <= this.value; i++)
+                {
+                    $('#tramada'+ i + "_ind")[0].setAttribute("type", "text");
+                }
+
+                //$(".inputs").html(imprimir);
+            }else{
+
+                $(".n_nichos_parcela_ind").css("display",'none');
+
+                //Reseteamos todos porque podemos haber escojido otra vez la opcion de eliger num tramadas
+                for(var i = 1; i <= 9; i++)
+                {
+                    $('#tramada'+ i + "_ind")[0].setAttribute("type", "hidden");
+                }
+            }
+
+        });
+
+        //Ocultar parcelas por si se han quedado desplegadas.
+        function ocultarParcelas(){
+
+            for(var i = 1; i <= 10; i++)
+            {
+                $('#parcela'+i).css("display", "none");
+
+                //ocultamos los inputs visibles
+                var input = $(".n_parcelas").find(".i"+i);
+                input[0].setAttribute("type", "hidden");
+            }
+        }
 
     });
+
     /**
      * Comentario cambios
      */

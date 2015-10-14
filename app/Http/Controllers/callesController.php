@@ -41,7 +41,7 @@ class callesController extends Controller {
      */
     function create(Request $r)
     {
-        $tramadas = intval($r->input("num_tramadas"));
+        $numTramadas = intval($r->input("num_tramadas"));
         //creamos el objeto calle pero no con all porque tiene otros campos que son de tramda
         $calle = new Calle();
 
@@ -49,19 +49,19 @@ class callesController extends Controller {
 
             //Si tipo calle es 1 guardamos la calle
 
-            if($tramadas > 0)
+            if($numTramadas > 0)
             {
                 //Insertar tramadas y calle
 
                 $calle->nombre = $r->input("nombre");
-                $calle->num_tramadas = $tramadas;
+                $calle->num_tramadas = $numTramadas;
                 $calle->tipo_calle = $r->input("tipo_calle");
                 $calle->save();
 
                 //Acto seguido guardamos las tramadas con el nº de nichos.
                 $totalNichos = 0;
 
-                for($i = 1; $i <= $tramadas; $i++) {
+                for($i = 1; $i <= $numTramadas; $i++) {
 
                     //Creamos un objeto tramada
                     $tramada = new Tramada();
@@ -87,34 +87,28 @@ class callesController extends Controller {
                 $updateCalle->total = $totalNichos;
                 $updateCalle->save();
 
-            }else{
-
-                //guardamos sólo la parte de la calle
-                $calle = new Calle($r->all());
-                $calle->save();
             }
         }else{
-            //Sino guardamos un panteon
+            //Sino guardamos las parcelas/panteones
 
             $panteon = new Panteon();
 
-            $panteon->numero = ($r->input('numero'));
-
-            if($r->input('iexistente') != -1){
+            if($r->input('iexistente') != ""){
                 //Si se ha seleccionado una calle existente entramos aquí.
-                $panteon->GC_CALLE_id = $r->input('iexistente');
-                $panteon->save();
+                /*$parcela = new Parcela(); //creamos 1 objeto parcela porque sólo vamos a dar de alta 1
+                $parcela->GC_CALLE_id = $r->input('iexistente');
+                $parcela->save();*/
 
-                //Aumentamos el numero de panteones
+                //Obtenemos el id de la calle existente
                 $updateCalle = Calle::find($r->input('iexistente'));
-                $updateCalle->panteones = (int) Calle::where('id' , '=' , $r->input('iexistente'))->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->num_panteones = (int) Calle::where('id' , '=' , $r->input('iexistente'))->get(array("num_panteones"))[0]->num_panteones + 1;
                 $updateCalle->save();
 
-                //Insertamos parcelas
-                $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
+                //Insertamos la parcela
+                $this->guardarParcelaIndividual($updateCalle->id,$r);
 
             }else{
-                //Si se ha creado el panteon en una nueva calle
+                //Si se ha creado una calle de panteones.
 
                 //damos de alta la nueva calle
                 $calle->nombre = $r->input("nombre");
@@ -122,18 +116,16 @@ class callesController extends Controller {
                 $calle->tipo_calle = $r->input("tipo_calle");
                 $calle->save();
 
-                //cogemos el id de la calle que se acaba de insertar
-                $panteon->GC_CALLE_id = $calle->id;
-                $panteon->save();
+                //Insertamos las parcelas en la nueva calle
+                $this->guardarParcelas($r->input("num_parcelas"),$calle->id,$r);
 
-
-                //Aumentamos el numero de panteones
+                //Aumentamos el numero de parcelas
                 $updateCalle = Calle::find($calle->id);
-                $updateCalle->panteones = (int) Calle::where('id' , '=' , $calle->id)->get(array("panteones"))[0]->panteones + 1;
+                $updateCalle->num_panteones = (int) $r->input('num_parcelas');
                 $updateCalle->save();
 
                 //Insertamos parcelas
-                $this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
+                //$this->guardarParcelas($r->input("num_parcelas"),$panteon->id,$r);
             }
 
         }
@@ -160,19 +152,21 @@ class callesController extends Controller {
         }
     }
 
-    function guardarParcelas($numeroParcelas,$idPanteon,$r){
+    function guardarParcelas($numeroParcelas,$idCalle,$r){
+
 
         for($i = 1; $i <= $numeroParcelas; $i++){
 
-            //Creamos el objeto nicho.
+            //Creamos el objeto parcela.
             $parcela = new Parcela();
 
+            //Asignamos los atributos a la parcela/panteon
+            $parcela->numero = $i;
             $parcela->tamanyo = $r->input("parcela". $i);
-            $parcela->GC_PANTEON_id = $idPanteon;
+            $parcela->GC_CALLE_id = $idCalle;
             $parcela->save();
 
             //asignamos las tramadas para cada parcela
-
             for($j = 1; $j <= $r->input("tram_parc_".$i); $j++)
             {
 
@@ -183,7 +177,7 @@ class callesController extends Controller {
                 $numNichos = $r->input("tramada". $j . "_p" . $i);
 
                 //Asignamos las propiedades del objeto
-                $tramada->tramada = $i;
+                $tramada->tramada = $j;
                 $tramada->nichos = $numNichos;
                 $tramada->GC_PARCELA_id = $parcela->id;
                 $tramada->save();
@@ -223,42 +217,34 @@ class callesController extends Controller {
 
             Calle::find($r->input('id'))->delete();
 
-
         }else{
             //es panteon
 
-            //2º Obtenemos los panteones que hay en la callae
+            //2º Obtenemos los parcelas/panteones que hay en la calle
 
-            $Panteones = Panteon::where('GC_CALLE_id' , '=' , $r->input('id'))->get();
+            $parcelas = parcela::where('GC_CALLE_id' , '=' , $r->input('id'))->get();
 
-            foreach ($Panteones as $panteon){
-                //3º Obtenemos los ids de las parcelas de cada panteon
-                $parcelas = Parcela::where('GC_PANTEON_id' , '=' , $panteon->id)->get();
+            foreach ($parcelas as $parcela){
 
-                foreach($parcelas as $parcela){
+                //3º obtenemos las tramadas de cada parcela
 
-                    //4º obtenemos las tramadas de cada parcela
+                $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela->id)->get();
 
-                    $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela->id)->get();
+                foreach($tramadas as $tramada){
 
-                    foreach($tramadas as $tramada){
+                    //4º borramos los nichos
+                    Nicho::where('GC_Tramada_id' , '=' , $tramada->id)->delete();
 
-                        //5º borramos los nichos
-                        Nicho::where('GC_Tramada_id' , '=' , $tramada->id)->delete();
-
-                        //6º borramos la tramada
+                    //5º borramos la tramada
                        Tramada::find($tramada->id)->delete();
-                    }
 
-                    //7º borramos las parcelas
-                    Parcela::find($parcela->id)->delete();
                 }
 
-                //8ºborramos los panteones
-                Panteon::find($panteon->id)->delete();
+                //6º borramos las parcelas
+                Parcela::find($parcela->id)->delete();
             }
 
-            //9º borramos la calle
+            //7º borramos la calle
             Calle::find($r->input('id'))->delete();
         }
     }
@@ -326,11 +312,49 @@ class callesController extends Controller {
         //Una vez sumado el total de los nichos actualizamos la calle insertada
         $updateCalle->total = $totalNichos;
         $updateCalle->save();
+    }
 
+    function guardarParcelaIndividual($idCalle,$r){
+
+            //Creamos el objeto parcela.
+            $parcela = new Parcela();
+
+            //Asignamos los atributos a la parcela/panteon
+            $parcela->numero = $r->input("numero");
+            $parcela->tamanyo = $r->input("tam_ind");
+            $parcela->GC_CALLE_id = $idCalle;
+            $parcela->save();
+
+            //asignamos las tramadas a la parcela
+            for($i = 1; $i <= $r->input("tramadas_parcela"); $i++)
+            {
+                //Creamos un objeto tramada
+                $tramada = new Tramada();
+
+                //obtemos los parámetros del objeto request
+                $numNichos = $r->input("tramada". $i ."_ind");
+
+                //Asignamos las propiedades del objeto
+                $tramada->tramada = $i;
+                $tramada->nichos = $numNichos;
+                $tramada->GC_PARCELA_id = $parcela->id;
+                $tramada->save();
+
+                //Guardamos los x nichos de la tramada $i
+                $this->guardarNichos($numNichos,$tramada->id,1);
+            }
     }
 
     function sePuedeCambiar(){
 
+    }
+
+    /**
+     * Devuelve un entero con el último numero de panteones insertado para una calle de panteones
+     */
+    function  ultimoPanteon(Request $r){
+        $calle = Calle::find($r->input("id"));
+        return $calle->num_panteones;
     }
 
     /**

@@ -88,7 +88,7 @@
                 </div>
                 <p class="text-center gc_title"><strong>TARIFAS</strong></p>
                 <p class="text-center text_hidden">Módulo para la gestión de tarifas</p>
-                <p class="text-center btn_hidden"><button class="btn btn-md btn-material-cyan">Entrar</button></p>
+                <p class="text-center btn_hidden"><a href="{{ URL::route('tarifas') }}" class="btn btn-md btn-material-cyan">Entrar</a></p>
                 <p class="text-center btn_show">
                     <button class="btn btn-md btn-material-cyan">
                         <i class="glyphicon glyphicon-share-alt"></i>

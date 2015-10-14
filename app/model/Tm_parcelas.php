@@ -11,13 +11,12 @@ namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Parcela extends Model{
+class Tm_parcelas extends Model{
 
-    protected $table = 'GC_Parcelas';
+    protected $table = 'GC_Tarifa_m_parcelas';
 
     protected $fillable = [
         'id',
-        'tamanyo',
-        'GC_PANTEON'
+        'tarifa'
     ];
 }

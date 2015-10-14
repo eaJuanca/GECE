@@ -45,11 +45,47 @@ Route::group(['prefix' => '/'], function()
 });
 
 //
-Route::get('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
+Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
 Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@delete']);
 
+Route::get('ultimoPanteon', ['as' => 'ultimoPanteon', 'uses' => 'callesController@ultimoPanteon']);
+
 Route::get('editarCalle',  ['as' => 'editarCalle', 'uses' => 'callesController@edit']);
+
+//Parte tarifas
+
+Route::get('tarifas',  ['as' => 'tarifas', 'uses' => 'tarifasController@index']);
+//no se porqué no va post
+Route::get('cp_parcelas',  ['as' => 'cp_parcelas', 'uses' => 'tarifasController@cp_parcelas']);
+
+Route::get('cpv_parcelas',  ['as' => 'cpv_parcelas', 'uses' => 'tarifasController@cpv_parcelas']);
+
+Route::get('cp_nichos',  ['as' => 'cp_nichos', 'uses' => 'tarifasController@cp_nichos']);
+
+Route::get('cpv_nichos',  ['as' => 'cpv_nichos', 'uses' => 'tarifasController@cpv_nichos']);
+
+Route::get('ct_parcelas',  ['as' => 'ct_parcelas', 'uses' => 'tarifasController@ct_parcelas']);
+
+Route::get('ctv_parcelas',  ['as' => 'ctv_parcelas', 'uses' => 'tarifasController@ctv_parcelas']);
+
+Route::get('ct_nichos',  ['as' => 'ct_nichos', 'uses' => 'tarifasController@ct_nichos']);
+
+Route::get('ctv_nichos',  ['as' => 'ctv_nichos', 'uses' => 'tarifasController@ctv_nichos']);
+
+Route::get('m_parcelas',  ['as' => 'm_parcelas', 'uses' => 'tarifasController@m_parcelas']);
+
+Route::get('mv_parcelas',  ['as' => 'mv_parcelas', 'uses' => 'tarifasController@mv_parcelas']);
+
+Route::get('m_nichos',  ['as' => 'm_nichos', 'uses' => 'tarifasController@m_nichos']);
+
+Route::get('mv_nichos',  ['as' => 'mv_nichos', 'uses' => 'tarifasController@mv_nichos']);
+
+
+
+
+
+//Fin parte tarifas
 
 Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);
 
