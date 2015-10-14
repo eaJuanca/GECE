@@ -375,14 +375,14 @@
 
                 var token = "{{ csrf_token()}}";
 
-                $("#form_tmp").submit(function (e) {
+                $("#from_tn").submit(function (e) {
 
                     e.preventDefault();
 
                     $.ajax({
                         type: "GET",
-                        url: "{{ URL::route('m_parcelas') }}",
-                        data: $("#form_tmp").serialize(),
+                        url: "{{ URL::route('ct_nichos') }}",
+                        data: $("#from_tn").serialize(),
                         dataType: "html",
                         error: function () {
                             alert("entra en error");
