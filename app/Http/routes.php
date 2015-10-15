@@ -137,3 +137,5 @@ Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoControl
 
 Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData']);
 
+Route::post('autocompletarTitular', ['as' => 'autocompletarTitular', 'uses' => 'TitularController@get']);
+

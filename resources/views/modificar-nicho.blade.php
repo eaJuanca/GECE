@@ -33,50 +33,49 @@
                         <h3 style="font-weight: bold">Titular</h3>
                         <br>
 
+                        <div class="row">
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">DNI</label>
+                                    <input type="text" id="dni" class="form-control" value="{{$titular->dni_titular}}" name="dni_titular">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-1 col-md-1 col-sm-12 col-xs-12" style="margin-top: 20px">
+                                <div class="form-group">
+                                    <button id="autocompletar" type="button" class="btn btn-danger btn-xs btn-raise">Autocompletar</button>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Apellidos, Nombre</label>
-                            <input type="text" class="form-control" value="{{$nicho->nombre_titular}}" name="nombre_titular" required>
+                            <input type="text" id="nombreapellidos" class="form-control" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Responsable del Nicho</label>
-                            <input type="text" class="form-control" value="{{$nicho->responsable}}" name="responsable">
+                            <input type="text" id="responsable" class="form-control" value="{{$titular->responsable}}" name="responsable">
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Domicilio</label>
-                            <input type="text" class="form-control"value="{{$nicho->dom_titular}}"  name="dom_titular">
+                            <input type="text" id="dom_titular" class="form-control"value="{{$titular->dom_titular}}"  name="dom_titular">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Código postal</label>
-                                    <input type="text" class="form-control" value="{{$nicho->cp_titular}}" name="cp_titular">
+                                    <input type="text" id="cp_titular" class="form-control" value="{{$titular->cp_titular}}" name="cp_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" class="form-control" value="{{$nicho->pob_titular}}" name="pob_titular">
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Expediente</label>
-                                    <input type="text" class="form-control" value="{{$nicho->exp_titular}}" name="exp_titular">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" class="form-control" value="{{$nicho->dni_titular}}" name="dni_titular">
+                                    <input type="text" id="pob_titular" class="form-control" value="{{$titular->pob_titular}}" name="pob_titular">
                                 </div>
                             </div>
 
@@ -86,18 +85,31 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Teléfono</label>
-                                    <input type="text" class="form-control" value="{{$nicho->tel_titular}}" name="tel_titular">
+                                    <input type="text" id="tel_titular" class="form-control" value="{{$titular->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Email</label>
-                                    <input type="text" class="form-control" value="{{$nicho->ema_titular}}" name="ema_titular">
+                                    <input type="text" id="ema_titular" class="form-control" value="{{$titular->ema_titular}}" name="ema_titular">
                                 </div>
                             </div>
 
                         </div>
+
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Expediente</label>
+                                    <input type="text" id="exp_titular" class="form-control" value="{{$titular->exp_titular}}" name="exp_titular">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
 
                         <h3 style="font-weight: bold">Situacion del nicho</h3>
                         <br>
@@ -266,6 +278,9 @@
     <script type="text/javascript">
 
 
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
 
         $('.fecha_inh').datepicker({
 
@@ -289,9 +304,6 @@
 
                 }
             });
-
-
-            var token = "{{ csrf_token()}}";
 
             $('#editar-nicho').submit(function (e) {
 
@@ -347,6 +359,43 @@
                     }
                 });
             });
+
+
+            $('#autocompletar').on('click', function (e) {
+
+                e.preventDefault();
+
+                var dni = $("#dni").val();
+
+                $.ajax({
+
+                    type: "POST",
+                    url: "{{ URL::route('autocompletarTitular') }}",
+                    data: {dni: dni},
+                    dataType: "json",
+                    error: function () {
+
+                        alert("Error: no hay usuarios con ese dni");
+                    },
+                    success: function (data) {
+
+
+                       $("#nombreapellidos").val(data['nombre_titular']);
+                       $("#responsable").val(data['responsable']);
+                       $("#dom_titular").val(data['dom_titular']);
+                       $("#cp_titular").val(data['cp_titular']);
+                       $("#pob_titular").val(data['pob_titular']);
+                       $("#tel_titular").val(data['tel_titular']);
+                       $("#ema_titular").val(data['ema_titular']);
+                       $("#exp_titular").val(data['exp_titular']);
+
+                    }
+                });
+
+
+            });
+
+
         });
 
         function explode(){

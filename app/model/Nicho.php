@@ -16,6 +16,7 @@ class Nicho extends Model{
     protected $table = 'GC_NICHOS';
 
     protected $fillable = [
+
         'nom_facturado',
         'dir_facturado',
         'nif_facturado',
@@ -33,7 +34,6 @@ class Nicho extends Model{
         'tarifa',
         'observaciones',
         'tipo',
-        'GC_Tramada_id',
         'GC_TITULAR_id'
     ];
 }
