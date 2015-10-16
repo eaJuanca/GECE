@@ -149,10 +149,12 @@ Route::get('login', ['as' => 'login', function()
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
-Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'LogController@logout']);
 
 
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
 Route::resource('log','LogController');
+
+
