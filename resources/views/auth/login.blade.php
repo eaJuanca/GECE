@@ -1,23 +1,112 @@
-<!-- resources/views/auth/login.blade.php -->
+<!DOCTYPE html>
+<html>
+<head>
+    <link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <meta charset="UTF-8">
 
-<form method="POST" action="/auth/login">
-    {!! csrf_field() !!}
+    <title>Inicio de sesion</title>
+    <style>
+        body {
+            background: url('http://i.imgur.com/Eor57Ae.jpg') no-repeat fixed center center;
+            background-size: cover;
+            font-family: Montserrat;
+        }
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
+        .logo {
+            width: 213px;
+            height: 36px;
+            background: url('http://i.imgur.com/fd8Lcso.png') no-repeat;
+            margin: 30px auto;
+        }
 
-    <div>
-        Password
-        <input type="password" name="password" id="password">
-    </div>
+        .login-block {
+            width: 320px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            border-top: 5px solid #ff656c;
+            margin: 100px auto;
+        }
 
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
-    </div>
+        .login-block h1 {
+            text-align: center;
+            color: #000;
+            font-size: 18px;
+            text-transform: uppercase;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
 
-    <div>
-        <button type="submit">Login</button>
-    </div>
+        .login-block input {
+            width: 100%;
+            height: 42px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-family: Montserrat;
+            padding: 0 20px 0 50px;
+            outline: none;
+        }
+
+        .login-block input#username {
+            background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px top no-repeat;
+            background-size: 16px 80px;
+        }
+
+        .login-block input#username:focus {
+            background: #fff url('http://i.imgur.com/u0XmBmv.png') 20px bottom no-repeat;
+            background-size: 16px 80px;
+        }
+
+        .login-block input#password {
+            background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px top no-repeat;
+            background-size: 16px 80px;
+        }
+
+        .login-block input#password:focus {
+            background: #fff url('http://i.imgur.com/Qf83FTt.png') 20px bottom no-repeat;
+            background-size: 16px 80px;
+        }
+
+        .login-block input:active, .login-block input:focus {
+            border: 1px solid #ff656c;
+        }
+
+        .login-block button {
+            width: 100%;
+            height: 40px;
+            background: #ff656c;
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid #e15960;
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-family: Montserrat;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .login-block button:hover {
+            background: #ff7b81;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<form class="login-block" method="POST" action="{{URL::route('log.store')}}">
+    <h1>Iniciar Sesion</h1>
+    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+    <input type="text" value="" placeholder="Usuario" id="username" name="email"/>
+    <input type="password" value="" placeholder="Password" id="password" name="password"/>
+
+    <button type="submit"> Entrar </button>
 </form>
+</body>
+
+</html>
