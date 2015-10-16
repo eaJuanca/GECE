@@ -152,9 +152,6 @@ Route::post('auth/login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@p
 Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'LogController@logout']);
 
 
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
-
 Route::resource('log','LogController');
 
 
