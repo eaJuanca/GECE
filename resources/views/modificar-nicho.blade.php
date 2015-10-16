@@ -107,6 +107,18 @@
                             </div>
 
 
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="select">Tipo de cesión</label>
+                                    <select class="form-control" id="select" name="cesion">
+                                        <option value="0">Cesión a perpetuidad</option>
+                                        <option value="1">Cesión temporal</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+
                         </div>
 
 

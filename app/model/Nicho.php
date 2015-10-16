@@ -33,6 +33,7 @@ class Nicho extends Model{
         'titular',
         'tarifa',
         'observaciones',
+        'cesion',
         'tipo',
         'GC_TITULAR_id'
     ];
