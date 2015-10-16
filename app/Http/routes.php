@@ -14,10 +14,9 @@
 Route::group(['prefix' => '/'], function()
 {
 
-    Route::get('/', ['as' => 'home', function() {
+    Route::get('/', ['uses' => 'WebController@home']);
 
-        return view('home');
-    }]);
+    Route::get('home', ['as' => 'home', 'uses' => 'WebController@home']);
 
     Route::get('calles', ['as' => 'calles', 'uses' => 'callesController@index']);
 
@@ -139,3 +138,21 @@ Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData'])
 
 Route::post('autocompletarTitular', ['as' => 'autocompletarTitular', 'uses' => 'TitularController@get']);
 
+
+Route::get('login', ['as' => 'login', function()
+{
+    return view('login');
+
+}]);
+
+// Validamos los datos de inicio de sesión PARA LA ADMINISTRACION
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
+Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
+
+
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+Route::resource('log','LogController');
