@@ -15,12 +15,27 @@ use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
 use App\model\Tct_parcelas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
 
 
 class tarifasController extends Controller{
 
+    public function __construct()
+    {
+
+    }
+
     function index(){
-       return view("tarifas");
+
+        $Tcp_parcelas = Tcp_parcelas::firstOrFail();
+        $Tcp_nichos = Tcp_nichos::firstOrFail();
+        $Tct_parcelas = Tct_parcelas::firstOrFail();
+        $Tct_nichos = Tct_nichos::firstOrFail();
+        $Tm_parcelas = Tm_parcelas::firstOrFail();
+        $Tm_nichos = Tm_nichos::firstOrFail();
+
+
+        return view("tarifas", compact("Tcp_parcelas","Tcp_nichos","Tct_parcelas","Tct_nichos","Tm_parcelas","Tm_nichos"));
     }
     /*
      * funcion para dar de alta la tarifa de cesion temporar de las parcelas o actualizarla
