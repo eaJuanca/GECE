@@ -20,4 +20,5 @@ class Tcp_parcelas extends Model{
         'tarifa'
     ];
 }
-//*comentario
+/** esto es un poco basura */
+//*comentario///
