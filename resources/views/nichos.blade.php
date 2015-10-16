@@ -65,8 +65,15 @@
                                 </div>
 
 
-
                                 <div class="row">
+
+                                    <div  id="dnibuscar" class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label" for="inputWarning">Dni</label>
+                                            <input type="text" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
+                                        </div>
+                                    </div>
+
                                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de calle</label>
@@ -74,31 +81,40 @@
                                         </div>
                                     </div>
 
-
-                                    <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                    <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Número de calle</label>
                                             <input type="text" class="form-control" name="numero" value="<?php if(isset($numero)) echo $numero; else $numero=''; ?>">
                                         </div>
                                     </div>
 
-                                    <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                    <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <br>
-                                            <button type="submit" class="btn btn-primary btn-raised">Buscar</button>
-                                            <a id='search' href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised" style="visibility: hidden">Terminar</a>
+                                            <label class="control-label" for="inputWarning">Tramada</label>
+                                            <input type="text" class="form-control"  name="tramada" value="<?php if(isset($tramada)) echo $tramada; else $tramada=''; ?>">
                                         </div>
                                     </div>
 
                                 </div>
 
-                                <div class="row" id="nota" style="display: none">
-                                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="row">
 
-                                    <span style="font-weight: bold; font-size: 16px">A continuación se muestran los resultados de búsqueda. Pulse <span style="color: red">terminar</span> para finalizar</span>
+                                    <div class="col col-lg-10 col-md-10 col-sm-12 col-xs-12" style="margin-top: 20px">
 
+                                        <span id='search' style="font-weight: bold; font-size:16px; visibility: hidden; ">A continuación se muestran los resultados de búsqueda. Pulse <a  href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised btn-xs" style="letter-spacing: 3px">Terminar</a> para finalizar</span>
+
+                                    </div>
+
+                                    <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-right">
+                                        <div class="form-group">
+                                            <br>
+                                            <button type="submit" class="btn btn-primary btn-raised">Buscar</button>
                                         </div>
+                                    </div>
+
+
                                 </div>
+
 
                             </section>
                         </div>
@@ -128,11 +144,9 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Tipo</th>
                                         <th>Cod.</th>
+                                        <th>Tipo</th>
                                         <th>Datos del nicho</th>
-                                        <th>Tarifa</th>
-                                        <th>Banco</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
@@ -143,19 +157,12 @@
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td> {{$disponible->tipo}}</td>
                                             <td> {{$disponible->id}}</td>
+                                            <td> {{$disponible->tipo}}</td>
                                             <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
                                                  Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
                                                  Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
-                                            <td> {{$disponible->tarifa}}</td>
-                                            <td>
-                                                @if($disponible->banco == null)
-                                                    <i class="fa fa-lg fa-times" style="color:red"></i>
-                                                @else
-                                                   {{$disponible->banco}}
-                                                @endif
-                                            </td>
+
                                             <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
@@ -187,13 +194,12 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Tipo</th>
                                         <th>Cod.</th>
+                                        <th>Tipo</th>
                                         <th>Titular</th>
+                                        <th>Difunto</th>
                                         <th>Telefono</th>
                                         <th>Calle</th>
-                                        <th>Tarifa</th>
-                                        <th>Banco</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
@@ -204,21 +210,14 @@
                                     @foreach($nodisponibles as $nodisponible)
 
                                         <tr>
-                                            <td> {{$nodisponible->tipo}}</td>
                                             <td> {{$nodisponible->id}}</td>
+                                            <td> {{$nodisponible->tipo}}</td>
                                             <td> {{$nodisponible->nombre_titular}}</td>
+                                            <td> {{$nodisponible->nom_difunto}}</td>
                                             <td> {{$nodisponible->telefono}}</td>
                                             <td> Calle: <span style="font-weight: bold">{{$nodisponible->nombre_calle}}, </span>
                                                 Altura, <span style="font-weight: bold">{{$nodisponible->altura}} </span>
                                                 Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
-                                            <td>
-                                                @if($nodisponible->banco == null)
-                                                    <i class="fa fa-lg fa-times" style="color:red"></i>
-                                                @else
-                                                    {{$nodisponible->banco}}
-                                                @endif
-                                            </td>
-                                            <td> {{$nodisponible->tarifa}}</td>
 
                                             <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
                                                  <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search"></i></a>
@@ -326,11 +325,13 @@
 
                 $("#titular").show();
                 $("#difunto").show();
+                $("#dnibuscar").show();
 
             }else{
 
                 $("#titular").hide();
                 $("#difunto").hide();
+                $("#dnibuscar").hide();
             }
 
             $('.paginacion').bootpag({
@@ -470,8 +471,8 @@
             });
         });
 
-        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show();  });
-        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); });
+        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); $("#dnibuscar").show();  });
+        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); $("#dnibuscar").hide(); });
 
 
 

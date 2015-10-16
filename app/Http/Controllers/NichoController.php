@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\model\InfoNicho;
 use App\model\Nicho;
+use App\model\Titular;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Mockery\Exception;
@@ -53,7 +54,8 @@ class NichoController extends Controller
 
         $nicho = Nicho::find($id);
         $info = InfoNicho::find($id);
-        return view('modificar-nicho', compact('id', 'nicho', 'info'));
+        $titular = Titular::findOrNew($nicho->GC_TITULAR_id);
+        return view('modificar-nicho', compact('id', 'nicho', 'info','titular'));
 
     }
 
@@ -72,18 +74,11 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$disponible->id]);
 
             echo '<tr>';
-            echo '<td>' . $disponible->tipo . '</td>';
             echo '<td>' . $disponible->id . '</td>';
+            echo '<td>' . $disponible->tipo . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $disponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
-
-            echo '<td >' . $disponible->tarifa . '</td>';
-
-            echo '<td>';
-            if ($disponible->banco == null)
-                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
-            else echo $disponible->banco . '</td >';
 
             echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
 
@@ -107,24 +102,18 @@ class NichoController extends Controller
 
 
             echo '<tr>';
-            echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->id . '</td>';
+            echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->nom_difunto . '</td>';
             echo '<td>' . $Nodisponible->telefono . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo '<td >' . $Nodisponible->tarifa . '</td>';
-
-            echo '<td>';
-            if ($Nodisponible->banco == null)
-                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
-            else echo $Nodisponible->banco . '</td >';
-
             echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='A�adir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
 
@@ -144,7 +133,9 @@ class NichoController extends Controller
         $difunto = $request->input('difunto');
         $calle = $request->input('calle');
         $numero = $request->input('numero');
+        $tramada = $request->input('tramada');
         $activo = $request->input('activa'); // tab activa
+        $dni = $request->input('dni');
         $search = 1; //busqueda activa
 
 
@@ -156,10 +147,11 @@ class NichoController extends Controller
                 $Qdisponibles->where('nombre_titular', null);
                 $Qdisponibles->orWhere('nombre_titular', '');
 
-            })->where(function ($Qdisponibles) use ($titular, $calle, $numero) {
+            })->where(function ($Qdisponibles) use ($titular, $calle, $numero,$tramada) {
 
                 if ($calle != '') $Qdisponibles->where('nombre_calle', 'like', "%$calle%");
                 if ($numero != '') $Qdisponibles->where('numero', $numero);
+                if ($tramada != '') $Qdisponibles->where('altura', $tramada);
             });
 
 
@@ -168,7 +160,7 @@ class NichoController extends Controller
             $disponibles = $Qdisponibles->groupby('id')->take(10)->get();
             $tab = 1; //se debe activar el tab 1
 
-            return view('nichos', compact('disponibles', 'td', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
+            return view('nichos', compact('disponibles', 'td', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero','tramada'));
 
 
         } else {
@@ -179,18 +171,22 @@ class NichoController extends Controller
                 $Qnodisponibles->where('nombre_titular', 'not', null);
                 $Qnodisponibles->orWhere('nombre_titular', '!=', '');
 
-            })->where(function ($Qnodisponibles) use ($titular, $calle, $numero) {
+            })->where(function ($Qnodisponibles) use ($titular, $calle, $numero, $difunto,$tramada,$dni) {
 
                 if ($titular != '') $Qnodisponibles->where('nombre_titular', 'like', "%$titular%");
                 if ($calle != '') $Qnodisponibles->where('nombre_calle', 'like', "%$calle%");
                 if ($numero != '') $Qnodisponibles->where('numero', $numero);
+                if ($difunto != '') $Qnodisponibles->where('nom_difunto', 'like', "%$difunto%");
+                if ($tramada != '') $Qnodisponibles->where('altura', $tramada);
+                if ($dni != '') $Qnodisponibles->where('dni_titular', 'like', "%$dni%");
+
             });
 
             $tab = 2; // se debe activar el tab 2
             $tnd = count($Qnodisponibles->groupby('id')->get());
             $nodisponibles = $Qnodisponibles->groupby('id')->take(10)->get();
 
-            return view('nichos', compact('nodisponibles', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero'));
+            return view('nichos', compact('nodisponibles', 'tnd', 'tab', 'search', 'titular', 'difunto', 'calle', 'numero','difunto','tramada','dni'));
 
         }
     }
@@ -227,18 +223,13 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$disponible->id]);
 
             echo '<tr>';
-            echo '<td>' . $disponible->tipo . '</td>';
             echo '<td>' . $disponible->id . '</td>';
+
+            echo '<td>' . $disponible->tipo . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $disponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
 
-            echo '<td >' . $disponible->tarifa . '</td>';
-
-            echo '<td>';
-            if ($disponible->banco == null)
-                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
-            else echo $disponible->banco . '</td >';
 
             echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
 
@@ -279,27 +270,20 @@ class NichoController extends Controller
             $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
 
             echo '<tr>';
-            echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->id . '</td>';
+            echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->nom_difunto . '</td>';
             echo '<td>' . $Nodisponible->telefono . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo '<td >' . $Nodisponible->tarifa . '</td>';
-
-            echo '<td>';
-            if ($Nodisponible->banco == null)
-                echo '<i class="fa fa-lg fa-times" style = "color:red" ></i >';
-            else echo $Nodisponible->banco . '</td >';
-
             echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='A�adir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
-
 
     }
 
@@ -341,11 +325,30 @@ class NichoController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request)
-    {
-        $nichoU = new Nicho($request->all());
+    public function edit(Request $request){
+
+
+        $id = '';
+        $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+        $existtitular = Titular::where('dni_titular',$request->input('dni_titular'))->take(1)->get();
+
+        if($existtitular->isEmpty()){
+
+            $titular->save();
+            $existtitular = Titular::where('dni_titular',$request->input('dni_titular'))->take(1)->get();
+            $id = $existtitular[0]->id;
+
+        }else{
+
+            $existtitular[0]->update($titular->attributesToArray());
+            $id = $existtitular[0]->id;
+        }
+
+        $nichoU = new Nicho($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
         $nicho = Nicho::find($request->input('id'));
+        $nichoU->GC_TITULAR_id = $id;
         $nicho->update($nichoU->attributesToArray());
+
     }
 
     /**
