@@ -39,44 +39,56 @@
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" id="dni" class="form-control" value="{{$titular->dni_titular}}" name="dni_titular">
+                                    <input type="text" id="dni" class="form-control bloqueable" value="{{$titular->dni_titular}}" name="dni_titular">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-1 col-md-1 col-sm-12 col-xs-12" style="margin-top: 20px">
-                                <div class="form-group">
-                                    <button id="autocompletar" type="button" class="btn btn-danger btn-xs btn-raise">Autocompletar</button>
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group" style=" margin-top: 35px">
+                                    <div class="sample1">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type ="checkbox" class="sintitular"> <span style="font-weight: bold;" >Sin titular temporalmente</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12" style="margin-top: 20px">
+                                <div class="form-group" style="margin-left: -20px">
+                                    <button id="borrar" type="button" class="btn btn-danger btn-xs btn-raise">Borrar</button>
                                 </div>
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Apellidos, Nombre</label>
-                            <input type="text" id="nombreapellidos" class="form-control" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
+                            <input type="text" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Responsable del Nicho</label>
-                            <input type="text" id="responsable" class="form-control" value="{{$titular->responsable}}" name="responsable">
+                            <input type="text" id="responsable" class="form-control bloqueable" value="{{$titular->responsable}}" name="responsable">
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Domicilio</label>
-                            <input type="text" id="dom_titular" class="form-control"value="{{$titular->dom_titular}}"  name="dom_titular">
+                            <input type="text" id="dom_titular" class="form-control bloqueable" value="{{$titular->dom_titular}}"  name="dom_titular">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Código postal</label>
-                                    <input type="text" id="cp_titular" class="form-control" value="{{$titular->cp_titular}}" name="cp_titular">
+                                    <input type="text" id="cp_titular" class="form-control bloqueable" value="{{$titular->cp_titular}}" name="cp_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" id="pob_titular" class="form-control" value="{{$titular->pob_titular}}" name="pob_titular">
+                                    <input type="text" id="pob_titular" class="form-control bloqueable" value="{{$titular->pob_titular}}" name="pob_titular">
                                 </div>
                             </div>
 
@@ -86,14 +98,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Teléfono</label>
-                                    <input type="text" id="tel_titular" class="form-control" value="{{$titular->tel_titular}}" name="tel_titular">
+                                    <input type="text" id="tel_titular" class="form-control bloqueable" value="{{$titular->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Email</label>
-                                    <input type="text" id="ema_titular" class="form-control" value="{{$titular->ema_titular}}" name="ema_titular">
+                                    <input type="text" id="ema_titular" class="form-control bloqueable" value="{{$titular->ema_titular}}" name="ema_titular">
                                 </div>
                             </div>
 
@@ -103,7 +115,7 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Expediente</label>
-                                    <input type="text" id="exp_titular" class="form-control" value="{{$titular->exp_titular}}" name="exp_titular">
+                                    <input type="text" id="exp_titular" class="form-control bloqueable" value="{{$titular->exp_titular}}" name="exp_titular">
                                 </div>
                             </div>
 
@@ -111,7 +123,7 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="select">Tipo de cesión</label>
-                                    <select class="form-control" id="select" name="cesion">
+                                    <select class="form-control bloqueable" id="select" name="cesion">
                                         <option value="0">Cesión a perpetuidad</option>
                                         <option value="1">Cesión temporal</option>
                                     </select>
@@ -320,102 +332,152 @@
                 }
             });
 
+            $(".sintitular").change(function() {
+                if(this.checked) {
+                    $(".bloqueable").val('')
+                    $('#dni').val('00000000T');
+                    $('.bloqueable').attr('disabled', true);
+                } else{
+                    $('#dni').val('');
+                    $('.bloqueable').attr('disabled', false);
+
+
+                }
+            });
+
             $('#editar-nicho').submit(function (e) {
 
                 e.preventDefault();
 
-                $.ajax({
+                if(nif($('#dni').val())) {
 
-                    type: "POST",
-                    url: "{{ URL::route('editar-nicho') }}",
-                    data: $('#editar-nicho').serialize(),
-                    dataType: "html",
-                    error: function () {
+                    $.ajax({
 
-                        Lobibox.notify('error', {
-                            title: 'No se ha podido modificar el nicho',
-                            showClass: 'flipInX',
-                            delay: 3000,
-                            delayIndicator: false,
+                        type: "POST",
+                        url: "{{ URL::route('editar-nicho') }}",
+                        data: $('#editar-nicho').serialize(),
+                        dataType: "html",
+                        error: function () {
 
-                            position: 'bottom left',
-                            msg: 'Compruebe la conexión a internet'
-                        });
-                    },
-                    success: function (data) {
-
-
-                        if( $('.enterrar').is(':checked')){
-
-                            Lobibox.notify('success', {
-                                title: 'Nicho modificado correctamente<br>Preparando inhumación...',
+                            Lobibox.notify('error', {
+                                title: 'No se ha podido modificar el nicho',
                                 showClass: 'flipInX',
                                 delay: 3000,
                                 delayIndicator: false,
-                                position: 'bottom left'
+
+                                position: 'bottom left',
+                                msg: 'Compruebe la conexión a internet'
                             });
+                        },
+                        success: function (data) {
 
-                            $('#submit').hide();
-                            setTimeout(explode, 2000);
+
+                            if ($('.enterrar').is(':checked')) {
+
+                                Lobibox.notify('success', {
+                                    title: 'Nicho modificado correctamente<br>Preparando inhumación...',
+                                    showClass: 'flipInX',
+                                    delay: 3000,
+                                    delayIndicator: false,
+                                    position: 'bottom left'
+                                });
+
+                                $('#submit').hide();
+                                setTimeout(explode, 2000);
 
 
-                        } else{
+                            } else {
 
-                            Lobibox.notify('success', {
-                                title: 'Nicho modificado correctamente',
-                                showClass: 'flipInX',
-                                delay: 3000,
-                                delayIndicator: false,
-                                position: 'bottom left'
-                            });
+                                Lobibox.notify('success', {
+                                    title: 'Nicho modificado correctamente',
+                                    showClass: 'flipInX',
+                                    delay: 3000,
+                                    delayIndicator: false,
+                                    position: 'bottom left'
+                                });
+
+                            }
 
                         }
+                    });
+                }
 
-                    }
-                });
+
             });
 
+            $('#dni').on("keyup",function(){
 
-            $('#autocompletar').on('click', function (e) {
+                var aux = this.value;
+                if(aux.length== 9){
 
-                e.preventDefault();
+                    var dni = $("#dni").val();
 
-                var dni = $("#dni").val();
+                    $.ajax({
 
-                $.ajax({
+                        type: "POST",
+                        url: "{{ URL::route('autocompletarTitular') }}",
+                        data: {dni: dni},
+                        dataType: "json",
+                        error: function () {
+                        },
+                        success: function (data) {
 
-                    type: "POST",
-                    url: "{{ URL::route('autocompletarTitular') }}",
-                    data: {dni: dni},
-                    dataType: "json",
-                    error: function () {
+                            $("#nombreapellidos").val(data['nombre_titular']);
+                            $("#responsable").val(data['responsable']);
+                            $("#dom_titular").val(data['dom_titular']);
+                            $("#cp_titular").val(data['cp_titular']);
+                            $("#pob_titular").val(data['pob_titular']);
+                            $("#tel_titular").val(data['tel_titular']);
+                            $("#ema_titular").val(data['ema_titular']);
+                            $("#exp_titular").val(data['exp_titular']);
 
-                        alert("Error: no hay usuarios con ese dni");
-                        location.reload();
-                    },
-                    success: function (data) {
+                            //Desabilitamos campos para que no se puedan editar
+                            if(rol != 0){
+                                alert("entra");
+                                $("#nombreapellidos")[0].setAttribute("disabled","");
+                            }
 
-                        $("#nombreapellidos").val(data['nombre_titular']);
-                        $("#responsable").val(data['responsable']);
-                        $("#dom_titular").val(data['dom_titular']);
-                        $("#cp_titular").val(data['cp_titular']);
-                        $("#pob_titular").val(data['pob_titular']);
-                        $("#tel_titular").val(data['tel_titular']);
-                        $("#ema_titular").val(data['ema_titular']);
-                        $("#exp_titular").val(data['exp_titular']);
-
-                        //Desabilitamos campos para que no se puedan editar
-                        if(rol != 0){
-                            alert("entra");
-                            $("#nombreapellidos")[0].setAttribute("disabled","");
                         }
+                    });
 
+                }
+            });
+
+            function nif(dni) {
+                var numero;
+                var letX;
+                var letra;
+                var expresion_regular_dni;
+
+                expresion_regular_dni = /^\d{8}[a-zA-Z]$/;
+
+                if(expresion_regular_dni.test (dni) == true){
+                    numero = dni.substr(0,dni.length-1);
+                    letX = dni.substr(dni.length-1,1);
+                    numero = numero % 23;
+                    letra='TRWAGMYFPDXBNJZSQVHLCKET';
+                    letra=letra.substring(numero,numero+1);
+                    if (letra!=letX.toUpperCase()) {
+                        alert('Dni erroneo, la letra del NIF no corresponde');
+                        return false;
+                    }else{
+                        return true;
                     }
-                });
+                }else{
+                    alert('Dni erroneo, formato no válido');
+                    return false;
+                }
+            }
+
+            $('#borrar').on("click",function(){
+
+                $(".bloqueable").val('');
 
             });
 
         });
+
+
 
         function explode(){
 

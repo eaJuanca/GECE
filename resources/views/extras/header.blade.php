@@ -7,6 +7,8 @@
         <a href="{{URL::route('auth/logout')}}"> <button  class="btn btn-danger btn-xs pull-right"> <i class="fa fa-user-times"></i>
                 Desconectar </button></a>
 
+
+
     </div>
 </div>
 
