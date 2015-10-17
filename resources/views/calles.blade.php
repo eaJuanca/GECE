@@ -12,7 +12,6 @@
 @section('contenido')
 
     </br>
-
     <div class="row well" style="margin: 0">
         <div class="col col-xs-2 col-sm-2 col-md-1 col-lg-1">
             <button class="btn btn-default btn-fab mdi-content-add mdi-action-grade" data-toggle="modal" data-target="#altaCalle"></button>

@@ -14,6 +14,7 @@
 
 @section('contenido')
 
+
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading">
             <h3 class="panel-title" style="color: white">Cumplimentacion datos del nicho {{$id}}</h3>
@@ -306,6 +307,8 @@
 
         $(document).ready(function () {
 
+            var rol = {{ Auth::user()->rol }}
+
             $.material.init();
 
             $(".enterrar").change(function() {
@@ -388,25 +391,29 @@
                     error: function () {
 
                         alert("Error: no hay usuarios con ese dni");
+                        location.reload();
                     },
                     success: function (data) {
 
+                        $("#nombreapellidos").val(data['nombre_titular']);
+                        $("#responsable").val(data['responsable']);
+                        $("#dom_titular").val(data['dom_titular']);
+                        $("#cp_titular").val(data['cp_titular']);
+                        $("#pob_titular").val(data['pob_titular']);
+                        $("#tel_titular").val(data['tel_titular']);
+                        $("#ema_titular").val(data['ema_titular']);
+                        $("#exp_titular").val(data['exp_titular']);
 
-                       $("#nombreapellidos").val(data['nombre_titular']);
-                       $("#responsable").val(data['responsable']);
-                       $("#dom_titular").val(data['dom_titular']);
-                       $("#cp_titular").val(data['cp_titular']);
-                       $("#pob_titular").val(data['pob_titular']);
-                       $("#tel_titular").val(data['tel_titular']);
-                       $("#ema_titular").val(data['ema_titular']);
-                       $("#exp_titular").val(data['exp_titular']);
+                        //Desabilitamos campos para que no se puedan editar
+                        if(rol != 0){
+                            alert("entra");
+                            $("#nombreapellidos")[0].setAttribute("disabled","");
+                        }
 
                     }
                 });
 
-
             });
-
 
         });
 
