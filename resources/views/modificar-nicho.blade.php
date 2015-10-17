@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Apellidos, Nombre</label>
-                            <input type="text" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
+                            <input type="text" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular">
                         </div>
 
                         <div class="form-group">
@@ -336,10 +336,14 @@
                 if(this.checked) {
                     $(".bloqueable").val('')
                     $('#dni').val('00000000T');
-                    $('.bloqueable').attr('disabled', true);
+                    $('#nombreapellidos').val('sin titular');
+                    $('.bloqueable').attr('readonly','readonly');
                 } else{
                     $('#dni').val('');
-                    $('.bloqueable').attr('disabled', false);
+
+                    $('.bloqueable').removeAttr('readonly');
+                    $('#nombreapellidos').val('');
+
 
 
                 }
