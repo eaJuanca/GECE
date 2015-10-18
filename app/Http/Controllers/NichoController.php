@@ -29,8 +29,10 @@ class NichoController extends Controller
     {
 
 
-        $Qdisponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '')->groupby('id');
-        $Qnodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->groupby('id');
+        $Qdisponibles = InfoNicho::whereNull('GC_TITULAR_id')->where('sintitular',false)->groupby('id');
+        $Qnodisponibles = InfoNicho::whereNotNull('GC_TITULAR_id')->oRwhere('sintitular',true)->groupby('id');
+
+
 
 
         $td = count($Qdisponibles->get()); // total de nichos disponibles
@@ -38,6 +40,7 @@ class NichoController extends Controller
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
+
 
 
 
@@ -55,13 +58,15 @@ class NichoController extends Controller
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function indexModify($id)
+    public function indexModify($idnicho)
     {
 
-        $nicho = Nicho::find($id);
-        $info = InfoNicho::find($id);
+        $nicho = Nicho::find($idnicho);
+        $info = InfoNicho::find($idnicho);
         $titular = Titular::findOrNew($nicho->GC_TITULAR_id);
-        return view('modificar-nicho', compact('id', 'nicho', 'info','titular'));
+
+
+        return view('modificar-nicho', compact('idnicho', 'nicho', 'info','titular'));
 
     }
 
@@ -73,7 +78,7 @@ class NichoController extends Controller
     public function paginateDisponibles(Request $request)
     {
 
-        $disponibles = InfoNicho::where('nombre_titular', null)->orWhere('nombre_titular', '')->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
+        $disponibles = InfoNicho::whereNull('GC_TITULAR_id')->where('sintitular',false)->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
 
         foreach ($disponibles as $disponible) {
 
@@ -99,7 +104,7 @@ class NichoController extends Controller
     public function paginateNoDisponibles(Request $request)
     {
 
-        $Nodisponibles = InfoNicho::where('nombre_titular', 'not', null)->orWhere('nombre_titular', '!=', '')->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
+        $Nodisponibles = InfoNicho::whereNotNull('GC_TITULAR_id')->oRwhere('sintitular',true)->skip(10 * ($request->input('page') - 1))->groupby('id')->take(10)->get();
 
         foreach ($Nodisponibles as $Nodisponible) {
 
@@ -150,8 +155,9 @@ class NichoController extends Controller
 
             $Qdisponibles = InfoNicho::where(function ($Qdisponibles) {
 
-                $Qdisponibles->where('nombre_titular', null);
-                $Qdisponibles->orWhere('nombre_titular', '');
+                $Qdisponibles->whereNull('GC_TITULAR_id');
+                $Qdisponibles->where('sintitular',false);
+
 
             })->where(function ($Qdisponibles) use ($titular, $calle, $numero,$tramada) {
 
@@ -174,8 +180,9 @@ class NichoController extends Controller
 
             $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
 
-                $Qnodisponibles->where('nombre_titular', 'not', null);
-                $Qnodisponibles->orWhere('nombre_titular', '!=', '');
+
+                $Qnodisponibles->whereNotNull('GC_TITULAR_id');
+                $Qnodisponibles->oRwhere('sintitular',true);
 
             })->where(function ($Qnodisponibles) use ($titular, $calle, $numero, $difunto,$tramada,$dni) {
 
@@ -212,8 +219,8 @@ class NichoController extends Controller
 
         $Qdisponibles = InfoNicho::where(function ($Qdisponibles) {
 
-            $Qdisponibles->where('nombre_titular', null);
-            $Qdisponibles->orWhere('nombre_titular', '');
+            $Qdisponibles->whereNull('GC_TITULAR_id');
+            $Qdisponibles->where('sintitular',false);
 
         })->where(function ($Qdisponibles) use ($calle, $numero) {
 
@@ -258,8 +265,8 @@ class NichoController extends Controller
 
         $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
 
-            $Qnodisponibles->where('nombre_titular', 'not', null);
-            $Qnodisponibles->orWhere('nombre_titular', '!=', '');
+            $Qnodisponibles->whereNotNull('GC_TITULAR_id');
+            $Qnodisponibles->oRwhere('sintitular',true);
 
         })->where(function ($Qnodisponibles) use ($titular, $calle, $numero) {
 
@@ -334,25 +341,41 @@ class NichoController extends Controller
     public function edit(Request $request){
 
 
-        $id = '';
-        $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
-        $existtitular = Titular::where('dni_titular',$request->input('dni_titular'))->take(1)->get();
+        $sintitularbox = $request->input('sintitular');
 
-        if($existtitular->isEmpty()){
+        $idtitular = $request->input('idtitular'); //id titular
 
-            $titular->save();
-            $existtitular = Titular::where('dni_titular',$request->input('dni_titular'))->take(1)->get();
-            $id = $existtitular[0]->id;
+        $sintitular = false;
+
+        if($sintitularbox == "on"){
+
+            $idtitular = null;
+            $sintitular = true;
 
         }else{
 
-            $existtitular[0]->update($titular->attributesToArray());
-            $id = $existtitular[0]->id;
+            if($idtitular==''){
+
+                $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+                $idtitular = $titular->insertGetId($titular->attributesToArray());
+            }
+
+            else{
+
+                $titularA = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+                $titular = Titular::find($idtitular);
+                $titular->update($titularA->attributesToArray());
+                $idtitular = $request->input('idtitular'); //id titular
+
+            }
         }
 
+
+
         $nichoU = new Nicho($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
-        $nicho = Nicho::find($request->input('id'));
-        $nichoU->GC_TITULAR_id = $id;
+        $nicho = Nicho::find($request->input('idnicho'));
+        $nichoU->GC_TITULAR_id = $idtitular;
+        $nichoU->sintitular = $sintitular;
         $nicho->update($nichoU->attributesToArray());
 
     }

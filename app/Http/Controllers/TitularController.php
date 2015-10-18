@@ -109,43 +109,52 @@ class TitularController extends Controller
         $calle = $request->input('callebuscar');
 
 
-        $titulares = Titular::where('nombre_titular','like', "%$nombre%");
+        $titulares = Titular::where('nombre_titular', 'like', "%$nombre%");
 
-        if($dni != "") $titulares->where('dni_titular','like', "%$dni%");
-        if($calle != "") $titulares->where('dom_titular','like', "%$calle%");
+        if ($dni != "") $titulares->where('dni_titular', 'like', "%$dni%");
+        if ($calle != "") $titulares->where('dom_titular', 'like', "%$calle%");
 
         $titulares = $titulares->get();
 
 
-        echo'<br>';
-        echo '<table class="table table-bordered table-hover"><tr>';
-        echo '<thead>';
-        echo '<th> Nombre';  echo '</th>';
-        echo '<th> Dni';  echo '</th>';
-        echo '<th> Domicilio';  echo '</th>';
-        echo '<th> Cargar';  echo '</th>';
-        echo '</thead></tr>';
+        echo '<br>';
 
-        foreach($titulares as $titular){
+        if (count($titulares) <= 20 && count($titulares) > 0) {
+            echo '<table class="table table-bordered table-hover"><tr>';
+            echo '<thead>';
+            echo '<th> Nombre';
+            echo '</th>';
+            echo '<th> Dni';
+            echo '</th>';
+            echo '<th> Domicilio';
+            echo '</th>';
+            echo '<th> Cargar';
+            echo '</th>';
+            echo '</thead></tr>';
 
-            echo '<tr>';
+            foreach ($titulares as $titular) {
 
-            echo '<td> '.$titular->nombre_titular.'</td>';
-            echo '<td> '.$titular->dni_titular.'</td>';
-            echo '<td> '.$titular->dom_titular.'</td>';
-            echo '<td> <button type="button" onclick="cargartitularbusqueda('. $titular->id.')" class="btn btn-warning btn-xs">Cargar</button></td>';
-            echo '</tr>';
+                echo '<tr>';
+
+                echo '<td> ' . $titular->nombre_titular . '</td>';
+                echo '<td> ' . $titular->dni_titular . '</td>';
+                echo '<td> ' . $titular->dom_titular . '</td>';
+                echo '<td> <button type="button" onclick="cargartitularbusqueda(' . $titular->id . ')" class="btn btn-warning btn-xs">Cargar</button></td>';
+                echo '</tr>';
+            }
+
+            echo '<tbody>';
+            echo '</tbody>';
+            echo '</table>';
+
+        }else if (count($titulares) == 0){
+
+            echo '<h2>No existen coincidencias para esos parametros de busqueda</h2>';
+
+        }else{
+            echo '<h2>Demasiados resultados de busqueda, afine mejor</h2>';
+
         }
-
-
-
-        echo '<tbody>';
-
-
-
-        echo '</tbody>';
-        echo '</table>';
-
     }
 
 }

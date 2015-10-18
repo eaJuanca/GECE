@@ -20,7 +20,7 @@
 
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading">
-            <h3 class="panel-title" style="color: white">Cumplimentacion datos del nicho {{$id}}</h3>
+            <h3 class="panel-title" style="color: white">Cumplimentacion datos del nicho {{$idnicho}}</h3>
         </div>
         <div class="panel-body">
 
@@ -28,7 +28,7 @@
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
-                <input type="hidden" class="form-control" name="id" value="{{$id}}">
+                <input type="hidden" class="form-control" name="idnicho" id="idnicho" value="{{$idnicho}}">
 
 
                 <div class="row">
@@ -36,6 +36,52 @@
 
                         <h3 style="font-weight: bold">Titular</h3>
                         <br>
+
+
+                            <span id="infosintitular"  @if($nicho->sintitular != true) style="display: none" @endif >Info: Este nicho se añadira sin titular </span>
+
+
+                           <span id="infotitularasignado" @if($nicho->GC_TITULAR_id == null) style="display: none" @endif >Estas editando los datos de un titular existente y asignado, si deseas asignar otro titular pulse </span>
+
+
+                           <span @if($nicho->GC_TITULAR_id == null) @else style="display: none" @endif id="infotitularnuevo">Estas añadiendo un nuevo titular a este nicho </span>
+
+
+                        <div class="row">
+
+                            <div id="infoautocompletado" style="display: none;" class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <span id="h3titular" style="color: red"></span>
+                            </div>
+                        </div>
+
+
+                        <input type="hidden" id="idtitular" class="form-control" value="{{$titular->id}}" name="idtitular">
+
+                        <div class="row">
+
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button type="button" id="nuevotitular" class="btn btn-info"> &nbsp;&nbsp;&nbsp;Nuevo&nbsp;&nbsp;&nbsp; </button>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog">
+                                        <button type="button" class="btn btn-danger btn-raise">Autocompletar</button>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button type="reset" id="recuperar" class="btn btn-success">Recuperar</button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
 
                         <div class="row">
 
@@ -51,27 +97,17 @@
                                     <div class="sample1">
                                         <div class="checkbox">
                                             <label>
-                                                <input type ="checkbox" class="sintitular"> <span style="font-weight: bold;" >Sin titular temporalmente</span>
+                                                <input type ="checkbox" class="sintitular" name="sintitular" @if($nicho->sintitular == true) checked @endif> <span style="font-weight: bold;" >Sin titular temporalmente</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12" style="margin-top: 20px">
-                                <div class="form-group">
-
-                                    <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog">
-                                        <button type="button" class="btn btn-danger btn-xs btn-raise">Autocompletar</button>
-                                    </a>
-
-                                </div>
-                            </div>
-
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="nombreapellidos">Nombre y apellidos</label>
-                            <input type="text" placeholder="Nombre apellido1 apellido2" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular">
+                            <input type="text" placeholder="Nombre apellido1 apellido2" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
                         </div>
 
                         <div class="form-group">
@@ -139,7 +175,6 @@
 
 
                         </div>
-
 
 
                         <h3 style="font-weight: bold">Situacion del nicho</h3>
@@ -410,6 +445,11 @@
                     $("#tel_titular").val(data['tel_titular']);
                     $("#ema_titular").val(data['ema_titular']);
                     $("#exp_titular").val(data['exp_titular']);
+                    $("#idtitular").val(data['id']);
+
+                    $('#infosintitular').css('display','none');
+                    $('#infotitularasignado').css('display','block');
+                    $('#infotitularnuevo').css('display','none');
 
                 }
             });
@@ -452,15 +492,24 @@
 
             $(".sintitular").change(function() {
                 if(this.checked) {
-                    $(".bloqueable").val('')
-                    $('#dni').val('00000000T');
-                    $('#nombreapellidos').val('sin titular');
+
+                    $(".bloqueable").val('');
                     $('.bloqueable').attr('readonly','readonly');
+                    $('#idtitular').val('');
+                    $('#infosintitular').css('display','block');
+                    $('#infotitularasignado').css('display','none');
+                    $('#infotitularnuevo').css('display','none');
+
                 } else{
                     $('#dni').val('');
 
                     $('.bloqueable').removeAttr('readonly');
                     $('#nombreapellidos').val('');
+                    $('#infosintitular').css('display','none');
+                    $('#infotitularasignado').css('display','none');
+                    $('#infotitularnuevo').css('display','block');
+
+
 
 
 
@@ -471,7 +520,6 @@
 
                 e.preventDefault();
 
-                if(nif($('#dni').val())) {
 
                     $.ajax({
 
@@ -522,7 +570,7 @@
 
                         }
                     });
-                }
+
 
 
             });
@@ -547,6 +595,13 @@
 
                     }
                 });
+
+            });
+
+
+            $('#complete-dialog').on('hidden.bs.modal', function () {
+
+                $('#resultadostitulares').html('');
 
             });
 
@@ -578,11 +633,24 @@
                 }
             }
 
-            $('#borrar').on("click",function(){
+        });
 
-                $(".bloqueable").val('');
+        //controlar la informacion de autocompletado y que la id se vacie
+        $("#nuevotitular").on("click", function(event){
 
+            $('#editar-nicho').find('input').each(function() {
+                $(this).val('');
             });
+
+            $('#idnicho').val({{$nicho->id}});
+
+        });
+
+
+        $("#recuperar").on("click", function(event){
+
+                $("#idtitular").val({{$nicho->GC_TITULAR_id}});
+
 
         });
 
@@ -590,7 +658,7 @@
 
         function explode(){
 
-            window.location.href = "{{ route('alta-difunto-nicho',[$id])}}";
+            window.location.href = "{{ route('alta-difunto-nicho',[$idnicho])}}";
         }
         /**
          * Comentario cambios

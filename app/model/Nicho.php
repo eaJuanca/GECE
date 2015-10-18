@@ -36,6 +36,7 @@ class Nicho extends Model{
         'cesion',
         'voluntades',
         'tipo',
-        'GC_TITULAR_id'
+        'GC_TITULAR_id',
+        'sintitular'
     ];
 }
