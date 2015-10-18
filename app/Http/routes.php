@@ -145,6 +145,10 @@ Route::post('getData', ['as' => 'getData', 'uses' => 'NichoController@getData'])
 Route::post('autocompletarTitular', ['as' => 'autocompletarTitular', 'uses' => 'TitularController@get']);
 
 
+//para la modal
+Route::post('autocompletarTitulares', ['as' => 'autocompletarTitulares', 'uses' => 'TitularController@getForModal']);
+
+
 Route::get('login', ['as' => 'login', function()
 {
     return view('login');

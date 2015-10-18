@@ -39,14 +39,14 @@
 
                         <div class="row">
 
-                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">DNI</label>
+                                    <label class="control-label" for="dni">DNI</label>
                                     <input type="text" id="dni" class="form-control bloqueable" value="{{$titular->dni_titular}}" name="dni_titular">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="form-group" style=" margin-top: 35px">
                                     <div class="sample1">
                                         <div class="checkbox">
@@ -59,38 +59,42 @@
                             </div>
 
                             <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12" style="margin-top: 20px">
-                                <div class="form-group" style="margin-left: -20px">
-                                    <button id="borrar" type="button" class="btn btn-danger btn-xs btn-raise">Borrar</button>
+                                <div class="form-group">
+
+                                    <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog">
+                                        <button type="button" class="btn btn-danger btn-xs btn-raise">Autocompletar</button>
+                                    </a>
+
                                 </div>
                             </div>
 
                         </div>
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning">Apellidos, Nombre</label>
-                            <input type="text" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular">
+                            <label class="control-label" for="nombreapellidos">Nombre y apellidos</label>
+                            <input type="text" placeholder="Nombre apellido1 apellido2" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular">
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning">Responsable del Nicho</label>
+                            <label class="control-label" for="responsable">Responsable del Nicho</label>
                             <input type="text" id="responsable" class="form-control bloqueable" value="{{$titular->responsable}}" name="responsable">
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning">Domicilio</label>
+                            <label class="control-label" for="dom_titular">Domicilio</label>
                             <input type="text" id="dom_titular" class="form-control bloqueable" value="{{$titular->dom_titular}}"  name="dom_titular">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Código postal</label>
+                                    <label class="control-label" for="cp_titular">Código postal</label>
                                     <input type="text" id="cp_titular" class="form-control bloqueable" value="{{$titular->cp_titular}}" name="cp_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Poblacion</label>
+                                    <label class="control-label" for="pob_titular">Poblacion</label>
                                     <input type="text" id="pob_titular" class="form-control bloqueable" value="{{$titular->pob_titular}}" name="pob_titular">
                                 </div>
                             </div>
@@ -100,14 +104,14 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Teléfono</label>
+                                    <label class="control-label" for="tel_titular">Teléfono</label>
                                     <input type="text" id="tel_titular" class="form-control bloqueable" value="{{$titular->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Email</label>
+                                    <label class="control-label" for="ema_titular">Email</label>
                                     <input type="text" id="ema_titular" class="form-control bloqueable" value="{{$titular->ema_titular}}" name="ema_titular">
                                 </div>
                             </div>
@@ -117,18 +121,17 @@
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Expediente</label>
+                                    <label class="control-label" for="exp_titular">Expediente</label>
                                     <input type="text" id="exp_titular" class="form-control bloqueable" value="{{$titular->exp_titular}}" name="exp_titular">
                                 </div>
                             </div>
-
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="select">Tipo de cesión</label>
                                     <select class="form-control bloqueable" id="select" name="cesion">
-                                        <option value="0">Cesión a perpetuidad</option>
-                                        <option value="1">Cesión temporal</option>
+                                        <option value="0" @if($nicho->cesion==0) selected @endif  >Cesión a perpetuidad</option>
+                                        <option value="1" @if($nicho->cesion==1) selected @endif  >Cesión temporal</option>
                                     </select>
 
                                 </div>
@@ -284,7 +287,17 @@
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Observaciones</label>
-                                    <textarea type="text" class="form-control" name="observaciones">{{$nicho->observaciones}}</textarea>
+                                    <textarea type="text" class="form-control" name="observaciones" rows="3">{{$nicho->observaciones}}</textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Voluntades</label>
+                                    <textarea type="text" id="voluntades" class="form-control" name="voluntades" rows="3">{{$nicho->voluntades}}</textarea>
                                 </div>
                             </div>
 
@@ -299,9 +312,111 @@
         </div>
     </div>
 
+
+    <div id="complete-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Busqueda titulares</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form id="buscartitular">
+
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="nombrebuscar">Nombre y apellidos</label>
+                                    <input type="text" required id="nombrebuscar" class="form-control" name="nombrebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="callebuscar">Calle</label>
+                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="dnibuscar">DNI</label>
+                                    <input type="text" id="dnibuscar" class="form-control" name="dnibuscar">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="resultadostitulares">
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button type="submit" id="botonbuscar" class="btn btn-success">Buscar</button>
+
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('js')
+
+
+    <script>
+        function cargartitularbusqueda(id){
+
+            $.ajax({
+
+                type: "POST",
+                url: "{{ URL::route('autocompletarTitular') }}",
+                data: {id: id},
+                dataType: "json",
+                error: function () {
+                },
+                success: function (data) {
+
+                    $("#nombreapellidos").val(data['nombre_titular']);
+                    $("#responsable").val(data['responsable']);
+                    $("#dni").val(data['dni_titular']);
+                    $("#dom_titular").val(data['dom_titular']);
+                    $("#cp_titular").val(data['cp_titular']);
+                    $("#pob_titular").val(data['pob_titular']);
+                    $("#tel_titular").val(data['tel_titular']);
+                    $("#ema_titular").val(data['ema_titular']);
+                    $("#exp_titular").val(data['exp_titular']);
+
+                }
+            });
+        }
+
+    </script>
+
 
     <script type="text/javascript">
 
@@ -412,43 +527,30 @@
 
             });
 
-            $('#dni').on("keyup",function(){
+            $('#buscartitular').submit(function (e) {
 
-                var aux = this.value;
-                if(aux.length== 9){
+                e.preventDefault();
 
-                    var dni = $("#dni").val();
 
-                    $.ajax({
+                $.ajax({
 
-                        type: "POST",
-                        url: "{{ URL::route('autocompletarTitular') }}",
-                        data: {dni: dni},
-                        dataType: "json",
-                        error: function () {
-                        },
-                        success: function (data) {
+                    type: "POST",
+                    url: "{{ URL::route('autocompletarTitulares') }}",
+                    data: $('#buscartitular').serialize(),
+                    dataType: "html",
+                    error: function () {
 
-                            $("#nombreapellidos").val(data['nombre_titular']);
-                            $("#responsable").val(data['responsable']);
-                            $("#dom_titular").val(data['dom_titular']);
-                            $("#cp_titular").val(data['cp_titular']);
-                            $("#pob_titular").val(data['pob_titular']);
-                            $("#tel_titular").val(data['tel_titular']);
-                            $("#ema_titular").val(data['ema_titular']);
-                            $("#exp_titular").val(data['exp_titular']);
+                    },
+                    success: function (data) {
 
-                            //Desabilitamos campos para que no se puedan editar
-                            if(rol != 0){
-                                alert("entra");
-                                $("#nombreapellidos")[0].setAttribute("disabled","");
-                            }
+                        $('#resultadostitulares').html(data);
 
-                        }
-                    });
+                    }
+                });
 
-                }
             });
+
+
 
             function nif(dni) {
                 var numero;

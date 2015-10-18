@@ -89,15 +89,62 @@ class TitularController extends Controller
     {
 
 
-            $dni = $request->input("dni");
-            $titular = Titular::where('dni_titular', $dni)->take(1)->get();
+            $id = $request->input("id");
+            $titular = Titular::find($id);
 
 
-            if ($titular->isEmpty()) {
+            if ($titular== null) {
                 return "error";
             } else {
-                return json_encode($titular[0]->attributesToArray());
+                return json_encode($titular->attributesToArray());
             }
+
+    }
+
+    public function getForModal(Request $request)
+    {
+
+        $nombre = $request->input('nombrebuscar');
+        $dni = $request->input('dnibuscar');
+        $calle = $request->input('callebuscar');
+
+
+        $titulares = Titular::where('nombre_titular','like', "%$nombre%");
+
+        if($dni != "") $titulares->where('dni_titular','like', "%$dni%");
+        if($calle != "") $titulares->where('dom_titular','like', "%$calle%");
+
+        $titulares = $titulares->get();
+
+
+        echo'<br>';
+        echo '<table class="table table-bordered table-hover"><tr>';
+        echo '<thead>';
+        echo '<th> Nombre';  echo '</th>';
+        echo '<th> Dni';  echo '</th>';
+        echo '<th> Domicilio';  echo '</th>';
+        echo '<th> Cargar';  echo '</th>';
+        echo '</thead></tr>';
+
+        foreach($titulares as $titular){
+
+            echo '<tr>';
+
+            echo '<td> '.$titular->nombre_titular.'</td>';
+            echo '<td> '.$titular->dni_titular.'</td>';
+            echo '<td> '.$titular->dom_titular.'</td>';
+            echo '<td> <button type="button" onclick="cargartitularbusqueda('. $titular->id.')" class="btn btn-warning btn-xs">Cargar</button></td>';
+            echo '</tr>';
+        }
+
+
+
+        echo '<tbody>';
+
+
+
+        echo '</tbody>';
+        echo '</table>';
 
     }
 
