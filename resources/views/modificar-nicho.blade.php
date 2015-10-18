@@ -41,10 +41,10 @@
                             <span id="infosintitular"  @if($nicho->sintitular != true) style="display: none" @endif >Info: Este nicho se añadira sin titular </span>
 
 
-                           <span id="infotitularasignado" @if($nicho->GC_TITULAR_id == null) style="display: none" @endif >Estas editando los datos de un titular existente y asignado, si deseas asignar otro titular pulse </span>
+                           <span id="infotitularasignado" @if($nicho->GC_TITULAR_id == null) style="display: none" @endif >Estas editando los datos de un titular existente, si deseas asignar otro titular pulse NUEVO </span>
 
 
-                           <span @if($nicho->GC_TITULAR_id == null) @else style="display: none" @endif id="infotitularnuevo">Estas añadiendo un nuevo titular a este nicho </span>
+                           <span @if($nicho->GC_TITULAR_id == null && $nicho->sinasignar==true) @else style="display: none" @endif id="infotitularnuevo">Estas añadiendo un nuevo titular a este nicho </span>
 
 
                         <div class="row">
@@ -644,12 +644,26 @@
 
             $('#idnicho').val({{$nicho->id}});
 
+            $('#infosintitular').css('display','none');
+            $('#infotitularasignado').css('display','none');
+            $('#infotitularnuevo').css('display','block');
+            $('.sintitular').removeAttr('checked');
+
         });
 
 
         $("#recuperar").on("click", function(event){
 
                 $("#idtitular").val({{$nicho->GC_TITULAR_id}});
+
+            $('#infosintitular').css('display','none');
+
+            if("{{$nicho->sintitular}}" == true) {
+                $('.sintitular').attr('checked');
+                $('#infotitularasignado').css('display','block');
+            }
+            if("{{$nicho->sintitular}}" == false) $('#infosintitular').css('display','block');
+            $('#infotitularnuevo').css('display','none');
 
 
         });
