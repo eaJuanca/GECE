@@ -343,11 +343,12 @@ class NichoController extends Controller
 
         $sintitularbox = $request->input('sintitular');
 
+
         $idtitular = $request->input('idtitular'); //id titular
 
         $sintitular = false;
 
-        if($sintitularbox == "on" || $sintitularbox == ""){
+        if($sintitularbox != null){
 
             $idtitular = null;
             $sintitular = true;
