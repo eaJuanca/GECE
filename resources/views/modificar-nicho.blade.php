@@ -85,7 +85,7 @@
 
                         <div class="row">
 
-                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="dni">DNI</label>
                                     <input type="text" id="dni" class="form-control bloqueable" value="{{$titular->dni_titular}}" name="dni_titular">
@@ -97,7 +97,7 @@
                                     <div class="sample1">
                                         <div class="checkbox">
                                             <label>
-                                                <input type ="checkbox" class="sintitular" name="sintitular" @if($nicho->sintitular == true) checked @endif> <span style="font-weight: bold;" >Sin titular temporalmente</span>
+                                                <input type ="checkbox" class="sintitular" id="sintitular" name="sintitular" @if($nicho->sintitular == true) checked @endif> <span style="font-weight: bold;" >Sin titular temporalmente</span>
                                             </label>
                                         </div>
                                     </div>
@@ -450,6 +450,8 @@
                     $('#infosintitular').css('display','none');
                     $('#infotitularasignado').css('display','block');
                     $('#infotitularnuevo').css('display','none');
+                    $('#sintitular')[0].checked = false;
+
 
                 }
             });
@@ -499,6 +501,7 @@
                     $('#infosintitular').css('display','block');
                     $('#infotitularasignado').css('display','none');
                     $('#infotitularnuevo').css('display','none');
+                    $(".sintitular").val="on";
 
                 } else{
                     $('#dni').val('');
@@ -647,22 +650,30 @@
             $('#infosintitular').css('display','none');
             $('#infotitularasignado').css('display','none');
             $('#infotitularnuevo').css('display','block');
-            $('.sintitular').removeAttr('checked');
+
+            $('#sintitular')[0].checked = false;
+
 
         });
 
 
         $("#recuperar").on("click", function(event){
 
-                $("#idtitular").val({{$nicho->GC_TITULAR_id}});
+            var sint = "{{$nicho->sintitular}}";
+
+            $("#idtitular").val({{$nicho->GC_TITULAR_id}});
 
             $('#infosintitular').css('display','none');
 
-            if("{{$nicho->sintitular}}" == true) {
-                $('.sintitular').attr('checked');
-                $('#infotitularasignado').css('display','block');
+            if(sint == "1") {
+
+                $('#sintitular')[0].checked = true;
+
+                $('#infosintitular').css('display','block');
             }
-            if("{{$nicho->sintitular}}" == false) $('#infosintitular').css('display','block');
+
+            if(sint == "0") {$('#infosintitular').css('display','block');}
+
             $('#infotitularnuevo').css('display','none');
 
 

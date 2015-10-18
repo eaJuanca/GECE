@@ -347,7 +347,7 @@ class NichoController extends Controller
 
         $sintitular = false;
 
-        if($sintitularbox == "on"){
+        if($sintitularbox == "on" || $sintitularbox == ""){
 
             $idtitular = null;
             $sintitular = true;
