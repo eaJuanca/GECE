@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="437357632">
-    <data-source source="LOCAL" name="MySQL - GECE@localhost" uuid="0f1324f6-0e57-4635-aa73-7e3fffbb095b">
+  <component name="DataSourceManagerImpl" format="xml" hash="1928402399">
+    <data-source source="LOCAL" name="MySQL - gestioncementerio@localhost" uuid="acad20ef-62e4-486b-9561-f7eeb4775d15">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/GECE</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/gestioncementerio</jdbc-url>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />

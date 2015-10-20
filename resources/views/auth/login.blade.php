@@ -105,8 +105,9 @@
     <input type="text" value="" placeholder="Usuario" id="username" name="email"/>
     <input type="password" value="" placeholder="Password" id="password" name="password"/>
 
-    <button type="submit"> Entrar </button>
+    <button type="submit"> Entrar</button>
 </form>
 </body>
 
 </html>
+

@@ -50,7 +50,7 @@ Route::group(['prefix' => '/'], function()
 });
 
 //
-Route::post('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
+Route::get('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
 Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@delete']);
 

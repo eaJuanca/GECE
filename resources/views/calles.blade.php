@@ -926,7 +926,7 @@
                 e.preventDefault();
 
                 $.ajax({
-                    type: "POST",
+                    type: "GET",
                     url: "{{ URL::route('altaCalle') }}",
                     data: $("#form-alta").serialize(),
                     dataType: "html",
