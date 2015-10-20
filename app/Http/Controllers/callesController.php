@@ -434,23 +434,29 @@ class callesController extends Controller {
             $parcela->GC_CALLE_id = $idCalle;
             $parcela->save();
 
-            //asignamos las tramadas a la parcela
-            for($i = 1; $i <= $r->input("tramadas_parcela"); $i++)
-            {
-                //Creamos un objeto tramada
-                $tramada = new Tramada();
+            //Comprobamos si hemos insertado tramadas en la parcela individual
+             $tramadasParcela = $r->input("tramadas_parcela");
 
-                //obtemos los parámetros del objeto request
-                $numNichos = $r->input("tramada". $i ."_ind");
+            if($tramadasParcela > 0){
 
-                //Asignamos las propiedades del objeto
-                $tramada->tramada = $i;
-                $tramada->nichos = $numNichos;
-                $tramada->GC_PARCELA_id = $parcela->id;
-                $tramada->save();
+                //asignamos las tramadas a la parcela
+                for($i = 1; $i <= $tramadasParcela  ; $i++)
+                {
+                    //Creamos un objeto tramada
+                    $tramada = new Tramada();
 
-                //Guardamos los x nichos de la tramada $i
-                $this->guardarNichos($numNichos,$tramada->id,1,0);
+                    //obtemos los parámetros del objeto request
+                    $numNichos = $r->input("tramada". $i ."_ind");
+
+                    //Asignamos las propiedades del objeto
+                    $tramada->tramada = $i;
+                    $tramada->nichos = $numNichos;
+                    $tramada->GC_PARCELA_id = $parcela->id;
+                    $tramada->save();
+
+                    //Guardamos los x nichos de la tramada $i
+                    $this->guardarNichos($tramadasParcela * $numNichos,$tramada->id,$i,$tramadasParcela);
+                }
             }
     }
 

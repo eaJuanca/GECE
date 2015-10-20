@@ -31,7 +31,6 @@
             <table id="example" class=" responsive table-striped table-hover " cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="width: 100%;">
                 <thead>
                 <tr role="row">
-                    <th class="sorting_asc" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="First name: activate to sort column descending" style="width: 75px;">Cód</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 74px;">Nombre</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 171px;">Tramadas</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 79px;">Nichos</th>
@@ -50,7 +49,6 @@
                     @foreach($calles as $calle)
 
                         <tr role="row" class="odd">
-                            <td class="sorting_1">{{$calle->id}}</td>
                             <td>{{$calle->nombre}}</td>
                             <td>{{$calle->num_tramadas}}</td>
                             <td>{{$calle->total}}</td>
@@ -894,7 +892,6 @@
     }
 
 
-
     $(document).ready(function(){
 
         $(document).ajaxStop($.unblockUI);
@@ -919,9 +916,14 @@
             var tramadas = $("#tramadas").val();
             var parcelas = $("#parcelas").val();
             var tramadas_parcela = $("#tramadas_parcela").val();
+            //Si añadimos una parcela a una existente comprobamos que este campo tenga algun valor para que no entre en el else del ajax
+            var numero = $("#inputNumero").val();
+
+
+
 
             if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 || parseInt(parcelas) > 0 && parseInt(parcelas)
-                    || parseInt(tramadas_parcela) > 0 && parseInt(tramadas_parcela) ) {
+                    || parseInt(tramadas_parcela) > 0 && parseInt(tramadas_parcela) || numero != "") {
 
                 e.preventDefault();
 

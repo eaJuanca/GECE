@@ -103,6 +103,11 @@
 
     <script type="text/javascript">
 
+        //Nada más cargar la vista obtemos el nº de tramadas que tiene la calle y el nicho
+        var actualTramdas = $("#tramadas").val();
+        var actualNichos = $("#tramada1").val();
+        var iguales = true;
+
         $(document).ready(function () {
 
 
@@ -137,7 +142,6 @@
 
             function ocultarInputs(inicio, fin){
 
-
                 for(var i = inicio; i <= fin; i++) {
                     $('#tramada' + i)[0].setAttribute("type", "hidden");
                 }
@@ -153,11 +157,16 @@
 
             $("#editar-calle").submit(function(e){
 
-                //obtenemos el num de tramadas
+                //obtenemos el num de tramadas que queremos insertar demás para comprobar si es mayor
+                //que el valor actual.
                 var tramadas = $("#tramadas").val();
-                //var parcelas = $("#parcelas").val()
 
-                if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 /*|| parseInt(parcelas) > 0 && parseInt(parcelas)*/) {
+                //Comprobamos también los nichos si coinciden y son mayor que el actual.
+                var nichos = $('#tramada' + 1).val();
+
+                comprobarNichos(tramadas);
+
+                if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 && ( (tramadas > actualTramdas && iguales) || (nichos > actualNichos && iguales) ) ) {
 
                     e.preventDefault();
 
@@ -184,10 +193,30 @@
                     });
                 }else
                 {
-                    alert("Selecciona nº de tramdas");
+                    alert("Selecciona un nº de tramadas mayor al que ya hay");
                 }
             });
 
+            //Comprobamos si el nº de los nichos ha cambiado y si es en todos igual
+            function comprobarNichos(fin){
+
+                i = 2;
+
+                while(iguales && i <= fin)
+                {
+                    if( $('#tramada' + 1).val() !=  $('#tramada' + i).val())
+                    {
+                        iguales = false;
+                    }
+
+                    i++;
+                }
+                /*for(var i = inicio; i <= fin; i++) {
+                    if( $('#tramada' + 1).val() !=  $('#tramada' + i).val()){
+                        iguales = false;
+                    }
+                }*/
+            }
 
         });
 
