@@ -58,8 +58,12 @@ Route::get('ultimoPanteon', ['as' => 'ultimoPanteon', 'uses' => 'callesControlle
 
 Route::get('editarCalle',  ['as' => 'editarCalle', 'uses' => 'callesController@edit']);
 
-//Parte tarifas
+//Alta usuarios
+Route::get('usuarios',  ['as' => 'usuarios', 'uses' => 'altaUsuarioController@index']);
 
+Route::get('nueva_alta',  ['as' => 'nueva_alta', 'uses' => 'altaUsuarioController@create']);
+
+//Parte tarifas
 Route::get('tarifas',  ['as' => 'tarifas', 'uses' => 'tarifasController@index']);
 //no se porqué no va post
 Route::get('cp_parcelas',  ['as' => 'cp_parcelas', 'uses' => 'tarifasController@cp_parcelas']);
@@ -85,9 +89,6 @@ Route::get('mv_parcelas',  ['as' => 'mv_parcelas', 'uses' => 'tarifasController@
 Route::get('m_nichos',  ['as' => 'm_nichos', 'uses' => 'tarifasController@m_nichos']);
 
 Route::get('mv_nichos',  ['as' => 'mv_nichos', 'uses' => 'tarifasController@mv_nichos']);
-
-
-
 
 
 //Fin parte tarifas

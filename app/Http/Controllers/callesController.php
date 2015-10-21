@@ -255,9 +255,32 @@ class callesController extends Controller {
 
         $calle = Calle::find($idCalle);
 
-        $tramadas = Tramada::where('GC_CALLE_id' , "=", $idCalle)->get();
 
-        return view('modificar_calle',compact('calle','tramadas'));
+        if($calle->tipo_calle == 1)
+        {
+            //Obtenemos las tramadas de la calle
+            $tramadas = Tramada::where('GC_CALLE_id' , "=", $idCalle)->get();
+
+            return view('modificar_calle_nichos',compact('calle','tramadas'));
+
+        }else{
+
+            //Obtenemos las parcelas de la calle panteon.
+            $parcelas = Parcela::where('GC_CALLE_id' , "=", $idCalle)->get();
+
+            //Obtenemos las tramadas de cada parcela para pasarlas a la vista.
+            $tramadas = array();
+
+            foreach($parcelas as $parcela){
+
+                $tramada = Tramada::where('GC_PARCELA_id', '=' , $parcela->id)->get();
+                $elemento = array($parcela->id, $tramada);
+
+                array_push($tramadas,$elemento);
+            }
+            dd($tramadas);
+            return view('modificar_calle_panteon',compact('calle','parcelas','tramadas'));
+        }
 
     }
 
@@ -471,10 +494,5 @@ class callesController extends Controller {
         $calle = Calle::find($r->input("id"));
         return $calle->num_panteones;
     }
-
-    /**
-     * Comentario cambios
-     */
-
 }
 

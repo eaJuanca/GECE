@@ -24,7 +24,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name','password'];
+    protected $fillable = ['name','password','rol','nichos','panteones','calle','difuntos',
+                           'recibos','facturas','tarifas','libro_registros','usuarios'];
 
     /**
      * The attributes excluded from the model's JSON form.

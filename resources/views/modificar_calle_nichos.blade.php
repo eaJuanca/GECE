@@ -21,8 +21,6 @@
         </div>
         <div class="panel-body">
 
-            @if($calle->tipo_calle == 1)
-
                 <form id="editar-calle">
 
                     <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -85,13 +83,6 @@
                     <button class="btn btn-success btn-raised">Modificar calle</button>
 
                 </form>
-
-            @else
-
-                <h1>panteon</h1>
-
-            @endif
-
 
         </div>
     </div>
