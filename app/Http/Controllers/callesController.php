@@ -278,7 +278,7 @@ class callesController extends Controller {
 
                 array_push($tramadas,$elemento);
             }
-            dd($tramadas);
+
             return view('modificar_calle_panteon',compact('calle','parcelas','tramadas'));
         }
 

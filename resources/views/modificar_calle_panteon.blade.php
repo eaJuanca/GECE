@@ -40,6 +40,7 @@
         <div class="row">
             @foreach($parcelas as $parcela)
 
+
                 <div class="col-xs-12 col-md-12 col-lg-4 text-center">
                     <form id="{{"parcela" . $parcela->id}}">
 
@@ -50,22 +51,35 @@
                                 <input type="text" name="nombre" class="form-control" id="inputNombre" value="{{$parcela->numero}}" placeholder="Nombre de la calle" required>
                             </div>
 
+                            <label for="inputFile" class="col-lg-2 ">Tamaño</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="nombre" class="form-control" id="inputNombre" value="{{$parcela->tamanyo}}" placeholder="Nombre de la calle" required>
+                            </div>
+
                             <div class="row">
                                 <label class="col-lg-2 margin">Tramadas</label>
                                 <div class="col-lg-9">
 
                                     <select class="form-control" id="tramadas" name="tramadas">
-                                        <option>- ¿Cuántas tramadas tiene la parcela? -</option>
 
                                         <?php
 
-                                        for($i = 1; $i <= 9 ; $i++){
+                                            $indice = 0;
 
-                                            if($i == count($tramadas))
-                                                echo " <option selected>  " . $i . "</option>";
-                                            else
-                                                echo " <option>  " . $i . "</option>";
-                                        }
+                                            if(count($tramadas[$indice][1]) > 0){
+
+                                                for($i = 1; $i <= 9 ; $i++){
+
+                                                    if($i == count($tramadas[$indice][1]))
+                                                        echo " <option selected>  " . $i . "</option>";
+                                                    else
+                                                        echo " <option>  " . $i . "</option>";
+                                                }
+
+                                                $indice++;
+                                            }else{
+
+                                            }
 
                                         ?>
                                     </select>

@@ -19,6 +19,7 @@ class Tcp_parcelas extends Model{
         'id',
         'tarifa'
     ];
+
 }
 /** esto es un poco basura */
-//*comentario///
+//*comentario////
