@@ -59,23 +59,25 @@
 
                         <div class="row">
 
-                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col col-lg-3 col-md-3 col-sm-4 col-xs-12">
                                 <div class="form-group">
-                                    <button type="button" id="nuevotitular" class="btn btn-info"> &nbsp;&nbsp;&nbsp;Nuevo&nbsp;&nbsp;&nbsp; </button>
+                                    <button style="font-size: 13px!important; align-content: center" type="button" id="nuevotitular" class="btn btn-info btn-xs"> <i class="fa fa-user-plus"></i>
+                                         Nuevo </button>
                                 </div>
                             </div>
 
-                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-6 col-sm-4 col-xs-12">
                                 <div class="form-group">
                                     <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog">
-                                        <button type="button" class="btn btn-danger btn-raise">Autocompletar</button>
+                                        <button style="font-size: 13px!important;" type="button" class="btn btn-danger btn-xs"><i class="fa fa-align-right"></i>
+                                             Autocompletar</button>
                                     </a>
                                 </div>
                             </div>
 
-                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
                                 <div class="form-group">
-                                    <button type="reset" id="recuperar" class="btn btn-success">Recuperar</button>
+                                    <button style="font-size: 13px!important;" type="reset" id="recuperar" class="btn btn-success btn-xs"><i class="fa fa-undo"></i> Recuperar</button>
                                 </div>
                             </div>
 
@@ -201,6 +203,13 @@
                         <h3 style="font-weight: bold">Facturado a</h3>
                         <br>
 
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button style="font-size: 11px!important;" type="button" id="copiartitular" class="btn btn-warning button-xs"><i class="fa fa-files-o"></i> Copiar desde Titular</button>
+                                </div>
+                            </div>
+                            </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Nombre</label>
@@ -342,7 +351,7 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-success btn-raised" id="submit">Modificar nicho</button>
+                <button type="submit" class="btn btn-success btn-raised" id="submit"><i class="fa fa-pencil-square-o"></i> Modificar nicho</button>
             </form>
         </div>
     </div>
@@ -485,9 +494,9 @@
 
             $(".enterrar").change(function() {
                 if(this.checked) {
-                    $('#submit').text('Modificar nicho y enterrar');
+                    $('#submit').html('<i class="fa fa-pencil-square-o"></i> Modificar nicho y enterrar <i class="fa fa-university"></i>');
                 } else{
-                    $('#submit').text('Modificar nicho');
+                    $('#submit').html('<i class="fa fa-pencil-square-o"></i> Modificar nicho');
 
                 }
             });
@@ -638,12 +647,28 @@
 
         });
 
+        $("#copiartitular").on("click", function(event){
+
+            $("input[name='nom_facturado']").val($("input[name='nombre_titular']").val());
+            $("input[name='dir_facturado']").val($("input[name='dom_titular']").val());
+            $("input[name='nif_facturado']").val($("input[name='dni_titular']").val());
+            $("input[name='pob_facturado']").val($("input[name='pob_titular']").val());
+            //$("input[name='pro_facturado']").val($("input[name='nombre_titular']").val());
+            $("input[name='cp_facturado']").val($("input[name='cp_titular']").val());
+            $("input[name='tel_facturado']").val($("input[name='tel_titular']").val());
+
+        });
+
         //controlar la informacion de autocompletado y que la id se vacie
         $("#nuevotitular").on("click", function(event){
 
             $('#editar-nicho').find('input').each(function() {
                 $(this).val('');
             });
+
+            $("#select").val("0");
+
+
 
             $('#idnicho').val({{$nicho->id}});
 
@@ -655,6 +680,8 @@
 
 
         });
+
+
 
 
         $("#recuperar").on("click", function(event){
@@ -672,7 +699,11 @@
                 $('#infosintitular').css('display','block');
             }
 
-            if(sint == "0") {$('#infosintitular').css('display','block');}
+            if(sint == "0") {
+
+                $('#infotitularasignado').css('display','block');
+
+            }
 
             $('#infotitularnuevo').css('display','none');
 

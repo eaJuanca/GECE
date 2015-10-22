@@ -340,7 +340,6 @@ class NichoController extends Controller
      */
     public function edit(Request $request){
 
-
         $sintitularbox = $request->input('sintitular');
 
 
