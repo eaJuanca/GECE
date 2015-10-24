@@ -67,11 +67,12 @@
 
                                     @for($i = 0; $i < count($tramadas); $i++)
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$i+1!!}' id='tramada{!!$i+1!!}' value="{{$tramadas[$i]->nichos}}" placeholder='tramada{!!$i+1!!}' required>
-                                        <input type='hidden' name=-"tra{!!$i+1!!}" value="{{$tramadas[$i]->id}}">
+                                        <input type='hidden' name="tra{!!$i+1!!}" value="{{$tramadas[$i]->id}}">
                                     @endfor
                                     @for($i = count($tramadas)+1; $i <= 9; $i++)
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$i!!}' id='tramada{!!$i!!}' placeholder='tramada{!!$i!!}' required>
                                     @endfor
+
                                 </div>
                             </div>
 

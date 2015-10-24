@@ -251,6 +251,12 @@ class callesController extends Controller {
         }
     }
 
+    /**
+     * Función que devuelve una vistra u otra con los parametros necesarios para modificar o calle
+     * o panteones
+     * @param $idCalle es el id de la calle a editar
+     * @return View es la vista a devolver.
+     */
     function editarView($idCalle){
 
         $calle = Calle::find($idCalle);
@@ -284,6 +290,10 @@ class callesController extends Controller {
 
     }
 
+    /**
+     * Función para modificar las calles tanto en nº de tramadas como de nichos.
+     * @param Request $r es la petición ajax con los valores a cambiar en la calle.
+     */
     function edit(Request $r){
 
         //Obtenemos el id de la calle a editar y le cambiamos el nombre
@@ -303,14 +313,15 @@ class callesController extends Controller {
         $countTramadas = Tramada::where('GC_CALLE_id' , '=',$r->input('idCalle'))->get();
 
         //Obtenemos el numero de nichos que hay en tramada 1 de esta calle en concreto para saber si
-        //se pretede añadir más
-        $countNichos = Nicho::where("GC_Tramada_id", '=', $countTramadas[0]->id)->count();
+        //se pretede añadir más, pero primero debemos ver si tienen alguna tramada antes
+        if(!$countTramadas->isEmpty()){
+            $countNichos = Nicho::where("GC_Tramada_id", '=', $countTramadas[0]->id)->count();
+        }
 
-        //Si no se han añadido tramadas comprobamos si se han añadido nichos.
+        //Si no se han añadido tramadas sólamente comprobamos si se han añadido nichos o las dos.
         if($numTramadas == count($countTramadas)){
 
             $this->aumentarNichos($r,$calle->id,$updateCalle);
-
         }
 
         //Si se han añadido tramadas y nichos
@@ -324,18 +335,62 @@ class callesController extends Controller {
         else {
 
             $this->aumentarTramadas($r,$numTramadas,$updateCalle,$numNichos);
+        }
+    }
 
-            //En caso de ser un numero menor estamos quitando nichos ¿qué nichos? o quitando tramadas
-            //hay que comprobar que no tengan muertos ni titular
-            //$this->sePuedeCambiar();
+    /**
+     * función para editar las parcelas.
+     * @param Request $r es la petición ajax con los datos del form
+     */
+    function editarParcelas(Request $r){
+
+        //Obtenemos la parcela a actualizar
+        $parcela = Parcela::find($r->input('idParcela'));
+        //y actualizamos sus valores de numero y tamaño
+        $parcela->numero = $r->input("numero");
+        $parcela->tamanyo = $r->input("tamanyo");
+        //Actualizamos la parcela en la BD
+        $parcela->save();
+        //Obtenemos el valor del input.
+        $numTramadas = $r->input("tramadas");
+
+        //Obtenemos las tramadas que tiene esa parcela para ver si son las mismas o se han añadido más.
+        $countTramadas = Tramada::where('GC_PARCELA_id' , '=',$r->input('idParcela'))->get();
+
+        //obtemos el número de nichos para la primera tramada por ejemplo porque las demas deben ser igual
+        $numNichos = $r->input("tramada1_p".$r->input("idParcela"));
+
+        //Obtenemos el numero de nichos que hay en tramada 1 de esta calle en concreto para saber si
+        //se pretede añadir más
+
+        if(!$countTramadas->isEmpty()){
+            $countNichos = Nicho::where("GC_Tramada_id", '=', $countTramadas[0]->id)->count();
+        }else{
+            $countNichos = 0;
+        }
+
+        //Ahora actualizamos el número de tramadas y nichos.
+        if($numTramadas == count($countTramadas)){
+
+            $this->aumentarNichosParcela($r,$numNichos);
+        }
+
+        //Si se han añadido tramadas y nichos
+        elseif( (count($countTramadas) < $numTramadas) && ($countNichos < $numNichos)){
+
+            $this->aumentarTramadasPacela($r,$numTramadas,$countNichos);
+            $this->aumentarNichosParcela($r,$numNichos);
+
+        }
+        else {
+            $this->aumentarTramadasPacela($r,$numTramadas,$numNichos);
         }
 
     }
 
-
     function updateNichos($numNichosTramada,$idTramada,$inicio,$incremento){
 
-        $nichos = Nicho::Where("GC_Tramada_id" , "=", $idTramada)->get();
+        $nichos = Nicho::where("GC_Tramada_id" , "=", $idTramada)->get();
         $posicion = 0;
 
         for($i = $inicio; $i <= $numNichosTramada;  $i+=$incremento) {
@@ -347,7 +402,9 @@ class callesController extends Controller {
                     $updateNicho = Nicho::where("id", "=", $nichos[$posicion]->id)->get();
                     $updateNicho[0]->numero = $i;
                     $updateNicho[0]->save();
+
                 } else {
+
                     //Creamos el objeto nicho.
                     $nicho = new Nicho();
                     $nicho->GC_Tramada_id = $idTramada;
@@ -355,6 +412,7 @@ class callesController extends Controller {
                     $nicho->save();
                 }
             }else{
+
                 //Creamos el objeto nicho.
                 $nicho = new Nicho();
                 $nicho->GC_Tramada_id = $idTramada;
@@ -445,6 +503,80 @@ class callesController extends Controller {
 
     }
 
+    /**
+     * Función para aumentar las tramadas de las parcelas a la hora de eidarlas
+     * @param $r es la peticion ajax
+     * @param $numTramadas es el nº de tramadas que va a alcanzar la parcela
+     * @param $numNichos es el nº de nichos que va a alcanzar la tramada.
+     */
+    function aumentarTramadasPacela($r,$numTramadas,$numNichos){
+
+
+        for($i = 1; $i <= $numTramadas; $i++) {
+
+            //Creamos un objeto tramada y comprobamos si existe esa tramada o tenemos que crearla
+            $tramada = Tramada::where('GC_PARCELA_id' , '=',$r->input('idParcela'))
+                    ->where('tramada' , '=', $r->input('tra') . $i)->get();
+
+
+
+            if($tramada->isEmpty()) {
+
+                $tramada = new Tramada();
+                $tramada->tramada = $i;
+
+            }else{
+                $tramada = $tramada[0];
+            }
+
+
+            //Asignamos las propiedades del objeto
+            $tramada->nichos = $numNichos;
+            $tramada->GC_PARCELA_id = $r->input('idParcela');
+            $tramada->save();
+
+            $this->updateNichos($numTramadas * $numNichos,$tramada->id, $i ,$numTramadas);
+        }
+    }
+
+
+    function aumentarNichosParcela($r,$numNichos){
+
+        $countTramadas = Tramada::where('GC_PARCELA_id' , '=',$r->input('idParcela'))->get();
+
+        //Obtenemos la última tramada de esta calle para averiguar luego el id del ultimo nicho
+        $ultimaTramada = $countTramadas[count($countTramadas) - 1];
+
+
+        if(!$ultimaTramada != null){
+
+            //Cogemos el último nicho insertado en la última tramada de esta parcela para saber por dónde empezar a
+            // incrementar de nuevo en caso de que tenga alguna tramada la parcela.
+            $ultimoNicho = Nicho::where("GC_Tramada_id", '=', $ultimaTramada->id)
+                    ->orderBy('id','desc')->first()->numero +1;
+        }
+        else{
+            $ultimoNicho = 0;
+        }
+
+        for ($i = 1; $i <= count($countTramadas); $i++) {
+
+            //Obtenemos tramada existente
+            $tramada = Tramada::where('GC_PARCELA_id', '=', $r->input('idParcela'))
+                                ->where('tramada', '=', $r->input('tra') . $i)->get();
+
+            $tramada = $tramada[0];
+
+            //Actualizamos las propiedades del objeto tramada
+            $tramada->nichos = $numNichos;
+            $tramada->GC_PARCELA_id = $r->input('idParcela');
+            $tramada->save();
+
+            $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas));
+        }
+
+    }
+
 
     function guardarParcelaIndividual($idCalle,$r){
 
@@ -483,16 +615,22 @@ class callesController extends Controller {
             }
     }
 
-    function sePuedeCambiar(){
-
-    }
-
     /**
      * Devuelve un entero con el último numero de panteones insertado para una calle de panteones
      */
     function  ultimoPanteon(Request $r){
         $calle = Calle::find($r->input("id"));
         return $calle->num_panteones;
+    }
+
+    /**
+     * Función para cambiar el nombre a la calle de los panteones
+     * @param Request $r es la peticion ajax con los valores.
+     */
+    function editarNombre(Request $r){
+        $calle = Calle::find($r->input("idCalle"));
+        $calle->nombre = $r->input("nombre");
+        $calle->save();
     }
 }
 

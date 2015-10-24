@@ -49,7 +49,7 @@ Route::group(['prefix' => '/'], function()
 
 });
 
-//
+//Gestión Calles
 Route::get('altaCalle',  ['as' => 'altaCalle', 'uses' => 'callesController@create']);
 
 Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@delete']);
@@ -57,6 +57,13 @@ Route::post('borrarCalle',  ['as' => 'borrarCalle', 'uses' => 'callesController@
 Route::get('ultimoPanteon', ['as' => 'ultimoPanteon', 'uses' => 'callesController@ultimoPanteon']);
 
 Route::get('editarCalle',  ['as' => 'editarCalle', 'uses' => 'callesController@edit']);
+//porque no va por post??????
+Route::get('editarNombre', ['as' => 'editarNombre', 'uses' => 'callesController@editarNombre']);
+
+Route::get('editarParcela', ['as' => 'editarParcela', 'uses' => 'callesController@editarParcelas']);
+//Fin gestión calles ///
+
+
 
 //Alta usuarios
 Route::get('usuarios',  ['as' => 'usuarios', 'uses' => 'altaUsuarioController@index']);
@@ -68,27 +75,15 @@ Route::get('tarifas',  ['as' => 'tarifas', 'uses' => 'tarifasController@index'])
 //no se porqué no va post
 Route::get('cp_parcelas',  ['as' => 'cp_parcelas', 'uses' => 'tarifasController@cp_parcelas']);
 
-Route::get('cpv_parcelas',  ['as' => 'cpv_parcelas', 'uses' => 'tarifasController@cpv_parcelas']);
-
 Route::get('cp_nichos',  ['as' => 'cp_nichos', 'uses' => 'tarifasController@cp_nichos']);
-
-Route::get('cpv_nichos',  ['as' => 'cpv_nichos', 'uses' => 'tarifasController@cpv_nichos']);
 
 Route::get('ct_parcelas',  ['as' => 'ct_parcelas', 'uses' => 'tarifasController@ct_parcelas']);
 
-Route::get('ctv_parcelas',  ['as' => 'ctv_parcelas', 'uses' => 'tarifasController@ctv_parcelas']);
-
 Route::get('ct_nichos',  ['as' => 'ct_nichos', 'uses' => 'tarifasController@ct_nichos']);
-
-Route::get('ctv_nichos',  ['as' => 'ctv_nichos', 'uses' => 'tarifasController@ctv_nichos']);
 
 Route::get('m_parcelas',  ['as' => 'm_parcelas', 'uses' => 'tarifasController@m_parcelas']);
 
-Route::get('mv_parcelas',  ['as' => 'mv_parcelas', 'uses' => 'tarifasController@mv_parcelas']);
-
 Route::get('m_nichos',  ['as' => 'm_nichos', 'uses' => 'tarifasController@m_nichos']);
-
-Route::get('mv_nichos',  ['as' => 'mv_nichos', 'uses' => 'tarifasController@mv_nichos']);
 
 
 //Fin parte tarifas
@@ -138,6 +133,8 @@ Route::get('modificar-calle-{id}', ['as' => 'modificar-calle', function($id){
     $controller = App::make(\App\Http\Controllers\callesController::class);
     return $controller->callAction('editarView', array('tipo' => $id));
 }]);
+
+
 
 Route::post('ModifyDifunto', ['as' => 'ModifyDifunto', 'uses' => 'DifuntoController@update']);
 
