@@ -109,17 +109,17 @@
                             <div class="row col-lg-12 inputs col-lg-offset-2">
 
                                 @for($j = 1; $j <= count($tramadas[$indice][1]); $j++)
-                                    <input type='number' class='col-lg-3 t_margin' min="{{$tramadas[$indice][1][0]->nichos}}" name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' value="{{$tramadas[$indice][1][0]->nichos}}" placeholder='tra-{!!$j!!}' required>
+                                    <input type='number' class='col-lg-3 t_margin tramadav' min="{{$tramadas[$indice][1][0]->nichos}}" name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' value="{{$tramadas[$indice][1][0]->nichos}}" placeholder='tra-{!!$j!!}' required>
                                     <input type='hidden' name="tra{!!$j!!}" value="{{$tramadas[$indice][1][0]->id}}">
                                 @endfor
                                 @for($j = count($tramadas[$indice][1])+1; $j <= 9; $j++)
-                                    <input type='number' class='col-lg-3 t_margin'  name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' placeholder='tra-{!!$j!!}' required>
+                                    <input type='number' class='col-lg-3 t_margin tramadav'  name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' placeholder='tra-{!!$j!!}' required>
                                 @endfor
                             </div>
                         </div>
 
 
-                        <button class="btn btn-success btn-raised pull-right" onclick="modificar('{{$parcela->id}}')">Modificar parcela</button>
+                        <button class="btn btn-success btn-raised pull-right">Modificar parcela</button>
 
                     </form>
                 </div>
@@ -146,30 +146,13 @@
 
 <script type="text/javascript">
 
-    function modificar(id){
-
-
-
-
-    }
-
-
-    //Nada más cargar la vista obtemos el nº de tramadas que tiene la calle y el nicho
-    var actualTramdas = $("#tramadas").val();
-    var actualNichos = $("#tramada1").val();
-    var iguales = true;
-
-
     $(document).ready(function () {
 
         var idParcelaStatico = 0;
 
-        var token = "{{ csrf_token()}}";
-
         var tramadas = $("#tramadas").val();
 
         //Desocultamos los inputs de las tramadas cuyas parcelas tienen valor en ellas.
-
         var tramadas = "{!!count($tramadas)!!}";
 
         for( var i = 1; i <= tramadas ; i++){
@@ -179,26 +162,7 @@
             mostrarTramadas(actual,i);
         }
 
-
         $(".n_nichos").css("display",'block');
-
-
-
-        function ocultarInputs(inicio, fin){
-
-            for(var i = inicio; i <= fin; i++) {
-                $('#tramada' + i)[0].setAttribute("type", "hidden");
-            }
-        }
-
-        function mostrarInputs(inicio, fin){
-
-            for(var i = inicio; i <= fin; i++) {
-
-                $('#tramada' + i)[0].setAttribute("type", "text");
-            }
-        }
-
 
         $("#nombre_panteones").submit(function(e){
 
@@ -226,75 +190,43 @@
         });
 
         //Creamos x peticiones ajax para asociarlas a las x parcelas
-
-
         $(".parcela").submit(function(e){
+            //Obtenemos el id de la parcela que se ha editado cuyo formulario se ha hecho submit
+            var idParcela = this.getAttribute('id');
 
-                //Obtenemos el id de la parcela que se ha editado cuyo formulario se ha hecho submit
-                var idParcela = this.getAttribute('id');
+            e.preventDefault();
 
-                //obtenemos el num de tramadas que queremos insertar demás para comprobar si es mayor
-                //que el valor actual.
-                //var tramadas = $("#tramadas").val();
+            $.ajax({
+                type: "GET",
+                url: "{{ URL::route('editarParcela') }}",
+                data: $('#'+idParcela).serialize() + "&idParcela="+idParcela,
+                dataType: "html",
+                error: function () {
+                    alert("entra en error");
+                },
+                success: function (data) {
 
-                //Comprobamos también los nichos si coinciden y son mayor que el actual.
-                //var nichos = $('#tramada' + 1).val();
+                    Lobibox.notify('success', {
+                        title: 'Parcela modificada',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+                        position: 'bottom left'
+                    });
 
-                //comprobarNichos(tramadas);
-
-               // if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 && ( (tramadas > actualTramdas && iguales) || (nichos > actualNichos && iguales) ) ) {
-
-                e.preventDefault();
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ URL::route('editarParcela') }}",
-                    data: $('#'+idParcela).serialize() + "&idParcela="+idParcela,
-                    dataType: "html",
-                    error: function () {
-                        alert("entra en error");
-                    },
-                    success: function (data) {
-
-                        Lobibox.notify('success', {
-                            title: 'Parcela modificada',
-                            showClass: 'flipInX',
-                            delay: 3000,
-                            delayIndicator: false,
-                            position: 'bottom left'
-                        });
-
-                        location.reload();
-                    }
-                });
-               // }else
-                //{
-                  //  alert("Selecciona un nº de tramadas mayor al que ya hay");
-                //}
-            });
-
-
-
-        //Comprobamos si el nº de los nichos ha cambiado y si es en todos igual
-        function comprobarNichos(fin){
-
-            i = 2;
-
-            while(iguales && i <= fin)
-            {
-                if( $('#tramada' + 1).val() !=  $('#tramada' + i).val())
-                {
-                    iguales = false;
+                    location.reload();
                 }
+            });
+        });
 
-                i++;
-            }
-        }
 
         $(".select").on("change",function() {
             idParcelaStatico = this.getAttribute('id');
             idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_")+1,idParcelaStatico.length);
             mostrarTramadas(this.value,idParcelaStatico);
+            var numTramdas = parseInt($("#tramparc_"+idParcelaStatico).val());
+            var number = $("#tramada1_p"+idParcelaStatico).val();
+            asignarValores(1,numTramdas,number,idParcelaStatico);
         });
 
 
@@ -326,16 +258,25 @@
 
                 $(".grupo_nichos_p" + parcela).css("display",'none');
             }
-
         }
 
+        //Asociamos el evento onchange para que todos cambien si cambia uno
+        $(".tramadav").on("change",function(e){
+            idParcelaStatico = this.getAttribute('id');
+            idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_")+2,idParcelaStatico.length);
+            //obtenemos las tramadas
+            var numTramdas = parseInt($("#tramparc_"+idParcelaStatico).val());
+            asignarValores(1,numTramdas,this.value,idParcelaStatico);
+        });
+
+        function asignarValores(inicio, fin,number,parcela){
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i + '_p'+ parcela).val(number);
+            }
+        }
 
     });
 
-
-    /**
-     * Comentario cambios
-     */
 </script>
 
 @endsection

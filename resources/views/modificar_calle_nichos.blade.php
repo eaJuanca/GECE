@@ -183,8 +183,8 @@
 
             //Asociamos el evento onchange para que todos cambien si cambia uno
             $(".tramadav").on("change",function(e){
-                    var numTramdas = parseInt($("#tramadas").val());
-                    asignarValores(1,numTramdas,this.value);
+                var numTramdas = parseInt($("#tramadas").val());
+                asignarValores(1,numTramdas,this.value);
             })
 
         });

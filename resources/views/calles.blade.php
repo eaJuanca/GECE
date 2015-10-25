@@ -198,9 +198,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 1</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -256,9 +253,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 2</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -314,9 +308,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 3</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -372,9 +363,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 4</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -430,9 +418,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 5</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -487,9 +472,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 6</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -545,9 +527,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 7</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -604,9 +583,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 8</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -644,7 +620,7 @@
                                             <label class="col-lg-4 margin">Tramadas parcela 9</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_9" name="tram_parc_9">
-                                                    <option>- ¿Cuántas ttramadas tiene la parcela? -</option>
+                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -662,9 +638,6 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 9</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
@@ -720,16 +693,13 @@
 
                                         <div class="row" hidden>
                                             <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 10</label>
-                                            <div class="row col-lg-9 inputs">
-
-                                            </div>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p10" style="display: none;">
                                         <label for="select" class="col-lg-4">Nº Nichos tramada parcela 10</label>
                                         <div class="row col-lg-8 inputs">
-                                            <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p10' id='tramada1_p10' placeholder='Tramada1' required>
+                                            <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p10' id='tramada1_p10' placeholder='Tramada 1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p10' id='tramada2_p10' placeholder='Tramada 2' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada3_p10' id='tramada3_p10' placeholder='Tramada 3' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada4_p10' id='tramada4_p10' placeholder='Tramada 4' required>
@@ -894,6 +864,8 @@
 
 
     $(document).ready(function(){
+
+        var idParcelaStatico = 0;
 
         //Obtenemos el valor actual de las tramadas para asignar valor actomáticamente cuando
         //aumentamos o disminuimos el nº de tramadas
@@ -1187,42 +1159,62 @@
         //Craemos eventos para todas los select de las tramadas de las parcelas de la 1 a la 10
         $('#tram_parc_1').on("change",function() {
             mostrarTramadas(this.value,1);
+            var number = $("#tramada1_p"+1).val();
+            asignarValoresParcelas(1,this.value,number,1);
         });
 
         $('#tram_parc_2').on("change",function() {
             mostrarTramadas(this.value,2);
+            var number = $("#tramada1_p"+2).val();
+            asignarValoresParcelas(1,this.value,number,2);
         });
 
         $('#tram_parc_3').on("change",function() {
             mostrarTramadas(this.value,3);
+            var number = $("#tramada1_p"+3).val();
+            asignarValoresParcelas(1,this.value,number,3);
         });
 
         $('#tram_parc_4').on("change",function() {
             mostrarTramadas(this.value,4);
+            var number = $("#tramada1_p"+4).val();
+            asignarValoresParcelas(1,this.value,number,4);
         });
 
         $('#tram_parc_5').on("change",function() {
             mostrarTramadas(this.value,5);
+            var number = $("#tramada1_p"+5).val();
+            asignarValoresParcelas(1,this.value,number,5);
         });
 
         $('#tram_parc_6').on("change",function() {
             mostrarTramadas(this.value,6);
+            var number = $("#tramada1_p"+6).val();
+            asignarValoresParcelas(1,this.value,number,6);
         });
 
         $('#tram_parc_7').on("change",function() {
             mostrarTramadas(this.value,7);
+            var number = $("#tramada1_p"+7).val();
+            asignarValoresParcelas(1,this.value,number,7);
         });
 
         $('#tram_parc_8').on("change",function() {
             mostrarTramadas(this.value,8);
+            var number = $("#tramada1_p"+8).val();
+            asignarValoresParcelas(1,this.value,number,8);
         });
 
         $('#tram_parc_9').on("change",function() {
             mostrarTramadas(this.value,9);
+            var number = $("#tramada1_p"+9).val();
+            asignarValoresParcelas(1,this.value,number,9);
         });
 
         $('#tram_parc_10').on("change",function() {
             mostrarTramadas(this.value,10);
+            var number = $("#tramada1_p"+10).val();
+            asignarValoresParcelas(1,this.value,number,10);
         });
 
 
@@ -1310,7 +1302,7 @@
             asignarValores(1,numTramdas,this.value);
         })
 
-        //Asignamos valores cuando cambiamos el valor de un input.
+        //Asignamos valores cuando cambiamos el valor de un input para las calles.
         function asignarValores(inicio, fin,number){
 
             for(var i = inicio; i <= fin; i++) {
@@ -1318,7 +1310,25 @@
             }
         }
 
+        //Asignamos valores cuando cambiamos el valor de un input para las calles.
+        function asignarValoresParcelas(inicio, fin,number,parcela){
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i + '_p'+ parcela).val(number);
+            }
+        }
 
+        //Asignamo evento on change para cada tramada de la parcela.
+        for(var i = 1; i <= 10; i++) {
+            for (var j = 1; j <= 10; j++) {
+                $('#tramada' + i + '_p' + j).on("change", function (e) {
+                    idParcelaStatico = this.getAttribute('id');
+                    idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_")+2,idParcelaStatico.length);
+                    //obtenemos las tramadas
+                    var numTramdas = parseInt($("#tram_parc_"+idParcelaStatico).val());
+                    asignarValoresParcelas(1,numTramdas,this.value,idParcelaStatico);
+                });
+            }
+        }
     });
 
     /**
