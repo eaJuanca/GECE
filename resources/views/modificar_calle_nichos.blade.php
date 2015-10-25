@@ -42,15 +42,13 @@
                                 <label class="col-lg-2 margin">Tramadas</label>
                                 <div class="col-lg-9">
                                     <select class="form-control" id="tramadas" name="tramadas">
-                                        <option>- ¿Cuántas tramadas tiene la parcela? -</option>
-
                                         <?php
 
                                             for($i = 1; $i <= 9 ; $i++){
 
                                                 if($i == count($tramadas))
                                                     echo " <option selected>  " . $i . "</option>";
-                                                else
+                                                elseif($i > count($tramadas))
                                                     echo " <option>  " . $i . "</option>";
                                             }
 
@@ -66,11 +64,11 @@
                                 <div class="row col-lg-9 inputs">
 
                                     @for($i = 0; $i < count($tramadas); $i++)
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$i+1!!}' id='tramada{!!$i+1!!}' value="{{$tramadas[$i]->nichos}}" placeholder='tramada{!!$i+1!!}' required>
+                                        <input type='number' min="{{$tramadas[$i]->nichos}}" class='col-lg-3 t_margin tramadav' name='tramada{!!$i+1!!}' id='tramada{!!$i+1!!}' value="{{$tramadas[$i]->nichos}}" placeholder='tramada{!!$i+1!!}' required>
                                         <input type='hidden' name="tra{!!$i+1!!}" value="{{$tramadas[$i]->id}}">
                                     @endfor
                                     @for($i = count($tramadas)+1; $i <= 9; $i++)
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$i!!}' id='tramada{!!$i!!}' placeholder='tramada{!!$i!!}' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada{!!$i!!}' id='tramada{!!$i!!}' placeholder='tramada{!!$i!!}' required>
                                     @endfor
 
                                 </div>
@@ -97,8 +95,6 @@
 
         //Nada más cargar la vista obtemos el nº de tramadas que tiene la calle y el nicho
         var actualTramdas = $("#tramadas").val();
-        var actualNichos = $("#tramada1").val();
-        var iguales = true;
 
         $(document).ready(function () {
 
@@ -129,6 +125,8 @@
                     $(".n_nichos").css("display",'none');
                 }
 
+                var number = $("#tramada1").val();
+                asignarValores(actualTramdas,this.value,number);
             });
 
 
@@ -143,72 +141,51 @@
 
                 for(var i = inicio; i <= fin; i++) {
 
-                    $('#tramada' + i)[0].setAttribute("type", "text");
+                    $('#tramada' + i)[0].setAttribute("type", "number");
                 }
             }
+
+            function asignarValores(inicio, fin,number){
+
+                for(var i = inicio; i <= fin; i++) {
+                    $('#tramada' + i).val(number)
+                }
+            }
+
 
             $("#editar-calle").submit(function(e){
 
-                //obtenemos el num de tramadas que queremos insertar demás para comprobar si es mayor
-                //que el valor actual.
-                var tramadas = $("#tramadas").val();
+                e.preventDefault();
 
-                //Comprobamos también los nichos si coinciden y son mayor que el actual.
-                var nichos = $('#tramada' + 1).val();
+                $.ajax({
+                    type: "GET",
+                    url: "{{ URL::route('editarCalle') }}",
+                    data: $("#editar-calle").serialize() + "&idCalle={{$calle->id}}",
+                    dataType: "html",
+                    error: function () {
+                        alert("entra en error");
+                    },
+                    success: function (data) {
 
-                comprobarNichos(tramadas);
+                        Lobibox.notify('success', {
+                            title: 'Calle añadida',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left'
+                        });
 
-                if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 && ( (tramadas > actualTramdas && iguales) || (nichos > actualNichos && iguales) ) ) {
+                        location.reload();
+                    }
+                });
 
-                    e.preventDefault();
-
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ URL::route('editarCalle') }}",
-                        data: $("#editar-calle").serialize() + "&idCalle={{$calle->id}}",
-                        dataType: "html",
-                        error: function () {
-                            alert("entra en error");
-                        },
-                        success: function (data) {
-
-                            Lobibox.notify('success', {
-                                title: 'Calle añadida',
-                                showClass: 'flipInX',
-                                delay: 3000,
-                                delayIndicator: false,
-                                position: 'bottom left'
-                            });
-
-                            location.reload();
-                        }
-                    });
-                }else
-                {
-                    alert("Selecciona un nº de tramadas mayor al que ya hay");
-                }
             });
 
-            //Comprobamos si el nº de los nichos ha cambiado y si es en todos igual
-            function comprobarNichos(fin){
-
-                i = 2;
-
-                while(iguales && i <= fin)
-                {
-                    if( $('#tramada' + 1).val() !=  $('#tramada' + i).val())
-                    {
-                        iguales = false;
-                    }
-
-                    i++;
-                }
-                /*for(var i = inicio; i <= fin; i++) {
-                    if( $('#tramada' + 1).val() !=  $('#tramada' + i).val()){
-                        iguales = false;
-                    }
-                }*/
-            }
+            //Asociamos el evento onchange para que todos cambien si cambia uno
+            $(".tramadav").on("change",function(e){
+                    var numTramdas = parseInt($("#tramadas").val());
+                    asignarValores(1,numTramdas,this.value);
+            })
 
         });
 

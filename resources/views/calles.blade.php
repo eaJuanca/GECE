@@ -768,15 +768,15 @@
                                 <div class="form-group n_nichos" >
                                     <label for="select" class="col-lg-3">Nº nichos por tramada</label>
                                     <div class="row col-lg-9 inputs">
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada1' id='tramada1' placeholder='Tramada 1' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada2' id='tramada2' placeholder='Tramada 2' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada3' id='tramada3' placeholder='Tramada 3' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada4' id='tramada4' placeholder='Tramada 4' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada5' id='tramada5' placeholder='Tramada 5' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada6' id='tramada6' placeholder='Tramada 6' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada7' id='tramada7' placeholder='Tramada 7' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada8' id='tramada8' placeholder='Tramada 8' required>
-                                        <input type='hidden' class='col-lg-3 t_margin' name='tramada9' id='tramada9' placeholder='Tramada 9' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada1' id='tramada1' placeholder='Tramada 1' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada2' id='tramada2' placeholder='Tramada 2' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada3' id='tramada3' placeholder='Tramada 3' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada4' id='tramada4' placeholder='Tramada 4' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada5' id='tramada5' placeholder='Tramada 5' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada6' id='tramada6' placeholder='Tramada 6' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada7' id='tramada7' placeholder='Tramada 7' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada8' id='tramada8' placeholder='Tramada 8' required>
+                                        <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada9' id='tramada9' placeholder='Tramada 9' required>
                                     </div>
                                 </div>
                             </div>
@@ -849,6 +849,7 @@
 
 <script type="text/javascript">
 
+
     function borrar(idCalle,tipoCalle,e){
 
         $(document).ajaxStop($.unblockUI);
@@ -893,6 +894,10 @@
 
 
     $(document).ready(function(){
+
+        //Obtenemos el valor actual de las tramadas para asignar valor actomáticamente cuando
+        //aumentamos o disminuimos el nº de tramadas
+        var actualTramdas = $("#tramadas").val();
 
         $(document).ajaxStop($.unblockUI);
 
@@ -1173,6 +1178,10 @@
                 }
             }
 
+
+            var number = $("#tramada1").val();
+            asignarValores(actualTramdas,this.value,number);
+
         });
 
         //Craemos eventos para todas los select de las tramadas de las parcelas de la 1 a la 10
@@ -1294,6 +1303,21 @@
                 input[0].setAttribute("type", "hidden");
             }
         }
+
+        //Asociamos el evento onchange para que todos cambien si cambia uno
+        $(".tramadav").on("change",function(e){
+            var numTramdas = parseInt($("#tramadas").val());
+            asignarValores(1,numTramdas,this.value);
+        })
+
+        //Asignamos valores cuando cambiamos el valor de un input.
+        function asignarValores(inicio, fin,number){
+
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i).val(number)
+            }
+        }
+
 
     });
 

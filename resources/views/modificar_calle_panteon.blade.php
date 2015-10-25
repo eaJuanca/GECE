@@ -69,7 +69,7 @@
                                 <label class="col-lg-2 margin">Tramadas</label>
                                 <div class="col-lg-9">
 
-                                    <select class="form-control select" id="tramparc_{!!$indice+1!!}" name="tramadas">
+                                    <select class="form-control select" min="{!!count($tramadas[$indice][1])!!}" id="tramparc_{!!$indice+1!!}" name="tramadas">
 
                                         <?php
 
@@ -79,7 +79,7 @@
 
                                                     if($i == count($tramadas[$indice][1]))
                                                         echo " <option selected>  " . $i . "</option>";
-                                                    else
+                                                    elseif($i > count($tramadas[$indice][1]) )
                                                         echo " <option>  " . $i . "</option>";
                                                 }
 
@@ -109,11 +109,11 @@
                             <div class="row col-lg-12 inputs col-lg-offset-2">
 
                                 @for($j = 1; $j <= count($tramadas[$indice][1]); $j++)
-                                    <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' value="{{$tramadas[$indice][1][0]->nichos}}" placeholder='tra-{!!$j!!}' required>
+                                    <input type='number' class='col-lg-3 t_margin' min="{{$tramadas[$indice][1][0]->nichos}}" name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' value="{{$tramadas[$indice][1][0]->nichos}}" placeholder='tra-{!!$j!!}' required>
                                     <input type='hidden' name="tra{!!$j!!}" value="{{$tramadas[$indice][1][0]->id}}">
                                 @endfor
                                 @for($j = count($tramadas[$indice][1])+1; $j <= 9; $j++)
-                                    <input type='hidden' class='col-lg-3 t_margin' name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' placeholder='tra-{!!$j!!}' required>
+                                    <input type='number' class='col-lg-3 t_margin'  name='tramada{!!$j!!}_p{!!$parcela->id!!}' id='tramada{!!$j!!}_p{!!$indice+1!!}' placeholder='tra-{!!$j!!}' required>
                                 @endfor
                             </div>
                         </div>
@@ -289,11 +289,6 @@
 
                 i++;
             }
-            /*for(var i = inicio; i <= fin; i++) {
-             if( $('#tramada' + 1).val() !=  $('#tramada' + i).val()){
-             iguales = false;
-             }
-             }*/
         }
 
         $(".select").on("change",function() {
@@ -318,7 +313,7 @@
 
                 for(var i = 1; i <= value; i++)
                 {
-                    $('#tramada' + i + '_p'+ parcela)[0].setAttribute("type", "text");
+                    $('#tramada' + i + '_p'+ parcela)[0].setAttribute("type", "number");
                 }
 
             }else{

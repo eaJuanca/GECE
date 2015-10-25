@@ -547,16 +547,23 @@ class callesController extends Controller {
         //Obtenemos la última tramada de esta calle para averiguar luego el id del ultimo nicho
         $ultimaTramada = $countTramadas[count($countTramadas) - 1];
 
-
-        if(!$ultimaTramada != null){
+        if($ultimaTramada != null){
 
             //Cogemos el último nicho insertado en la última tramada de esta parcela para saber por dónde empezar a
             // incrementar de nuevo en caso de que tenga alguna tramada la parcela.
             $ultimoNicho = Nicho::where("GC_Tramada_id", '=', $ultimaTramada->id)
-                    ->orderBy('id','desc')->first()->numero +1;
+                            ->orderBy('id','desc')->first();
+
+            //Si $ultimoNicho es distinto de null cogemos su id
+            if($ultimoNicho != null){
+                $ultimoNicho = $ultimoNicho->numero +1;
+            }else{
+                $ultimoNicho = 1;
+            }
+
         }
         else{
-            $ultimoNicho = 0;
+            $ultimoNicho = 1;
         }
 
         for ($i = 1; $i <= count($countTramadas); $i++) {
@@ -573,6 +580,7 @@ class callesController extends Controller {
             $tramada->save();
 
             $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas));
+            $ultimoNicho++;
         }
 
     }
