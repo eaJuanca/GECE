@@ -32,6 +32,25 @@
             </div>
             @endif
 
+            @if(Auth::user()->panteones)
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <hr>
+                    <div class="well">
+                        <div class="alert alert-material-amber text-center">
+                            <img src="{{ asset('street.png') }}" width="41"/>
+                        </div>
+                        <p class="text-center gc_title"><strong>Panteones</strong></p>
+                        <p class="text-center text_hidden">Módulo para la gestión de panteones</p>
+                        <p class="text-center btn_hidden"><a href="{{ URL::route('panteones') }}" class="btn btn-md btn-material-amber">Entrar</a></p>
+                        <p class="text-center btn_show">
+                            <button class="btn btn-md btn-material-amber">
+                                <i class="glyphicon glyphicon-share-alt"></i>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            @endif
+
             @if(Auth::user()->calle)
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <hr>

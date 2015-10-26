@@ -153,6 +153,11 @@ Route::get('login', ['as' => 'login', function()
 
 }]);
 
+//Apartados nichos
+Route::get('panteones', ['as' => 'panteones', 'uses' => 'panteonesController@index']);
+
+
+
 // Validamos los datos de inicio de sesión PARA LA ADMINISTRACION
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

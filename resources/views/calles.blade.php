@@ -822,9 +822,9 @@
 
     function borrar(idCalle,tipoCalle,e){
 
-
-
+        //Le pedimos confirmación al usuario antes de borrar la calle
         var r = confirm("¿Seguro quieres borrar los datos de la calle?");
+
         if (r == true) {
 
             $(document).ajaxStop($.unblockUI);
