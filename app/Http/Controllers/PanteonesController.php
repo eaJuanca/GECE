@@ -18,6 +18,7 @@ class PanteonesController extends Controller
         return view('');
 
 
+
     }
 
     /**
