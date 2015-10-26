@@ -1,15 +1,18 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Miguel
- * Date: 26/10/2015
- * Time: 17:35
+ * User: juanca
+ * Date: 21/4/15
+ * Time: 12:34
  */
 
-namespace app\model;
+namespace App\model;
 
 
-class VPanteones
-{
+use Illuminate\Database\Eloquent\Model;
+
+class VPanteones extends Model{
+
+    protected $table = 'panteones';
 
 }

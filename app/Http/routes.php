@@ -46,6 +46,11 @@ Route::group(['prefix' => '/'], function()
         return $controller->callAction('indexModify', array('tipo' => $id));
     }]);
 
+    Route::get('modificar-panteones-{id}', ['as' => 'modificar-panteones', function($id){
+        $controller = App::make(\App\Http\Controllers\PanteonesController::class);
+        return $controller->callAction('edit', array('id' => $id));
+    }]);
+
 
 });
 

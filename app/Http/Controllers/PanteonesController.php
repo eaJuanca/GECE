@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -15,7 +16,26 @@ class PanteonesController extends Controller
      */
     public function index()
     {
-        return view('');
+
+        $Qdisponibles = VPanteones::whereNull('titular_id')->groupby('parcela_id');
+        $Qnodisponibles = VPanteones::whereNotNull('titular_id')->groupby('parcela_id');
+
+
+
+
+        $td = count($Qdisponibles->get()); // total de nichos disponibles
+        $tnd = count($Qnodisponibles->get()); // total de nichos no disponibles
+
+        $disponibles = $Qdisponibles->take(10)->get();
+        $nodisponibles = $Qnodisponibles->take(10)->get();
+
+
+
+
+        $tab = 1; // tab activa
+        $search = 0; // busqueda inactica
+
+        return view('panteones', compact('nodisponibles','disponibles','tab','search','td','tnd'));
 
 
 
@@ -61,7 +81,9 @@ class PanteonesController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        dd($id);
+        return view('modificar-panteon');
     }
 
     /**

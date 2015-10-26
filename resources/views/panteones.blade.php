@@ -148,8 +148,6 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Cod.</th>
-                                        <th>Tipo</th>
                                         <th>Datos del nicho</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -161,13 +159,11 @@
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td> {{$disponible->id}}</td>
-                                            <td> {{$disponible->tipo}}</td>
-                                            <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
-                                                 Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
+
+                                            <td> Calle: <span style="font-weight: bold">{{$disponible->calle}}, </span>
                                                  Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
 
-                                            <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-panteones',[$disponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
 
