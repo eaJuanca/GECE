@@ -77,7 +77,7 @@ class callesController extends Controller {
                     $tramada->save();
 
                     //Guardamos los x nichos de la tramada $i
-                    $this->guardarNichos($numTramadas * $numNichos,$tramada->id,$i,$numTramadas);
+                    $this->guardarNichos($numTramadas * $numNichos,$tramada->id,$i,$numTramadas,1);
 
                 }
 
@@ -136,15 +136,15 @@ class callesController extends Controller {
      * @param int $idTramada es el id de la tramada en la que se ubican los nichos
      */
 
-    function guardarNichos($numNichosTramada,$idTramada,$inicio,$incremento){
+    function guardarNichos($numNichosTramada,$idTramada,$inicio,$incremento,$tipo){
+
 
         for($i = $inicio; $i <= $numNichosTramada;  $i+=$incremento){
-
             //Creamos el objeto nicho.
             $nicho = new Nicho();
-
             $nicho->GC_Tramada_id = $idTramada;
             $nicho->numero = $i;
+            $nicho->tipo = $tipo;
             $nicho->save();
 
         }
@@ -185,7 +185,7 @@ class callesController extends Controller {
                     $tramada->save();
 
                     //Guardamos los x nichos de la tramada $i
-                    $this->guardarNichos($tramadasParcela * $numNichos, $tramada->id, $j, $tramadasParcela);
+                    $this->guardarNichos($tramadasParcela * $numNichos, $tramada->id, $j, $tramadasParcela,2);
 
                 }
             }
@@ -388,7 +388,7 @@ class callesController extends Controller {
 
     }
 
-    function updateNichos($numNichosTramada,$idTramada,$inicio,$incremento){
+    function updateNichos($numNichosTramada,$idTramada,$inicio,$incremento,$tipo){
 
         $nichos = Nicho::where("GC_Tramada_id" , "=", $idTramada)->get();
         $posicion = 0;
@@ -409,6 +409,7 @@ class callesController extends Controller {
                     $nicho = new Nicho();
                     $nicho->GC_Tramada_id = $idTramada;
                     $nicho->numero = $i;
+                    $nicho->tipo = $tipo;
                     $nicho->save();
                 }
             }else{
@@ -417,6 +418,7 @@ class callesController extends Controller {
                 $nicho = new Nicho();
                 $nicho->GC_Tramada_id = $idTramada;
                 $nicho->numero = $i;
+                $nicho->tipo = $tipo;
                 $nicho->save();
             }
             $posicion++;
@@ -441,7 +443,7 @@ class callesController extends Controller {
 
             //Obtenemos tramada existente
             $tramada = Tramada::where('GC_CALLE_id', '=', $r->input('idCalle'))
-                ->where('tramada', '=', $r->input('tra') . $i)->get();
+                                ->where('tramada', '=', $r->input('tra') . $i)->get();
 
             $tramada = $tramada[0];
 
@@ -456,7 +458,7 @@ class callesController extends Controller {
             //Para actualizar luego el atributo total nicho del objeto calle
             $totalNichos += $numNichos;
 
-            $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas));
+            $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas),1);
             $ultimoNicho++;
         }
 
@@ -493,7 +495,7 @@ class callesController extends Controller {
             $totalNichos += $numNichos;
             $tramada->save();
 
-            $this->updateNichos($numTramadas * $numNichos,$tramada->id, $i ,$numTramadas);
+            $this->updateNichos($numTramadas * $numNichos,$tramada->id, $i ,$numTramadas,1);
         }
 
 
@@ -535,7 +537,7 @@ class callesController extends Controller {
             $tramada->GC_PARCELA_id = $r->input('idParcela');
             $tramada->save();
 
-            $this->updateNichos($numTramadas * $numNichos,$tramada->id, $i ,$numTramadas);
+            $this->updateNichos($numTramadas * $numNichos,$tramada->id, $i ,$numTramadas,2);
         }
     }
 
@@ -579,7 +581,7 @@ class callesController extends Controller {
             $tramada->GC_PARCELA_id = $r->input('idParcela');
             $tramada->save();
 
-            $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas));
+            $this->guardarNichos(count($countTramadas) * $numNichos, $tramada->id, (int) $ultimoNicho,count($countTramadas),2);
             $ultimoNicho++;
         }
 
@@ -618,7 +620,7 @@ class callesController extends Controller {
                     $tramada->save();
 
                     //Guardamos los x nichos de la tramada $i
-                    $this->guardarNichos($tramadasParcela * $numNichos,$tramada->id,$i,$tramadasParcela);
+                    $this->guardarNichos($tramadasParcela * $numNichos,$tramada->id,$i,$tramadasParcela,2);
                 }
             }
     }
