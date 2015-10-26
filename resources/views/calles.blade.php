@@ -822,50 +822,57 @@
 
     function borrar(idCalle,tipoCalle,e){
 
-        $(document).ajaxStop($.unblockUI);
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        $.ajax({
-            type: "POST",
-            url: "{{ URL::route('borrarCalle') }}",
-            data: {id : idCalle, tipo: tipoCalle},
-            dataType: "html",
-            success: function (data) {
+        var r = confirm("¿Seguro quieres borrar los datos de la calle?");
+        if (r == true) {
 
-                Lobibox.notify('success', {
-                    title: 'Calle borrada',
-                    showClass: 'flipInX',
-                    delay: 3000,
-                    delayIndicator: false,
-                    position: 'bottom left'
-                });
+            $(document).ajaxStop($.unblockUI);
 
-                location.reload();
-            },
-            error: function () {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-                Lobibox.notify('error', {
-                    title: 'No se ha podido borrar la calle',
-                    showClass: 'flipInX',
-                    delay: 3000,
-                    delayIndicator: false,
+            $.ajax({
+                type: "POST",
+                url: "{{ URL::route('borrarCalle') }}",
+                data: {id: idCalle, tipo: tipoCalle},
+                dataType: "html",
+                success: function (data) {
 
-                    position: 'bottom left',
-                    msg: 'Compruebe la conexión a internet'
-                });
-            }
-        });
+                    Lobibox.notify('success', {
+                        title: 'Calle borrada',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+                        position: 'bottom left'
+                    });
+
+                    location.reload();
+                },
+                error: function () {
+
+                    Lobibox.notify('error', {
+                        title: 'No se ha podido borrar la calle',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+
+                        position: 'bottom left',
+                        msg: 'Compruebe la conexión a internet'
+                    });
+                }
+            });
+        }
     }
 
 
     $(document).ready(function(){
 
         var idParcelaStatico = 0;
+
 
         //Obtenemos el valor actual de las tramadas para asignar valor actomáticamente cuando
         //aumentamos o disminuimos el nº de tramadas
