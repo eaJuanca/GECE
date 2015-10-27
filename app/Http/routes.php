@@ -174,3 +174,20 @@ Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'LogController@logou
 Route::resource('log','LogController');
 
 
+
+//Paginacion dedicado al apartado de los nichos disponibles
+Route::post('PanteonesPaginateDisponibles', ['as' => 'PanteonesPaginateDisponibles', 'uses' => 'PanteonesController@paginateDisponibles']);
+
+//Paginacion dedicado al apartado de los nichos NO disponibles
+Route::post('PanteonesPaginateNoDisponibles', ['as' => 'PanteonesPaginateNoDisponibles', 'uses' => 'PanteonesController@paginateNoDisponibles']);
+
+//Paginacion dedicado al apartado de los nichos disponibles cuando es una busqueda
+Route::post('PanteonesPaginateDisponiblesBusqueda', ['as' => 'PanteonesPaginateDisponiblesBusqueda', 'uses' => 'PanteonesController@paginateDisponiblesBusqueda']);
+
+//Paginacion dedicado al apartado de los nichos NO disponibles cuando es una busqueda
+Route::post('PanteonesPaginateNoDisponiblesBusqueda', ['as' => 'PanteonesPaginateNoDisponiblesBusqueda', 'uses' => 'PanteonesController@paginateNoDisponiblesBusqueda']);
+
+//busqueda de nichos a traves del formulario
+Route::post('busquedaPanteones', ['as' => 'busquedaPanteones', 'uses' => 'PanteonesController@busqueda']);
+
+

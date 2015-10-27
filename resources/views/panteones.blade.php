@@ -42,7 +42,7 @@
                 <div class="panel-heading">Formulario de búsqueda</div>
                 <div class="panel-body">
 
-                    <form method="POST" action="{{URL::route('busquedaNichos')}}">
+                    <form method="POST" action="{{URL::route('busquedaPanteones')}}">
 
                         <div class="row">
                             <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -52,17 +52,17 @@
 
 
                                 <div class="row">
-                                    <div  id="titular" class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div  id="titular" class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de titular</label>
                                             <input type="text" class="form-control" name="titular" value="<?php if(isset($titular)) echo $titular; else $titular=''; ?>">
                                         </div>
                                     </div>
 
-                                    <div id="difunto" class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                    <div  id="dnibuscar" class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Nombre del difunto</label>
-                                            <input type="text" class="form-control"  name="difunto" value="<?php if(isset($difunto)) echo $difunto; else $difunto=''; ?>">
+                                            <label class="control-label" for="inputWarning">Dni</label>
+                                            <input type="text" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
                                         </div>
                                     </div>
 
@@ -71,31 +71,19 @@
 
                                 <div class="row">
 
-                                    <div  id="dnibuscar" class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Dni</label>
-                                            <input type="text" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
-                                        </div>
-                                    </div>
 
-                                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+                                    <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Nombre de calle</label>
                                             <input type="text" class="form-control" name="calle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
                                         </div>
                                     </div>
 
-                                    <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                    <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
                                             <label class="control-label" for="inputWarning">Número de calle</label>
                                             <input type="text" class="form-control" name="numero" value="<?php if(isset($numero)) echo $numero; else $numero=''; ?>">
-                                        </div>
-                                    </div>
-
-                                    <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Tramada</label>
-                                            <input type="text" class="form-control"  name="tramada" value="<?php if(isset($tramada)) echo $tramada; else $tramada=''; ?>">
                                         </div>
                                     </div>
 
@@ -105,7 +93,7 @@
 
                                     <div class="col col-lg-10 col-md-10 col-sm-12 col-xs-12" style="margin-top: 20px">
 
-                                        <span id='search' style="font-weight: bold; font-size:16px; visibility: hidden; ">A continuación se muestran los resultados de búsqueda. Pulse <a  href="{{URL::route('nichos')}}" class="btn btn-danger btn-raised btn-xs" style="letter-spacing: 3px">Terminar</a> para finalizar</span>
+                                        <span id='search' style="font-weight: bold; font-size:16px; visibility: hidden; ">A continuación se muestran los resultados de búsqueda. Pulse <a  href="{{URL::route('panteones')}}" class="btn btn-danger btn-raised btn-xs" style="letter-spacing: 3px">Terminar</a> para finalizar</span>
 
                                     </div>
 
@@ -129,8 +117,8 @@
     </div>
     <br>
     <ul id="myTab" class="nav nav-tabs" style="margin-bottom: 15px;">
-        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Nichos disponibles (<?php if(isset($td)) echo $td; else $td=0 ?>)</span></button></a></li>
-        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Nichos no disponibles (<?php if(isset($tnd)) echo $tnd; else $tnd=0 ?>)</span></button></a></li>
+        <li class="active button1"><a href="#home" data-toggle="tab"><button id="button1" class="btn btn-warning btn-raised button1"><span class="bold">Parcelas disponibles (<?php if(isset($td)) echo $td; else $td=0 ?>)</span></button></a></li>
+        <li class="button2"><a href="#profile" data-toggle="tab"><button  id="button2" class="btn btn-warning disabled button2"><span class="bold">Parcelas no disponibles (<?php if(isset($tnd)) echo $tnd; else $tnd=0 ?>)</span></button></a></li>
     </ul>
 
     <div id="myTabContent" class="tab-content">
@@ -140,7 +128,7 @@
                 <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading"><span style="font-weight: bold">Difuntos registrados en el sistema</span>
+                        <div class="panel-heading"><span style="font-weight: bold">Parcelas registradas en el sistema</span>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -148,7 +136,7 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Datos del nicho</th>
+                                        <th>Datos de las parcelas</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
@@ -311,9 +299,9 @@
 
 
             var titular = "{{$titular}}";
-            var difunto = "{{$difunto}}";
             var numero = "{{$numero}}";
             var calle = "{{$calle}}";
+            var dni = "{{$dni}}";
 
 
             if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
@@ -359,15 +347,15 @@
 
                 if(search==0) {
 
-                    ruta = "{{ URL::route('paginateDisponibles') }}";
+                    ruta = "{{ URL::route('PanteonesPaginateDisponibles') }}";
                     data = {page: num};
                  }
 
                 //si es una busqueda, paginamos los resultados
                 else{
 
-                    ruta = "{{ URL::route('paginateDisponiblesBusqueda') }}";
-                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                    ruta = "{{ URL::route('PanteonesPaginateDisponiblesBusqueda') }}";
+                    data = { page: num, numero: numero, calle: calle };
                 }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
@@ -437,7 +425,7 @@
                 else{
 
                     ruta = "{{ URL::route('paginateNoDisponiblesBusqueda') }}";
-                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                    data = { page: num, dni: dni, titular: titular, numero: numero, calle: calle };
                 }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
@@ -536,7 +524,7 @@
             $('#modalfras4').css('display','none');
             $('#cargando').show();
 
-        })
+        });
 
         /**
          * Comentario cambios

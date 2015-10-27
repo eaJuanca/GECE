@@ -318,6 +318,8 @@
             var difunto = "{{$difunto}}";
             var numero = "{{$numero}}";
             var calle = "{{$calle}}";
+            var dni = "{{$dni}}";
+            var tramada = "{{$tramada}}";
 
 
             if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
@@ -371,7 +373,7 @@
                 else{
 
                     ruta = "{{ URL::route('paginateDisponiblesBusqueda') }}";
-                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                    data = { page: num, tramada:tramada, numero: numero, calle: calle };
                 }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
@@ -441,7 +443,7 @@
                 else{
 
                     ruta = "{{ URL::route('paginateNoDisponiblesBusqueda') }}";
-                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle };
+                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle, dni: dni, tramada: tramada };
                 }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra

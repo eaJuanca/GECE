@@ -23,8 +23,8 @@ class PanteonesController extends Controller
 
 
 
-        $td = count($Qdisponibles->get()); // total de nichos disponibles
-        $tnd = count($Qnodisponibles->get()); // total de nichos no disponibles
+        $td = count($Qdisponibles->get()); // total de panteones disponibles
+        $tnd = count($Qnodisponibles->get()); // total de panteones no disponibles
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
@@ -107,5 +107,121 @@ class PanteonesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function busqueda(Request $request){
+
+        $titular = $request->input('titular');
+        $calle = $request->input('calle');
+        $numero = $request->input('numero');
+        $activo = $request->input('activa'); // tab activa
+        $dni = $request->input('dni');
+        $search = 1; //busqueda activa
+
+
+        if ($activo == 1) {
+
+
+            $Qdisponibles = VPanteones::where(function ($Qdisponibles) {
+
+               $Qdisponibles->whereNull('titular_id');
+
+            })->where(function ($Qdisponibles) use ($calle, $numero) {
+
+                if ($calle != '') $Qdisponibles->where('calle', 'like', "%$calle%");
+                if ($numero != '') $Qdisponibles->where('numero', $numero);
+            });
+
+
+            $td = count($Qdisponibles->get()); //total con respecto a la busqueda
+
+            $disponibles = $Qdisponibles->groupby('parcela_id')->take(10)->get();
+            $tab = 1; //se debe activar el tab 1
+
+            return view('panteones', compact('disponibles', 'td', 'tab', 'search', 'titular', 'calle', 'numero'));
+
+
+        } else {
+
+
+            $Qnodisponibles = VPanteones::where(function ($Qnodisponibles) {
+
+
+                $Qnodisponibles->whereNotNull('titular_id');
+
+            })->where(function ($Qnodisponibles) use ($titular, $calle, $numero,$dni) {
+
+                if ($titular != '') $Qnodisponibles->where('nombre_titular', 'like', "%$titular%");
+                if ($calle != '') $Qnodisponibles->where('calle', 'like', "%$calle%");
+                if ($numero != '') $Qnodisponibles->where('numero', $numero);
+                if ($dni != '') $Qnodisponibles->where('dni_titular', 'like', "%$dni%");
+
+            });
+
+            $tab = 2; // se debe activar el tab 2
+            $tnd = count($Qnodisponibles->get());
+            $nodisponibles = $Qnodisponibles->groupby('parcela_id')->take(10)->get();
+
+            return view('panteones', compact('nodisponibles', 'tnd', 'tab', 'search', 'titular', 'calle', 'numero','dni'));
+
+        }
+    }
+
+
+    public function paginateDisponibles(Request $request)
+    {
+
+        $disponibles = VPanteones::whereNull('titular_id')->skip(10 * ($request->input('page') - 1))->groupby('parcela_id')->take(10)->get();
+
+        foreach ($disponibles as $disponible) {
+
+            $ruta = route('modificar-panteones', [$disponible->id]);
+
+            echo '<tr>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->calle . ',</span >
+                       Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+        }
+        //
+    }
+
+    public function paginateDisponiblesBusqueda(Request $request)
+    {
+
+        $calle = $request->input('calle');
+        $numero = $request->input('numero');
+        $page = $request->input('page');
+
+
+        $Qdisponibles = VPanteones::where(function ($Qdisponibles) {
+
+            $Qdisponibles->whereNull('titular_id');
+
+        })->where(function ($Qdisponibles) use ($calle, $numero) {
+
+            if ($calle != '') $Qdisponibles->where('calle', 'like', "%$calle%");
+            if ($numero != '') $Qdisponibles->where('numero', $numero);
+        });
+
+
+        $disponibles = $Qdisponibles->skip(10 * ($page - 1))->groupby('parcela_id')->take(10)->get();
+
+        foreach ($disponibles as $disponible) {
+
+            $ruta = route('modificar-panteones', [$disponible->id]);
+
+            echo '<tr>';
+
+            echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->calle . ',</span >
+                       Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
+
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+
+        }
+
     }
 }

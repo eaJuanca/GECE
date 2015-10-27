@@ -159,7 +159,7 @@ class NichoController extends Controller
                 $Qdisponibles->where('sintitular',false);
 
 
-            })->where(function ($Qdisponibles) use ($titular, $calle, $numero,$tramada) {
+            })->where(function ($Qdisponibles) use ($calle, $numero,$tramada) {
 
                 if ($calle != '') $Qdisponibles->where('nombre_calle', 'like', "%$calle%");
                 if ($numero != '') $Qdisponibles->where('numero', $numero);
@@ -214,6 +214,7 @@ class NichoController extends Controller
 
         $calle = $request->input('calle');
         $numero = $request->input('numero');
+        $tramada = $request->input('tramada');
         $page = $request->input('page');
 
 
@@ -222,10 +223,12 @@ class NichoController extends Controller
             $Qdisponibles->whereNull('GC_TITULAR_id');
             $Qdisponibles->where('sintitular',false);
 
-        })->where(function ($Qdisponibles) use ($calle, $numero) {
+        })->where(function ($Qdisponibles) use ($calle, $numero,$tramada) {
 
             if ($calle != '') $Qdisponibles->where('nombre_calle', 'like', "%$calle%");
             if ($numero != '') $Qdisponibles->where('numero', $numero);
+            if ($tramada != '') $Qdisponibles->where('altura', $tramada);
+
         });
 
 
@@ -257,10 +260,10 @@ class NichoController extends Controller
 
         $titular = $request->input('titular');
         $difunto = $request->input('difunto');
-        $calle = $request->input('nombrecalle');
+        $calle = $request->input('calle');
         $numero = $request->input('numero');
-        $activo = $request->input('activa'); // tab activa
-        $search = 1; //busqueda activa
+        $tramada = $request->input('tramada');
+        $dni = $request->input('dni');
         $page = $request->input('page');
 
         $Qnodisponibles = InfoNicho::where(function ($Qnodisponibles) {
@@ -268,11 +271,14 @@ class NichoController extends Controller
             $Qnodisponibles->whereNotNull('GC_TITULAR_id');
             $Qnodisponibles->oRwhere('sintitular',true);
 
-        })->where(function ($Qnodisponibles) use ($titular, $calle, $numero) {
+        })->where(function ($Qnodisponibles) use ($titular, $calle, $numero,$difunto,$tramada,$dni) {
 
             if ($titular != '') $Qnodisponibles->where('nombre_titular', 'like', "%$titular%");
             if ($calle != '') $Qnodisponibles->where('nombre_calle', 'like', "%$calle%");
             if ($numero != '') $Qnodisponibles->where('numero', $numero);
+            if ($difunto != '') $Qnodisponibles->where('nom_difunto', 'like', "%$difunto%");
+            if ($tramada != '') $Qnodisponibles->where('altura', $tramada);
+            if ($dni != '') $Qnodisponibles->where('dni_titular', 'like', "%$dni%");
         });
 
         $Nodisponibles = $Qnodisponibles->skip(10 * ($page - 1))->groupby('id')->take(10)->get();
