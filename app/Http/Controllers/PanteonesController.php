@@ -296,6 +296,7 @@ class PanteonesController extends Controller
 
     public function nichosPanteones($id){
 
-        dd($id);
+
+        return view('nichospanteones');
     }
 }
