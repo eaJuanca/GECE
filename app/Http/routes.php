@@ -51,6 +51,8 @@ Route::group(['prefix' => '/'], function()
         return $controller->callAction('edit', array('id' => $id));
     }]);
 
+    //muestra una vista con los nichos que hay en un panteon
+    Route::get('nichos-panteones-{id}', ['as' => 'nichos-panteones', 'uses' => 'PanteonesController@nichosPanteones']);
 
 });
 
@@ -175,19 +177,19 @@ Route::resource('log','LogController');
 
 
 
-//Paginacion dedicado al apartado de los nichos disponibles
+//Paginacion dedicado al apartado de los panteones disponibles
 Route::post('PanteonesPaginateDisponibles', ['as' => 'PanteonesPaginateDisponibles', 'uses' => 'PanteonesController@paginateDisponibles']);
 
-//Paginacion dedicado al apartado de los nichos NO disponibles
+//Paginacion dedicado al apartado de los panteones NO disponibles
 Route::post('PanteonesPaginateNoDisponibles', ['as' => 'PanteonesPaginateNoDisponibles', 'uses' => 'PanteonesController@paginateNoDisponibles']);
 
-//Paginacion dedicado al apartado de los nichos disponibles cuando es una busqueda
+//Paginacion dedicado al apartado de los panteones disponibles cuando es una busqueda
 Route::post('PanteonesPaginateDisponiblesBusqueda', ['as' => 'PanteonesPaginateDisponiblesBusqueda', 'uses' => 'PanteonesController@paginateDisponiblesBusqueda']);
 
-//Paginacion dedicado al apartado de los nichos NO disponibles cuando es una busqueda
+//Paginacion dedicado al apartado de los panteones NO disponibles cuando es una busqueda
 Route::post('PanteonesPaginateNoDisponiblesBusqueda', ['as' => 'PanteonesPaginateNoDisponiblesBusqueda', 'uses' => 'PanteonesController@paginateNoDisponiblesBusqueda']);
 
-//busqueda de nichos a traves del formulario
+//busqueda de panteones a traves del formulario
 Route::post('busquedaPanteones', ['as' => 'busquedaPanteones', 'uses' => 'PanteonesController@busqueda']);
 
 

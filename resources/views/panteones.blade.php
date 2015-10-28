@@ -182,11 +182,7 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Cod.</th>
-                                        <th>Tipo</th>
                                         <th>Titular</th>
-                                        <th>Difunto</th>
-                                        <th>Telefono</th>
                                         <th>Calle</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -197,19 +193,14 @@
 
                                     @foreach($nodisponibles as $nodisponible)
 
+
                                         <tr>
-                                            <td> {{$nodisponible->id}}</td>
-                                            <td> {{$nodisponible->tipo}}</td>
                                             <td> {{$nodisponible->nombre_titular}}</td>
-                                            <td> {{$nodisponible->nom_difunto}}</td>
-                                            <td> {{$nodisponible->telefono}}</td>
-                                            <td> Calle: <span style="font-weight: bold">{{$nodisponible->nombre_calle}}, </span>
-                                                Altura, <span style="font-weight: bold">{{$nodisponible->altura}} </span>
+                                            <td> Calle: <span style="font-weight: bold">{{$nodisponible->calle}}, </span>
                                                 Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
 
-                                            <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
-                                                 <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="A�adir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a>
+                                            <td> <a title="Modificar Nicho" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+                                                 <a title="Ver Nicho"       href="{{ route('nichos-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-search"></i></a>
                                             </td>
 
                                         </tr>
@@ -224,31 +215,6 @@
                         </div>
                     </div>
                     <div class="paginacion2" style="float: right"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="complete-dialog" class="modal fade" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Condiciones</h4>
-                </div>
-                <div class="modal-body">
-
-                    <p id="cargando">Espere...</p>
-                    <p id="modalfras1" style="font-size: 20px; display: none">No se puede enterrar mas difuntos en este nicho</p>
-
-                    <p id="modalfras2" style="font-size: 20px; display: none; color: green">Se cumplen las condiciones para enterrar un nuevo difunto </p> <br>
-
-                    <span id="modalfras3" style="font-weight: bold; color: red ; display: none" > Se ha llegado al total de difuntos por nicho</span> <br>
-
-                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 4 años desde la última inhumación</span>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
