@@ -183,7 +183,7 @@ class PanteonesController extends Controller
             echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->calle . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i> Editar parcela</a></td ></tr >";
 
         }
         //
@@ -205,8 +205,8 @@ class PanteonesController extends Controller
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a>";
-            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i></a>";
+            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Panteon </a>";
+            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
             echo "</td></tr>";
 
         }
@@ -287,8 +287,8 @@ class PanteonesController extends Controller
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a>";
-            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i></a>";
+            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Panteon </a>";
+            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
             echo "</td></tr>";
 
         }
@@ -324,7 +324,7 @@ class PanteonesController extends Controller
             echo '<td> Altura, <span style = "font-weight: bold">' . $disponible->altura . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero_nicho . '</span > </td >';
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-search' ></i > Ver difuntos</a> </td ></tr >";
 
         }
     }
@@ -333,7 +333,7 @@ class PanteonesController extends Controller
 
         $disponibles = Difunto::where('GC_NICHOS_id',$id)->get();
 
-        return view('difunto-nicho-panteon',compact('difuntos'));
+        return view('difunto-nicho-panteon',compact('disponibles','id'));
 
     }
 }

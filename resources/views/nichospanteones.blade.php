@@ -66,7 +66,7 @@
                                                 Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
                                                 Numero <span style="font-weight: bold">{{$disponible->numero_nicho}} </span> </td>
 
-                                            <td> <a href="{{ route('ver-difuntos-nicho-panteon',[$disponible->nicho])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('ver-difuntos-nicho-panteon',[$disponible->nicho])}}"><i class="fa fa-lg fa-search"></i> Ver difuntos</a></td>
 
                                         </tr>
 

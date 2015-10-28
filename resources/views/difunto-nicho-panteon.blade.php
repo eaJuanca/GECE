@@ -51,7 +51,8 @@
                                 <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
                                     <thead>
                                     <tr>
-                                        <th>Datos del nicho</th>
+                                        <th>Nombre difunto</th>
+                                        <th>Fecha Inhumacion</th>
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
@@ -62,11 +63,10 @@
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td>
-                                                Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
-                                                Numero <span style="font-weight: bold">{{$disponible->numero_nicho}} </span> </td>
+                                            <td> {{$disponible->nom_difunto}} </td>
+                                            <td> {{$disponible->fec_inh_difunto}} </td>
 
-                                            <td> <a href="{{ route('ver-difuntos-nicho-panteon',[$disponible->nicho])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-difunto',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar difunto</a></td>
 
                                         </tr>
 
@@ -77,6 +77,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            <a href="{{ route('alta-difunto-nicho',[$id])}}"><button type="button" class="btn btn-success">Añadir difunto</button></a>
                         </div>
                     </div>
                 </div>
