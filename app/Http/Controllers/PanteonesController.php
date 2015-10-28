@@ -175,7 +175,7 @@ class PanteonesController extends Controller
 
         foreach ($disponibles as $disponible) {
 
-            $ruta = route('modificar-panteones', [$disponible->id]);
+            $ruta = route('modificar-panteones', [$disponible->parcela_id]);
 
             echo '<tr>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $disponible->calle . ',</span >
@@ -185,6 +185,31 @@ class PanteonesController extends Controller
 
         }
         //
+    }
+
+    public function paginateNoDisponibles(Request $request){
+
+        $Nodisponibles = VPanteones::whereNotNull('titular_id')->skip(10 * ($request->input('page') - 1))->groupby('parcela_id')->take(10)->get();
+
+        foreach ($Nodisponibles as $Nodisponible) {
+
+            $ruta = route('modificar-panteones', [$Nodisponible->parcela_id]);
+            $ruta2 = route('nichos-panteones',[$Nodisponible->parcela_id]);
+
+
+            echo '<tr>';
+            echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->dni_titular . '</td>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
+                       Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
+
+            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a>";
+            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i></a>";
+            echo "</td></tr>";
+
+        }
+
+
     }
 
     public function paginateDisponiblesBusqueda(Request $request)
@@ -210,7 +235,7 @@ class PanteonesController extends Controller
 
         foreach ($disponibles as $disponible) {
 
-            $ruta = route('modificar-panteones', [$disponible->id]);
+            $ruta = route('modificar-panteones', [$disponible->parcela_id]);
 
             echo '<tr>';
 
@@ -222,6 +247,51 @@ class PanteonesController extends Controller
 
 
         }
+    }
+
+    public function paginateNoDisponiblesBusqueda(Request $request){
+
+        $titular = $request->input('titular');
+        $calle = $request->input('calle');
+        $numero = $request->input('numero');
+        $dni = $request->input('dni');
+        $page = $request->input('page');
+
+        $Qnodisponibles = VPanteones::where(function ($Qnodisponibles) {
+
+            $Qnodisponibles->whereNotNull('titular_id');
+
+
+        })->where(function ($Qnodisponibles) use ($titular, $calle, $numero,$dni) {
+
+            if ($titular != '') $Qnodisponibles->where('nombre_titular', 'like', "%$titular%");
+            if ($calle != '') $Qnodisponibles->where('calle', 'like', "%$calle%");
+            if ($numero != '') $Qnodisponibles->where('numero', $numero);
+            if ($dni != '') $Qnodisponibles->where('dni_titular', 'like', "%$dni%");
+        });
+
+        $Nodisponibles = $Qnodisponibles->skip(10 * ($page - 1))->groupby('parcela_id')->take(10)->get();
+
+
+        foreach ($Nodisponibles as $Nodisponible) {
+
+            $ruta = route('modificar-panteones', [$Nodisponible->parcela_id]);
+            $ruta2 = route('nichos-panteones',[$Nodisponible->parcela_id]);
+
+
+            echo '<tr>';
+            echo '<td>' . $Nodisponible->nombre_titular . '</td>';
+            echo '<td>' . $Nodisponible->dni_titular . '</td>';
+            echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
+                       Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
+
+            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a>";
+            echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i></a>";
+            echo "</td></tr>";
+
+        }
+
+
     }
 
     public function nichosPanteones($id){

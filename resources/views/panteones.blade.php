@@ -183,6 +183,7 @@
                                     <thead>
                                     <tr>
                                         <th>Titular</th>
+                                        <th>DNI</th>
                                         <th>Calle</th>
                                         <th>Acciones</th>
                                     </tr>
@@ -196,11 +197,12 @@
 
                                         <tr>
                                             <td> {{$nodisponible->nombre_titular}}</td>
+                                            <td> {{$nodisponible->dni_titular}}</td>
                                             <td> Calle: <span style="font-weight: bold">{{$nodisponible->calle}}, </span>
                                                 Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
 
-                                            <td> <a title="Modificar Nicho" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
-                                                 <a title="Ver Nicho"       href="{{ route('nichos-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-search"></i></a>
+                                            <td> <a title="Modificar Panteon" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+                                                 <a title="Ver Nichos"       href="{{ route('nichos-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-search"></i></a>
                                             </td>
 
                                         </tr>
@@ -384,13 +386,13 @@
                 if(search==0) {
 
                     data = {page: num};
-                    ruta = "{{ URL::route('paginateNoDisponibles') }}";
+                    ruta = "{{ URL::route('PanteonesPaginateNoDisponibles') }}";
                 }
 
                 //si es una busqueda, paginamos los resultados
                 else{
 
-                    ruta = "{{ URL::route('paginateNoDisponiblesBusqueda') }}";
+                    ruta = "{{ URL::route('PanteonesPaginateNoDisponiblesBusqueda') }}";
                     data = { page: num, dni: dni, titular: titular, numero: numero, calle: calle };
                 }
 
@@ -432,71 +434,5 @@
 
     </script>
 
-    <script>
-
-        function borrar(id) {
-
-            if (confirm('Realmente desea borrar el difunto con id ' + id + '?')) {
-                $(".difunto" + id).hide();
-            }
-        }
-
-        function modal(id){
-
-            var httpR;
-
-            $.ajax({
-
-                type: "post",
-                url: "{{ URL::route('getData') }}",
-                data: {id: id},
-                dataType: "json",
-
-                beforeSend: function(data2){
-                    /*httpR es la variable global donde guardamos la conexion*/
-                    if(httpR){
-                        /*Si habia alguna conexion anterior, la cancelamos*/
-                        httpR.abort();
-                    }
-                    /*Guardamos la nueva conexion*/
-                    httpR = data2;
-                },
-                error: function () {
-                    alert("Error en la petición");
-                },
-                success: function (data) {
-
-                    $('#cargando').hide();
-
-                    var total = data['total'];
-                    var fecha = data['fecha'];
-                    var cumplefecha = data['cumplefecha'];
-                    var cumpletotal = data['cumpletotal'];
-
-                    if(!cumplefecha || !cumpletotal){ $('#modalfras1').css('display','block'); }
-                    if(cumplefecha && cumpletotal){ $('#modalfras2').css('display','block'); }
-                    if(!cumpletotal){ $('#modalfras3').css('display','block'); }
-                    if(!cumplefecha){ $('#modalfras4').css('display','block'); }
-
-                }
-            });
-        }
-
-        $('#complete-dialog').on('hidden.bs.modal', function () {
-
-            $('#modalfras1').css('display','none');
-            $('#modalfras2').css('display','none');
-            $('#modalfras3').css('display','none');
-            $('#modalfras4').css('display','none');
-            $('#cargando').show();
-
-        });
-
-        /**
-         * Comentario cambios
-         *
-         *
-         */
-    </script>
 
 @endsection
