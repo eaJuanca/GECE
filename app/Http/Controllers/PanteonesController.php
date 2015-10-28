@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\model\Difunto;
+use App\model\NichosPanteones;
 use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -297,6 +299,41 @@ class PanteonesController extends Controller
     public function nichosPanteones($id){
 
 
-        return view('nichospanteones');
+        $nichos = NichosPanteones::where('parcela_id',$id);
+        $td = count($nichos->get());
+
+        $disponibles = $nichos->take(10)->get();
+        return view('nichospanteones',compact('disponibles','td','id'));
+    }
+
+
+    /**
+     * @param Request $request
+     */
+
+    public function paginateNichosPanteones(Request $request){
+
+        $id = $request->input('id');
+        $disponibles = NichosPanteones::where('parcela_id',$id)->skip(10 * ($request->input('page') - 1))->take(10)->get();
+
+        foreach ($disponibles as $disponible) {
+
+            $ruta = route('ver-difuntos-nicho-panteon', [$disponible->nicho]);
+
+            echo '<tr>';
+            echo '<td> Altura, <span style = "font-weight: bold">' . $disponible->altura . ',</span >
+                       Numero, <span style = "font-weight: bold" >' . $disponible->numero_nicho . '</span > </td >';
+
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+
+        }
+    }
+
+    public function verDifuntosNicho($id){
+
+        $disponibles = Difunto::where('GC_NICHOS_id',$id)->get();
+
+        return view('difunto-nicho-panteon',compact('difuntos'));
+
     }
 }

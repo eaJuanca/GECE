@@ -43,7 +43,7 @@
                 <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading"><span style="font-weight: bold">Difuntos en el panteon</span>
+                        <div class="panel-heading"><span style="font-weight: bold">Nichos en este panteon</span>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -62,13 +62,11 @@
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td> {{$disponible->id}}</td>
-                                            <td> {{$disponible->tipo}}</td>
-                                            <td> Calle: <span style="font-weight: bold">{{$disponible->nombre_calle}}, </span>
+                                            <td>
                                                 Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
-                                                Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
+                                                Numero <span style="font-weight: bold">{{$disponible->numero_nicho}} </span> </td>
 
-                                            <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('ver-difuntos-nicho-panteon',[$disponible->nicho])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
 
                                         </tr>
 
@@ -91,6 +89,7 @@
 @endsection
 
 @section('jquery')
+
     <script src="{{ asset('assets/js/bootpag.min.js') }}"></script>
 
 
@@ -108,54 +107,13 @@
             paginas = count / 10; //4 es el n?mero de items que queremos que aparezcan.
         }
 
-        var count2 = "{{$tnd}}"; //variable para contar el total de franquicias y mostrar en relacion con el n? de paginas
-        var paginas2 = 0;
-        if (count2 % 10 != 0) {
-            paginas2 = Math.floor(count2 / 10) + 1;
-        } else {
-            paginas2 = count2 / 10; //4 es el número de items que queremos que aparezcan.
-        }
 
-        var tab = "{{$tab}}";
-        var search = "{{$search}}";
 
-        if(search == 1){
-            if(tab==1){
-                $('.button2').hide();
-            }
-            else{
-                $('.button1').hide();
-            }
-        }
 
         $(document).ready(function () {
 
+            var id = "{{$id}}";
 
-            var titular = "{{$titular}}";
-            var difunto = "{{$difunto}}";
-            var numero = "{{$numero}}";
-            var calle = "{{$calle}}";
-            var dni = "{{$dni}}";
-            var tramada = "{{$tramada}}";
-
-
-            if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
-
-            if(tab==2) {
-
-                $('#myTab a[href="#profile"]').tab('show');// Select tab by name
-                $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2);
-
-                $("#titular").show();
-                $("#difunto").show();
-                $("#dnibuscar").show();
-
-            }else{
-
-                $("#titular").hide();
-                $("#difunto").hide();
-                $("#dnibuscar").hide();
-            }
 
             $('.paginacion').bootpag({
                 total: paginas,
@@ -175,23 +133,11 @@
 
             }).on("page", function (event, num) {
 
-                var ruta = "";
-                var data = "";
 
-                //si no es una busqueda paginamos to-do
+                    var ruta = "{{ URL::route('paginateNichosPanteones') }}";
+                    var data = {page: num, id: id};
 
-                if(search==0) {
 
-                    ruta = "{{ URL::route('paginateDisponibles') }}";
-                    data = {page: num};
-                }
-
-                //si es una busqueda, paginamos los resultados
-                else{
-
-                    ruta = "{{ URL::route('paginateDisponiblesBusqueda') }}";
-                    data = { page: num, tramada:tramada, numero: numero, calle: calle };
-                }
 
                 //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
                 var httpR;
@@ -203,9 +149,9 @@
                     data: data,
                     dataType: "html",
 
-                    beforeSend: function(data2){
+                    beforeSend: function (data2) {
                         /*httpR es la variable global donde guardamos la conexion*/
-                        if(httpR){
+                        if (httpR) {
                             /*Si habia alguna conexion anterior, la cancelamos*/
                             httpR.abort();
                         }
@@ -224,148 +170,8 @@
                 });
             });
 
-
-            $('.paginacion2').bootpag({
-                total: paginas2,
-                page: 1,
-                maxVisible: 5,
-                leaps: true,
-                firstLastUse: true,
-                first: 'Primero',
-                last: 'Ultimo',
-                wrapClass: 'pagination',
-                activeClass: 'active',
-                disabledClass: 'disabled',
-                nextClass: 'next',
-                prevClass: 'prev',
-                lastClass: 'last',
-                firstClass: 'first'
-
-            }).on("page", function (event, num) {
-
-
-
-                var ruta = "";
-                var data = "";
-
-                //si no es una busqueda paginamos to-do
-
-                if(search==0) {
-
-                    data = {page: num};
-                    ruta = "{{ URL::route('paginateNoDisponibles') }}";
-                }
-
-                //si es una busqueda, paginamos los resultados
-                else{
-
-                    ruta = "{{ URL::route('paginateNoDisponiblesBusqueda') }}";
-                    data = { page: num, titular: titular, difunto: difunto, numero: numero, calle: calle, dni: dni, tramada: tramada };
-                }
-
-                //variable de conexion, para cancelar las conexiones anteriores antes de lanzar otra
-                var httpR;
-
-                $.ajax({
-
-                    type: "post",
-                    url: ruta,
-                    data: data,
-                    dataType: "html",
-
-                    beforeSend: function(data2){
-                        /*httpR es la variable global donde guardamos la conexion*/
-                        if(httpR){
-                            /*Si habia alguna conexion anterior, la cancelamos*/
-                            httpR.abort();
-                        }
-                        /*Guardamos la nueva conexion*/
-                        httpR = data2;
-                    },
-
-                    error: function () {
-                        alert("Error en la petición");
-                    },
-
-                    success: function (data) {
-                        $(".tndisponibles").html(data);
-                    }
-                });
-            });
         });
 
-        $(".button2").click(function(){ $("#button2").removeClass('disabled'); $("#button1").addClass('disabled'); $('#activa').val(2); $("#titular").show(); $("#difunto").show(); $("#dnibuscar").show();  });
-        $(".button1").click(function(){ $("#button1").removeClass('disabled'); $("#button2").addClass('disabled'); $('#activa').val(1);  $("#titular").hide(); $("#difunto").hide(); $("#dnibuscar").hide(); });
-
-
-
-    </script>
-
-    <script>
-
-        function borrar(id) {
-
-            if (confirm('Realmente desea borrar el difunto con id ' + id + '?')) {
-                $(".difunto" + id).hide();
-            }
-        }
-
-        function modal(id){
-
-            var httpR;
-
-            $.ajax({
-
-                type: "post",
-                url: "{{ URL::route('getData') }}",
-                data: {id: id},
-                dataType: "json",
-
-                beforeSend: function(data2){
-                    /*httpR es la variable global donde guardamos la conexion*/
-                    if(httpR){
-                        /*Si habia alguna conexion anterior, la cancelamos*/
-                        httpR.abort();
-                    }
-                    /*Guardamos la nueva conexion*/
-                    httpR = data2;
-                },
-                error: function () {
-                    alert("Error en la petición");
-                },
-                success: function (data) {
-
-                    $('#cargando').hide();
-
-                    var total = data['total'];
-                    var fecha = data['fecha'];
-                    var cumplefecha = data['cumplefecha'];
-                    var cumpletotal = data['cumpletotal'];
-
-                    if(!cumplefecha || !cumpletotal){ $('#modalfras1').css('display','block'); }
-                    if(cumplefecha && cumpletotal){ $('#modalfras2').css('display','block'); }
-                    if(!cumpletotal){ $('#modalfras3').css('display','block'); }
-                    if(!cumplefecha){ $('#modalfras4').css('display','block'); }
-
-                }
-            });
-        }
-
-        $('#complete-dialog').on('hidden.bs.modal', function () {
-
-            $('#modalfras1').css('display','none');
-            $('#modalfras2').css('display','none');
-            $('#modalfras3').css('display','none');
-            $('#modalfras4').css('display','none');
-            $('#cargando').show();
-
-        })
-
-        /**
-         * Comentario cambios
-         *
-         *
-         */
     </script>
 
 @endsection

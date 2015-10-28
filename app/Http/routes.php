@@ -189,6 +189,11 @@ Route::post('PanteonesPaginateDisponiblesBusqueda', ['as' => 'PanteonesPaginateD
 //Paginacion dedicado al apartado de los panteones NO disponibles cuando es una busqueda
 Route::post('PanteonesPaginateNoDisponiblesBusqueda', ['as' => 'PanteonesPaginateNoDisponiblesBusqueda', 'uses' => 'PanteonesController@paginateNoDisponiblesBusqueda']);
 
+Route::post('paginateNichosPanteones', ['as' => 'paginateNichosPanteones', 'uses' => 'PanteonesController@paginateNichosPanteones']);
+
+
+Route::get('ver-difuntos-nicho-panteon-{id}', ['as' => 'ver-difuntos-nicho-panteon', 'uses' => 'PanteonesController@verDifuntosNicho']);
+
 //busqueda de panteones a traves del formulario
 Route::post('busquedaPanteones', ['as' => 'busquedaPanteones', 'uses' => 'PanteonesController@busqueda']);
 
