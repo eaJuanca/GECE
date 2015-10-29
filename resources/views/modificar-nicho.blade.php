@@ -687,6 +687,8 @@
         $("#recuperar").on("click", function(event){
 
             var sint = "{{$nicho->sintitular}}";
+            var titular = "{{$nicho->GC_TITULAR_id}}";
+
 
             $("#idtitular").val({{$nicho->GC_TITULAR_id}});
 
@@ -699,11 +701,19 @@
                 $('#infosintitular').css('display','block');
             }
 
-            if(sint == "0") {
+            else if(sint == "0" && titular =="") {
+
+                $('#infotitularasignado').css('display','none');
+
+            }
+
+            else if(sint == "0") {
 
                 $('#infotitularasignado').css('display','block');
 
             }
+
+
 
             $('#infotitularnuevo').css('display','none');
 
