@@ -418,6 +418,8 @@
                     $('#infotitularasignado').css('display','block');
                     $('#infotitularnuevo').css('display','none');
 
+                    //Cada vez que se cambia de titular cogemos el valor del titular.
+                    idTitular = $("#idtitular").val();
                 }
             });
         }
@@ -429,6 +431,7 @@
 
         var idTitular = "{!!$parcela->GC_TITULAR_id!!}";
         var idParcela = "{!!$parcela->id!!}"
+
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
@@ -524,8 +527,6 @@
                     }
                 });
 
-                //Cada vez que se cambia de titular cogemos el valor del titular.
-                idTitular = $("#idtitular").val();
 
             });
 
@@ -590,12 +591,13 @@
 
             //Reasignamos el valor de la parcela proque se ha borrado.
             $("#idparcela").val(idParcela);
+
         });
 
         $("#recuperar").on("click", function(event) {
 
+            alert(idTitular);
             if(idTitular == "") {
-
                 $('#infotitularasignado').css('display','none')
                 $('#infotitularnuevo').css('display','block');
                 $("#idtitular").val("")
@@ -606,7 +608,6 @@
                 $('#infotitularnuevo').css('display','none');
 
                 $("#idtitular").val(idTitular)
-
                 $("#idparcela").val(idParcela);
 
             }
