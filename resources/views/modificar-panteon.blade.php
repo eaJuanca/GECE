@@ -524,6 +524,9 @@
                     }
                 });
 
+                //Cada vez que se cambia de titular cogemos el valor del titular.
+                idTitular = $("#idtitular").val();
+
             });
 
 
