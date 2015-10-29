@@ -35,7 +35,7 @@
                         <div class="form-group nombre">
                             <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                             <div class="col-lg-10">
-                                @if($Tcp_parcelas->tarifa != null)
+                                @if($Tcp_parcelas != null)
                                     <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
                                 @else
                                     <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="valor tarifa" required>
@@ -58,7 +58,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tcp_nichos->tarifa != null)
+                            @if($Tcp_nichos != null)
                                 <input type="text" name="cp_nicho" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos->tarifa !!}" required>
                             @else
                                 <input type="text" name="cp_nicho" class="form-control cp_nicho" placeholder="valor tarifa" required>
@@ -92,7 +92,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tct_parcelas->tarifa != null)
+                            @if($Tct_parcelas != null)
                                 <input type="text" name="ct_parcela" class="form-control ct_parcela" placeholder="{!! $Tct_parcelas->tarifa !!}" required>
                             @else
                                 <input type="text" name="ct_parcela" class="form-control ct_parcela" placeholder="valor tarifa" required>
@@ -116,7 +116,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tct_nichos->tarifa != null)
+                            @if($Tct_nichos != null)
                                 <input type="text" name="ct_nicho" class="form-control ct_nicho" placeholder="{!! $Tct_nichos->tarifa !!}" required>
                             @else
                                 <input type="text" name="ct_nicho" class="form-control ct_nicho" placeholder="valor tarifa" required>
@@ -148,7 +148,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tm_parcelas->tarifa != null)
+                            @if($Tm_parcelas != null)
                                 <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="{!! $Tm_parcelas->tarifa !!}" required>
                             @else
                                 <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="valor tarifa" required>
@@ -171,7 +171,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tm_nichos->tarifa != null)
+                            @if($Tm_nichos != null)
                                 <input type="text" name="m_nicho" class="form-control m_nicho" placeholder="{!! $Tm_nichos->tarifa !!}" required>
                             @else
                                 <input type="text" name="m_nicho" class="form-control m_nicho" placeholder="valor tarifa" required>
@@ -223,7 +223,7 @@
 
                         });
 
-                        location.reload();
+                       // location.reload();
                     }
                 });
 
@@ -252,7 +252,7 @@
 
                         });
 
-                        location.reload();
+                        //location.reload();
                     }
                 });
 
@@ -281,7 +281,7 @@
 
                             });
 
-                            location.reload();
+                            //location.reload();
                         }
                     });
 
@@ -310,7 +310,7 @@
 
                             });
 
-                            location.reload();
+                            //location.reload();
                         }
                     });
 
@@ -339,7 +339,7 @@
 
                         });
 
-                        location.reload();
+                       // location.reload();
                     }
                 });
 
@@ -369,7 +369,7 @@
 
                             });
 
-                            location.reload();
+                           // location.reload();
                         }
                     });
 

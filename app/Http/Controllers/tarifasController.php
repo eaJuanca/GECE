@@ -27,12 +27,12 @@ class tarifasController extends Controller{
 
     function index(){
 
-        $Tcp_parcelas = Tcp_parcelas2::firstOrFail();
-        $Tcp_nichos = Tcp_nichos::firstOrFail();
-        $Tct_parcelas = Tct_parcelas::firstOrFail();
-        $Tct_nichos = Tct_nichos::firstOrFail();
-        $Tm_parcelas = Tm_parcelas::firstOrFail();
-        $Tm_nichos = Tm_nichos::firstOrFail();
+        $Tcp_parcelas = Tcp_parcelas2::first();
+        $Tcp_nichos = Tcp_nichos::first();
+        $Tct_parcelas = Tct_parcelas::first();
+        $Tct_nichos = Tct_nichos::first();
+        $Tm_parcelas = Tm_parcelas::first();
+        $Tm_nichos = Tm_nichos::first();
 
 
         return view("tarifas", compact("Tcp_parcelas","Tcp_nichos","Tct_parcelas","Tct_nichos","Tm_parcelas","Tm_nichos"));
