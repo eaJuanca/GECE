@@ -668,8 +668,6 @@
 
             $("#select").val("0");
 
-
-
             $('#idnicho').val({{$nicho->id}});
 
             $('#infosintitular').css('display','none');

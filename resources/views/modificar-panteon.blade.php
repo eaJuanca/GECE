@@ -51,7 +51,7 @@
                         </div>
 
 
-                        <input type="hidden" id="idtitular" class="form-control" value="{{$titular->parcela_id}}" name="idtitular">
+                        <input type="hidden" id="idtitular" class="form-control" value="{{$titular->id}}" name="idtitular">
 
                         <div class="row">
 
@@ -76,8 +76,6 @@
                                     <button style="font-size: 13px!important;" type="reset" id="recuperar" class="btn btn-success btn-xs"><i class="fa fa-undo"></i> Recuperar</button>
                                 </div>
                             </div>
-
-
 
                         </div>
 
@@ -419,8 +417,6 @@
 
                     $('#infotitularasignado').css('display','block');
                     $('#infotitularnuevo').css('display','none');
-                    $('#sintitular')[0].checked = false;
-
 
                 }
             });
@@ -431,6 +427,8 @@
 
     <script type="text/javascript">
 
+        var idTitular = "{!!$parcela->GC_TITULAR_id!!}";
+        var idParcela = "{!!$parcela->id!!}"
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
@@ -587,24 +585,28 @@
             $('#infotitularasignado').css('display','none');
             $('#infotitularnuevo').css('display','block');
 
+            //Reasignamos el valor de la parcela proque se ha borrado.
+            $("#idparcela").val(idParcela);
         });
 
-        $("#recuperar").on("click", function(event){
+        $("#recuperar").on("click", function(event) {
 
-            if(sint == "1") {
+            if(idTitular == "") {
 
-                $('#sintitular')[0].checked = true;
+                $('#infotitularasignado').css('display','none')
+                $('#infotitularnuevo').css('display','block');
+                $("#idtitular").val("")
+                $("idparcela").val(idParcela);
 
-                $('#infosintitular').css('display','block');
+            }else{
+                $('#infotitularasignado').css('display','block')
+                $('#infotitularnuevo').css('display','none');
+
+                $("#idtitular").val(idTitular)
+
+                $("#idparcela").val(idParcela);
+
             }
-
-            if(sint == "0") {
-
-                $('#infotitularasignado').css('display','block');
-
-            }
-
-            $('#infotitularnuevo').css('display','none');
 
 
         });
