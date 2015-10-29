@@ -417,9 +417,6 @@
 
                     $('#infotitularasignado').css('display','block');
                     $('#infotitularnuevo').css('display','none');
-
-                    //Cada vez que se cambia de titular cogemos el valor del titular.
-                    idTitular = $("#idtitular").val();
                 }
             });
         }
