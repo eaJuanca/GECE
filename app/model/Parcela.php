@@ -18,6 +18,25 @@ class Parcela extends Model{
     protected $fillable = [
         'id',
         'tamanyo',
-        'GC_PANTEON'
+        'GC_PANTEON',
+        'numero',
+        'nom_facturado',
+        'dir_facturado',
+        'nif_facturado',
+        'pob_facturado',
+        'pro_facturado',
+        'cp_facturado',
+        'tel_facturado',
+        'iban',
+        'GC_TITULAR_id',
+        'banco',
+        'sucursal',
+        'dc',
+        'cuenta',
+        'plaza',
+        'titular',
+        'tafifa',
+        'observaciones',
+        'voluntades'
     ];
 }

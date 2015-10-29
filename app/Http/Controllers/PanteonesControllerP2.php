@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\model\Parcela;
+use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\model\Titular;
 
 class PanteonesControllerP2 extends Controller
 {
@@ -15,7 +18,21 @@ class PanteonesControllerP2 extends Controller
      */
     public function index()
     {
-        //
+
+    }
+
+    public function indexModify($id){
+        //obtenemos que no tienen titular primero
+        //$parcela = VPanteones::where('parcela_id' ,'=',$id)
+        // ->where('titular_id', '=', null)->get();
+
+        $parcela = Parcela::find($id);
+        //obtenemos informacion de la vista creada para panteones o parcelas
+        $infoParcela = VPanteones::where('parcela_id', '=', $parcela->id )->get()[0];
+        //obtenemos los datos del titular
+        $titular = Titular::findOrNew($parcela->GC_TITULAR_id);
+
+        return view('modificar-panteon', compact('parcela','titular','infoParcela'));
     }
 
     /**
@@ -56,10 +73,30 @@ class PanteonesControllerP2 extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        dd($id);
-        return view('modificar-panteon');
+        $idtitular = $request->input('idtitular'); //id titular
+
+
+        if($idtitular == ''){
+
+            $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+            $idtitular = $titular->insertGetId($titular->attributesToArray());
+
+        }
+        else{
+
+            $titularA = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+            $titular = Titular::find($idtitular);
+            $titular->update($titularA->attributesToArray());
+            $idtitular = $request->input('idtitular'); //id titular
+
+        }
+
+        $parcelaU = new parcela($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+        $parcela = Parcela::find($request->input('idparcela'));
+        $parcelaU->GC_TITULAR_id = $idtitular;
+        $parcela->update($parcelaU->attributesToArray());
     }
 
     /**

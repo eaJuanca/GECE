@@ -348,7 +348,6 @@ class NichoController extends Controller
 
         $sintitularbox = $request->input('sintitular');
 
-
         $idtitular = $request->input('idtitular'); //id titular
 
         $sintitular = false;
@@ -375,8 +374,6 @@ class NichoController extends Controller
 
             }
         }
-
-
 
         $nichoU = new Nicho($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
         $nicho = Nicho::find($request->input('idnicho'));

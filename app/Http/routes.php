@@ -35,7 +35,7 @@ Route::group(['prefix' => '/'], function()
         return view('alta_difunto');
     }]);
 
-    //A�adir un difunto desde la vista nicho
+    //Añadir un difunto desde la vista nicho
     Route::get('alta-difunto-{nichoid}', ['as' => 'alta-difunto-nicho', 'uses' => 'DifuntoController@DifuntoNicho']);
 
     Route::get('nichos', ['as' => 'nichos','uses' => 'NichoController@index']);
@@ -48,7 +48,7 @@ Route::group(['prefix' => '/'], function()
 
     Route::get('modificar-panteones-{id}', ['as' => 'modificar-panteones', function($id){
         $controller = App::make(\App\Http\Controllers\PanteonesControllerP2::class);
-        return $controller->callAction('edit', array('id' => $id));
+        return $controller->callAction('indexModify', array('id' => $id));
     }]);
 
     //muestra una vista con los nichos que hay en un panteon
@@ -91,11 +91,11 @@ Route::get('ct_nichos',  ['as' => 'ct_nichos', 'uses' => 'tarifasController@ct_n
 Route::get('m_parcelas',  ['as' => 'm_parcelas', 'uses' => 'tarifasController@m_parcelas']);
 
 Route::get('m_nichos',  ['as' => 'm_nichos', 'uses' => 'tarifasController@m_nichos']);
-
-
 //Fin parte tarifas
 
 Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);
+
+Route::get('editar-parcela', ['as' => 'editar-parcela', 'uses' => 'PanteonesControllerP2@edit']);
 
 Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
 

@@ -109,7 +109,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="nombreapellidos">Nombre y apellidos</label>
-                            <input type="text" placeholder="Nombre apellido1 apellido2" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
+                            <input type="text" placehoplaceholder="Nombre apellido1 apellido2" id="nombreapellidos" class="form-control bloqueable" value="{{$titular->nombre_titular}}" name="nombre_titular" required>
                         </div>
 
                         <div class="form-group">

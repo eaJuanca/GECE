@@ -2,8 +2,8 @@
 
 @section('title')
 
-        <h2 style="color: white; font-weight: bold; margin-left:10px; "> Modificar Nicho </h2>
-        <p class="pull-right"><a href="{{ URL::route('nichos') }}" class="btn btn-md btn-material-orange back glyphicon glyphicon glyphicon-arrow-left"></a></p>
+        <h2 style="color: white; font-weight: bold; margin-left:10px; "> Modificar Parcela </h2>
+        <p class="pull-right"><a href="{{ URL::route('panteones') }}" class="btn btn-md btn-material-orange back glyphicon glyphicon glyphicon-arrow-left"></a></p>
 
 @endsection
 
@@ -20,16 +20,17 @@
 
     <div class="panel panel-info" style="margin-top: 20px">
         <div class="panel-heading">
-            <h3 class="panel-title" style="color: white">Cumplimentacion datos del nicho {{$idnicho}}</h3>
+            <h3 class="panel-title" style="color: white">Cumplimentacion datos de la parcela {{$parcela->id}}</h3>
         </div>
         <div class="panel-body">
 
-            <form id="editar-nicho">
+            <form id="editar-parcela">
+
+                <input name="_method" type="hidden" value="PATCH">
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
-                <input type="hidden" class="form-control" name="idnicho" id="idnicho" value="{{$idnicho}}">
-
+                <input type="hidden" class="form-control" name="idparcela" id="idparcela" value="{{$parcela->id}}">
 
                 <div class="row">
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -37,15 +38,10 @@
                         <h3 style="font-weight: bold">Titular</h3>
                         <br>
 
-
-                            <span id="infosintitular"  @if($nicho->sintitular != true) style="display: none" @endif >Info: Este nicho se añadira sin titular </span>
-
-
-                           <span id="infotitularasignado" @if($nicho->GC_TITULAR_id == null) style="display: none" @endif >Estas editando los datos de un titular existente, si deseas asignar otro titular pulse NUEVO </span>
+                        <span id="infotitularasignado" @if($parcela->GC_TITULAR_id == null) style="display: none" @endif >Estas editando los datos de un titular existente, si deseas asignar otro titular pulse NUEVO </span>
 
 
-                           <span @if($nicho->GC_TITULAR_id == null && $nicho->sinasignar==true) @else style="display: none" @endif id="infotitularnuevo">Estas añadiendo un nuevo titular a este nicho </span>
-
+                        <span @if($parcela->GC_TITULAR_id == null) @else style="display: none" @endif id="infotitularnuevo">Estas añadiendo un nuevo titular a este nicho </span>
 
                         <div class="row">
 
@@ -55,7 +51,7 @@
                         </div>
 
 
-                        <input type="hidden" id="idtitular" class="form-control" value="{{$titular->id}}" name="idtitular">
+                        <input type="hidden" id="idtitular" class="form-control" value="{{$titular->parcela_id}}" name="idtitular">
 
                         <div class="row">
 
@@ -91,18 +87,6 @@
                                 <div class="form-group">
                                     <label class="control-label" for="dni">DNI</label>
                                     <input type="text" id="dni" class="form-control bloqueable" value="{{$titular->dni_titular}}" name="dni_titular">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                                <div class="form-group" style=" margin-top: 35px">
-                                    <div class="sample1">
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type ="checkbox" class="sintitular" id="sintitular" name="sintitular" @if($nicho->sintitular == true) checked @endif> <span style="font-weight: bold;" >Sin titular temporalmente</span>
-                                            </label>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
 
@@ -164,37 +148,14 @@
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="select">Tipo de cesión</label>
-                                    <select class="form-control bloqueable" id="select" name="cesion">
-                                        <option value="0" @if($nicho->cesion==0) selected @endif  >Cesión a perpetuidad</option>
-                                        <option value="1" @if($nicho->cesion==1) selected @endif  >Cesión temporal</option>
-                                    </select>
-
-                                </div>
-                            </div>
-
-
                         </div>
 
 
-                        <h3 style="font-weight: bold">Situacion del nicho</h3>
+                        <h3 style="font-weight: bold">Situacion de la parcela</h3>
                         <br>
-
-                        <span style="font-weight: bold">Calle:</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->nombre_calle}}</span> <br><br>
-                        <span style="font-weight: bold">Altura</span><br>  <span style="font-weight: bold; color: #1c84c6">{{$info->altura}} </span><br><br>
-                        <span style="font-weight: bold">Numero</span><br> <span style="font-weight: bold; color: #1c84c6">{{$info->numero}} </span><br>
-
+                        <span style="font-weight: bold">Calle:</span><br> <span style="font-weight: bold; color: #1c84c6">{{$infoParcela->calle}}</span> <br><br>
+                        <span style="font-weight: bold">Numero</span><br> <span style="font-weight: bold; color: #1c84c6">{{$infoParcela->numero}} </span><br>
                         <br>
-
-                        <div class="sample1">
-                            <div class="checkbox">
-                                <label>
-                                    <input type ="checkbox" class="enterrar"> <span style="font-weight: bold"> Enterrar difunto despues de modificar el nicho</span>
-                                </label>
-                            </div>
-                        </div>
 
                     </section>
 
@@ -213,21 +174,21 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Nombre</label>
-                            <input type="text" class="form-control" value="{{$nicho->nom_facturado}}" name="nom_facturado">
+                            <input type="text" class="form-control" value="{{$parcela->nom_facturado}}" name="nom_facturado">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Direccion</label>
-                                    <input type="text" class="form-control" value="{{$nicho->dir_facturado}}" name="dir_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->dir_facturado}}" name="dir_facturado">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Nif</label>
-                                    <input type="text" class="form-control" value="{{$nicho->nif_facturado}}" name="nif_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->nif_facturado}}" name="nif_facturado">
                                 </div>
                             </div>
 
@@ -237,14 +198,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" class="form-control" value="{{$nicho->pob_facturado}}" name="pob_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->pob_facturado}}" name="pob_facturado">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Provincia</label>
-                                    <input type="text" class="form-control" value="{{$nicho->pro_facturado}}" name="pro_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->pro_facturado}}" name="pro_facturado">
 
                                 </div>
                             </div>
@@ -255,14 +216,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Código postal</label>
-                                    <input type="text" class="form-control" value="{{$nicho->cp_facturado}}" name="cp_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->cp_facturado}}" name="cp_facturado">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Teléfono</label>
-                                    <input type="text" class="form-control" value="{{$nicho->tel_facturado}}" name="tel_facturado">
+                                    <input type="text" class="form-control" value="{{$parcela->tel_facturado}}" name="tel_facturado">
                                 </div>
                             </div>
 
@@ -275,28 +236,28 @@
                             <div class="col col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">IBAN</label>
-                                    <input type="text" class="form-control" value="{{$nicho->iban}}" name="iban">
+                                    <input type="text" class="form-control" value="{{$parcela->iban}}" name="iban">
                                 </div>
                             </div>
 
                             <div class="col col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Banco</label>
-                                    <input type="text" class="form-control" value="{{$nicho->banco}}" name="banco">
+                                    <input type="text" class="form-control" value="{{$parcela->banco}}" name="banco">
                                 </div>
                             </div>
 
                             <div class="col col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Sucursal</label>
-                                    <input type="text" class="form-control" value="{{$nicho->sucursal}}" name="sucursal">
+                                    <input type="text" class="form-control" value="{{$parcela->sucursal}}" name="sucursal">
                                 </div>
                             </div>
 
                             <div class="col col-lg-3 col-md-3 col-sm-6 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DC</label>
-                                    <input type="text" class="form-control" value="{{$nicho->dc}}" name="dc">
+                                    <input type="text" class="form-control" value="{{$parcela->dc}}" name="dc">
                                 </div>
                             </div>
                         </div>
@@ -305,14 +266,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Cuenta</label>
-                                    <input type="text" class="form-control" value="{{$nicho->cuenta}}" name="cuenta">
+                                    <input type="text" class="form-control" value="{{$parcela->cuenta}}" name="cuenta">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Plaza</label>
-                                    <input type="text" class="form-control" value="{{$nicho->plaza}}" name="plaza">
+                                    <input type="text" class="form-control" value="{{$parcela->plaza}}" name="plaza">
                                 </div>
                             </div>
                         </div>
@@ -321,7 +282,7 @@
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Titular de la cuenta</label>
-                                    <input type="text" class="form-control" value="{{$nicho->titular}}" name="titular">
+                                    <input type="text" class="form-control" value="{{$parcela->titular}}" name="titular">
                                 </div>
                             </div>
 
@@ -331,7 +292,7 @@
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Observaciones</label>
-                                    <textarea type="text" class="form-control" name="observaciones" rows="3">{{$nicho->observaciones}}</textarea>
+                                    <textarea type="text" class="form-control" name="observaciones" rows="3">{{$parcela->observaciones}}</textarea>
                                 </div>
                             </div>
 
@@ -341,7 +302,7 @@
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Voluntades</label>
-                                    <textarea type="text" id="voluntades" class="form-control" name="voluntades" rows="3">{{$nicho->voluntades}}</textarea>
+                                    <textarea type="text" id="voluntades" class="form-control" name="voluntades" rows="3">{{$parcela->voluntades}}</textarea>
                                 </div>
                             </div>
 
@@ -351,7 +312,7 @@
 
 
                 </div>
-                <button type="submit" class="btn btn-success btn-raised" id="submit"><i class="fa fa-pencil-square-o"></i> Modificar nicho</button>
+                <button type="submit" class="btn btn-success btn-raised" id="submit"><i class="fa fa-pencil-square-o"></i> Modificar parcela</button>
             </form>
         </div>
     </div>
@@ -456,7 +417,6 @@
                     $("#exp_titular").val(data['exp_titular']);
                     $("#idtitular").val(data['id']);
 
-                    $('#infosintitular').css('display','none');
                     $('#infotitularasignado').css('display','block');
                     $('#infotitularnuevo').css('display','none');
                     $('#sintitular')[0].checked = false;
@@ -492,57 +452,20 @@
 
             $.material.init();
 
-            $(".enterrar").change(function() {
-                if(this.checked) {
-                    $('#submit').html('<i class="fa fa-pencil-square-o"></i> Modificar nicho y enterrar <i class="fa fa-university"></i>');
-                } else{
-                    $('#submit').html('<i class="fa fa-pencil-square-o"></i> Modificar nicho');
-
-                }
-            });
-
-            $(".sintitular").change(function() {
-                if(this.checked) {
-
-                    $(".bloqueable").val('');
-                    $('.bloqueable').attr('readonly','readonly');
-                    $('#idtitular').val('');
-                    $('#infosintitular').css('display','block');
-                    $('#infotitularasignado').css('display','none');
-                    $('#infotitularnuevo').css('display','none');
-                    $(".sintitular").val="on";
-
-                } else{
-                    $('#dni').val('');
-
-                    $('.bloqueable').removeAttr('readonly');
-                    $('#nombreapellidos').val('');
-                    $('#infosintitular').css('display','none');
-                    $('#infotitularasignado').css('display','none');
-                    $('#infotitularnuevo').css('display','block');
-
-
-
-
-
-                }
-            });
-
-            $('#editar-nicho').submit(function (e) {
+            $('#editar-parcela').submit(function (e) {
 
                 e.preventDefault();
 
-
                     $.ajax({
 
-                        type: "POST",
-                        url: "{{ URL::route('editar-nicho') }}",
-                        data: $('#editar-nicho').serialize(),
+                        type: "GET",
+                        url: "{{ URL::route('editar-parcela') }}",
+                        data: $('#editar-parcela').serialize(),
                         dataType: "html",
                         error: function () {
 
                             Lobibox.notify('error', {
-                                title: 'No se ha podido modificar el nicho',
+                                title: 'No se ha podido modificar la parcela',
                                 showClass: 'flipInX',
                                 delay: 3000,
                                 delayIndicator: false,
@@ -571,7 +494,7 @@
                             } else {
 
                                 Lobibox.notify('success', {
-                                    title: 'Nicho modificado correctamente',
+                                    title: 'Parcela modificada correctamente',
                                     showClass: 'flipInX',
                                     delay: 3000,
                                     delayIndicator: false,
@@ -582,18 +505,13 @@
 
                         }
                     });
-
-
-
             });
 
             $('#buscartitular').submit(function (e) {
 
                 e.preventDefault();
 
-
                 $.ajax({
-
                     type: "POST",
                     url: "{{ URL::route('autocompletarTitulares') }}",
                     data: $('#buscartitular').serialize(),
@@ -616,8 +534,6 @@
                 $('#resultadostitulares').html('');
 
             });
-
-
 
             function nif(dni) {
                 var numero;
@@ -662,35 +578,18 @@
         //controlar la informacion de autocompletado y que la id se vacie
         $("#nuevotitular").on("click", function(event){
 
-            $('#editar-nicho').find('input').each(function() {
+            $('#editar-parcela').find('input').each(function() {
                 $(this).val('');
             });
 
             $("#select").val("0");
 
-
-
-            $('#idnicho').val({{$nicho->id}});
-
-            $('#infosintitular').css('display','none');
             $('#infotitularasignado').css('display','none');
             $('#infotitularnuevo').css('display','block');
 
-            $('#sintitular')[0].checked = false;
-
-
         });
 
-
-
-
         $("#recuperar").on("click", function(event){
-
-            var sint = "{{$nicho->sintitular}}";
-
-            $("#idtitular").val({{$nicho->GC_TITULAR_id}});
-
-            $('#infosintitular').css('display','none');
 
             if(sint == "1") {
 
@@ -710,11 +609,9 @@
 
         });
 
-
-
         function explode(){
 
-            window.location.href = "{{ route('alta-difunto-nicho',[$idnicho])}}";
+
         }
         /**
          * Comentario cambios
