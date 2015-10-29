@@ -10,7 +10,7 @@ namespace App\Http\Controllers;
 
 use App\model\Tm_nichos;
 use App\model\Tm_parcelas;
-use App\model\Tcp_parcelas;
+use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
 use App\model\Tct_parcelas;
@@ -27,7 +27,7 @@ class tarifasController extends Controller{
 
     function index(){
 
-        $Tcp_parcelas = Tcp_parcelas::firstOrFail();
+        $Tcp_parcelas = Tcp_parcelas2::firstOrFail();
         $Tcp_nichos = Tcp_nichos::firstOrFail();
         $Tct_parcelas = Tct_parcelas::firstOrFail();
         $Tct_nichos = Tct_nichos::firstOrFail();
@@ -43,20 +43,20 @@ class tarifasController extends Controller{
     function cp_parcelas(Request $r){
 
 
-        $countTarifa =  Tcp_parcelas::count();
+        $countTarifa =  Tcp_parcelas2::count();
 
 
         //Si ya esta la tarifa dada de alta la actualizamos.
         if($countTarifa == 1){
 
-            $tarifa = Tcp_parcelas::firstOrFail();
+            $tarifa = Tcp_parcelas2::firstOrFail();
             $tarifa->tarifa = $r->input("cp_parcela");
             $tarifa->save();
 
         }else{
 
             //sino la creamos
-            $tarifa = new Tcp_parcelas();
+            $tarifa = new Tcp_parcelas2();
             $tarifa->tarifa = $r->input("cp_parcela");
             $tarifa->save();
         }
@@ -67,7 +67,7 @@ class tarifasController extends Controller{
      */
     function cpv_parcelas()
     {
-        $tarifa = Tcp_parcelas::firstOrFail();
+        $tarifa = Tcp_parcelas2::firstOrFail();
         return $tarifa->tarifa;
     }
 
