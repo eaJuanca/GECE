@@ -151,7 +151,7 @@
                                             <td> Calle: <span style="font-weight: bold">{{$disponible->calle}}, </span>
                                                  Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
 
-                                            <td> <a href="{{ route('modificar-panteones',[$disponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a> Modificar Panteon</td>
+                                            <td> <a href="{{ route('modificar-panteones',[$disponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar Panteon</a> </td>
 
                                         </tr>
 

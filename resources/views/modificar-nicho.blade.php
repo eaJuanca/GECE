@@ -713,10 +713,7 @@
 
             }
 
-
-
             $('#infotitularnuevo').css('display','none');
-
 
         });
 
