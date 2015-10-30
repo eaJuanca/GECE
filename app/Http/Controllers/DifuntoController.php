@@ -104,6 +104,7 @@ class DifuntoController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $difunto = new Difunto($request->all());
         $difunto->save();
     }

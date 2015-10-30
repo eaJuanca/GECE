@@ -98,7 +98,7 @@
                     </div>
                     <p class="text-center gc_title"><strong>FACTURACION</strong></p>
                     <p class="text-center text_hidden">Módulo para la facturación</p>
-                    <p class="text-center btn_hidden"><button class="btn btn-md btn-material-cyan">Entrar</button></p>
+                    <p class="text-center btn_hidden"><a href="{{ URL::route('facturacion') }}" class="btn btn-md" style="background-color:#B2EBF2">Entrar</a></p>
                     <p class="text-center btn_show">
                         <button class="btn btn-md" style="background-color:#0097A7">
                             <i class="glyphicon glyphicon-share-alt"></i>

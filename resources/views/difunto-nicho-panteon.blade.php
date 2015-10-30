@@ -78,7 +78,7 @@
                                 </table>
                             </div>
 
-                            <a href="{{ route('alta-difunto-nicho',[$id])}}"><button type="button" class="btn btn-success">Añadir difunto</button></a>
+                            <a href="{{ route('alta-difunto-nicho',[$id])}}"><button type="button" class="btn btn-success">AÃ±adir difunto</button></a>
                         </div>
                     </div>
                 </div>

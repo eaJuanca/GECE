@@ -197,4 +197,6 @@ Route::get('ver-difuntos-nicho-panteon-{id}', ['as' => 'ver-difuntos-nicho-pante
 //busqueda de panteones a traves del formulario
 Route::post('busquedaPanteones', ['as' => 'busquedaPanteones', 'uses' => 'PanteonesController@busqueda']);
 
+Route::get('facturacion', ['as' => 'facturacion', 'uses' => 'FacturacionController@index']);
+
 
