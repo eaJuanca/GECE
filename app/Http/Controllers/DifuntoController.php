@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\model\Difunto;
+use App\model\InfoNicho;
+use App\model\Nicho;
+use App\model\Titular;
 use App\model\TotalNicho;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
 
 class DifuntoController extends Controller
 {
@@ -104,9 +108,18 @@ class DifuntoController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        $difunto = new Difunto($request->all());
-        $difunto->save();
+
+            $nichoid = $request->input('GC_NICHOS_id');
+            $nicho = Nicho::find($nichoid);
+            $titular = Titular::find($nicho->GC_TITULAR_id);
+
+            $difunto = new Difunto($request->all());
+            $difunto->save();
+
+            $fc = new FacturacionController();
+            $fc->facturaEnterramiento($nicho,$difunto,$titular);
+
+
     }
 
 

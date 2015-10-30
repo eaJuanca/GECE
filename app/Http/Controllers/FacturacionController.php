@@ -84,4 +84,9 @@ class FacturacionController extends Controller
     {
         //
     }
+
+    public function facturaEnterramiento($nicho,$difunto,$titular)
+    {
+        //
+    }
 }

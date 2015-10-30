@@ -302,7 +302,7 @@
                     success: function (data) {
 
                         Lobibox.notify('success', {
-                            title: 'Difunto a�adido<br> Espere...',
+                            title: 'Difunto añadido<br> Espere...',
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
@@ -319,7 +319,7 @@
         });
 
         function explode(){
-            window.location.href = "{{ URL::route('difunto') }}";
+           // window.location.href = "{{ URL::route('difunto') }}";
         }
 
         /**
