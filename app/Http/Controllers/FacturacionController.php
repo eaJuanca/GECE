@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\model\Factura;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -85,8 +86,18 @@ class FacturacionController extends Controller
         //
     }
 
-    public function facturaEnterramiento($nicho,$difunto,$titular)
+    public function facturaEnterramiento($nicho,$difunto,$titular,$parcela = null)
     {
-        //
+        $factura = NEW Factura();
+
+        $factura->idtitular = $titular;
+        $factura->iddifunto = $difunto;
+        $factura->idnicho = $nicho;
+        $factura->idparcela = $parcela;
+        $factura->tipo = 1;
+
+        $factura->save();
+
+
     }
 }

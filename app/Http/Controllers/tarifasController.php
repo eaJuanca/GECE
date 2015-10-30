@@ -14,6 +14,8 @@ use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
 use App\model\Tct_parcelas;
+use App\model\Iva2 as Iva;
+use App\model\TarifaServicios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 
@@ -33,9 +35,12 @@ class tarifasController extends Controller{
         $Tct_nichos = Tct_nichos::first();
         $Tm_parcelas = Tm_parcelas::first();
         $Tm_nichos = Tm_nichos::first();
+        $iva = Iva::first();
+
+        $servicios = TarifaServicios::all();
 
 
-        return view("tarifas", compact("Tcp_parcelas","Tcp_nichos","Tct_parcelas","Tct_nichos","Tm_parcelas","Tm_nichos"));
+        return view("tarifas", compact("Tcp_parcelas","Tcp_nichos","Tct_parcelas","Tct_nichos","Tm_parcelas","Tm_nichos","iva","servicios"));
     }
     /*
      * funcion para dar de alta la tarifa de cesion temporar de las parcelas o actualizarla
@@ -225,6 +230,27 @@ class tarifasController extends Controller{
         }
     }
 
+
+    function m_iva(Request $r)
+    {
+        $countIva =  Iva::count();
+
+        //Si ya esta la tarifa dada de alta la actualizamos.
+        if($countIva == 1){
+
+            $iva = Iva::firstOrFail();
+            $iva->tipo = $r->input("iva");
+            $iva->save();
+
+        }else{
+
+            //sino la creamos
+            $iva = new Iva();
+            $iva->tipo = $r->input("iva");
+            $iva->save();
+        }
+    }
+
     /*
     * Función para obtener el valor de la tarifa de cesion temporal de los nichos
     */
@@ -233,4 +259,15 @@ class tarifasController extends Controller{
         $tarifa = Tm_nichos::firstOrFail();
         return $tarifa->tarifa;
     }
+
+    function nuevoservicio(Request $r)
+    {
+        $servicio = new TarifaServicios();
+        $servicio->concepto = $r->input('concepto');
+        $servicio->codigo = $r->input('codigo');
+        $servicio->importe = $r->input('importe');
+
+        $servicio->save();
+    }
+
 }

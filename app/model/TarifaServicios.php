@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class TarifaServicios extends Model
     protected $fillable = [
         'concepto',
         'importe',
-        'subcuenta'
+        'codigo'
     ];
 }

@@ -186,7 +186,81 @@
         </div>
     </div>
 
+    <div class="panel panel-info" style="margin-top: 20px">
+        <div class="panel-body">
 
+            <form id="from_iva">
+
+                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
+
+                    <h3 class="text-center" style="font-weight: bold">IVA</h3>
+                    <br>
+
+                    <div class="form-group nombre">
+                        <label for="inputFile" class="col-lg-2 ">% IVA:</label>
+                        <div class="col-lg-10">
+                            @if($iva != null)
+                                <input type="number" min="0" name="iva" class="form-control m_nicho" value="{!! $iva->tipo !!}" required>
+                            @else
+                                <input type="number" min="0" name="iva" class="form-control m_nicho" placeholder="valor iva" required>
+                            @endif
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-raised pull-right">Modificar</button>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="panel panel-info" style="margin-top: 20px">
+        <div class="panel-heading">
+            <h3 class="panel-title" style="color: white">
+                Servicios
+            </h3>
+        </div>
+        <div class="panel-body">
+
+
+            <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
+                <thead>
+                <tr>
+                    <th>Código.</th>
+                    <th>Concepto</th>
+                    <th>Importe €</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody class="tdisponibles">
+
+
+                @foreach($servicios as $servicio)
+
+                    <tr>
+                        <td> {{$servicio->codigo}}</td>
+                        <td> {{$servicio->concepto}}</td>
+                        <td> {{$servicio->importe}}</td>
+                        <td></td>
+
+                    </tr>
+
+                @endforeach
+
+                <tr>
+
+
+                    <td> <input type="text" id="codigo"></td>
+                    <td> <input type="text" id="concepto"></td>
+                    <td> <input type="number" id="importe" min="0"></td>
+                    <td> <button class="btn btn-success btn-xs" id="nuevoservicio">Añadir</button></td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 @endsection
 
@@ -197,6 +271,38 @@
 
 
         $(document).ready(function () {
+
+
+            $("#nuevoservicio").on("click", function(event){
+
+                var codigo = $("#codigo").val();
+                var concepto = $("#concepto").val();
+                var importe = $("#importe").val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{ URL::route('nuevo_servicio') }}",
+                    data: {codigo: codigo, concepto: concepto, importe: importe},
+                    dataType: "html",
+                    error: function () {
+                        alert("No se ha podido añadir el servicio");
+                    },
+                    success: function (data) {
+
+                        Lobibox.notify('success', {
+                            title: 'Servicio añadido',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left'
+
+                        });
+
+                        // location.reload();
+                    }
+                });
+
+            });
 
             var token = "{{ csrf_token()}}";
 
@@ -352,7 +458,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "{{ URL::route('m_nichos') }}",
+                        url: "{{ URL::route('m_iva') }}",
                         data: $("#from_tmn").serialize(),
                         dataType: "html",
                         error: function () {
@@ -362,6 +468,36 @@
 
                             Lobibox.notify('success', {
                                 title: 'Tarifa modificada',
+                                showClass: 'flipInX',
+                                delay: 3000,
+                                delayIndicator: false,
+                                position: 'bottom left'
+
+                            });
+
+                           // location.reload();
+                        }
+                    });
+
+                });
+
+
+            $("#from_iva").submit(function (e) {
+
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: "GET",
+                        url: "{{ URL::route('m_iva') }}",
+                        data: $("#from_iva").serialize(),
+                        dataType: "html",
+                        error: function () {
+                            alert("entra en error");
+                        },
+                        success: function (data) {
+
+                            Lobibox.notify('success', {
+                                title: 'Iva modificado',
                                 showClass: 'flipInX',
                                 delay: 3000,
                                 delayIndicator: false,

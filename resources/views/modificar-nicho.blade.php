@@ -570,6 +570,8 @@
 
                             } else {
 
+                                $('#submit').hide();
+
                                 Lobibox.notify('success', {
                                     title: 'Nicho modificado correctamente',
                                     showClass: 'flipInX',
@@ -579,6 +581,10 @@
                                 });
 
                             }
+
+
+                            setTimeout(explode2, 2000);
+
 
                         }
                     });
@@ -720,6 +726,11 @@
         function explode(){
 
             window.location.href = "{{ route('alta-difunto-nicho',[$idnicho])}}";
+        }
+
+        function explode2(){
+
+            window.location.reload();
         }
         /**
          * Comentario cambios

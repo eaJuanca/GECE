@@ -117,7 +117,7 @@ class DifuntoController extends Controller
             $difunto->save();
 
             $fc = new FacturacionController();
-            $fc->facturaEnterramiento($nicho,$difunto,$titular);
+            $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id);
 
 
     }
