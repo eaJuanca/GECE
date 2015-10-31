@@ -485,6 +485,16 @@
             todayHighlight: true
         });
 
+        function redirectNicho(){
+
+            window.location.href = "{{ route('alta-difunto-nicho',[$idnicho])}}";
+        }
+
+        function reloadMe(){
+
+            window.location.href = "{{ route('show-facturas',[$idnicho])}}";
+        }
+
 
         $(document).ready(function () {
 
@@ -565,7 +575,8 @@
                                 });
 
                                 $('#submit').hide();
-                                setTimeout(explode, 2000);
+                                setTimeout(redirectNicho, 2000);
+
 
 
                             } else {
@@ -580,10 +591,12 @@
                                     position: 'bottom left'
                                 });
 
+                                setTimeout(reloadMe, 2000);
+
+
                             }
 
 
-                            setTimeout(explode2, 2000);
 
 
                         }
@@ -722,16 +735,6 @@
         });
 
 
-
-        function explode(){
-
-            window.location.href = "{{ route('alta-difunto-nicho',[$idnicho])}}";
-        }
-
-        function explode2(){
-
-            window.location.reload();
-        }
         /**
          * Comentario cambios
          */

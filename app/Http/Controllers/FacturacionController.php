@@ -6,6 +6,7 @@ use App\model\Factura;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class FacturacionController extends Controller
 {
@@ -41,15 +42,16 @@ class FacturacionController extends Controller
         //
     }
 
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $idnicho
+     * @return \Illuminate\View\View
      */
-    public function show($id)
-    {
-        //
+    public function show($idnicho) {
+
+        $factura = Factura::where('idnicho',$idnicho)->where('serie','D')->first();
+        $factura= $factura->id;
+        return view('facturasProcesoNichos',compact('factura'));
     }
 
     /**
@@ -98,6 +100,51 @@ class FacturacionController extends Controller
 
         $factura->save();
 
+
+    }
+
+    public function facturaCesionPerpetura($titular, $nicho){
+
+
+        //fecha de hoy
+        $hoy = Carbon::now();
+
+        //busco si hay una factura de un nicho para la serie D, osea si alguna vez se ha generado una factura
+        $aux = Factura::where('idnicho',$nicho)->where('serie','D')->first();
+
+        //obtener el numero de factura maximo
+        $numero = Factura::where('serie','D')->whereYear('inicio','=',$hoy->year)->max('numero');
+
+        //hay que generar o no las facturas de mantenimiento
+        $fmantenimiento = false;
+
+
+
+        //valores que se establecen solo una vez
+        if($aux == null) {
+
+            $factura = new Factura();
+            $factura->numero = $numero+1;
+            $factura->inicio = $hoy;
+            $factura->idnicho = $nicho;
+            $factura->serie = 'D';
+            $fmantenimiento = true;
+
+        }
+        else {
+            $factura = $aux;
+        }
+
+        //el titular puede cambiar
+        $factura->idtitular = $titular;
+
+        $factura->save();
+
+
+        if($fmantenimiento){
+
+            //generar facturas de mantenimiento
+        }
 
     }
 }

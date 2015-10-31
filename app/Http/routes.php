@@ -203,4 +203,9 @@ Route::post('busquedaPanteones', ['as' => 'busquedaPanteones', 'uses' => 'Panteo
 
 Route::get('facturacion', ['as' => 'facturacion', 'uses' => 'FacturacionController@index']);
 
+Route::get('show-facturas-{nichoid}', ['as' => 'show-facturas', 'uses' => 'FacturacionController@show']);
+
+Route::get('pdfacturanicho-{id}', ['as' => 'pdfacturanicho', 'uses' => 'PdfFacturasGenerator@facturaNicho']);
+
+
 
