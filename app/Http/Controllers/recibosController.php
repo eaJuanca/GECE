@@ -49,6 +49,8 @@ class recibosController extends Controller
     public function show($id)
     {
         //
+
+        dd("entra");
     }
 
     /**

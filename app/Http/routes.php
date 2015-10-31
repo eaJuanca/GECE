@@ -106,6 +106,13 @@ Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoContr
 Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice']);
 
 
+//Parte Recibos///
+
+Route::post('listaNichos' ,  ['as' => 'listaNichos', 'uses' => 'recibosController@show']);
+
+//Fin parte recibos//
+
+
 //Paginacion dedicado al apartado de los nichos disponibles
 Route::post('paginateDisponibles', ['as' => 'paginateDisponibles', 'uses' => 'NichoController@paginateDisponibles']);
 
@@ -178,8 +185,6 @@ Route::get('auth/logout', ['as' => 'auth/logout', 'uses' => 'LogController@logou
 
 
 Route::resource('log','LogController');
-
-
 
 //Paginacion dedicado al apartado de los panteones disponibles
 Route::post('PanteonesPaginateDisponibles', ['as' => 'PanteonesPaginateDisponibles', 'uses' => 'PanteonesController@paginateDisponibles']);

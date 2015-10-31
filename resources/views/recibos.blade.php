@@ -1,3 +1,5 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
 @extends('master')
 
 @section('title')
@@ -8,6 +10,7 @@
 
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
+
 
     <style>
         .stepwizard-step p {
@@ -49,11 +52,9 @@
             line-height: 1.428571429;
             border-radius: 15px;
             margin-top: 0%;
+            border: 1px solid transparent;
         }
 
-        .btn-personalize{
-
-        }
     </style>
 
 @endsection
@@ -69,7 +70,7 @@
                 <p>Búsqueda</p>
             </div>
             <div class="stepwizard-step">
-                <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+                <a href="#step-2" type="button" class="btn btn-default btn-circle btn-personalize" disabled="disabled">2</a>
                 <p>Periodo</p>
             </div>
             <div class="stepwizard-step">
@@ -87,19 +88,70 @@
         <div class="row setup-content" id="step-1">
             <div class="col-xs-6 col-md-offset-3">
                 <div class="col-md-12">
-                    <h3> Step 1</h3>
-                    <div class="form-group">
-                        <label class="control-label">First Name</label>
-                        <input  maxlength="100" type="text" required="required" class="form-control" placeholder="Enter First Name"  />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Last Name</label>
-                        <input maxlength="100" type="text" required="required" class="form-control" placeholder="Enter Last Name" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Address</label>
-                        <textarea required="required" class="form-control" placeholder="Enter your address" ></textarea>
-                    </div>
+                    <h3>  </h3>
+                    <form id="buscartitular">
+
+                        <div class="row">
+
+                            <div class="col col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="nombrebuscar">Nombre y apellidos</label>
+                                    <input type="text" required id="nombrebuscar" class="form-control" name="nombrebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <div class="col col-lg-12">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="corriente" name="corriente"><span class="checkbox-material"><span class="check"></span></span> <span style="font-weight: bold;">Al corriente</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="callebuscar">Calle</label>
+                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="dnibuscar">DNI</label>
+                                    <input type="text" id="dnibuscar" class="form-control" name="dnibuscar">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="resultadostitulares">
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <button type="submit" id="botonbuscar" class="btn btn-success">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
                         <i class="fa fa-arrow-right"></i>
                     </button>
@@ -200,6 +252,35 @@
             });
 
             $('div.setup-panel div a.btn-primary').trigger('click');
+
+            $("#botonbuscar").on('click',function(e){
+
+                $.ajax({
+                    type: "post",
+                    url: "{{ URL::route('listaNichos') }}",
+                    data: data,
+                    dataType: "html",
+                    beforeSend: function(data2){
+                        /*httpR es la variable global donde guardamos la conexion*/
+                        if(httpR){
+                            /*Si habia alguna conexion anterior, la cancelamos*/
+                            httpR.abort();
+                        }
+                        /*Guardamos la nueva conexion*/
+                        httpR = data2;
+                    },
+                    error: function () {
+                        alert("Error en la petición");
+                    },
+                    success: function (data) {
+
+                        $(".tdisponibles").html(data);
+
+
+                    }
+                });
+
+            });
         });
 
     </script>
