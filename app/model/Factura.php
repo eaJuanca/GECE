@@ -21,8 +21,10 @@ class Factura extends Model{
         'idnicho',
         'idparcela',
         'iddifunto',
-        'tipo',
-        'anyo',
+        'inicio',
+        'fin',
+        'serie',
+        'numero',
         'pendiente',
         'pagada'
 
