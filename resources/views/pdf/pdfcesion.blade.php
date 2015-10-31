@@ -3,6 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Factura cesion temporal</title>
+
 </head>
 
 <style>
@@ -30,21 +31,26 @@
 </p>
 <hr>
 
-<p>
-    Factura nº:
-    <br>
-    Fecha:
-</p>
+<table style="width:100%">
+    <tr>
+        <td width="50%">Fctura nº</td>
+        <td>Datos de facturación</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td width="60%">Fecha</td>
+        <td>Nombre y apellidos:</td>
+        <td></td>
+    </tr>
 
-<p style="position:absolute; margin-left: 70%; margin-top: -10%">
-Datos de facturación
-    <br>
-</p>
+    <tr>
+        <td width="20%"></td>
+        <td> Datos del nicho</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
 
-<main>
-
-
-    </main>
 
 </body>
 </html>
