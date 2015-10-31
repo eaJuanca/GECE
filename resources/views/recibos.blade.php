@@ -10,9 +10,6 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
 
     <style>
-        body {
-            margin-top:40px;
-        }
         .stepwizard-step p {
             margin-top: 10px;
         }
@@ -52,6 +49,10 @@
             line-height: 1.428571429;
             border-radius: 15px;
             margin-top: 0%;
+        }
+
+        .btn-personalize{
+
         }
     </style>
 
@@ -202,6 +203,8 @@
         });
 
     </script>
+
+    <!--comentario -_>
 
 @endsection
 
