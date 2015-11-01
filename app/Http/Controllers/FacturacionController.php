@@ -92,14 +92,18 @@ class FacturacionController extends Controller
     {
         $factura = NEW Factura();
 
+        $hoy = Carbon::now();
+
         $factura->idtitular = $titular;
         $factura->iddifunto = $difunto;
         $factura->idnicho = $nicho;
         $factura->idparcela = $parcela;
+        $factura->serie = 'E';
+        $factura->inicio = $hoy;
+        $numero = Factura::where('serie','E')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $factura->numero = $numero+1;
 
         $factura->save();
-
-
     }
 
     public function facturaCesionPerpetura($titular, $nicho){
