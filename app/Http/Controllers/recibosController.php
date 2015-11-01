@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\model\Nicho;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -49,10 +50,23 @@ class recibosController extends Controller
     public function show($id)
     {
         //
-
-        dd("entra");
     }
 
+
+    public function listar(Request $r){
+        //tenemos que sacar una lista de nichos en función a los parámetros de la petición.
+        if($r->input('corriente') != null) {
+
+
+        }else{
+            //buscamos todos los nichos que tengan facturas pendientes.
+
+
+        }
+
+
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

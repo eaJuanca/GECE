@@ -108,8 +108,8 @@ Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice
 
 //Parte Recibos///
 
-Route::post('listaNichos' ,  ['as' => 'listaNichos', 'uses' => 'recibosController@show']);
-
+Route::get('listarNichos' ,  ['as' => 'listarNichos', 'uses' => 'recibosController@listar']);
+Route::get('recibos', ['as' => 'recibos', 'uses' => 'recibosController@index']);
 //Fin parte recibos//
 
 
@@ -174,8 +174,6 @@ Route::get('login', ['as' => 'login', function()
 //Apartados nichos
 Route::get('panteones', ['as' => 'panteones', 'uses' => 'panteonesController@index']);
 
-//Apartado recibos
-Route::get('recibos', ['as' => 'recibos', 'uses' => 'recibosController@index']);
 
 // Validamos los datos de inicio de sesión PARA LA ADMINISTRACION
 // Authentication routes...

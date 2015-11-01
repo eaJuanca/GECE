@@ -84,12 +84,11 @@
         </div>
     </div>
 
-        <form role="form" action="" method="post">
+        <form id="listarNichos" role="form" action="" method="post">
         <div class="row setup-content" id="step-1">
             <div class="col-xs-6 col-md-offset-3">
                 <div class="col-md-12">
                     <h3>  </h3>
-                    <form id="buscartitular">
 
                         <div class="row">
 
@@ -150,8 +149,6 @@
 
                         </div>
 
-                    </form>
-
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
                         <i class="fa fa-arrow-right"></i>
                     </button>
@@ -198,7 +195,7 @@
             <div class="col-xs-6 col-md-offset-3">
                 <div class="col-md-12">
                     <h3> Step 3</h3>
-                    <button class="btn btn-success btn-lg pull-right" type="submit">Submit</button>
+                    <button class="btn btn-success btn-lg pull-right" type="submit">Generar</button>
                 </div>
             </div>
         </div>
@@ -211,7 +208,13 @@
 
     <script type="text/javascript">
 
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
         $(document).ready(function () {
+
+
             var navListItems = $('div.setup-panel div a'),
                     allWells = $('.setup-content'),
                     allNextBtn = $('.nextBtn');
@@ -255,27 +258,18 @@
 
             $("#botonbuscar").on('click',function(e){
 
+                e.preventDefault();
+
                 $.ajax({
-                    type: "post",
-                    url: "{{ URL::route('listaNichos') }}",
-                    data: data,
+                    type: "GET",
+                    url: "{{ URL::route('listarNichos') }}",
+                    data: $('#listarNichos').serialize(),
                     dataType: "html",
-                    beforeSend: function(data2){
-                        /*httpR es la variable global donde guardamos la conexion*/
-                        if(httpR){
-                            /*Si habia alguna conexion anterior, la cancelamos*/
-                            httpR.abort();
-                        }
-                        /*Guardamos la nueva conexion*/
-                        httpR = data2;
-                    },
-                    error: function () {
-                        alert("Error en la petición");
-                    },
                     success: function (data) {
 
-                        $(".tdisponibles").html(data);
-
+                        console.log(data);
+                    },
+                    error: function () {
 
                     }
                 });

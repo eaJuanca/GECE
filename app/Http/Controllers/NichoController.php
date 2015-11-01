@@ -364,7 +364,6 @@ class NichoController extends Controller
                 $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
                 $idtitular = $titular->insertGetId($titular->attributesToArray());
             }
-
             else{
 
                 $titularA = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));

@@ -75,7 +75,7 @@
                 <hr>
                 <div class="well">
                     <div class="alert text-center gc_icons" style="background-color:#0097A7">
-                        <i class="glyphicon glyphicon-list-alt"></i>
+                        <i class="fa fa-file-text-o"></i>
                     </div>
                     <p class="text-center gc_title"><strong>RECIBOS</strong></p>
                     <p class="text-center text_hidden">Módulo para la impresión de recibos</p>
@@ -171,7 +171,7 @@
                     <hr>
                     <div class="well">
                         <div class="alert text-center gc_icons" style="background-color:#D7CCC8">
-                            <i class="glyphicon glyphicon-user"></i>
+                            <i class="fa fa-users"></i>
                         </div>
                         <p class="text-center gc_title"><strong>ALTA USUARIOS</strong></p>
                         <p class="text-center text_hidden">Módulo para dar de alta nuevos usuarios</p>
