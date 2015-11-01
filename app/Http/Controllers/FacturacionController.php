@@ -96,7 +96,6 @@ class FacturacionController extends Controller
         $factura->iddifunto = $difunto;
         $factura->idnicho = $nicho;
         $factura->idparcela = $parcela;
-        $factura->tipo = 1;
 
         $factura->save();
 
