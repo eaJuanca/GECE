@@ -49,8 +49,7 @@ class FacturacionController extends Controller
      */
     public function show($idnicho) {
 
-        $factura = Factura::where('idnicho',$idnicho)->where('serie','D')->orWhere('serie','T')->first();
-        $factura= $factura->id;
+        $factura = Factura::where('idnicho',$idnicho)->orderBy('serie')->get();
         return view('facturasProcesoNichos',compact('factura'));
     }
 

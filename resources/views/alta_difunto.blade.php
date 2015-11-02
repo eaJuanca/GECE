@@ -319,7 +319,8 @@
         });
 
         function explode(){
-           // window.location.href = "{{ URL::route('difunto') }}";
+
+            window.location.href = "{{ route('show-facturas',[$nichoid])}}";
         }
 
         /**
