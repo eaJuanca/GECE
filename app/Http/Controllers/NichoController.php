@@ -381,7 +381,7 @@ class NichoController extends Controller
         $nicho->update($nichoU->attributesToArray());
 
         $factura = new FacturacionController();
-        $factura->facturaCesionPerpetura($idtitular,$nicho->id);
+        $factura->facturaCesion($idtitular,$nicho->id,$nicho->cesion);
 
     }
 
