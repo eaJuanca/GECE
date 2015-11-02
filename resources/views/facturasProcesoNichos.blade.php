@@ -44,9 +44,93 @@
                 </div>
                 <div class="panel-body">
 
-                    @if($factura)
-                       <a href="{{ route('pdfacturanicho',[$factura])}}"> <button class="btn btn-danger">Factura cesión</button> </a>
-                        @endif
+
+
+
+
+                        <div class="table-responsive">
+
+                            <table class="table table-bordered table-hover table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>Factura</th>
+                                    <th>Nº</th>
+                                    <th>Emision</th>
+                                    <th>Duración</th>
+                                    <th>Acciones</th>
+
+                                </tr>
+                                </thead>
+                                <tbody class="facturas">
+
+
+                                @foreach($factura as $f)
+
+                                    <?php
+
+                                    $aux = $f->numero;
+                                    $aux = strlen($aux);
+                                    $aux = 5- $aux;
+                                    ?>
+
+
+                                    <tr>
+                                    @if($f->serie=="N")
+                                            <td>Manteminiento Nicho</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>{{$f->fin}}</td>
+                                             <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
+
+                                    @elseif($f->serie=='D')
+
+                                            <td>Cesión a perpetuidad</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>-</td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
+
+                                    @elseif($f->serie=='E')
+
+                                            <td>Enterramiento</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>-</td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a> <br></td>
+
+                                        @elseif($f->serie=='T')
+
+                                            <td>Cesión Temporal</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>-</td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a> <br></td>
+
+                                        @elseif($f->serie=='M')
+
+                                            <td>Mantenimiento Panteon</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>-</td>
+                                            <td> < href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> <br></td>
+
+                                        @elseif($f->serie=='P')
+
+                                            <td>Cesión Panteón</td>
+                                            <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                            <td>{{$f->inicio}}</td>
+                                            <td>-</td>
+                                            <td> < href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> <br></td>
+                                    @endif
+                                    </tr>
+
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
                 </div>
             </div>
 
