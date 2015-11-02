@@ -149,6 +149,32 @@
 
                         </div>
 
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><span style="font-weight: bold">Listado de nichos</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0">
+                                        <thead>
+                                        <tr>
+                                            <th>Cod</th>
+                                            <th>Difunto</th>
+                                            <th>Fecha defunción</th>
+                                            <th>Localidad</th>
+                                            <th>Sexo</th>
+                                            <th>Nicho</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="difuntos">
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
                         <i class="fa fa-arrow-right"></i>
                     </button>
