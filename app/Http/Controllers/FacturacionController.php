@@ -51,7 +51,12 @@ class FacturacionController extends Controller
 
 
         $search = true;
-        $facturas = VFacturas::paginate(10);
+        $facturas = VFacturas::where(function($facturas) use ($titular){
+
+            $facturas->where('nombre_titular','like',"%$titular%");
+
+        })->paginate(10);
+
         return View::make('facturacion',compact('facturas'));
     }
 
