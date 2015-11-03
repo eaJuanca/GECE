@@ -36,6 +36,7 @@ class FacturacionController extends Controller
 
 
     /**
+     * EN DESARROLLO.........
      * @param Request $request
      * @return mixed
      */
@@ -53,6 +54,7 @@ class FacturacionController extends Controller
         $facturas = VFacturas::paginate(10);
         return View::make('facturacion',compact('facturas'));
     }
+
 
     /**
      * Show the form for creating a new resource.
