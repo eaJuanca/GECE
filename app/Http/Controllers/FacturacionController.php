@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\model\Factura;
+use App\model\VFacturas;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -19,7 +19,7 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        $facturas = Factura::where('id','<=','60')->paginate(10);
+        $facturas = VFacturas::paginate(10);
         return View::make('facturacion',compact('facturas'));
     }
 
@@ -30,8 +30,28 @@ class FacturacionController extends Controller
      */
     public function paginate(){
 
-        $facturas = Factura::where('id','<=','60')->paginate(10);
+        $facturas = VFacturas::paginate(10);
         return view('renders.facturas',compact('facturas'));
+    }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function busqueda(Request $request){
+
+        $titular = $request->input('titular');
+        $difunto = $request->input('difunto');
+        $dni = $request->input('dni');
+        $calle = $request->input('calle');
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+
+
+        $search = true;
+        $facturas = VFacturas::paginate(10);
+        return View::make('facturacion',compact('facturas'));
     }
 
     /**

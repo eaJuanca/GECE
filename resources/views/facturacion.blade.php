@@ -66,6 +66,8 @@
                                     <input type="text" class="form-control" name="calle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
                                 </div>
                             </div>
+                            </div>
+                        <div class="row">
 
                             <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
@@ -79,6 +81,10 @@
                                     <label class="control-label" for="inputWarning">Fecha hasta</label>
                                     <input type="text" class="form-control"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
                                 </div>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 message">
+
                             </div>
 
 
@@ -108,25 +114,103 @@
                 <div class="panel-body">
                     <div class="table-responsive render">
 
-                        <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
+                        <table class="table table-bordered table-hover table-condensed" cellspacing="10" cellpadding="10">
                             <thead>
                             <tr>
-                                <th>Cod.</th>
-                                <th>Tipo</th>
-                                <th>Otra</th>
+                                <th>Factura</th>
+                                <th>Nº</th>
+                                <th>Emision</th>
+                                <th>Duración</th>
+                                <th>Titular</th>
+                                <th>Dni</th>
+                                <th>Acciones</th>
 
                             </tr>
                             </thead>
-                            <tbody class="tfacturas">
+                            <tbody class="facturas">
 
-                            @foreach($facturas as $factura)
+
+                            @foreach($facturas as $f)
+
+                                <?php
+
+                                $aux = $f->numero;
+                                $aux = strlen($aux);
+                                $aux = 5- $aux;
+                                ?>
+
 
                                 <tr>
-                                    <td> {{$factura->id}}</td>
-                                    <td> {{$factura->idtitular}}</td>
-                                    <td> <a onclick="alert({{ $factura->id }})"> alert</a></td>
+                                    @if($f->serie=="N")
+                                        <td>Manteminiento Nicho</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
 
+                                    @elseif($f->serie=='D')
 
+                                        <td>Cesión a perpetuidad</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
+
+                                    @elseif($f->serie=='E')
+
+                                        <td>Enterramiento</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a> <br></td>
+
+                                    @elseif($f->serie=='T')
+
+                                        <td>Cesión Temporal</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a> <br></td>
+
+                                    @elseif($f->serie=='M')
+
+                                        <td>Mantenimiento Panteon</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a> <br></td>
+
+                                    @elseif($f->serie=='P')
+
+                                        <td>Cesión Panteón</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a> <br></td>
+
+                                        @else
+
+                                        <td>??</td>
+                                        <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$f->fin}}</td>
+                                        <td>{{$f->nombre_titular}}</td>
+                                        <td>{{$f->dni_titular}}</td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a> <br></td>
+
+                                    @endif
                                 </tr>
 
                             @endforeach
@@ -163,31 +247,32 @@
 
         $(document).ready(function () {
 
+            var titular = "{{ $titular }}";
+            var difunto = "{{ $difunto }}";
+            var dni = "{{ $dni }}";
+            var calle = "{{ $calle }}";
+            var desde = "{{ $desde }}";
+            var hasta = "{{ $hasta }}";
+            var search = "{{ (isset($search))?$search:0 }}";
+
             $(document).on('click','.pagination a', function(e){
 
                 e.preventDefault();
 
                 var page = $(this).attr('href').split('page=')[1];
-                getFacturas(page);
+
+                $.ajax({
+
+                    type: "POST",
+                    url: '/ajax/facturas',
+                    data:{page :page},
+                    success: function(data){ $('.render').html(data); }
+
+                })
             });
-
-
         });
 
-        function getFacturas (page){
 
-            $.ajax({
-
-                type: "POST",
-                url: '/ajax/facturas',
-                data:{page :page}
-
-            }).done(function(data){
-
-                $('.render').html(data);
-
-            });
-        }
 
 
 
