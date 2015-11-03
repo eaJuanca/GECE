@@ -29,7 +29,6 @@
                 <div class="row">
                     <section class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                        <input type="hidden"  id="activa" name="activa" value="1">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
@@ -72,22 +71,36 @@
                             <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha desde</label>
-                                    <input type="text" class="form-control" name="desde" value="<?php if(isset($desde)) echo $desde; else $desde=''; ?>">
+                                    <input type="text" class="form-control fecha" name="desde" value="<?php if(isset($desde)) echo $desde; else $desde=''; ?>">
                                 </div>
                             </div>
 
                             <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha hasta</label>
-                                    <input type="text" class="form-control"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
+                                    <input type="text" class="form-control fecha"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 message">
+                            <div class="col col-lg-4 col-md-2 col-sm-12 col-xs-12  message">
+
+                                @if($search)
+                                    <div class="form-group">
+
+                                        <br>
+                                        <br>
+                                        <span  style="font-weight: bold; color: orangered;" > Estas en modo busqueda, pulse para terminar <i  style="color: black" class="fa fa-hand-o-right fa-2x"></i> </span>
+                                    </div>
+                                @endif
+                            </div>
+
+
+                            <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12 message">
 
                                 @if($search)
                                 <div class="form-group">
-                                    <a href="{{ URL::route('facturacion') }}"><button class="btn btn-warning">Terminar Busqueda</button></a>
+                                    <br>
+                                    <a  href="{{ URL::route('facturacion') }}"><button style="font-size: 14px!important;" type="button" class="btn btn-warning btn-xs">Terminar Busqueda</button></a>
                                 </div>
                                     @endif
                             </div>
@@ -96,7 +109,7 @@
                             <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-right">
                                 <div class="form-group">
                                     <br>
-                                    <button type="submit" class="btn btn-primary btn-raised">Buscar</button>
+                                    <button type="submit" style="font-size: 14px!important;" class="btn btn-primary btn-raised btn-xs">Buscar</button>
                                 </div>
                             </div>
 
@@ -248,6 +261,20 @@
 
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
+        $('.fecha').datepicker({
+
+            format: "yyyy-mm-dd",
+            language: "es",
+            multidate: false,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('.fecha').keydown(function() {
+            //code to not allow any changes to be made to input field
+            return false;
         });
 
         $(document).ready(function () {

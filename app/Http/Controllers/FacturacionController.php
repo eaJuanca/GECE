@@ -37,7 +37,6 @@ class FacturacionController extends Controller
 
 
     /**
-     * EN DESARROLLO.........
      * @param Request $request
      * @return mixed
      */
@@ -52,18 +51,30 @@ class FacturacionController extends Controller
 
 
         $search = true;
-        $facturas = VFacturas::where(function($facturas) use ($titular){
+        $facturas = VFacturas::where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
 
-            $facturas->where('nombre_titular','like',"%$titular%");
+            if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
+            if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
+            if($dni != "") $facturas->where('dni_titular','like',"%$dni%");
+            if($calle != "") $facturas->where('calle','like',"%$calle%");
+
+            if($desde != "" && $hasta != ""){
+
+                $facturas->whereBetween('inicio', array($desde, $hasta));
+
+            }else if($desde != ""){
+
+                $facturas->where('inicio','>=',$desde);
+            } else if($hasta != ""){
+                $facturas->where('inicio','<=', $hasta);
+            }
 
         })->paginate(10);
 
         if($request->ajax()){
 
             return view('renders.facturas',compact('facturas'));
-
         }
-
         else{
             return View::make('facturacion',compact('facturas','search','titular','difunto','dni','calle','desde','hasta'));
         }
