@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\View;
 
 class FacturacionController extends Controller
 {
@@ -17,8 +19,19 @@ class FacturacionController extends Controller
      */
     public function index()
     {
+        $facturas = Factura::where('id','<=','60')->paginate(10);
+        return View::make('facturacion',compact('facturas'));
+    }
 
-        return view('facturacion');
+
+    /**
+     * Paginacion de facturas
+     * @return mixed
+     */
+    public function paginate(){
+
+        $facturas = Factura::where('id','<=','60')->paginate(10);
+        return view('renders.facturas',compact('facturas'));
     }
 
     /**
