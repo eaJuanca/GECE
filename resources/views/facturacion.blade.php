@@ -85,6 +85,11 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12 message">
 
+                                @if($search)
+                                <div class="form-group">
+                                    <a href="{{ URL::route('facturacion') }}"><button class="btn btn-warning">Terminar Busqueda</button></a>
+                                </div>
+                                    @endif
                             </div>
 
 
@@ -261,11 +266,22 @@
 
                 var page = $(this).attr('href').split('page=')[1];
 
+                var url;
+                var data;
+                if(search == 1){
+
+                    url = "{{ URL::route('busquedaFacturas') }}";
+                    data = {page: page, titular: titular, difunto:difunto, dni:dni, calle:calle, desde:desde, hasta:hasta};
+                } else{
+                    url = '/ajax/facturas';
+                    data ={page :page};
+                }
+
                 $.ajax({
 
                     type: "POST",
-                    url: '/ajax/facturas',
-                    data:{page :page},
+                    url: url,
+                    data:data,
                     success: function(data){ $('.render').html(data); }
 
                 })

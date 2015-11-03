@@ -20,7 +20,8 @@ class FacturacionController extends Controller
     public function index()
     {
         $facturas = VFacturas::paginate(10);
-        return View::make('facturacion',compact('facturas'));
+        $search = false;
+        return View::make('facturacion',compact('facturas','search'));
     }
 
 
@@ -57,7 +58,15 @@ class FacturacionController extends Controller
 
         })->paginate(10);
 
-        return View::make('facturacion',compact('facturas'));
+        if($request->ajax()){
+
+            return view('renders.facturas',compact('facturas'));
+
+        }
+
+        else{
+            return View::make('facturacion',compact('facturas','search','titular','difunto','dni','calle','desde','hasta'));
+        }
     }
 
 
