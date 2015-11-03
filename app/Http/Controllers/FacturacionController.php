@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\model\Factura;
+use App\model\VFacturas;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\View;
 
 class FacturacionController extends Controller
 {
@@ -17,9 +19,67 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-
-        return view('facturacion');
+        $facturas = VFacturas::paginate(10);
+        $search = false;
+        return View::make('facturacion',compact('facturas','search'));
     }
+
+
+    /**
+     * Paginacion de facturas
+     * @return mixed
+     */
+    public function paginate(){
+
+        $facturas = VFacturas::paginate(10);
+        return view('renders.facturas',compact('facturas'));
+    }
+
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function busqueda(Request $request){
+
+        $titular = $request->input('titular');
+        $difunto = $request->input('difunto');
+        $dni = $request->input('dni');
+        $calle = $request->input('calle');
+        $desde = $request->input('desde');
+        $hasta = $request->input('hasta');
+
+
+        $search = true;
+        $facturas = VFacturas::where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
+
+            if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
+            if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
+            if($dni != "") $facturas->where('dni_titular','like',"%$dni%");
+            if($calle != "") $facturas->where('calle','like',"%$calle%");
+
+            if($desde != "" && $hasta != ""){
+
+                $facturas->whereBetween('inicio', array($desde, $hasta));
+
+            }else if($desde != ""){
+
+                $facturas->where('inicio','>=',$desde);
+            } else if($hasta != ""){
+                $facturas->where('inicio','<=', $hasta);
+            }
+
+        })->paginate(10);
+
+        if($request->ajax()){
+
+            return view('renders.facturas',compact('facturas'));
+        }
+        else{
+            return View::make('facturacion',compact('facturas','search','titular','difunto','dni','calle','desde','hasta'));
+        }
+    }
+
 
     /**
      * Show the form for creating a new resource.

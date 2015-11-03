@@ -155,7 +155,7 @@
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Médico nº</la1bel>
+                                    <label class="control-label" for="inputWarning">Médico nº</label>
                                     <input type="text" class="form-control" name="med_difunto" value="{{ $difunto->med_difunto }}">
                                 </div>
                             </div>
