@@ -140,7 +140,7 @@
                                     <tr>
                                         <th><input style="margin: 10px" type="text" id="codigo"></th>
                                         <th><input style="margin: 10px" type="text" id="concepto"></th>
-                                        <th><input style="margin: 10px" type="text" id="cantidad"></th>
+                                        <th><input style="margin: 10px" type="number" min="1" value="1" id="cantidad"></th>
                                         <th><input style="margin: 10px" type="text" id="precio"></th>
                                         <th><button type="button" class="btn btn-success btn-xs addd">Añadir</button></th>
 
@@ -170,7 +170,6 @@
                 var value = $('#servicios').val();
 
                 if(value != null) {
-
                     var servicio = $('#servicio' + value);
 
                     var price = servicio.attr("data-price");
@@ -178,14 +177,10 @@
                     var concepto = servicio.text();
                     servicio.remove();
 
-                    $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td>"+codigo+"</td></tr>");
+                    $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td><a><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
 
                     recalcular();
                 }
-
-
-
-
             });
 
 
@@ -193,24 +188,20 @@
 
                 var codigo = $('#codigo').val();
                 var concepto = $('#concepto').val();
-                var cantidad = $('#cantidad').val();
+                var cantidad = document.getElementById("cantidad").value;
                 var price = $('#precio').val();
 
-                if(price != "") $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td>"+codigo+"</td></tr>");
-
+                if(price != "") $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='"+cantidad+"'></td><td class='asumar'>"+price+"</td><td><a><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
                 recalcular();
 
 
             });
 
 
-            $("tbody").on('change', 'input#cantidad',function(){
+            $("tbody").on('change', 'input#cantidad',function(){ recalcular(); });
 
-                recalcular();
 
-            });
-
-             });
+        });
 
         function recalcular (){
 
@@ -223,8 +214,13 @@
             });
 
             $('#base').text(total.toFixed(2) + " €");
+            $('#base').val(total.toFixed(2));
+
             $('#iva').text((total*0.21).toFixed(2) + " €");
+            $('#iva').val((total*0.21).toFixed(2));
+
             $('#total').text((total*1.21).toFixed(2) + " €");
+            $('#total').val((total*1.21).toFixed(2));
 
         }
 
