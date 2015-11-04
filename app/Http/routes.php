@@ -111,7 +111,9 @@ Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice
 
 Route::get('listarNichos' ,  ['as' => 'listarNichos', 'uses' => 'recibosController@listar']);
 Route::get('recibos', ['as' => 'recibos', 'uses' => 'recibosController@index']);
-Route::get('selectNicho', ['as' => 'selectNicho', 'uses' => 'recibosController@getNicho']);
+Route::get('getFin', ['as' => 'getFin', 'uses' => 'recibosController@getNichoFin']);
+Route::get('actualizaFactura', ['as' => 'actualizaFactura', 'uses' => 'recibosController@update']);
+
 
 //Fin parte recibos//
 
