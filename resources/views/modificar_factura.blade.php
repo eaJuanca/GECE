@@ -53,52 +53,68 @@
                         </div>
 
 
-                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <table class="table table-bordered table-hover table-condensed" cellspacing="10" cellpadding="10">
-                                <thead>
-                                <tr>
-                                    <th>Código.</th>
-                                    <th>Concepto</th>
-                                    <th>Importe €</th>
-                                    <th>Acciones</th>
-                                </tr>
-                                </thead>
-                                <tbody class="tdisponibles">
-
-
-                                @foreach($servicios as $servicio)
-
-                                    <tr id="servicio{{$servicio->id}}">
-                                        <td> {{$servicio->codigo}}</td>
-                                        <td> {{$servicio->concepto}}</td>
-                                        <td> {{$servicio->importe}}</td>
-                                        <td><a onclick="borrarServicio({{$servicio->id}})"> <button class="btn btn-warning btn-xs" id="borrarservicio">Borrar <i class="fa fa-trash"></i></button></a></td>
-
-                                    </tr>
-
-                                @endforeach
-
-                                </tbody>
-                                <tfoot>
-
-                                <tr>
-                                    <td> <input style="margin: 10px" type="text" id="codigo"></td>
-                                    <td> <input style="margin: 10px" type="text" id="concepto"></td>
-                                    <td> <input style="margin: 10px" type="number" id="importe" min="0"></td>
-                                    <td> <button class="btn btn-success btn-xs" id="nuevoservicio">Añadir</button></td>
-
-                                </tr>
-                                </tfoot>
-
-
-                            </table>
-
-                        </div>
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                     </div>
-                </div>
+
+                    <br>
+                    <hr>
+                    <br>
+
+                    <div class="row">
+
+
+                        <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+
+                            <div class="form-group">
+                                <label class="control-label" for="servicios">Servicios preestablecidos</label>
+                                <select class="form-control" name="servicios" id="servicios">
+                                    @foreach($servicios as $servicio)
+                                        <option value="{{$servicio->id}}" data-price="{{$servicio->importe}}" id="servicio{{$servicio->id}}">{{$servicio->concepto}}</option>
+                                    @endforeach
+
+                                </select></div>
+
+                        </div>
+
+                        <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <button type="button" class="btn btn-info add">Añadir</button>
+
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <div class="row">
+
+
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+                            <div class="table-responsive">
+
+                                <table class="table table-bordered table-hover table-condensed" cellspacing="10" cellpadding="10">
+                                    <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Concepto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Acciones</th>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody class="facturas">
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                      </div>
             </div>
         </div>
     </div>
@@ -110,77 +126,24 @@
 
     <script type="text/javascript">
 
-
-        function borrarServicio(id){
-
-
-            $.ajax({
-                type: "GET",
-                url: "{{ URL::route('borrar_servicio') }}",
-                data: {id: id},
-                dataType: "html",
-                error: function () {
-                    alert("No se ha podido borrar el servicio");
-                },
-                success: function (data) {
-
-                    Lobibox.notify('success', {
-                        title: 'Servicio borrado',
-                        showClass: 'flipInX',
-                        delay: 3000,
-                        delayIndicator: false,
-                        position: 'bottom left'
-
-                    });
-
-                    $("#servicio"+id).hide(300);
-
-                }
-            });
-        }
+        $(document).ready(function(){
 
 
-        $(document).ready(function () {
+            $('.add').on('click',function(){
+
+                var value = $('#servicios').val();
+                var servicio =  $('#servicio'+value);
+
+                var price = servicio.attr("data-price");
+                servicio.remove();
 
 
-            $("#nuevoservicio").on("click", function(event){
 
-                var codigo = $("#codigo").val();
-                var concepto = $("#concepto").val();
-                var importe = $("#importe").val();
-
-                $.ajax({
-                    type: "GET",
-                    url: "{{ URL::route('nuevo_servicio') }}",
-                    data: {codigo: codigo, concepto: concepto, importe: importe},
-                    dataType: "html",
-                    error: function () {
-                        alert("No se ha podido añadir el servicio");
-                    },
-                    success: function (data) {
-
-                        Lobibox.notify('success', {
-                            title: 'Servicio añadido',
-                            showClass: 'flipInX',
-                            delay: 3000,
-                            delayIndicator: false,
-                            position: 'bottom left'
-
-                        });
-
-                        $('.tdisponibles').append("<tr id='servicio"+data+"'><td>"+ codigo +"</td><td>"+ concepto +"</td><td>"+ importe +"</td><td><a onclick='borrarServicio("+data+")'> <button class='btn btn-warning btn-xs' id='borrarservicio'>Borrar <i class='fa fa-trash'></i></button></a></td></tr>");
-
-                        $("#codigo").val('');
-                        $("#concepto").val('');
-                        $("#importe").val('');
-                        // location.reload();
-                    }
-                });
 
             });
-
-            });
+        });
 
     </script>
+
 
 @endsection

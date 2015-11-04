@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\model\LineaFactura;
 use App\model\VFacturas;
 use App\model\Factura;
 use Illuminate\Http\Request;
@@ -126,8 +127,9 @@ class FacturacionController extends Controller
 
         $f = VFacturas::find($id);
         $servicios = TarifaServicios::all();
+        $lineas = LineaFactura::where('GC_Factura_id',$id)->get();
 
-        return view('modificar_factura',compact('f','servicios'));
+        return view('modificar_factura',compact('f','servicios','lineas'));
     }
 
     /**
