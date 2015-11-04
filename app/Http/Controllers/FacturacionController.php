@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\VFacturas;
+use App\model\Factura;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -121,7 +122,9 @@ class FacturacionController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $f = VFacturas::find($id);
+        return view('modificar_factura',compact('f'));
     }
 
     /**

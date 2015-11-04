@@ -213,6 +213,8 @@ Route::get('show-facturas-{nichoid}', ['as' => 'show-facturas', 'uses' => 'Factu
 
 Route::get('pdfacturanicho-{id}', ['as' => 'pdfacturanicho', 'uses' => 'PdfFacturasGenerator@facturaNicho']);
 
+Route::get('modificar-factura-{id}', ['as' => 'modificar-factura', 'uses' => 'FacturacionController@edit']);
+
 
 Route::post('/ajax/facturas',['as' => 'paginacionFacturas', 'uses' => 'FacturacionController@paginate']);
 

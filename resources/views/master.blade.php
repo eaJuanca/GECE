@@ -17,6 +17,17 @@
 
     @yield('css')
 
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .container{
+            min-height: 100%;
+
+        }
+    </style>
+
 </head>
 
 <body>
