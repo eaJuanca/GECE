@@ -251,9 +251,9 @@
                 <tfoot>
 
                 <tr>
-                    <td> <input type="text" id="codigo"></td>
-                    <td> <input type="text" id="concepto"></td>
-                    <td> <input type="number" id="importe" min="0"></td>
+                    <td> <input style="margin: 10px" type="text" id="codigo"></td>
+                    <td> <input style="margin: 10px" type="text" id="concepto"></td>
+                    <td> <input style="margin: 10px" type="number" id="importe" min="0"></td>
                     <td> <button class="btn btn-success btn-xs" id="nuevoservicio">Añadir</button></td>
 
                 </tr>
@@ -330,6 +330,9 @@
 
                         $('.tdisponibles').append("<tr id='servicio"+data+"'><td>"+ codigo +"</td><td>"+ concepto +"</td><td>"+ importe +"</td><td><a onclick='borrarServicio("+data+")'> <button class='btn btn-warning btn-xs' id='borrarservicio'>Borrar <i class='fa fa-trash'></i></button></a></td></tr>");
 
+                        $("#codigo").val('');
+                        $("#concepto").val('');
+                        $("#importe").val('');
                         // location.reload();
                     }
                 });
