@@ -95,6 +95,7 @@ Route::get('m_nichos',  ['as' => 'm_nichos', 'uses' => 'tarifasController@m_nich
 Route::get('m_iva',  ['as' => 'm_iva', 'uses' => 'tarifasController@m_iva']);
 
 Route::get('nuevo_servicio',  ['as' => 'nuevo_servicio', 'uses' => 'tarifasController@nuevoservicio']);
+Route::get('borrar_servicio',  ['as' => 'borrar_servicio', 'uses' => 'tarifasController@delete']);
 //Fin parte tarifas
 
 Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController@edit']);

@@ -266,8 +266,18 @@ class tarifasController extends Controller{
         $servicio->concepto = $r->input('concepto');
         $servicio->codigo = $r->input('codigo');
         $servicio->importe = $r->input('importe');
+        $servicio->tipo = 0; //TARIFA PREDEFINIDA - LAS QUE CREAS TU PA SIEMPRE
 
         $servicio->save();
+
+        echo $servicio->id;
+    }
+
+    public function delete(Request $r){
+
+        $id = $r->input('id');
+        $servicio = TarifaServicios::find($id);
+        $servicio->delete();
     }
 
 }

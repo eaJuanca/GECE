@@ -223,7 +223,7 @@
         <div class="panel-body">
 
 
-            <table class="table table-bordered table-hover" cellspacing="10" cellpadding="10">
+            <table class="table table-bordered table-hover table-condensed" cellspacing="10" cellpadding="10">
                 <thead>
                 <tr>
                     <th>Código.</th>
@@ -237,27 +237,29 @@
 
                 @foreach($servicios as $servicio)
 
-                    <tr>
+                    <tr id="servicio{{$servicio->id}}">
                         <td> {{$servicio->codigo}}</td>
                         <td> {{$servicio->concepto}}</td>
                         <td> {{$servicio->importe}}</td>
-                        <td></td>
+                        <td><a onclick="borrarServicio({{$servicio->id}})"> <button class="btn btn-warning btn-xs" id="borrarservicio">Borrar <i class="fa fa-trash"></i></button></a></td>
 
                     </tr>
 
                 @endforeach
 
+                </tbody>
+                <tfoot>
+
                 <tr>
-
-
                     <td> <input type="text" id="codigo"></td>
                     <td> <input type="text" id="concepto"></td>
                     <td> <input type="number" id="importe" min="0"></td>
                     <td> <button class="btn btn-success btn-xs" id="nuevoservicio">Añadir</button></td>
 
                 </tr>
+                </tfoot>
 
-                </tbody>
+
             </table>
         </div>
     </div>
@@ -268,6 +270,34 @@
 
     <script type="text/javascript">
 
+
+        function borrarServicio(id){
+
+
+            $.ajax({
+                type: "GET",
+                url: "{{ URL::route('borrar_servicio') }}",
+                data: {id: id},
+                dataType: "html",
+                error: function () {
+                    alert("No se ha podido borrar el servicio");
+                },
+                success: function (data) {
+
+                    Lobibox.notify('success', {
+                        title: 'Servicio borrado',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+                        position: 'bottom left'
+
+                    });
+
+                    $("#servicio"+id).hide(300);
+
+                }
+            });
+        }
 
 
         $(document).ready(function () {
@@ -297,6 +327,8 @@
                             position: 'bottom left'
 
                         });
+
+                        $('.tdisponibles').append("<tr id='servicio"+data+"'><td>"+ codigo +"</td><td>"+ concepto +"</td><td>"+ importe +"</td><td><a onclick='borrarServicio("+data+")'> <button class='btn btn-warning btn-xs' id='borrarservicio'>Borrar <i class='fa fa-trash'></i></button></a></td></tr>");
 
                         // location.reload();
                     }
