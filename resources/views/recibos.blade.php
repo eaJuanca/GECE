@@ -92,46 +92,51 @@
 
                         <div class="row">
 
-                            <div class="col col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                            <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="nombrebuscar">Nombre y apellidos</label>
-                                    <input type="text" required id="nombrebuscar" class="form-control" name="nombrebuscar">
+                                    <input type="text" id="nombrebuscar" class="form-control" name="nombrebuscar">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-group">
                                     <div class="col col-lg-12">
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" class="corriente" name="corriente"><span class="checkbox-material"><span class="check"></span></span> <span style="font-weight: bold;">Al corriente</span>
+                                                <input type="checkbox" class="corriente" name="corriente"><span class="checkbox-material"><span class="check"></span></span> <span style="font-weight: bold;">Al día</span>
                                             </label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="callebuscar">Calle</label>
-                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="dnibuscar">DNI</label>
                                     <input type="text" id="dnibuscar" class="form-control" name="dnibuscar">
                                 </div>
                             </div>
 
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="callebuscar">Calle</label>
+                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
+                                </div>
+                            </div>
 
-                        </div>
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="nombrebuscar">Domicilio titular</label>
+                                    <input type="text" id="domiciliobuscar" class="form-control" name="domiciliobuscar">
+                                </div>
+                            </div>
 
-                        <div class="row">
-
-                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12" id="resultadostitulares">
-
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="form-group enter">
+                                    <label class="control-label" for="nombrebuscar">Selección: </label>
+                                    <label id="select"> </label>
+                                </div>
                             </div>
 
                         </div>
@@ -148,33 +153,6 @@
                             </div>
 
                         </div>
-
-                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                        <div class="panel panel-default">
-                            <div class="panel-heading"><span style="font-weight: bold">Listado de nichos</span>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-
-                                    <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0">
-                                        <thead>
-                                        <tr>
-                                            <th>Cod</th>
-                                            <th>Difunto</th>
-                                            <th>Fecha defunción</th>
-                                            <th>Localidad</th>
-                                            <th>Sexo</th>
-                                            <th>Nicho</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="difuntos">
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
                         <i class="fa fa-arrow-right"></i>
                     </button>
@@ -226,6 +204,38 @@
             </div>
         </div>
     </form>
+    <div class="row">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            <div class="panel panel-default" style="font-family: serif">
+                <div class="panel-heading"><span style="font-weight: bold">Listado de nichos</span>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0" style="font-size: small">
+                            <thead>
+                            <tr>
+                                <th>Calle</th>
+                                <th>Altura</th>
+                                <th>Nº nicho</th>
+                                <th>Nº parcela</th>
+                                <th>Titular</th>
+                                <th>Domicilio</th>
+                                <th>DNI</th>
+                                <th>Accion</th>
+                            </tr>
+                            </thead>
+                            <tbody class="nichos">
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 @endsection
@@ -237,6 +247,43 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
+
+        //funcion en la que pasamos un id de parcela o de nicho y el tipo si es parcela o nicho.
+        function cargar(id,tipo){
+
+            var cadena = "";
+
+            /*for(var i = 0; i < $("#nicho"+id)[0].childElementCount - 1; i++)
+            {
+
+                cadena += $("#nicho"+id)[0].children[i].textContent + ",";
+
+            }*/
+            cadena += $("#nicho"+id)[0].children[0].textContent + ", "
+            if( $("#nicho" + id)[0].children[2].textContent != ""){
+                cadena +=  $("#nicho"+id)[0].children[2].textContent + ", "
+            }else{
+                cadena +=  $("#nicho"+id)[0].children[3].textContent + ", "
+            }
+            cadena += $("#nicho"+id)[0].children[4].textContent + ", "
+            cadena += $("#nicho"+id)[0].children[6].textContent;
+
+            $("#select").html(cadena);
+
+            //Peticion ajax para ir rellenando los datos de una nueva factura
+            $.ajax({
+                type: "GET",
+                url: "{{ URL::route('selectNicho') }}",
+                data: { id:id , tipo:tipo},
+                dataType: "html",
+                success: function (data) {
+
+                },
+                error: function () {
+
+                }
+            });
+        }
 
         $(document).ready(function () {
 
@@ -261,12 +308,27 @@
                 }
             });
 
+
             allNextBtn.click(function(){
                 var curStep = $(this).closest(".setup-content"),
                         curStepBtn = curStep.attr("id"),
                         nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
                         curInputs = curStep.find("input[type='text'],input[type='url']"),
                         isValid = true;
+
+                        //para que no se pueda seguir si la peticion ajax no se elige ningún nicho.
+                        if(curStepBtn == 'step-1'){
+                            //$("#select")[0].removeAttribute('disabled');
+                            if($("#select").text() == " ")
+                            {
+                                isValid = false;
+
+                            }else{
+
+                                isValid = true;
+                            }
+
+                        }
 
                 $(".form-group").removeClass("has-error");
                 for(var i=0; i<curInputs.length; i++){
@@ -282,6 +344,8 @@
 
             $('div.setup-panel div a.btn-primary').trigger('click');
 
+
+
             $("#botonbuscar").on('click',function(e){
 
                 e.preventDefault();
@@ -292,8 +356,7 @@
                     data: $('#listarNichos').serialize(),
                     dataType: "html",
                     success: function (data) {
-
-                        console.log(data);
+                        $(".nichos").html(data)
                     },
                     error: function () {
 
@@ -301,6 +364,7 @@
                 });
 
             });
+
         });
 
     </script>

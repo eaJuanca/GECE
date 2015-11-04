@@ -530,11 +530,6 @@
                     $('#infosintitular').css('display','none');
                     $('#infotitularasignado').css('display','none');
                     $('#infotitularnuevo').css('display','block');
-
-
-
-
-
                 }
             });
 
