@@ -21,7 +21,7 @@ class Nicho extends Model{
         'dir_facturado',
         'nif_facturado',
         'pob_facturado',
-        'pro_faturado',
+        'pro_facturado',
         'cp_facturado',
         'tel_facturado',
         'iban',

@@ -26,7 +26,8 @@ class Factura extends Model{
         'serie',
         'numero',
         'pendiente',
-        'pagada'
+        'pagada',
+        'base'
 
     ];
 }

@@ -11,6 +11,7 @@ class TarifaServicios extends Model
     protected $fillable = [
         'concepto',
         'importe',
-        'codigo'
+        'codigo',
+        'tipo'
     ];
 }

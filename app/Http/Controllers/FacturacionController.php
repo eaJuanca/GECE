@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\View;
+use App\model\TarifaServicios;
 
 class FacturacionController extends Controller
 {
@@ -124,7 +125,9 @@ class FacturacionController extends Controller
     {
 
         $f = VFacturas::find($id);
-        return view('modificar_factura',compact('f'));
+        $servicios = TarifaServicios::all();
+
+        return view('modificar_factura',compact('f','servicios'));
     }
 
     /**
@@ -162,6 +165,7 @@ class FacturacionController extends Controller
         $factura->idparcela = $parcela;
         $factura->serie = 'E';
         $factura->inicio = $hoy;
+        $factura->fin = $hoy;
         $numero = Factura::where('serie','E')->whereYear('inicio','=',$hoy->year)->max('numero');
         $factura->numero = $numero+1;
 
