@@ -72,7 +72,7 @@
                                 <label class="control-label" for="servicios">Servicios preestablecidos</label>
                                 <select class="form-control" name="servicios" id="servicios">
                                     @foreach($servicios as $servicio)
-                                        <option value="{{$servicio->id}}" data-price="{{$servicio->importe}}" id="servicio{{$servicio->id}}">{{$servicio->concepto}}</option>
+                                        <option value="{{$servicio->id}}" data-price="{{$servicio->importe}}" data-codigo="{{$servicio->codigo}}" id="servicio{{$servicio->id}}">{{$servicio->concepto}}</option>
                                     @endforeach
 
                                 </select></div>
@@ -110,6 +110,42 @@
 
 
                                     </tbody>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="text-align: right; border-bottom-color: transparent">Base</th>
+                                        <th style="text-align: right" id="base"></th>
+                                        <th></th>
+
+                                    </tr><tr>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="text-align: right; border-bottom-color: transparent">IVA 21%</th>
+                                        <th style="text-align: right" id="iva"></th>
+                                        <th></th>
+
+                                    </tr><tr>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="border-color: transparent"></th>
+                                        <th style="text-align: right; border-bottom-color: transparent">Total Factura</th>
+                                        <th style="text-align: right" id="total"></th>
+                                        <th><button class="btn btn-warning">Cerrar Factura</button></th>
+
+                                    </tr>
+                                    </tfoot>
+
+                                    <tfoot>
+                                    <tr>
+                                        <th><input style="margin: 10px" type="text" id="codigo"></th>
+                                        <th><input style="margin: 10px" type="text" id="concepto"></th>
+                                        <th><input style="margin: 10px" type="text" id="cantidad"></th>
+                                        <th><input style="margin: 10px" type="text" id="precio"></th>
+                                        <th><button type="button" class="btn btn-success btn-xs addd">Añadir</button></th>
+
+                                    </tr>
+                                    </tfoot>
                                 </table>
                             </div>
 
@@ -132,16 +168,65 @@
             $('.add').on('click',function(){
 
                 var value = $('#servicios').val();
-                var servicio =  $('#servicio'+value);
 
-                var price = servicio.attr("data-price");
-                servicio.remove();
+                if(value != null) {
+
+                    var servicio = $('#servicio' + value);
+
+                    var price = servicio.attr("data-price");
+                    var codigo = servicio.attr("data-codigo");
+                    var concepto = servicio.text();
+                    servicio.remove();
+
+                    $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td>"+codigo+"</td></tr>");
+
+                    recalcular();
+                }
 
 
 
 
             });
-        });
+
+
+            $('.addd').on('click',function(){
+
+                var codigo = $('#codigo').val();
+                var concepto = $('#concepto').val();
+                var cantidad = $('#cantidad').val();
+                var price = $('#precio').val();
+
+                if(price != "") $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td>"+codigo+"</td></tr>");
+
+                recalcular();
+
+
+            });
+
+
+            $("tbody").on('change', 'input#cantidad',function(){
+
+                recalcular();
+
+            });
+
+             });
+
+        function recalcular (){
+
+            var total = 0.00;
+            $('.asumar').each(function(){
+
+                var c = $(this).parent(1).children(1).children(1).val();
+                total += (parseFloat($(this).text()))*c;
+
+            });
+
+            $('#base').text(total.toFixed(2) + " €");
+            $('#iva').text((total*0.21).toFixed(2) + " €");
+            $('#total').text((total*1.21).toFixed(2) + " €");
+
+        }
 
     </script>
 

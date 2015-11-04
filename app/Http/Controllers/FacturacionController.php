@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\model\LineaFactura;
 use App\model\VFacturas;
 use App\model\Factura;
+use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -127,7 +128,7 @@ class FacturacionController extends Controller
 
         $f = VFacturas::find($id);
         $servicios = TarifaServicios::all();
-        $lineas = LineaFactura::where('GC_Factura_id',$id)->get();
+        $lineas = VLinea::where('factura',$id)->get();
 
        //crear una vista
 
