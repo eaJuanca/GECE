@@ -129,6 +129,8 @@ class FacturacionController extends Controller
         $servicios = TarifaServicios::all();
         $lineas = LineaFactura::where('GC_Factura_id',$id)->get();
 
+       //crear una vista
+
         return view('modificar_factura',compact('f','servicios','lineas'));
     }
 
