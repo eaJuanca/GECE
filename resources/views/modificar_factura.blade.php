@@ -131,7 +131,7 @@
                                         <th style="border-color: transparent"></th>
                                         <th style="text-align: right; border-bottom-color: transparent">Total Factura</th>
                                         <th style="text-align: right" id="total"></th>
-                                        <th><button class="btn btn-warning">Cerrar Factura</button></th>
+                                        <th><button class="btn btn-warning cerrar">Cerrar Factura</button></th>
 
                                     </tr>
                                     </tfoot>
@@ -140,7 +140,7 @@
                                     <tr>
                                         <th><input style="margin: 10px" type="text" id="codigo"></th>
                                         <th><input style="margin: 10px" type="text" id="concepto"></th>
-                                        <th><input class="cantidad" style="margin: 10px" type="number" min="0" value="1"></th>
+                                        <th><input class="cantidad" style="margin: 10px" type="number" min="1" value="1"></th>
                                         <th><input style="margin: 10px" type="text" id="precio"></th>
                                         <th><button type="button" class="btn btn-success btn-xs addd">Añadir</button></th>
 
@@ -150,6 +150,7 @@
                             </div>
 
                         </div>
+                      </div>
                       </div>
             </div>
         </div>
@@ -162,9 +163,14 @@
 
     <script type="text/javascript">
 
+        $.ajaxSetup({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+        });
+
         $(document).ready(function(){
 
 
+            var rows = 0;
             $('.add').on('click',function(){
 
                 var value = $('#servicios').val();
@@ -177,7 +183,9 @@
                     var concepto = servicio.text();
                     servicio.remove();
 
-                    $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td class='asumar'>"+price+"</td><td><a><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
+                    $('.facturas').append("<tr class='tobd' id='row"+rows+"' data-id='"+value+"'><td id='codbd'>"+codigo+"</td><td id='conbd'>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='1'></td><td id='pricebd' class='asumar'>"+price+"</td><td><a onclick='deleterow("+rows+")'><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
+
+                    rows++;
 
                     recalcular();
                 }
@@ -191,9 +199,77 @@
                 var cantidad = $('.cantidad').val();
                 var price = $('#precio').val();
 
-                if(price != "") $('.facturas').append("<tr><td>"+codigo+"</td><td>"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='"+cantidad+"'></td><td class='asumar'>"+price+"</td><td><a><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
+                if(price != "") $('.facturas').append("<tr class='tobd' id='row"+rows+"'><td id='codbd' >"+codigo+"</td><td id='conbd' >"+concepto+"</td><td><input id='cantidad' type='number' min='1' value='"+cantidad+"'></td><td id='pricebd' class='asumar'>"+price+"</td><td><a onclick='deleterow("+rows+")'><button type='button' class='btn btn-danger btn-xs'>Quitar</button></a></td></tr>");
                 recalcular();
 
+                var codigo = $('#codigo').val('');
+                var concepto = $('#concepto').val('');
+                var cantidad = $('.cantidad').val('');
+                var price = $('#precio').val('');
+
+
+            });
+
+
+            $('.cerrar').on('click',function(){
+
+                var lineas = [];
+                var count = 0;
+
+
+                $('.tobd').each(function(){
+
+
+                    var aux = [];
+
+                    var row = $(this);
+                    aux[0] = row.attr("data-id");
+                    aux[1] = row.find('#codbd').text();
+                    aux[2] = row.find('#conbd').text();
+                    aux[3] = row.find('#cantidad').val();
+                    aux[4] = row.find('#pricebd').text();
+
+                    lineas[count] = aux;
+                    count++;
+
+                });
+
+                var factura = "{{$f->id}}";
+
+                $.ajax({
+                    type: "POST",
+                    url: "{{ URL::route('add-lineas') }}",
+                    data: {lineas: lineas, factura: factura},
+                    dataType: "html",
+                    error: function () {
+
+                        Lobibox.notify('warning', {
+                            title: 'Operación Ilegal',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left',
+                            icon: 'fa fa-thumbs-down',
+                            sound: false
+                        });
+                    },
+                    success: function (data) {
+
+                        Lobibox.notify('success', {
+                            title: 'Factura cerrada',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
+                            position: 'bottom left',
+                            icon: 'fa fa-thumbs-up',
+                            sound: false
+                        });
+
+                        setTimeout(function(){
+                            window.location.href = "{{ URL::route('facturacion') }}";
+                        }, 3000);
+                    }
+                });
 
             });
 
@@ -218,6 +294,11 @@
             $('#iva').text((total*0.21).toFixed(2) + " €");
             $('#total').text((total*1.21).toFixed(2) + " €");
 
+        }
+
+        function deleterow(row){
+
+            $('#row'+row).remove();
         }
 
     </script>

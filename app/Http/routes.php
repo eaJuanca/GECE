@@ -220,6 +220,8 @@ Route::post('/ajax/facturas',['as' => 'paginacionFacturas', 'uses' => 'Facturaci
 
 Route::post('busquedaFacturas',['as' => 'busquedaFacturas', 'uses' => 'FacturacionController@busqueda']);
 
+Route::post('add-lineas',['as' => 'add-lineas', 'uses' => 'LineaController@store']);
+
 
 
 
