@@ -26,11 +26,42 @@
         <div class="panel-heading">
             <h3 class="panel-title" style="color: white">
                 @if($cumplefecha && $cumpletotal)Cumplimentacion datos difunto
-                @else Error en requisitos @endif</h3>
+                @else Error en requisitos {{\Illuminate\Support\Facades\Auth::user()->rol}} @endif</h3>
         </div>
         <div class="panel-body">
 
-                @if($cumplefecha && $cumpletotal)
+            @if( (!$cumplefecha || !$cumpletotal) && \Illuminate\Support\Facades\Auth::user()->rol == 1 )
+
+                <div class="row">
+                    <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                        <h4><span class="fa-stack fa-lg"> <i class="fa fa-circle fa-stack-2x"></i> <i class="fa fa-info fa-stack-1x fa-inverse"></i></span> No se cumplen ciertos requisitos para enterrar a un nuevo difunto, contacte con el administrador en caso de dudas </h4><br>
+
+                        @if(!$cumpletotal) <i class="fa fa-exclamation"></i>
+                        <span style="font-weight: bold; color: red; font-size: 16px">Hay 4 difuntos en este nicho</span><br>@endif
+                        @if(!$cumplefecha)<i class="fa fa-exclamation"></i>
+                        <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 4 años desde la última inhumación</span>@endif
+                    </div>
+                </div>
+
+            @else
+
+                @if( (!$cumplefecha || !$cumpletotal))
+
+                    <div class="row">
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                            <h4><span class="fa-stack fa-lg"> <i class="fa fa-circle fa-stack-2x"></i> <i class="fa fa-info fa-stack-1x fa-inverse"></i></span> No se cumplen ciertos requisitos para enterrar a un nuevo difunto, como administrador tienes esa posibilidad, aunque necesitas el permiso de sanidad </h4><br>
+
+                            @if(!$cumpletotal) <i class="fa fa-exclamation"></i>
+                            <span style="font-weight: bold; color: red; font-size: 16px">Hay 4 difuntos en este nicho</span><br>@endif
+                            @if(!$cumplefecha)<i class="fa fa-exclamation"></i>
+                            <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 4 años desde la última inhumación</span>@endif
+
+                            <hr>
+                        </div>
+                    </div>
+                @endif
                <form id="nuevo-difunto">
 
                 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -237,19 +268,6 @@
 
                 <button class="btn btn-success btn-raised boton21">Añadir nuevo difunto</button>
             </form>
-                    @else
-
-                    <div class="row">
-                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                            <H2>No es posible enterrar un difunto en este nicho</H2><br>
-
-                            @if(!$cumpletotal) <span style="font-weight: bold; color: red; font-size: 20px">Hay 4 difuntos en este nicho</span><br>@endif
-                            <hr>
-                            @if(!$cumplefecha) <span style="font-weight: bold; color: red; font-size: 20px">No han pasado más de 4 años desde la última inhumación</span>@endif
-
-                        </div>
-                    </div>
                 @endif
         </div>
     </div>
