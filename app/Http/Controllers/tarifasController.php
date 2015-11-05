@@ -30,12 +30,13 @@ class tarifasController extends Controller{
     function index(){
 
         $Tcp_parcelas = Tcp_parcelas2::first();
-        $Tcp_nichos = Tcp_nichos::first();
+        $Tcp_nichos = Tcp_nichos::all();
         $Tct_parcelas = Tct_parcelas::first();
         $Tct_nichos = Tct_nichos::first();
         $Tm_parcelas = Tm_parcelas::first();
         $Tm_nichos = Tm_nichos::first();
         $iva = Iva::first();
+
 
         $servicios = TarifaServicios::all();
 
@@ -82,22 +83,13 @@ class tarifasController extends Controller{
     function cp_nichos(Request $r){
 
         $countTarifa =  Tcp_nichos::count();
-
-
-        //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
-
-            $tarifa = Tcp_nichos::firstOrFail();
-            $tarifa->tarifa = $r->input("cp_nicho");
-            $tarifa->save();
-
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tcp_nichos();
-            $tarifa->tarifa = $r->input("cp_nicho");
+        //Actualizamos las tarifas porque ya están creadas en la bd desde el principo
+        for ($i = 0 ; $i < $countTarifa; $i++) {
+            $tarifa = Tcp_nichos::find($i+1);
+            $tarifa->tarifa = $r->input("cp_nicho" . $i);
             $tarifa->save();
         }
+
     }
 
     /*

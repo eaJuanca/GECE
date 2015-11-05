@@ -28,21 +28,20 @@
 
                 <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
 
+                    <h3 class="text-center" style="font-weight: bold">Parcela</h3>
+                    <br>
 
-                        <h3 class="text-center" style="font-weight: bold">Parcela</h3>
-                        <br>
-
-                        <div class="form-group nombre">
-                            <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
-                            <div class="col-lg-10">
-                                @if($Tcp_parcelas != null)
-                                    <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
-                                @else
-                                    <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="valor tarifa" required>
-                                @endif
-                            </div>
+                    <div class="form-group nombre">
+                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
+                        <div class="col-lg-10">
+                            @if($Tcp_parcelas != null)
+                                <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
+                            @else
+                                <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="valor tarifa" required>
+                            @endif
                         </div>
-                        <button class="btn btn-success btn-raised pull-right">Modificar</button>
+                    </div>
+                    <button class="btn btn-success btn-raised pull-right">Modificar</button>
 
                 </div>
             </form>
@@ -55,16 +54,16 @@
                     <h3 class="text-center" style="font-weight: bold">Nicho</h3>
                     <br>
 
-                    <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
-                        <div class="col-lg-10">
-                            @if($Tcp_nichos != null)
-                                <input type="text" name="cp_nicho" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos->tarifa !!}" required>
-                            @else
-                                <input type="text" name="cp_nicho" class="form-control cp_nicho" placeholder="valor tarifa" required>
-                            @endif
+                    @for($i = 0 ; $i < count($Tcp_nichos); $i++)
+                        <div class="row form-group nombre" style="margin-left: 0px">
+
+                            <label class="col col-lg-2 ">Tramada{{$i+1}}:</label>
+                            <div class="col col-lg-10">
+                                <input type="text" name="cp_nicho{!!$i!!}" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos[$i]->tarifa !!}" required>
+                            </div>
                         </div>
-                    </div>
+                    @endfor
+
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
 
                 </div>
@@ -144,9 +143,22 @@
 
                 <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
                     <h3 class="text-center" style="font-weight: bold">Parcela</h3>
+
                     <br>
-                    <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
+
+                    <div class="row form-group nombre">
+                        <label for="inputFile" class="col-lg-2 ">Tarifa construida:</label>
+                        <div class="col-lg-10">
+                            @if($Tm_parcelas != null)
+                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="{!! $Tm_parcelas->tarifa !!}" required>
+                            @else
+                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="valor tarifa" required>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="row form-group nombre">
+                        <label for="inputFile" class="col-lg-2 ">Tarifa sin construir:</label>
                         <div class="col-lg-10">
                             @if($Tm_parcelas != null)
                                 <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="{!! $Tm_parcelas->tarifa !!}" required>
