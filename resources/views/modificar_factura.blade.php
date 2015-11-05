@@ -265,6 +265,7 @@
                             sound: false
                         });
 
+                        $('.cerrar').hide();
                         setTimeout(function(){
                             window.location.href = "{{ URL::route('facturacion') }}";
                         }, 3000);
