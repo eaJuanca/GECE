@@ -201,7 +201,6 @@
                                         <th>Cod.</th>
                                         <th>Tipo</th>
                                         <th>Titular</th>
-                                        <th>Difunto</th>
                                         <th>Telefono</th>
                                         <th>Calle</th>
                                         <th>Acciones</th>
@@ -217,15 +216,14 @@
                                             <td> {{$nodisponible->id}}</td>
                                             <td> {{$nodisponible->tipo}}</td>
                                             <td> {{$nodisponible->nombre_titular}}</td>
-                                            <td> {{$nodisponible->nom_difunto}}</td>
                                             <td> {{$nodisponible->telefono}}</td>
                                             <td> Calle: <span style="font-weight: bold">{{$nodisponible->nombre_calle}}, </span>
                                                 Altura, <span style="font-weight: bold">{{$nodisponible->altura}} </span>
                                                 Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
 
-                                            <td> <a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>
+                                            <td> @if(\Illuminate\Support\Facades\Auth::user()->rol == 0)<a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>@endif
                                                  <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search"></i></a>
-                                                 <a title="A�adir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a>
+                                                 <a title="Añadir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a>
                                             </td>
 
                                         </tr>
@@ -261,7 +259,7 @@
 
                     <span id="modalfras3" style="font-weight: bold; color: red ; display: none" > Se ha llegado al total de difuntos por nicho</span> <br>
 
-                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 4 años desde la última inhumación</span>
+                    <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 5 años desde la última inhumación</span>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>

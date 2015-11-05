@@ -7,6 +7,7 @@ use App\model\Nicho;
 use App\model\Titular;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 use App\model\TotalNicho;
 use Carbon\Carbon;
@@ -116,13 +117,13 @@ class NichoController extends Controller
             echo '<td>' . $Nodisponible->id . '</td>';
             echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
-            echo '<td>' . $Nodisponible->nom_difunto . '</td>';
             echo '<td>' . $Nodisponible->telefono . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
+            echo "<td> ";
+            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
             echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
@@ -292,13 +293,13 @@ class NichoController extends Controller
             echo '<td>' . $Nodisponible->id . '</td>';
             echo '<td>' . $Nodisponible->tipo . '</td>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
-            echo '<td>' . $Nodisponible->nom_difunto . '</td>';
             echo '<td>' . $Nodisponible->telefono . '</td>';
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->nombre_calle . ',</span >
                        Altura, <span style = "font-weight: bold" >' . $Nodisponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
+            echo "<td> ";
+            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
             echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
             echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
@@ -425,7 +426,7 @@ class NichoController extends Controller
             $fecha = $TN[0]->ultimo;
 
             $fecha_ultimo = new Carbon($fecha);
-            $fecha_ultimo->addYears(4);
+            $fecha_ultimo->addYears(5);
             $hoy = Carbon::now();
 
             $cumpletotal = true;

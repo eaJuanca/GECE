@@ -40,7 +40,7 @@
                         @if(!$cumpletotal) <i class="fa fa-exclamation"></i>
                         <span style="font-weight: bold; color: red; font-size: 16px">Hay 4 difuntos en este nicho</span><br>@endif
                         @if(!$cumplefecha)<i class="fa fa-exclamation"></i>
-                        <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 4 años desde la última inhumación</span>@endif
+                        <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 5 años desde la última inhumación</span>@endif
                     </div>
                 </div>
 
@@ -56,7 +56,7 @@
                             @if(!$cumpletotal) <i class="fa fa-exclamation"></i>
                             <span style="font-weight: bold; color: red; font-size: 16px">Hay 4 difuntos en este nicho</span><br>@endif
                             @if(!$cumplefecha)<i class="fa fa-exclamation"></i>
-                            <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 4 años desde la última inhumación</span>@endif
+                            <span style="font-weight: bold; color: red; font-size: 16px">No han pasado más de 5 años desde la última inhumación</span>@endif
 
                             <hr>
                         </div>
