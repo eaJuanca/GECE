@@ -162,14 +162,17 @@
         <div class="row setup-content" id="step-2">
             <div class="col-xs-6 col-md-offset-3">
                 <div class="col-md-12">
-                    <h3> Step 2</h3>
-                    <div class="form-group">
-                        <label class="control-label">Company Name</label>
-                        <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" for="inputWarning" >Fecha inicio</label>
+                            <input type="text" class="form-control fecha_ini" disabled name="fecha_ini" value="2015-11-01">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Company Address</label>
-                        <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address"  />
+                    <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" for="inputWarning">Fecha fin</label>
+                            <input required type="text" class="form-control fecha_fin" name="fecha_fin">
+                        </div>
                     </div>
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
                         <i class="fa fa-arrow-right"></i>
@@ -180,18 +183,7 @@
         <div class="row setup-content" id="step-3">
             <div class="col-xs-6 col-md-offset-3">
                 <div class="col-md-12">
-                    <h3> Step 2</h3>
-                    <div class="form-group">
-                        <label class="control-label">Company Name</label>
-                        <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Company Address</label>
-                        <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address"  />
-                    </div>
-                    <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
-                        <i class="fa fa-arrow-right"></i>
-                    </button>
+                    Visualizarción factura.
                 </div>
             </div>
         </div>
@@ -204,14 +196,18 @@
             </div>
         </div>
     </form>
-    <div class="row">
-        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
+    <div hidden class="row resultados">
+        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default" style="font-family: serif">
-                <div class="panel-heading"><span style="font-weight: bold">Listado de nichos</span>
+                <div class="panel-heading"><span style="font-weight: bold">Resultados</span>
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
+                    <div hidden class="resultados_dialogo text-center" style="color:red; font-size: 20px">
+
+                    </div>
+
+                    <div hidden class="table-responsive resultados_tabla">
 
                         <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0" style="font-size: small">
                             <thead>
@@ -223,7 +219,7 @@
                                 <th>Titular</th>
                                 <th>Domicilio</th>
                                 <th>DNI</th>
-                                <th>Accion</th>
+                                <th>Acción</th>
                             </tr>
                             </thead>
                             <tbody class="nichos">
@@ -244,21 +240,19 @@
 
     <script type="text/javascript">
 
+        var fechaInicio = null;
+        var idNicho = null;
+        var tipo = null;
+
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
 
         //funcion en la que pasamos un id de parcela o de nicho y el tipo si es parcela o nicho.
-        function cargar(id,tipo){
+        function cargar(id,tip){
 
             var cadena = "";
 
-            /*for(var i = 0; i < $("#nicho"+id)[0].childElementCount - 1; i++)
-            {
-
-                cadena += $("#nicho"+id)[0].children[i].textContent + ",";
-
-            }*/
             cadena += $("#nicho"+id)[0].children[0].textContent + ", "
             if( $("#nicho" + id)[0].children[2].textContent != ""){
                 cadena +=  $("#nicho"+id)[0].children[2].textContent + ", "
@@ -270,20 +264,75 @@
 
             $("#select").html(cadena);
 
+            idNicho = id;
+            tipo = tip;
+
             //Peticion ajax para ir rellenando los datos de una nueva factura
             $.ajax({
                 type: "GET",
-                url: "{{ URL::route('selectNicho') }}",
-                data: { id:id , tipo:tipo},
+                url: "{{ URL::route('getFin') }}",
+                data: { id:id},
+                dataType: "html",
+                success: function (data) {
+                    fechaInicio = data;
+                },
+                error: function () {
+
+                    Lobibox.notify('error', {
+                        title: 'No se ha podido cargar los datos del nicho',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+
+                        position: 'bottom left',
+                        msg: 'Compruebe la conexión a internet'
+                    });
+                }
+            });
+        }
+
+
+
+        function actualizar(id,tipo,inicio,fin){
+            //Peticion ajax para ir rellenando los datos de una nueva factura
+            $.ajax({
+                type: "GET",
+                url: "{{ URL::route('actualizaFactura') }}",
+                data: { id:id, tipo:tipo,inicio:inicio,fin:fin},
                 dataType: "html",
                 success: function (data) {
 
                 },
                 error: function () {
 
+                    Lobibox.notify('error', {
+                        title: 'No se ha podido actualizar la fecha',
+                        showClass: 'flipInX',
+                        delay: 3000,
+                        delayIndicator: false,
+
+                        position: 'bottom left',
+                        msg: 'Compruebe la conexión a internet'
+                    });
                 }
             });
         }
+
+        $('.fecha_ini').datepicker({
+            format: "yyyy-mm-dd",
+            language: "es",
+            multidate: false,
+            autoclose: true,
+            todayHighlight: true
+        });
+
+        $('.fecha_fin').datepicker({
+            format: "yyyy-mm-dd",
+            language: "es",
+            multidate: false,
+            autoclose: true,
+            todayHighlight: true
+        });
 
         $(document).ready(function () {
 
@@ -318,16 +367,21 @@
 
                         //para que no se pueda seguir si la peticion ajax no se elige ningún nicho.
                         if(curStepBtn == 'step-1'){
-                            //$("#select")[0].removeAttribute('disabled');
+
                             if($("#select").text() == " ")
                             {
                                 isValid = false;
-
                             }else{
-
                                 isValid = true;
+                                $(".resultados")[0].setAttribute("hidden","");
+                                //Al ir al siguiente paso ponemos la fecha que corresponde al la ultima pagada
+                                $('.fecha_ini').datepicker('update', new Date(fechaInicio, 0, 1));
                             }
+                        }
 
+                        //si vamos a pasar al paso 3 hacemos peticion ajax para actualizar la fecha fin de la factura
+                        if(curStepBtn == 'step-2'){
+                            actualizar(idNicho,tipo,$(".fecha_ini").val(),$(".fecha_fin").val());
                         }
 
                 $(".form-group").removeClass("has-error");
@@ -356,10 +410,33 @@
                     data: $('#listarNichos').serialize(),
                     dataType: "html",
                     success: function (data) {
-                        $(".nichos").html(data)
+                        $(".resultados")[0].removeAttribute("hidden");
+                        if(data == 0 ){
+                            $(".resultados_dialogo")[0].removeAttribute("hidden");
+                            $(".resultados_tabla")[0].setAttribute("hidden",'');
+                            $(".resultados_dialogo").html("Ningún resultado.");
+                        }else if(data == 1) {
+                            $(".resultados_dialogo")[0].removeAttribute("hidden");
+                            $(".resultados_tabla")[0].setAttribute("hidden",'');
+                            $(".resultados_dialogo").html("Hay más de 30 resultados para esta búsqueda por favor especifica más parámetros de búsqueda.");
+                        }else{
+                            $(".resultados_dialogo")[0].setAttribute("hidden",'');
+                            $(".resultados")[0].removeAttribute("hidden");
+                            $(".resultados")[0].removeAttribute("hidden");
+                            $(".resultados_tabla")[0].removeAttribute("hidden");
+                            $(".nichos").html(data)
+                        }
                     },
                     error: function () {
+                        Lobibox.notify('error', {
+                            title: 'No se ha podido realizar la búsqueda',
+                            showClass: 'flipInX',
+                            delay: 3000,
+                            delayIndicator: false,
 
+                            position: 'bottom left',
+                            msg: 'Compruebe la conexión a internet'
+                        });
                     }
                 });
 

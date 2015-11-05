@@ -24,10 +24,6 @@ class recibosController extends Controller
 
     public function index()
     {
-
-        //inicializamos el objeto factura
-        $this->nuevaFactura = new Factura();
-
         $nichos = new Collection();
         return view('recibos',compact('nichos'));
     }
@@ -89,7 +85,10 @@ class recibosController extends Controller
                         $nichos->oRwhere('nicho_calle', 'like', "%$calle%");
                     }
                     if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
-
+                    if($dni != '') {
+                        $nichos->where('nicho_dni', 'like', "%$dni%");
+                        $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
+                    }
                 })->groupBy('idnicho')->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
 
         }else {
@@ -110,50 +109,95 @@ class recibosController extends Controller
                         $nichos->where('nicho_dni', 'like', "%$dni%");
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
+                    if($dni != '') {
+                        $nichos->where('nicho_dni', 'like', "%$dni%");
+                        $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
+                    }
+
                 })->groupBy('idnicho')->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
         }
 
-        for ($i = 0; $i < count($nichos); $i++) {
+        if(count($nichos) != 0 && count($nichos) > 30)
+        {
+            return 1;
+        }else if(count($nichos) == 0) {
+            return 0;
+        }else{
+            for ($i = 0; $i < count($nichos); $i++) {
 
-            echo '<tr id="nicho'.$nichos[$i]->id .'">';
-            echo '<td >' .  $nichos[$i]->nicho_calle . ' </td >';
-            echo '<td >' .  $nichos[$i]->altura. ' </td >';
-            echo '<td >' .  $nichos[$i]->nicho_numero . ' </td >';
-            echo '<td >' .  $nichos[$i]->parcela_calle . ' </td >';
-            echo '<td >' .  $nichos[$i]->nombre_titular . ' </td >';
-            echo '<td >' .  $nichos[$i]->domicilio . ' </td >';
-            if($nichos[$i]->nicho_dni != null) {
-                echo '<td >' . $nichos[$i]->nicho_dni . ' </td >';
-                echo '<td style = "width: 100px" > <div>
-                        <a onclick ="cargar(' . $nichos[$i]->id . ')" style = "margin-right: 10px; color:#03A9F4;" >
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></a >
+                echo '<tr id="nicho'.$nichos[$i]->id .'">';
+                echo '<td >' .  $nichos[$i]->nicho_calle . ' </td >';
+                echo '<td >' .  $nichos[$i]->altura. ' </td >';
+                echo '<td >' .  $nichos[$i]->nicho_numero . ' </td >';
+                echo '<td >' .  $nichos[$i]->parcela_calle . ' </td >';
+                echo '<td >' .  $nichos[$i]->nombre_titular . ' </td >';
+                echo '<td >' .  $nichos[$i]->domicilio . ' </td >';
+                if($nichos[$i]->nicho_dni != null) {
+                    echo '<td >' . $nichos[$i]->nicho_dni . ' </td >';
+                    echo '<td style = "width: 100px" > <div>
+                        <button onclick ="cargar(' . $nichos[$i]->id . ', \'N\')" style = "margin-right: 10px; color:#03A9F4;" >
+                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></button >
                     </div >
                 </td >
             </tr >';
-            }else{
-                echo '<td >' . $nichos[$i]->parcela_dni . ' </td >';
-                echo '<td style = "width: 100px" > <div>
-                        <a onclick ="cargar(' . $nichos[$i]->id .')" style = "margin-right: 10px; color:#03A9F4;" >
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></a >
+                }else{
+                    echo '<td >' . $nichos[$i]->parcela_dni . ' </td >';
+                    echo '<td style = "width: 100px" > <div>
+                        <button onclick ="cargar(' . $nichos[$i]->id .', \'P\')" style   = "margin-right: 10px; color:#03A9F4;" >
+                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></button >
                     </div >
                 </td >
             </tr >';
+                }
             }
 
-
-
         }
+
     }
 
-    function getNicho(Request $r){
+    function update(Request $r){
 
-        //Cremos la nueva factura con los datos necesarios que tenemos del nicho que
-        //se ha seleccionado
-        $nicho = infoRecibos::where('id' , '=' ,$r->input('id'))->get();
+        //Obtenemos los parámetros de la petición
+        $id = $r->input('id');
+        $tipo = $r->input('tipo');
+        $hoy = Carbon::now();
+
+        //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
+        $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
+
+        //inicializamos el objeto factura
+        $this->nuevaFactura = new Factura();
 
         //Asignamos atributos a nuevaFactura;
-        $this->nuevaFactura->idnicho = $nicho->idnicho;
+        $this->nuevaFactura->idtitular = $nicho->idtitular;
+        if($tipo == 'N'){
+            $this->nuevaFactura->idnicho = $nicho->idtitular;
+            //Obtenemos el nº de la serie que le corresponde
+            $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
 
+        }else {
+            $this->nuevaFactura->idparcela = $nicho->idparcela;
+            //Obtenemos el nº de la serie que le corresponde
+            $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
+
+        }
+        $this->nuevaFactura->iddifunto = $nicho->iddifunto;
+        $this->nuevaFactura->serie = $tipo;
+        $this->nuevaFactura->numero = $numero + 1;
+        $this->nuevaFactura->pendiente = 1;//las ponemos así por defecto?
+        $this->nuevaFactura->pagada = 0;//las ponemos así por defecto?
+        $this->nuevaFactura->inicio = $r->input('inicio');
+        $this->nuevaFactura->fin = $r->input('fin');
+        $this->nuevaFactura->save();
+
+        return $nicho->fin;
+    }
+
+
+    public function  getNichoFin(Request $r){
+        $id = $r->input('id');
+        $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
+        return $nicho->fin;
     }
     /**
      * Show the form for editing the specified resource.
@@ -162,18 +206,6 @@ class recibosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
     {
         //
     }
