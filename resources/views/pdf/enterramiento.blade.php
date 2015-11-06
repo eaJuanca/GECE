@@ -51,6 +51,7 @@
 </style>
 <body>
 
+<div class=".parte1">
 <img src="{{ URL::asset('assets/cruz.gif') }}" height="38" width="32">
 <br>
 <br>
@@ -83,7 +84,7 @@ $date = $date->format('j-m-Y');
         <td valign="top">Fctura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
         </td>
         <td valign="top"><br>Datos del nicho <br><br> {{$f->nom_facturado}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->nicho_numero}}
-            <span> <br>Tramada: </span> {{$f->tramada}}<br></td>
+            <span> <br>Tramada: </span> {{$f->tramada}}<br><br> {{$f->nom_difunto}}</td>
         <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nom_facturado}}
             <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}}
             <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</td>
@@ -102,13 +103,19 @@ $date = $date->format('j-m-Y');
         <th>Precio</th>
     </tr>
 
+
+    <?php $total = 0; ?>
+
+    @foreach($lineas as $linea)
     <tr>
 
-        <td class="left">{{$coste->codigo}}</td>
-        <td class="left">Cesión a perpetuidad</td>
-        <td class="left">1</td>
-        <td class="right">{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td class="left">{{$linea->codigo}}</td>
+        <td class="left">{{$linea->concepto}}</td>
+        <td class="left">{{$linea->cantidad}}</td>
+        <td class="right">{{ number_format($linea->importe * $linea->cantidad,2)}}{{" € "}}</td>
+        <?php $total+= $linea->importe * $linea->cantidad ?>
     </tr>
+    @endforeach
 
 
     <tr class="right">
@@ -116,7 +123,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder" ></td>
         <td class="noborder">Base</td>
-        <td>{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td>{{ number_format($total,2)}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -124,7 +131,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2)}}{{" € "}}</td>
+        <td>{{ number_format($total * ($iva->tipo/100),2)}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -132,11 +139,16 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">TOTAL FACTURA</td>
-        <td>{{ number_format($coste->tarifa + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
+        <td>{{ number_format($total + ($total * ($iva->tipo/100)),2)}}{{" €"}}</td>
     </tr>
+
+
+
+
     </thead>
 </table>
 
+    </div>
 
 </body>
 </html>

@@ -217,6 +217,10 @@ Route::get('show-facturas-{nichoid}', ['as' => 'show-facturas', 'uses' => 'Factu
 
 Route::get('pdfacturanicho-{id}', ['as' => 'pdfacturanicho', 'uses' => 'PdfFacturasGenerator@facturaNicho']);
 
+Route::get('pdfacturanichotemporal-{id}', ['as' => 'pdfacturanichotemporal', 'uses' => 'PdfFacturasGenerator@facturaTemporal']);
+
+Route::get('pdfacturaenterramiento-{id}', ['as' => 'pdfacturaenterramiento', 'uses' => 'PdfFacturasGenerator@facturaEnterramiento']);
+
 Route::get('modificar-factura-{id}', ['as' => 'modificar-factura', 'uses' => 'FacturacionController@edit']);
 
 
