@@ -24,10 +24,29 @@
         font-size: 11px;
     }
 
-    tr td:last-child {
+    .table1 tr td:last-child {
         width: 1%;
         white-space: nowrap;
     }
+
+
+    .left{
+        text-align: left;
+    }
+
+    .right{
+
+        text-align: right;
+    }
+
+    .noborder{
+        border: none;
+    }
+
+    .table2 td, .table2 th{
+        padding: 2px 5px 2px 5px;
+    }
+
 
 </style>
 <body>
@@ -59,7 +78,7 @@ $date = new \Carbon\Carbon($f->inicio);
 $date = $date->format('j-m-Y');
 ?>
 
-<table style="width:90%" border="0">
+<table class="table1" style="width:90%" border="0">
     <tr>
         <td valign="top">Fctura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
         </td>
@@ -74,9 +93,9 @@ $date = $date->format('j-m-Y');
 
 <br>
 <br>
-<table width="90%" border="1">
+<table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center" cellspacing="0" cellpadding="0">
     <thead>
-    <tr>
+    <tr style="font-size: 18px; background-color: #00BCD4">
         <th>Código</th>
         <th>Concepto</th>
         <th>Cantidad</th>
@@ -85,10 +104,35 @@ $date = $date->format('j-m-Y');
 
     <tr>
 
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td class="left">{{$coste->codigo}}</td>
+        <td class="left">Cesión a perpetuidad</td>
+        <td class="left">1</td>
+        <td class="right">{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+    </tr>
+
+
+    <tr class="right">
+
+        <td class="noborder"></td>
+        <td class="noborder" ></td>
+        <td class="noborder">Base</td>
+        <td>{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+    </tr>
+
+    <tr class="right">
+
+        <td class="noborder"></td>
+        <td class="noborder"></td>
+        <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
+        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2)}}{{" € "}}</td>
+    </tr>
+
+    <tr class="right">
+
+        <td class="noborder"></td>
+        <td class="noborder"></td>
+        <td class="noborder">TOTAL FACTURA</td>
+        <td>{{ number_format($coste->tarifa + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
     </tr>
     </thead>
 </table>
