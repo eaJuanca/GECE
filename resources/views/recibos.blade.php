@@ -75,10 +75,6 @@
             </div>
             <div class="stepwizard-step">
                 <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
-                <p>Previsualización</p>
-            </div>
-            <div class="stepwizard-step">
-                <a href="#step-4" type="button" class="btn btn-default btn-circle" disabled="disabled">4</a>
                 <p>Generar</p>
             </div>
         </div>
@@ -182,16 +178,9 @@
         </div>
         <div class="row setup-content" id="step-3">
             <div class="col-xs-6 col-md-offset-3">
-                <div class="col-md-12">
-                    Visualizarción factura.
-                </div>
-            </div>
-        </div>
-        <div class="row setup-content" id="step-4">
-            <div class="col-xs-6 col-md-offset-3">
-                <div class="col-md-12">
-                    <h3> Step 3</h3>
-                    <button class="btn btn-success btn-lg pull-right" type="submit">Generar</button>
+                <div class="col-md-12 enlace text-center">
+
+
                 </div>
             </div>
         </div>
@@ -209,24 +198,6 @@
 
                     <div hidden class="table-responsive resultados_tabla">
 
-                        <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0" style="font-size: small">
-                            <thead>
-                            <tr>
-                                <th>Calle</th>
-                                <th>Altura</th>
-                                <th>Nº nicho</th>
-                                <th>Nº parcela</th>
-                                <th>Titular</th>
-                                <th>Domicilio</th>
-                                <th>DNI</th>
-                                <th>Acción</th>
-                            </tr>
-                            </thead>
-                            <tbody class="nichos">
-
-
-                            </tbody>
-                        </table>
                     </div>
                 </div>
             </div>
@@ -302,6 +273,10 @@
                 dataType: "html",
                 success: function (data) {
 
+                    //Añadimos lo que devuelve la peticion que es un enlace para
+                    //visualizar y descargar el recibo.
+                $(".enlace").html(data);
+
                 },
                 error: function () {
 
@@ -376,12 +351,16 @@
                                 $(".resultados")[0].setAttribute("hidden","");
                                 //Al ir al siguiente paso ponemos la fecha que corresponde al la ultima pagada
                                 $('.fecha_ini').datepicker('update', new Date(fechaInicio, 0, 1));
+                                fechaInicio = parseInt(fechaInicio)+1;
+                                $('.fecha_fin').datepicker('update', new Date(fechaInicio, 0, 1));
                             }
                         }
 
                         //si vamos a pasar al paso 3 hacemos peticion ajax para actualizar la fecha fin de la factura
                         if(curStepBtn == 'step-2'){
                             actualizar(idNicho,tipo,$(".fecha_ini").val(),$(".fecha_fin").val());
+                            //descargamos automaticamente el pdf
+                            $(".download")[0].click()
                         }
 
                 $(".form-group").removeClass("has-error");
@@ -424,7 +403,7 @@
                             $(".resultados")[0].removeAttribute("hidden");
                             $(".resultados")[0].removeAttribute("hidden");
                             $(".resultados_tabla")[0].removeAttribute("hidden");
-                            $(".nichos").html(data)
+                            $(".resultados_tabla").html(data)
                         }
                     },
                     error: function () {
@@ -442,7 +421,33 @@
 
             });
 
+
+            $(document).on('click','.pagination a', function(e){
+
+                e.preventDefault();
+
+                var page = $(this).attr('href').split('page=')[1];
+
+                var url;
+                var data;
+
+                url = "{{ URL::route('listarNichos') }}";
+                data = $('#listarNichos').serialize() + "&page="+page;
+
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data:data,
+                    success: function(data){ $('.resultados_tabla').html(data); }
+
+                })
+            });
+
+
+
+
         });
+
 
     </script>
 

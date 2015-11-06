@@ -113,6 +113,8 @@ Route::get('listarNichos' ,  ['as' => 'listarNichos', 'uses' => 'recibosControll
 Route::get('recibos', ['as' => 'recibos', 'uses' => 'recibosController@index']);
 Route::get('getFin', ['as' => 'getFin', 'uses' => 'recibosController@getNichoFin']);
 Route::get('actualizaFactura', ['as' => 'actualizaFactura', 'uses' => 'recibosController@update']);
+Route::get('pdfmantenimiento-{id}', ['as' => 'pdfmantenimiento', 'uses' => 'PdfFacturasGenerator2@facturaMantenimientoNicho']);
+Route::get('ipdfmantenimiento-{id}', ['as' => 'ipdfmantenimiento', 'uses' => 'PdfFacturasGenerator2@imprimirFacturamanteniminento']);
 
 
 //Fin parte recibos//

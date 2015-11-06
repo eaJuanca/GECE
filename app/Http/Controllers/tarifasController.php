@@ -33,7 +33,7 @@ class tarifasController extends Controller{
         $Tcp_nichos = Tcp_nichos::all();
         $Tct_parcelas = Tct_parcelas::first();
         $Tct_nichos = Tct_nichos::first();
-        $Tm_parcelas = Tm_parcelas::first();
+        $Tm_parcelas = Tm_parcelas::all();
         $Tm_nichos = Tm_nichos::first();
         $iva = Iva::first();
 
@@ -69,15 +69,6 @@ class tarifasController extends Controller{
     }
 
     /*
-     * Funcion para obtener el valor de la tarifa de cesion temporal de las parcelas
-     */
-    function cpv_parcelas()
-    {
-        $tarifa = Tcp_parcelas2::firstOrFail();
-        return $tarifa->tarifa;
-    }
-
-    /*
     * funcion para dar de alta la tarifa de cesion perpetuidad de las parcelas o actualizarla
     */
     function cp_nichos(Request $r){
@@ -89,16 +80,6 @@ class tarifasController extends Controller{
             $tarifa->tarifa = $r->input("cp_nicho" . $i);
             $tarifa->save();
         }
-
-    }
-
-    /*
-    * Funcion para obtener el valor de la tarifa de cesion temporal de los nichos
-    */
-    function cpv_nichos()
-    {
-        $tarifa = Tcp_nichos::firstOrFail();
-        return $tarifa->tarifa;
     }
 
     /*
@@ -167,24 +148,18 @@ class tarifasController extends Controller{
 
 
     /*
-    * Función para dar de alta la tarifa cesion temporal de los nichos
+    * Función para dar de alta las tarifa de mantenimiento de las parcelas
+    * hay dos tipos la del cod 1 que es por metro cuadrado (parcela sin nichos)
+    * cod 2 que es por nº de nichos
     */
     function m_parcelas(Request $r)
     {
         $countTarifa =  Tm_parcelas::count();
 
-        //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
-
-            $tarifa = Tm_parcelas::firstOrFail();
-            $tarifa->tarifa = $r->input("m_parcela");
-            $tarifa->save();
-
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tm_parcelas();
-            $tarifa->tarifa = $r->input("m_parcela");
+        for($i = 0; $i < $countTarifa; $i++)
+        {
+            $tarifa = Tm_parcelas::find($i+1);
+            $tarifa->tarifa = $r->input("m_parcela".$i);
             $tarifa->save();
         }
     }

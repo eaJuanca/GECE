@@ -12,6 +12,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
 use PhpParser\Node\Expr\Cast\Object_;
+use App;
+use App\Http\Controllers\PdfFacturasGenerator2;
 
 class recibosController extends Controller
 {
@@ -63,6 +65,7 @@ class recibosController extends Controller
 
     public function listar(Request $r){
 
+
         $titular = $r->input('nombrebuscar');
         $calle = $r->input('callebuscar');
         $dni = $r->input('dnibuscar');
@@ -89,7 +92,7 @@ class recibosController extends Controller
                         $nichos->where('nicho_dni', 'like', "%$dni%");
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
-                })->groupBy('idnicho')->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
+                })->groupBy('idnicho')->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
 
         }else {
 
@@ -114,8 +117,9 @@ class recibosController extends Controller
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
 
-                })->groupBy('idnicho')->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
+                })->groupBy('idnicho')->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
         }
+
 
         if(count($nichos) != 0 && count($nichos) > 30)
         {
@@ -123,34 +127,7 @@ class recibosController extends Controller
         }else if(count($nichos) == 0) {
             return 0;
         }else{
-            for ($i = 0; $i < count($nichos); $i++) {
-
-                echo '<tr id="nicho'.$nichos[$i]->id .'">';
-                echo '<td >' .  $nichos[$i]->nicho_calle . ' </td >';
-                echo '<td >' .  $nichos[$i]->altura. ' </td >';
-                echo '<td >' .  $nichos[$i]->nicho_numero . ' </td >';
-                echo '<td >' .  $nichos[$i]->parcela_calle . ' </td >';
-                echo '<td >' .  $nichos[$i]->nombre_titular . ' </td >';
-                echo '<td >' .  $nichos[$i]->domicilio . ' </td >';
-                if($nichos[$i]->nicho_dni != null) {
-                    echo '<td >' . $nichos[$i]->nicho_dni . ' </td >';
-                    echo '<td style = "width: 100px" > <div>
-                        <button onclick ="cargar(' . $nichos[$i]->id . ', \'N\')" style = "margin-right: 10px; color:#03A9F4;" >
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></button >
-                    </div >
-                </td >
-            </tr >';
-                }else{
-                    echo '<td >' . $nichos[$i]->parcela_dni . ' </td >';
-                    echo '<td style = "width: 100px" > <div>
-                        <button onclick ="cargar(' . $nichos[$i]->id .', \'P\')" style   = "margin-right: 10px; color:#03A9F4;" >
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i ></button >
-                    </div >
-                </td >
-            </tr >';
-                }
-            }
-
+            return view('renders.recibos',compact('nichos'));
         }
 
     }
@@ -165,13 +142,15 @@ class recibosController extends Controller
         //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
 
+
         //inicializamos el objeto factura
         $this->nuevaFactura = new Factura();
 
         //Asignamos atributos a nuevaFactura;
         $this->nuevaFactura->idtitular = $nicho->idtitular;
+
         if($tipo == 'N'){
-            $this->nuevaFactura->idnicho = $nicho->idtitular;
+            $this->nuevaFactura->idnicho = $nicho->idnicho;
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
 
@@ -181,6 +160,7 @@ class recibosController extends Controller
             $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
 
         }
+
         $this->nuevaFactura->iddifunto = $nicho->iddifunto;
         $this->nuevaFactura->serie = $tipo;
         $this->nuevaFactura->numero = $numero + 1;
@@ -190,7 +170,15 @@ class recibosController extends Controller
         $this->nuevaFactura->fin = $r->input('fin');
         $this->nuevaFactura->save();
 
-        return $nicho->fin;
+        //Generamos el pdf????
+        //View::make('recibos')->nest('child','pdf.pdfmantenimiento');
+
+        echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimiento-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
+        echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimiento-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
+
+        //Descargamos el recibo automáticamente por si acaso.
+        //$controller = App::make(PdfFacturasGenerator2::class);
+        //$controller->callAction('imprimirFacturamanteniminento', array('id' => $this->nuevaFactura->id));
     }
 
 

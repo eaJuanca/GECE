@@ -149,22 +149,14 @@
                     <div class="row form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa construida:</label>
                         <div class="col-lg-10">
-                            @if($Tm_parcelas != null)
-                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="{!! $Tm_parcelas->tarifa !!}" required>
-                            @else
-                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="valor tarifa" required>
-                            @endif
+                            <input type="text" name="m_parcela0" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[0]->tarifa !!}" required>
                         </div>
                     </div>
 
                     <div class="row form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa sin construir:</label>
                         <div class="col-lg-10">
-                            @if($Tm_parcelas != null)
-                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="{!! $Tm_parcelas->tarifa !!}" required>
-                            @else
-                                <input type="text" name="m_parcela" class="form-control m_parcela" placeholder="valor tarifa" required>
-                            @endif
+                            <input type="text" name="m_parcela1" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[1]->tarifa !!}" required>
                         </div>
                     </div>
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
@@ -505,7 +497,7 @@
 
                     $.ajax({
                         type: "GET",
-                        url: "{{ URL::route('m_iva') }}",
+                        url: "{{ URL::route('m_nichos') }}",
                         data: $("#from_tmn").serialize(),
                         dataType: "html",
                         error: function () {
