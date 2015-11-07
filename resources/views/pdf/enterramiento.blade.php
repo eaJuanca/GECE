@@ -82,7 +82,7 @@ $date = $date->format('j-m-Y');
 
 <table class="table1" style="width:90%" border="0">
     <tr>
-        <td valign="top">Fctura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
+        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
         </td>
         <td valign="top"><br>Datos del nicho <br><br> {{$f->nom_facturado}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->nicho_numero}}
             <span> <br>Tramada: </span> {{$f->tramada}}<br><br> {{$f->nom_difunto}}</td>
