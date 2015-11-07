@@ -186,7 +186,7 @@
                                         <td>{{$f->fin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
-                                        <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a>@if($f->pendiente != 0)<a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a>@endif <br></td>
+                                        <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <a href="{{ route('pdforden',[$f->id])}}"> <button class="btn btn-warning btn-xs">Orden <i class="fa fa-male fa-lg"></i></button> </a>@if($f->pendiente != 0)<a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a>@endif <br></td>
 
                                     @elseif($f->serie=='T')
 

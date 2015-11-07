@@ -67,4 +67,19 @@ class PdfFacturasGenerator extends Controller
 
     }
 
+    public function orden($id){
+
+        $f = VFacturas::find($id);
+
+        $tr = $f->tramada;
+        $lineas = VLinea::where('factura',$id)->get();
+        $iva = Iva2::find(1);
+
+
+        $view =  \View::make('pdf.orden', compact('f','lineas','iva'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
+    }
+
 }
