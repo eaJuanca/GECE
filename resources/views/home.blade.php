@@ -14,7 +14,7 @@
         <div class="row">
 
             @if(Auth::user()->nichos)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <hr>
                 <div class="well">
                     <div class="alert alert-material-orange text-center">
