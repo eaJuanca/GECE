@@ -57,7 +57,7 @@
     <br>
     <br>
 
-    <h1 style="font-size: 18px; text-align: center; margin-left: -12.5% "> Cementerio Eclesiástico de la Purísima
+    <h1 style="font-size: 26px; text-align: center; margin-left: -12.5% "> Cementerio Eclesiástico de la Purísima
         Concepción</h1><br>
 
     <p id="p1">
@@ -78,15 +78,18 @@
 
     $date = new \Carbon\Carbon($f->inicio);
     $date = $date->format('j-m-Y');
+
+    $date2 = new \Carbon\Carbon(substr($f->created_at,0,10));
+    $date2 = $date2->format('j-m-Y');
     ?>
 
-    <table class="table1" style="width:90%" border="0">
+    <table class="table1" style="width:90%" border="0" width="95%">
         <tr >
-            <td valign="top">Fctura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} </td>
+            <td valign="top"> <div>Nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</div> </td>
         </tr>
 
         <tr>
-            <td> Orden de trabajo</td>
+            <td>  <div style="margin-left: 35%"><h1>Orden de trabajo</h1>  </div></td>
         </tr>
 
     </table>
@@ -111,29 +114,55 @@
         @endforeach
 
 
-        <tr class="right">
-
-            <td class="noborder"></td>
-            <td class="noborder" ></td>
-        </tr>
-
-        <tr class="right">
-
-            <td class="noborder"></td>
-            <td class="noborder"></td>
-        </tr>
-
-        <tr class="right">
-
-            <td class="noborder"></td>
-            <td class="noborder"></td>
-        </tr>
-
-
-
 
         </thead>
     </table>
+
+
+    <br>
+    <br>
+    <table>
+
+        <tbody>
+
+        <tr class="left">
+            <td width="20%"><span>            </span></td>
+            <td class="noborder">Difunto: {{$f->nom_difunto}} </td>
+            <td></td>
+
+        </tr><tr class="left">
+            <td></td>
+            <td class="noborder">Nicho numero: {{$f->nicho_numero}} </td>
+            <td></td>
+
+        </tr>
+
+        <tr class="left">
+            <td></td>
+            <td class="noborder">Fila: {{$f->tramada}} </td>
+            <td></td>
+
+        </tr>
+
+        <tr class="left">
+            <td></td>
+            <td class="noborder">Grupo/Calle: {{$f->calle}} </td>
+            <td></td>
+
+        </tr>
+
+        <tr class="left">
+            <td></td>
+            <td class="noborder">cuyo nicho es:</td>
+            <td></td>
+
+        </tr>
+        </tbody>
+    </table>
+
+    <H4 style="text-align: right; width: 80%">Yecla {{$date2}}</H4>
+
+    <h3>Sr. Sepulturero del Cementerio Eclesiástico de la Purísima Concepción de Yecla</h3>
 
 </div>
 
