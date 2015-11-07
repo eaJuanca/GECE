@@ -11,7 +11,7 @@ namespace App\model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tcp_parcelas extends Model{
+class Tcp_parcelas2 extends Model{
 
     protected $table = 'GC_Tarifa_cp_parcelas';
 

@@ -224,7 +224,7 @@ Route::get('show-facturasParcela-{parcelaid}', ['as' => 'show-facturasParcela', 
 
 Route::get('pdfacturanicho-{id}', ['as' => 'pdfacturanicho', 'uses' => 'PdfFacturasGenerator@facturaNicho']);
 
-Route::get('pdfacturParcela-{id}', ['as' => 'pdfacturParcela', 'uses' => 'PdfFacturasGenerator@facturaParcela']);
+Route::get('pdfacturaParcela-{id}', ['as' => 'pdfacturaParcela', 'uses' => 'PdfFacturasGenerator@facturaParcela']);
 
 Route::get('pdfacturanichotemporal-{id}', ['as' => 'pdfacturanichotemporal', 'uses' => 'PdfFacturasGenerator@facturaTemporal']);
 
