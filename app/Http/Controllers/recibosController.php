@@ -149,36 +149,45 @@ class recibosController extends Controller
         //Asignamos atributos a nuevaFactura;
         $this->nuevaFactura->idtitular = $nicho->idtitular;
 
-        if($tipo == 'N'){
-            $this->nuevaFactura->idnicho = $nicho->idnicho;
-            //Obtenemos el nº de la serie que le corresponde
-            $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
-
-        }else {
-            $this->nuevaFactura->idparcela = $nicho->idparcela;
-            //Obtenemos el nº de la serie que le corresponde
-            $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
-
-        }
-
         $this->nuevaFactura->iddifunto = $nicho->iddifunto;
         $this->nuevaFactura->serie = $tipo;
-        $this->nuevaFactura->numero = $numero + 1;
         $this->nuevaFactura->pendiente = 1;//las ponemos así por defecto?
         $this->nuevaFactura->pagada = 0;//las ponemos así por defecto?
         $this->nuevaFactura->inicio = $r->input('inicio');
         $this->nuevaFactura->fin = $r->input('fin');
         $this->nuevaFactura->save();
 
+        if($tipo == 'N'){
+            $this->nuevaFactura->idnicho = $nicho->idnicho;
+            //Obtenemos el nº de la serie que le corresponde
+            $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
+            $this->nuevaFactura->numero = $numero + 1;
+
+            //Generamos los pdfs para imprimir el recibo del nicho
+            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
+            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
+
+        }else {
+            $this->nuevaFactura->idparcela = $nicho->idparcela;
+            //Obtenemos el nº de la serie que le corresponde
+            $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
+            $this->nuevaFactura->numero = $numero + 1;
+
+            //Generamos los enlaces para los pdfs de las parcelas
+            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoParcela-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
+            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
+        }
+
+
+
+
         //Generamos el pdf????
         //View::make('recibos')->nest('child','pdf.pdfmantenimiento');
 
-        echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimiento-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
-        echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimiento-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
 
-        //Descargamos el recibo automáticamente por si acaso.
-        //$controller = App::make(PdfFacturasGenerator2::class);
-        //$controller->callAction('imprimirFacturamanteniminento', array('id' => $this->nuevaFactura->id));
+
+
+
     }
 
 

@@ -117,6 +117,17 @@ class FacturacionController extends Controller
         return view('facturasProcesoNichos',compact('factura'));
     }
 
+
+    /**
+     * @param $idnicho
+     * @return \Illuminate\View\View
+     */
+    public function showParcela($idparcela) {
+
+        $factura = Factura::where('idparcela',$idparcela)->orderBy('serie')->get();
+        return view('facturasProcesoNichos',compact('factura'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -212,6 +223,35 @@ class FacturacionController extends Controller
 
             $this->Mantenimiento5Nicho($nicho, $titular);
 
+        }
+    }
+
+
+    public function fcpP($titular, $parcela){
+
+        //fecha de hoy
+        $hoy = Carbon::now();
+
+        //busco si hay una factura de una parcela para la serie P, osea si alguna vez se ha generado una factura
+        $aux = Factura::where('idnicho',$parcela)->where('serie','P')->first();
+
+        //obtener el numero de factura maximo
+        $numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
+
+
+        //valores que se establecen solo una vez
+        if($aux == null) {
+
+            $factura = new Factura();
+            $factura->numero = $numero+1;
+            $factura->inicio = $hoy;
+            $factura->fin = $hoy;
+            $factura->idparcela = $parcela;
+            $factura->serie = 'P';
+            $factura->idtitular = $titular;
+            $factura->save();
+
+            //$this->Mantenimiento5Nicho($nicho, $titular);
         }
     }
 

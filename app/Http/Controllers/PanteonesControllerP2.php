@@ -97,6 +97,11 @@ class PanteonesControllerP2 extends Controller
         $parcela = Parcela::find($request->input('idparcela'));
         $parcelaU->GC_TITULAR_id = $idtitular;
         $parcela->update($parcelaU->attributesToArray());
+
+        //LLamamos al controlador Facturacion controller para generar la factura de cesion perpetua
+        //de la parcela que estamos editando.
+        $factura = new FacturacionController();
+        $factura->fcpP($idtitular,$parcela->id);
     }
 
     /**

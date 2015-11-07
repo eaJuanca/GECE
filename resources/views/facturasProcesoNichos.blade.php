@@ -112,7 +112,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> < href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> <br></td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a><br></td>
 
                                         @elseif($f->serie=='P')
 
@@ -120,7 +120,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> < href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> <br></td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><br></td>
                                     @endif
                                     </tr>
 

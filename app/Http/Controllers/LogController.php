@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 use Redirect;
-use Illuminate\Http\Request;;
 use App\Http\Requests;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;

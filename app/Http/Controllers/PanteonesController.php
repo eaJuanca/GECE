@@ -23,15 +23,11 @@ class PanteonesController extends Controller
         $Qnodisponibles = VPanteones::whereNotNull('titular_id')->groupby('parcela_id');
 
 
-
-
         $td = count($Qdisponibles->get()); // total de panteones disponibles
         $tnd = count($Qnodisponibles->get()); // total de panteones no disponibles
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
-
-
 
 
         $tab = 1; // tab activa
