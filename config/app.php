@@ -140,6 +140,8 @@ return [
         //añadido
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        'Maatwebsite\Excel\ExcelServiceProvider',
+
         //fin añadido
 
         /*
@@ -148,6 +150,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
 
     ],
 
@@ -200,6 +203,9 @@ return [
         //Añadido
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+
+
         //fin añadido
 
     ],

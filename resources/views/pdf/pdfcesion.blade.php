@@ -55,8 +55,10 @@
 <br>
 <br>
 
-<h1 style="font-size: 18px; text-align: center; margin-left: -12.5% "> Cementerio Eclesiástico de la Purísima
-    Concepción</h1><br>
+<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -44%">
+<br>
+<br>
+<br>
 
 <p id="p1">
     CIF: R3000591B <br>
