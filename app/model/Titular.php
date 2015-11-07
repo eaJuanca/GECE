@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Titular extends Model{
 
-    protected $table = 'gc_titular';
+    protected $table = 'GC_TITULAR';
 
     protected $fillable = [
 
