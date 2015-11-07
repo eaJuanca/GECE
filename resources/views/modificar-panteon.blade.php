@@ -443,6 +443,11 @@
             todayHighlight: true
         });
 
+        function reloadMe(){
+
+            window.location.href = "{{ route('show-facturasParcela',[$parcela->id])}}";
+        }
+
 
         $(document).ready(function () {
 
@@ -499,6 +504,7 @@
                                     position: 'bottom left'
                                 });
 
+                                setTimeout(reloadMe, 2000);
                             }
 
                         }

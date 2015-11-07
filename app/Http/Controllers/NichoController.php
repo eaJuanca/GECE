@@ -383,7 +383,6 @@ class NichoController extends Controller
 
         $factura = new FacturacionController();
         $factura->facturaCesion($idtitular,$nicho->id,$nicho->cesion);
-
     }
 
     /**

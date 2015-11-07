@@ -28,6 +28,5 @@ class Factura extends Model{
         'pendiente',
         'pagada',
         'base'
-
     ];
 }
