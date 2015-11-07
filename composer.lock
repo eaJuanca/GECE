@@ -493,16 +493,16 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v5.1.6",
+            "version": "v5.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "8b7c357e78b8fb6a2e48377cf2441441aac6dd1e"
+                "reference": "5ad8377968ba3b4da91fc60ca98b2eef4df380fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/8b7c357e78b8fb6a2e48377cf2441441aac6dd1e",
-                "reference": "8b7c357e78b8fb6a2e48377cf2441441aac6dd1e",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/5ad8377968ba3b4da91fc60ca98b2eef4df380fc",
+                "reference": "5ad8377968ba3b4da91fc60ca98b2eef4df380fc",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                     "email": "adam@laravelcollective.com"
                 }
             ],
-            "time": "2015-09-03 17:16:48"
+            "time": "2015-11-06 18:14:38"
         },
         {
             "name": "league/flysystem",
