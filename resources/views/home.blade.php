@@ -147,7 +147,7 @@
             @endif
 
 
-            @if(Auth::user()->libro_registros)
+            @if(Auth::user()->libro_registros == 4)
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <hr>
                     <div class="well">
