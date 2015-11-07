@@ -297,6 +297,7 @@
             format: "yyyy-mm-dd",
             language: "es",
             multidate: false,
+            viewMode: "years",
             autoclose: true,
             todayHighlight: true
         });
@@ -305,6 +306,7 @@
             format: "yyyy-mm-dd",
             language: "es",
             multidate: false,
+            viewMode: "years",
             autoclose: true,
             todayHighlight: true
         });
@@ -432,7 +434,7 @@
                 var data;
 
                 url = "{{ URL::route('listarNichos') }}";
-                data = $('#listarNichos').serialize() + "&page="+page;
+                data = $('#listarNichos').serialize() + "?page?="+page;
 
                 $.ajax({
                     type: "GET",

@@ -104,11 +104,10 @@ $date = $date->format('j-m-Y');
     </tr>
 
     <tr>
-
         <td class="left"></td>
         <td class="left">Cesión a perpetuidad</td>
-        <td class="left">1</td>
-        <td class="right">{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td class="left"> {{$f->tamanyo}} m2 x {{$coste->tarifa}}€</td>
+        <td class="right">{{ number_format($coste->tarifa * $f->tamanyo,2)}}{{" € "}}</td>
     </tr>
 
 
@@ -117,7 +116,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder" ></td>
         <td class="noborder">Base</td>
-        <td>{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td>{{ number_format($coste->tarifa * $f->tamanyo,2)}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -133,7 +132,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">TOTAL FACTURA</td>
-        <td>{{ number_format($coste->tarifa + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
+        <td>{{ number_format($coste->tarifa * $f->tamanyo + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
     </tr>
     </thead>
 </table>

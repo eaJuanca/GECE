@@ -166,7 +166,7 @@
                                         <td>{{$f->fin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
-                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <br></td>
+                                        <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <br></td>
 
                                     @elseif($f->serie == 'D')
 
@@ -206,7 +206,7 @@
                                         <td>{{$f->fin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
-                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
+                                        <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
 
                                     @elseif($f->serie == 'P')
 
@@ -226,7 +226,7 @@
                                         <td>{{$f->fin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
-                                        <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
+                                        <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
 
                                     @endif
                                 </tr>

@@ -38,6 +38,7 @@ class PdfFacturasGenerator extends Controller
     }
 
     /**
+     * Para visualiza la factura
      * @param $id de la parcela cuya factura de venta hay que imprimir
      * @return mixed
      */
@@ -53,6 +54,24 @@ class PdfFacturasGenerator extends Controller
         $pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
 
+    }
+
+    /**
+     * Para imprimir la facatura sin visualizarla.
+     * @param $id de la parcela cuya factura de venta hay que imprimir
+     * @return mixed
+     */
+    public function ifacturaParcela($id){
+
+        $f = VFacturasP::find($id);
+        $coste = Tcp_parcelas2::find(0);
+        $iva = Iva2::find(1);
+
+
+        $view =  \View::make('pdf.pdfcesionparcela', compact('f','coste','iva'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->download('recibo.pdf');
     }
 
 

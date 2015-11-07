@@ -18,14 +18,14 @@
     @foreach($nichos as $nicho)
 
         <tr id="nicho{!!$nicho->id!!}">
-            <td> {{$nicho->nicho_calle}}    </td>
-            <td> {{$nicho->altura}}         </td>
-            <td> {{$nicho->nicho_numero}}   </td>
-            <td> {{$nicho->parcela_calle}} </td>
-            <td> {{$nicho->nombre_titular}} </td>
-            <td> {{$nicho->domicilio}}      </td>
-            @if($nicho->nicho_dni != null)
-                <td> {{$nicho->nicho_dni}}  </td>
+            @if($nicho->idnicho != null)
+                <td> {{$nicho->nicho_calle}}    </td>
+                <td> {{$nicho->altura}}         </td>
+                <td> {{$nicho->nicho_numero}}   </td>
+                <td>                            </td>
+                <td> {{$nicho->nicho_titular}} </td>
+                <td> {{$nicho->domicilio}}      </td>
+                <td> {{$nicho->nicho_dni}}      </td>
                 <td style = "width: 100px">
                     <div>
                         <button onclick="cargar('{!!$nicho->id!!}' ,'N')" style="margin-right: 10px; color:#03A9F4">
@@ -33,9 +33,16 @@
                         </button>
                     </div>
                 </td>
-        </tr>
+            </tr>
+
             @else
-                <td>{{$nicho->parcela_dni}} </td>
+                <td> {{$nicho->parcela_calle}}  </td>
+                <td>                            </td>
+                <td>                            </td>
+                <td> {{$nicho->parcela_numero}} </td>
+                <td> {{$nicho->panteon_titular}}</td>
+                <td> {{$nicho->domicilio}}      </td>
+                <td> {{$nicho->parcela_dni}}    </td>
                 <td style = "width: 100px">
                     <div>
                         <button onclick="cargar('{!!$nicho->id!!}' ,'P')" style="margin-right: 10px; color:#03A9F4">
@@ -43,7 +50,6 @@
                         </button>
                     </div>
                 </td>
-        </tr>
             @endif
     @endforeach
 

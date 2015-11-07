@@ -227,34 +227,26 @@ class FacturacionController extends Controller
     }
 
 
-    public function fcpP($titular, $parcela){
+    /*
+     * Función para generar la factura de cesión de perpetuidad de la parcela comprada.
+     */
 
-        //fecha de hoy
+    public function Mantenimiento5Nicho($nicho, $titular){
+
         $hoy = Carbon::now();
+        $man = Carbon::now();
 
-        //busco si hay una factura de una parcela para la serie P, osea si alguna vez se ha generado una factura
-        $aux = Factura::where('idnicho',$parcela)->where('serie','P')->first();
+        $factura = new Factura();
+        $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $factura->numero = $numero+1;
+        $factura->inicio = $hoy;
+        $factura->fin = $man->addYears(5);
+        $factura->idnicho = $nicho;
+        $factura->serie = 'N';
+        $factura->idtitular = $titular;
+        $factura->save();
 
-        //obtener el numero de factura maximo
-        $numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
-
-
-        //valores que se establecen solo una vez
-        if($aux == null) {
-
-            $factura = new Factura();
-            $factura->numero = $numero+1;
-            $factura->inicio = $hoy;
-            $factura->fin = $hoy;
-            $factura->idparcela = $parcela;
-            $factura->serie = 'P';
-            $factura->idtitular = $titular;
-            $factura->save();
-
-            //$this->Mantenimiento5Nicho($nicho, $titular);
-        }
     }
-
 
     public function facturaCesionTemporal($titular, $nicho){
 
@@ -286,19 +278,46 @@ class FacturacionController extends Controller
         }
     }
 
+    public function fcpP($titular, $parcela){
 
-    public function Mantenimiento5Nicho($nicho, $titular){
+        //fecha de hoy
+        $hoy = Carbon::now();
+
+        //busco si hay una factura de una parcela para la serie P, osea si alguna vez se ha generado una factura
+        $aux = Factura::where('idnicho',$parcela)->where('serie','P')->first();
+
+        //obtener el numero de factura maximo
+        $numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
+
+
+        //valores que se establecen solo una vez
+        if($aux == null) {
+
+            $factura = new Factura();
+            $factura->numero = $numero+1;
+            $factura->inicio = $hoy;
+            $factura->fin = $hoy;
+            $factura->idparcela = $parcela;
+            $factura->serie = 'P';
+            $factura->idtitular = $titular;
+            $factura->save();
+
+            $this->Mantenimiento1Parcela($parcela, $titular);
+        }
+    }
+
+    public function Mantenimiento1Parcela($parcela, $titular){
 
         $hoy = Carbon::now();
         $man = Carbon::now();
 
         $factura = new Factura();
-        $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $numero = Factura::where('serie','M')->whereYear('inicio','=',$hoy->year)->max('numero');
         $factura->numero = $numero+1;
         $factura->inicio = $hoy;
-        $factura->fin = $man->addYears(5);
-        $factura->idnicho = $nicho;
-        $factura->serie = 'N';
+        $factura->fin = $man->addYears(1);
+        $factura->idparcela = $parcela;
+        $factura->serie = 'M';
         $factura->idtitular = $titular;
         $factura->save();
 

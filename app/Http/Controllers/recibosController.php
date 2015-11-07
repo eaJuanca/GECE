@@ -77,12 +77,12 @@ class recibosController extends Controller
         if($r->input('corriente') != null) {
             //buscamos todos los nichos que no tengan facturas pendientes incluso estén adelantados  es decir fecha fin => al año de hoy.
             $hoy = Carbon::now();
-            $nichos = DB::table('inforecibos')
-                ->select('id', 'idtitular', 'idnicho', 'idparcela', 'iddifunto', 'inicio', (DB::raw('max(fin) as fin')),
-                    'serie', 'numero', 'pendiente', 'nicho_numero', 'altura', 'nombre_titular', 'parcela_numero', 'nicho_calle',
-                    'parcela_calle','nicho_dni','parcela_dni','domicilio')->where('fin', '>=', $hoy->year)
+            $nichos = infoRecibos::where('fin', '>=', $hoy->year)
                 ->where(function ($nichos) use ($titular,$calle,$dni,$domicilio) {
-                    if($titular != '') $nichos->where('nombre_titular', 'like', "%$titular%");
+                    if($titular != '') {
+                        $nichos->where('panteon_titular', 'like', "%$titular%");
+                        $nichos->oRwhere('nicho_titular', 'like', "%$titular%");
+                    }
                     if($calle != '' ) {
                         $nichos->where('parcela_calle', 'like', "%$calle%");
                         $nichos->oRwhere('nicho_calle', 'like', "%$calle%");
@@ -92,18 +92,17 @@ class recibosController extends Controller
                         $nichos->where('nicho_dni', 'like', "%$dni%");
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
-                })->groupBy('idnicho')->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
-
+                })->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
         }else {
 
             //buscamos todos los nichos que tengan facturas pendientes es decir fecha fin < al año de hoy.
             $hoy = Carbon::now();
-            $nichos = DB::table('inforecibos')
-                ->select('id', 'idtitular', 'idnicho', 'idparcela', 'iddifunto', 'inicio', (DB::raw('max(fin) as fin')),
-                    'serie', 'numero', 'pendiente', 'nicho_numero', 'altura', 'nombre_titular', 'parcela_numero', 'nicho_calle',
-                    'parcela_calle', 'nicho_dni', 'parcela_dni')->where('fin', '<', $hoy->year)
-                ->where(function ($nichos) use ($titular, $calle, $dni) {
-                    if ($titular != '') $nichos->where('nombre_titular', 'like', "%$titular%");
+            $nichos = infoRecibos::where('fin', '<', $hoy->year)
+                ->where(function ($nichos) use ($titular, $calle, $dni,$domicilio) {
+                    if($titular != '') {
+                        $nichos->where('panteon_titular', 'like', "%$titular%");
+                        $nichos->oRwhere('nicho_titular', 'like', "%$titular%");
+                    }
                     if ($calle != '') {
                         $nichos->where('parcela_calle', 'like', "%$calle%");
                         $nichos->oRwhere('nicho_calle', 'like', "%$calle%");
@@ -116,8 +115,8 @@ class recibosController extends Controller
                         $nichos->where('nicho_dni', 'like', "%$dni%");
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
-
-                })->groupBy('idnicho')->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
+                    if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
+                })->paginate(10);
         }
 
 
@@ -175,7 +174,7 @@ class recibosController extends Controller
 
             //Generamos los enlaces para los pdfs de las parcelas
             echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoParcela-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
-            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
+            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoParcela-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
         }
 
 

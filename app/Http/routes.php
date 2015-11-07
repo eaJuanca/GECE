@@ -118,7 +118,7 @@ Route::get('pdfmantenimientoNicho-{id}', ['as' => 'pdfmantenimientoNicho', 'uses
 Route::get('ipdfmantenimientoNicho-{id}', ['as' => 'ipdfmantenimientoNicho', 'uses' => 'PdfFacturasGenerator2@imprimirFacturamanteniminentoNicho']);
 //Imprimir y visualizar recibos parcelas
 Route::get('pdfmantenimientoParcela-{id}', ['as' => 'pdfmantenimientoParcela', 'uses' => 'PdfFacturasGenerator2@facturaMantenimientoParcela']);
-Route::get('ipdfmantenimientoParcela-{id}', ['as' => 'ipdfmantenimientoParcela', 'uses' => 'PdfFacturasGenerator2@imprimirFacturamanteniminentoParcela']);
+Route::get('ipdfmantenimientoParcela-{id}', ['as' => 'ipdfmantenimientoParcela', 'uses' => 'PdfFacturasGenerator2@ifacturaMantenimientoParcela']);
 
 
 
@@ -225,6 +225,8 @@ Route::get('show-facturasParcela-{parcelaid}', ['as' => 'show-facturasParcela', 
 Route::get('pdfacturanicho-{id}', ['as' => 'pdfacturanicho', 'uses' => 'PdfFacturasGenerator@facturaNicho']);
 
 Route::get('pdfacturaParcela-{id}', ['as' => 'pdfacturaParcela', 'uses' => 'PdfFacturasGenerator@facturaParcela']);
+
+Route::get('ipdfacturaParcela-{id}', ['as' => 'ipdfacturaParcela', 'uses' => 'PdfFacturasGenerator@ifacturaParcela']);
 
 Route::get('pdfacturanichotemporal-{id}', ['as' => 'pdfacturanichotemporal', 'uses' => 'PdfFacturasGenerator@facturaTemporal']);
 

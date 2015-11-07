@@ -147,14 +147,14 @@
                     <br>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa construida:</label>
+                        <label for="inputFile" class="col-lg-2 ">Tarifa sin construir:</label>
                         <div class="col-lg-10">
                             <input type="text" name="m_parcela0" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[0]->tarifa !!}" required>
                         </div>
                     </div>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa sin construir:</label>
+                        <label for="inputFile" class="col-lg-2 ">Tarifa construida:</label>
                         <div class="col-lg-10">
                             <input type="text" name="m_parcela1" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[1]->tarifa !!}" required>
                         </div>
