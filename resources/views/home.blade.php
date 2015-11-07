@@ -33,7 +33,7 @@
             @endif
 
             @if(Auth::user()->panteones)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <hr>
                     <div class="well">
                         <div class="alert alert-material-amber text-center">
@@ -52,7 +52,7 @@
             @endif
 
             @if(Auth::user()->calle)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <hr>
                 <div class="well">
                     <div class="alert text-center" style="background-color:#FFECB3">
@@ -71,7 +71,7 @@
             @endif
 
             @if(Auth::user()->recibos)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <hr>
                 <div class="well">
                     <div class="alert text-center gc_icons" style="background-color:#0097A7">
@@ -90,7 +90,7 @@
             @endif
 
             @if(Auth::user()->facturas)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <hr>
                 <div class="well">
                     <div class="alert text-center alert-material-cyan">
@@ -109,7 +109,7 @@
             @endif
 
                 @if(Auth::user()->difuntos)
-                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                         <hr>
                         <div class="well">
                             <div class="alert text-center" style="background-color:#B2EBF2">
@@ -128,7 +128,7 @@
                 @endif
 
             @if(Auth::user()->tarifas)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <hr>
                 <div class="well">
                     <div class="alert text-center" style="background-color:#5D4037">
@@ -148,7 +148,7 @@
 
 
             @if(Auth::user()->libro_registros == 4)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <hr>
                     <div class="well">
                         <div class="alert text-center" style="background-color:#795548">
@@ -167,7 +167,7 @@
             @endif
 
             @if(Auth::user()->usuarios)
-                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                     <hr>
                     <div class="well">
                         <div class="alert text-center gc_icons" style="background-color:#D7CCC8">
