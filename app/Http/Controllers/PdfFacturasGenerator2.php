@@ -21,17 +21,10 @@ class PdfFacturasGenerator2 extends Controller
         //Buscamos el id de la factura generada mediante el modulo de recibo
         $factura = Factura::find($id);
 
-
         //Buscamos el nicho
         $nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
 
-        //Buscamos el precio de mantenimiento del nicho en tarifas
-        $tarifa = Tm_nichos::first();
-
-        //Buscamos el iva configurado
-        $iva = Iva2::first();
-
-        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho','tarifa','iva'))->render();
+        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo.pdf', array( 'Attachment'=>1 ));
@@ -46,14 +39,7 @@ class PdfFacturasGenerator2 extends Controller
         //Buscamos el nicho
         $nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
 
-        //Buscamos el precio de mantenimiento del nicho en tarifas
-        $tarifa = Tm_nichos::first();
-
-        //Buscamos el iva configurado
-        $iva = Iva2::first();
-
-
-        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho','tarifa','iva'))->render();
+        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->download('recibo.pdf');
@@ -78,23 +64,14 @@ class PdfFacturasGenerator2 extends Controller
 
         //si tiene tramadas está construida por lo tanto tarifa 2
         if(count($tramadas) > 0){
-            $tipo = 2;
-            $tarifa = Tm_parcelas::find(2);
             $numNichos = count($tramadas) * $tramadas[0]->nichos;
-
         }else{
         //Sino la tarifa 1
             $tipo = 1;
-            $tarifa = Tm_parcelas::find(1);
-            //obtenemos el tamanyo de la parcela
             $tamanyio = Parcela::find($parcela->idparcela)->tamanyo;
         }
 
-        //Buscamos el iva configurado
-        $iva = Iva2::first();
-
-
-        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','iva','tipo','numNichos','tarifa'))->render();
+        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo.pdf', array( 'Attachment'=>1 ));
@@ -121,23 +98,14 @@ class PdfFacturasGenerator2 extends Controller
 
         //si tiene tramadas está construida por lo tanto tarifa 2
         if(count($tramadas) > 0){
-            $tipo = 2;
-            $tarifa = Tm_parcelas::find(2);
             $numNichos = count($tramadas) * $tramadas[0]->nichos;
-
         }else{
             //Sino la tarifa 1
             $tipo = 1;
-            $tarifa = Tm_parcelas::find(1);
-            //obtenemos el tamanyo de la parcela
             $tamanyio = Parcela::find($parcela->idparcela)->tamanyo;
         }
 
-        //Buscamos el iva configurado
-        $iva = Iva2::first();
-
-
-        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','iva','tipo','numNichos','tarifa'))->render();
+        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->download('recibo.pdf', array( 'Attachment'=>1 ));

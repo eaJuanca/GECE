@@ -78,14 +78,6 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
 //obtenemos la fecha inicio y fin de los años que se pretende pagar
 $inicio = new Carbon\Carbon($factura->inicio);
 $fin = new Carbon\Carbon($factura->fin);
-//calculamos el precio segun el tipo de parcela (construida o no construida)
-if($tipo == 1){
-    $precio = ($tamanyio * $tarifa->tarifa) * ($fin->year - $inicio->year);
-
-}else{
-    $precio = ($numNichos * $tarifa->tarifa) * ($fin->year - $inicio->year);
-}
-$precio = number_format ( $precio , 2 ,  "," , " " );
 ?>
 
 <br>
@@ -96,14 +88,14 @@ $precio = number_format ( $precio , 2 ,  "," , " " );
             <h4 style="text-align: center">Mantenimiento {{$inicio->year}} a {{$fin->year}}</h4>
         </td>
         <td style="text-align: center">
-            <h3>{{$precio}}€</h3>
+            <h3>{{$factura->base}}€</h3>
         </td>
     </tr>
 </table>
 
 <?php
 
-$ivaCalculado = $iva->tipo * $precio/100;
+$ivaCalculado = $factura->iva * $factura->base/100;
 ?>
 
 <br>
@@ -111,7 +103,7 @@ $ivaCalculado = $iva->tipo * $precio/100;
 <table style="width:90%" border="1">
     <tr>
         <td>
-            <h3 style="text-align: right">IVA {{$iva->tipo}}%</h3>
+            <h3 style="text-align: right">IVA {{$factura->iva}}%</h3>
         </td>
         <td style="text-align: center">
             <h3>{{$ivaCalculado}}€</h3>
@@ -122,7 +114,7 @@ $ivaCalculado = $iva->tipo * $precio/100;
             <h3>TOTAL</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$precio + $ivaCalculado}}€</h3>
+            <h3>{{$factura->base + $ivaCalculado}}€</h3>
         </td>
     </tr>
 </table>
@@ -130,8 +122,8 @@ $ivaCalculado = $iva->tipo * $precio/100;
 <br>
 <p>Titular de la pacela efectos informativos</p>
 <hr style="width: 100%; margin-right: 10%">
-<p>{{$parcela->nombre_titular}}</p>
-<p>{{$parcela->nicho_dni}}</p>
+<p>{{$parcela->panteon_titular}}</p>
+<p>{{$parcela->parcela_dni}}</p>
 <p>{{$parcela->domicilio}}</p>
 <p>30510 Yecla (Murcia)</p>
 <hr style="width: 100%; margin-right: 10%">
