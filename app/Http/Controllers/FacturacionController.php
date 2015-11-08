@@ -121,7 +121,9 @@ class FacturacionController extends Controller
      */
     public function show($idnicho) {
 
-        $factura = Factura::where('idnicho',$idnicho)->orderBy('serie')->get();
+        $factura = Factura::where('idnicho',$idnicho)->where('serie','!=','E')->orderBy('id','ASC')->take(3)->get();
+        $factura2 = Factura::where('idnicho',$idnicho)->where('serie','E')->orderBy('id','DESC')->take(1)->get();
+        $factura = $factura->merge($factura2);
         return view('facturasProcesoNichos',compact('factura'));
     }
 
