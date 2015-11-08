@@ -38,7 +38,7 @@ class PdfFacturasGenerator extends Controller
     }
 
     /**
-     * Para visualiza la factura
+     * Para visualiza la factura de cesion de parcela
      * @param $id de la parcela cuya factura de venta hay que imprimir
      * @return mixed
      */
@@ -81,7 +81,6 @@ class PdfFacturasGenerator extends Controller
 
         $coste = Tct_nichos::find(0);
         $iva = Iva2::find(1);
-
 
         $view =  \View::make('pdf.temporal', compact('f','coste','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');

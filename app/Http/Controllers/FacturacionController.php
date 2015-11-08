@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\model\InfoNicho;
 use App\model\Iva2;
+use App\model\Parcela;
 use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
@@ -329,11 +330,14 @@ class FacturacionController extends Controller
         //$numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
         $numero = VFacturasP::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
 
+        //Obtener el tamanyo de la parcela
+        $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
+
         $tarifa = Tcp_parcelas2::first();
 
-        $iva = Iva2::first();
+        $iva = Iva2::first()->tipo;
 
-        $precio = $tarifa->tarifa * $aux->tamanyo;
+        $precio = $tarifa->tarifa * $tamanyo;
 
         //valores que se establecen solo una vez
         if($aux == null) {
@@ -359,9 +363,11 @@ class FacturacionController extends Controller
         $hoy = Carbon::now();
         $man = Carbon::now();
 
-        $iva = Iva2::first();
+
+        $iva = Iva2::first()->tipo;
         $tarifa = Tm_parcelas::find(1);
-        $tamanyo = VFacturasP::find($parcela)->tamanyo;
+        //Obtener el tamanyo de la parcela
+        $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
         $precio = $tarifa->tarifa * $tamanyo;
 
         $factura = new Factura();

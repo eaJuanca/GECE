@@ -124,7 +124,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2)}}{{" € "}}</td>
+        <td>{{ number_format(($coste->tarifa * $f->tamanyo) * ($iva->tipo/100),2)}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -132,7 +132,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">TOTAL FACTURA</td>
-        <td>{{ number_format($coste->tarifa * $f->tamanyo + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
+        <td>{{ number_format(($coste->tarifa * $f->tamanyo) + (($coste->tarifa * $f->tamanyo) * ($iva->tipo/100)),2)}}{{" €"}}</td>
     </tr>
     </thead>
 </table>
