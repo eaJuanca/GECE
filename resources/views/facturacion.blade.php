@@ -242,7 +242,7 @@
 
                     </div>
 
-                    <button type="button" class="btn btn-success"> Exportar  <i class="fa fa-file-excel-o"></i></button>
+                    <button type="button" class="btn btn-success exportar"> Exportar  <i class="fa fa-file-excel-o"></i></button>
 
                 </div>
 
@@ -314,6 +314,22 @@
                     success: function(data){ $('.render').html(data); }
 
                 })
+            });
+
+
+            $(document).on('click','.exportar', function(e){
+
+                e.preventDefault();
+
+                var url;
+                var data;
+                if(search == 1){
+                    data = {titular: titular, difunto:difunto, dni:dni, calle:calle, desde:desde, hasta:hasta, search:1};
+                } else{
+                    data ={search:0};
+                }
+
+                alert(data);
             });
         });
 
