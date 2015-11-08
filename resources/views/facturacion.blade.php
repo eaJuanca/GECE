@@ -242,7 +242,18 @@
 
                     </div>
 
-                    <button type="button" class="btn btn-success exportar"> Exportar  <i class="fa fa-file-excel-o"></i></button>
+                    <form method="GET" action="{{ URL::route('exportfacturas') }}">
+
+                                    <input type="hidden" class="form-control" name="titular" value="<?php if(isset($titular)) echo $titular; else $titular=''; ?>">
+                                    <input type="hidden" class="form-control"  name="difunto" value="<?php if(isset($difunto)) echo $difunto; else $difunto=''; ?>">
+                                    <input type="hidden" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
+                                    <input type="hidden" class="form-control" name="calle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
+                                    <input type="hidden" class="form-control fecha" name="desde" value="<?php if(isset($desde)) echo $desde; else $desde=''; ?>">
+                                    <input type="hidden" class="form-control fecha"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
+                                    <input type="hidden" class="form-control fecha"  name="search" value="{{ (isset($search))?$search:0 }}">
+                        <button type="submit" class="btn btn-success exportar"> Exportar  <i class="fa fa-file-excel-o"></i></button>
+
+                    </form>
 
                 </div>
 
@@ -316,21 +327,6 @@
                 })
             });
 
-
-            $(document).on('click','.exportar', function(e){
-
-                e.preventDefault();
-
-                var url;
-                var data;
-                if(search == 1){
-                    data = {titular: titular, difunto:difunto, dni:dni, calle:calle, desde:desde, hasta:hasta, search:1};
-                } else{
-                    data ={search:0};
-                }
-
-                alert(data);
-            });
         });
 
 
