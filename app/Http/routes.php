@@ -243,6 +243,8 @@ Route::post('busquedaFacturas',['as' => 'busquedaFacturas', 'uses' => 'Facturaci
 
 Route::post('add-lineas',['as' => 'add-lineas', 'uses' => 'LineaController@store']);
 
+Route::get('exportfacturas',['as' => 'exportfacturas', 'uses' => 'ExporterController@ExportFacturas']);
+
 
 
 
