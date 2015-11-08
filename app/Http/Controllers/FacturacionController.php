@@ -4,15 +4,17 @@ namespace App\Http\Controllers;
 
 use App\model\InfoNicho;
 use App\model\Iva2;
-use App\model\LineaFactura;
+use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
 use App\model\Tm_nichos;
+use App\model\Tm_parcelas;
 use App\model\VFacturas;
 use App\model\Factura;
 use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\model\VFacturasP;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Response;
@@ -147,7 +149,6 @@ class FacturacionController extends Controller
         $lineas = VLinea::where('factura',$id)->get();
 
        //crear una vista
-
         return view('modificar_factura',compact('f','servicios','lineas'));
     }
 
@@ -322,11 +323,17 @@ class FacturacionController extends Controller
         $hoy = Carbon::now();
 
         //busco si hay una factura de una parcela para la serie P, osea si alguna vez se ha generado una factura
-        $aux = Factura::where('idnicho',$parcela)->where('serie','P')->first();
+        $aux = VFacturasP::where('idparcela',$parcela)->where('serie','P')->first();
 
         //obtener el numero de factura maximo
-        $numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
+        //$numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $numero = VFacturasP::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
 
+        $tarifa = Tcp_parcelas2::first();
+
+        $iva = Iva2::first();
+
+        $precio = $tarifa->tarifa * $aux->tamanyo;
 
         //valores que se establecen solo una vez
         if($aux == null) {
@@ -338,6 +345,9 @@ class FacturacionController extends Controller
             $factura->idparcela = $parcela;
             $factura->serie = 'P';
             $factura->idtitular = $titular;
+            $factura->base = $precio;
+            $factura->iva = $iva;
+            $factura->total = $precio + ($precio * ($iva/100));
             $factura->save();
 
             $this->Mantenimiento1Parcela($parcela, $titular);
@@ -349,6 +359,11 @@ class FacturacionController extends Controller
         $hoy = Carbon::now();
         $man = Carbon::now();
 
+        $iva = Iva2::first();
+        $tarifa = Tm_parcelas::find(1);
+        $tamanyo = VFacturasP::find($parcela)->tamanyo;
+        $precio = $tarifa->tarifa * $tamanyo;
+
         $factura = new Factura();
         $numero = Factura::where('serie','M')->whereYear('inicio','=',$hoy->year)->max('numero');
         $factura->numero = $numero+1;
@@ -357,6 +372,9 @@ class FacturacionController extends Controller
         $factura->idparcela = $parcela;
         $factura->serie = 'M';
         $factura->idtitular = $titular;
+        $factura->base = $precio;
+        $factura->iva = $iva;
+        $factura->total = $precio + ($precio * $iva/100);
         $factura->save();
 
     }
