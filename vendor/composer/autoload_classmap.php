@@ -53,6 +53,7 @@ return array(
     'App\\model\\LineaFactura' => $baseDir . '/app/model/LineaFactura.php',
     'App\\model\\Nicho' => $baseDir . '/app/model/Nicho.php',
     'App\\model\\NichosPanteones' => $baseDir . '/app/model/NichosPanteones.php',
+    'App\\model\\Panteon' => $baseDir . '/app/model/Panteon.php',
     'App\\model\\Parcela' => $baseDir . '/app/model/Parcela.php',
     'App\\model\\TarifaServicios' => $baseDir . '/app/model/TarifaServicios.php',
     'App\\model\\Tcp_nichos' => $baseDir . '/app/model/Tcp_nichos.php',
