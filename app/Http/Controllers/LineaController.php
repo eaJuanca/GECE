@@ -44,9 +44,10 @@ class LineaController extends Controller
 
         $lineas = $request->input('lineas');
         $factura = $request->input('factura');
+        $fac = Factura::find($factura);
 
 
-        if($lineas != null) {
+        if($lineas != null && $fac->pendiente==1) {
 
             foreach ($lineas as $linea) {
 
@@ -77,7 +78,6 @@ class LineaController extends Controller
 
                 }
 
-                $fac = Factura::find($factura);
                 $fac->pendiente = 0;
                 $fac->save();
             }
@@ -86,11 +86,8 @@ class LineaController extends Controller
             $iva = $iva->tipo;
 
             $aux = VLinea::select(\DB::raw('sum(importe * cantidad) as total'))->where('factura',$factura)->get()[0];
-            dd($aux);
-            $factura = Factura::find($factura);
-            $factura->update(['base' => $total]);
-            $factura->update(['iva' => $total*($iva/100)]);
-            $factura->update(['total' => $total + ($total*($iva/100))]);
+            $total = $aux->total;
+            $fac->update(['base' => $total,'iva' => $total*($iva/100),'total' => $total + ($total*($iva/100))]);
         }
 
     }
