@@ -21,7 +21,7 @@ class ExporterController extends Controller
 
         if($s != 1){
 
-            $data = VFacturasnp::take(1000)->get();
+            $data = VFacturasnp::take(1000)->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
 
         }else if($s == 1){
 
@@ -50,7 +50,7 @@ class ExporterController extends Controller
                     $facturas->where('inicio','<=', $hasta);
                 }
 
-            })->get();
+            })->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
 
         }
 
