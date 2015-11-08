@@ -242,6 +242,8 @@
 
                     </div>
 
+                    <button type="button" class="btn btn-success"> Exportar  <i class="fa fa-file-excel-o"></i></button>
+
                 </div>
 
 
