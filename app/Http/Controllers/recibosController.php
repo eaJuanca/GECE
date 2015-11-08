@@ -9,10 +9,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use PhpParser\Node\Expr\Cast\Object_;
+use App\model\Tm_nichos;
+use App\model\Iva2;
 use App;
+use App\model\Tramada;
+use App\model\Tm_parcelas;
+use App\model\Parcela;
 use App\Http\Controllers\PdfFacturasGenerator2;
 
 class recibosController extends Controller
@@ -138,11 +140,8 @@ class recibosController extends Controller
         $tipo = $r->input('tipo');
         $hoy = Carbon::now();
 
-
-
         //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
-
 
         //inicializamos el objeto factura
         $this->nuevaFactura = new Factura();
@@ -157,19 +156,54 @@ class recibosController extends Controller
         $this->nuevaFactura->inicio = $r->input('inicio');
         $this->nuevaFactura->fin = $r->input('fin');
 
+        //obtenemos la fecha inicio y fin de los años que se pretende pagar
+        $inicio = new Carbon($r->input('inicio'));
+        $fin = new Carbon($r->input('fin'));
+
         if($tipo == 'N'){
+
+            //Si es de un nicho el recibo que vamos a imprimir.
             $this->nuevaFactura->idnicho = $nicho->idnicho;
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
             $this->nuevaFactura->numero = $numero + 1;
+            //Calculamos la  base total
+            $tarifa = Tm_nichos::first();
+            $precio = $tarifa->tarifa * ($fin->year - $inicio->year);
 
         }else {
             $this->nuevaFactura->idparcela = $nicho->idparcela;
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
             $this->nuevaFactura->numero = $numero + 1;
+
+            //Buscamos el precio de mantenimiento de la parcela en tarifas que depende del tipo de nicho
+            //si está construido o no, para saberlo comprobamos si tiene alguna tramada
+            $tramadas = Tramada::where('GC_PARCELA_id', '=' , $nicho->idparcela)->get();
+
+            //si tiene tramadas está construida por lo tanto tarifa 2
+            if(count($tramadas) > 0){
+                $tipo = 2;
+                $tarifa = Tm_parcelas::find(2);
+                //obtenemos el tamanyo de la parcela
+                $numNichos = count($tramadas) * $tramadas[0]->nichos;
+                $precio = ($numNichos * $tarifa->tarifa) * ($fin->year - $inicio->year);
+            }else {
+                //Sino la tarifa 1
+                $tipo = 1;
+                $tarifa = Tm_parcelas::find(1);
+                //obtenemos el tamanyo de la parcela
+                $tamanyio = Parcela::find($nicho->idparcela)->tamanyo;
+                $precio = ($tamanyio * $tarifa->tarifa) * ($fin->year - $inicio->year);
+
+            }
         }
 
+
+        $iva = Iva2::first()->tipo;
+        $this->nuevaFactura->iva = $iva;
+        $this->nuevaFactura->base = $precio;
+        $this->nuevaFactura->total = $precio + ($precio * ($iva/100));
         $this->nuevaFactura->save();
 
 
@@ -191,6 +225,8 @@ class recibosController extends Controller
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
         return $nicho->fin;
     }
+
+
     /**
      * Show the form for editing the specified resource.
      *
