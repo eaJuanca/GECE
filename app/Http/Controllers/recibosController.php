@@ -138,6 +138,8 @@ class recibosController extends Controller
         $tipo = $r->input('tipo');
         $hoy = Carbon::now();
 
+
+
         //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
 
@@ -154,7 +156,6 @@ class recibosController extends Controller
         $this->nuevaFactura->pagada = 0;//las ponemos así por defecto?
         $this->nuevaFactura->inicio = $r->input('inicio');
         $this->nuevaFactura->fin = $r->input('fin');
-        $this->nuevaFactura->save();
 
         if($tipo == 'N'){
             $this->nuevaFactura->idnicho = $nicho->idnicho;
@@ -162,30 +163,25 @@ class recibosController extends Controller
             $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
             $this->nuevaFactura->numero = $numero + 1;
 
-            //Generamos los pdfs para imprimir el recibo del nicho
-            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
-            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
-
         }else {
             $this->nuevaFactura->idparcela = $nicho->idparcela;
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
             $this->nuevaFactura->numero = $numero + 1;
-
-            //Generamos los enlaces para los pdfs de las parcelas
-            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoParcela-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
-            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoParcela-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
         }
 
+        $this->nuevaFactura->save();
 
 
-
-        //Generamos el pdf????
-        //View::make('recibos')->nest('child','pdf.pdfmantenimiento');
-
-
-
-
+        if($tipo == 'N'){
+            //Generamos los pdfs para imprimir el recibo del nicho
+            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Visualizar y descargar Recibo</a>';
+            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoNicho-'.$this->nuevaFactura->id.'">Descargar directamente</a>';
+        }else {
+            //Generamos los enlaces para los pdfs de las parcelas
+            echo '<a type="button" class="btn btn-success" style="background-color: #009688;" href="/pdfmantenimientoParcela-' . $this->nuevaFactura->id . '">Visualizar y descargar Recibo</a>';
+            echo '<a type="button" class="btn btn-success download" style="background-color: #009688;" href="/ipdfmantenimientoParcela-' . $this->nuevaFactura->id . '">Descargar directamente</a>';
+        }
 
     }
 

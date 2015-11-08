@@ -361,8 +361,6 @@
                         //si vamos a pasar al paso 3 hacemos peticion ajax para actualizar la fecha fin de la factura
                         if(curStepBtn == 'step-2'){
                             actualizar(idNicho,tipo,$(".fecha_ini").val(),$(".fecha_fin").val());
-                            //descargamos automaticamente el pdf
-                            $(".download")[0].click()
                         }
 
                 $(".form-group").removeClass("has-error");
