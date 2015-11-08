@@ -178,7 +178,7 @@ class FacturacionController extends Controller
         //
     }
 
-    public function facturaEnterramiento($nicho,$difunto,$titular,$parcela = null)
+    public function facturaEnterramiento($nicho,$difunto,$titular,$parcela)
     {
         $factura = NEW Factura();
 

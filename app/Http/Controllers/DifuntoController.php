@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\model\Difunto;
 use App\model\InfoNicho;
 use App\model\Nicho;
+use App\model\Parcela;
 use App\model\Titular;
 use App\model\TotalNicho;
+use App\model\Tramada;
+use App\model\VPanteones;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -112,12 +115,27 @@ class DifuntoController extends Controller
             $nichoid = $request->input('GC_NICHOS_id');
             $nicho = Nicho::find($nichoid);
             $titular = Titular::find($nicho->GC_TITULAR_id);
+            $p = false;
+
+            if($titular == null){
+
+                $tramada = Tramada::find($nicho->GC_Tramada_id);
+                $parcela = VPanteones::where('parcela_id',$tramada->GC_PARCELA_id)->get()[0];
+                $titular = Titular::find($parcela->titular_id);
+                $p = true;
+
+            }
 
             $difunto = new Difunto($request->all());
             $difunto->save();
 
             $fc = new FacturacionController();
-            $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id);
+
+            if($p){
+
+                $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, $parcela->parcela_id);
+
+            }else $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, null);
 
 
     }
