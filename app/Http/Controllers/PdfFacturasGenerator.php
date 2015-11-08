@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\model\Factura;
 use App\model\Iva2;
-use App\model\TarifaServicios;
+use App\model\Nicho;
 use App\model\Tcp_nichos;
 use App\model\Tcp_parcelas2;
 use App\model\Tct_nichos;
+use App\model\Tramada;
+use App\model\VFacturasnp;
 use App\model\VLinea;
 use App\Http\Requests;
 use App\model\VFacturas;
@@ -91,14 +93,24 @@ class PdfFacturasGenerator extends Controller
 
     public function facturaEnterramiento($id){
 
+        $f = VFacturasnp::find($id);
 
-        $f = VFacturas::find($id);
+        $tramada = null;
 
         $lineas = VLinea::where('factura',$id)->get();
-        $iva = Iva2::find(1);
+        $iva = Iva2::first();
 
+        if($f->idparcela != null){
+            //si es una parcela obtenemos el id de la tramada
+            $nicho = Nicho::find($f->idnicho);
+            $numero = $nicho->numero;
+            $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
+        }else{
+            $tramada = $f->tramada;
+            $numero = $f->nicho_numero;
+        }
 
-        $view =  \View::make('pdf.enterramiento', compact('f','lineas','iva'))->render();
+        $view =  \View::make('pdf.enterramiento', compact('f','lineas','iva','tramada','numero'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));

@@ -99,13 +99,25 @@
             <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}
                 <br>Fecha: {{$date}}
             </td>
-            <td valign="top"><br>Datos del nicho <br><br> {{$f->nom_facturado}} <br> <span>Calle: </span>{{$f->calle}}
-                <span> <br>Numero: </span> {{$f->nicho_numero}}
-                <span> <br>Tramada: </span> {{$f->tramada}}<br><br> {{$f->nom_difunto}}</td>
+            <td valign="top">
+                @if($f->idparcela == null)
+                    <br>Datos del nicho <br>
+                @else
+                    <br>Datos de la parcela</br>
+                @endif
+                <br> {{$f->nom_facturado}} <br>
+                <span>Calle: </span>{{$f->calle}}
+                @if($f->idparcela != null)
+                    <span> <br>Parcela: </span> {{$f->nicho_numero}}
+                    <span> <br>Número: </span> {{$numero}}
+                @else
+                    <span> <br>Número: </span> {{$numero}}
+                @endif
+                <span> <br>Tramada: </span> {{$tramada}}<br><br> {{$f->nom_difunto}}</td>
             <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nom_facturado}}
                 <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}}
                 <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</td>
-        </tr>
+            </tr>
 
     </table>
 

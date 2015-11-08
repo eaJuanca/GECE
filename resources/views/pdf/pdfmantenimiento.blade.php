@@ -73,6 +73,9 @@
     //obtenemos la fecha inicio y fin de los años que se pretende pagar
     $inicio = new Carbon\Carbon($factura->inicio);
     $fin = new Carbon\Carbon($factura->fin);
+    //calculamos el precio
+    $precio = $tarifa->tarifa * ($fin->year - $inicio->year);
+    $precio = number_format ( $precio , 2 ,  "," , " " );
 ?>
 
 <br>
@@ -83,13 +86,14 @@
             <h3 style="text-align: center">Mantenimiento {{$inicio->year}} a {{$fin->year}}</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->base}}€</h3>
+            <h3>{{$precio}}€</h3>
         </td>
     </tr>
 </table>
 
 <?php
-    $ivaCalculado = $factura->iva * $factura->base/100;
+
+    $ivaCalculado = $iva->tipo * $precio/100;
 ?>
 
 <br>
@@ -97,7 +101,7 @@
 <table style="width:90%" border="1">
     <tr>
         <td>
-            <h3 style="text-align: right">IVA {{$factura->iva}}%</h3>
+            <h3 style="text-align: right">IVA {{$iva->tipo}}%</h3>
         </td>
         <td style="text-align: center">
             <h3>{{$ivaCalculado}}€</h3>
@@ -108,7 +112,7 @@
             <h3>TOTAL</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->base + $ivaCalculado}}€</h3>
+            <h3>{{$precio + $ivaCalculado}}€</h3>
         </td>
     </tr>
 </table>
@@ -116,7 +120,7 @@
 <br>
 <p>Titular del nicho efectos informativos</p>
 <hr style="width: 100%; margin-right: 10%">
-<p>{{$nicho->nicho_titular}}</p>
+<p>{{$nicho->nombre_titular}}</p>
 <p>{{$nicho->nicho_dni}}</p>
 <p>{{$nicho->domicilio}}</p>
 <p>30510 Yecla (Murcia)</p>
