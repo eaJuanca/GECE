@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\model\Factura;
+use App\model\Iva2;
 use App\model\LineaFactura;
 use App\model\TarifaServicios;
+use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -79,6 +81,16 @@ class LineaController extends Controller
                 $fac->pendiente = 0;
                 $fac->save();
             }
+
+            $iva = Iva2::first();
+            $iva = $iva->tipo;
+
+            $aux = VLinea::select(\DB::raw('sum(importe * cantidad) as total'))->where('factura',$factura)->get()[0];
+            dd($aux);
+            $factura = Factura::find($factura);
+            $factura->update(['base' => $total]);
+            $factura->update(['iva' => $total*($iva/100)]);
+            $factura->update(['total' => $total + ($total*($iva/100))]);
         }
 
     }
