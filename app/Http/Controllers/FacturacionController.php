@@ -365,12 +365,12 @@ class FacturacionController extends Controller
         $hoy = Carbon::now();
         $man = Carbon::now();
 
-
         $iva = Iva2::first()->tipo;
         $tarifa = Tm_parcelas::find(1);
         //Obtener el tamanyo de la parcela
         $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
         $precio = $tarifa->tarifa * $tamanyo;
+
 
         $factura = new Factura();
         $numero = Factura::where('serie','M')->whereYear('inicio','=',$hoy->year)->max('numero');
@@ -381,7 +381,7 @@ class FacturacionController extends Controller
         $factura->serie = 'M';
         $factura->idtitular = $titular;
         $factura->base = $precio;
-        $factura->iva = $iva;
+        $factura->iva = $precio * ($iva/100);
         $factura->total = $precio + ($precio * $iva/100);
         $factura->save();
 

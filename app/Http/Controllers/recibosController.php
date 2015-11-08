@@ -143,6 +143,9 @@ class recibosController extends Controller
         //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
 
+        //obtenemos el iva para calculos
+        $iva = Iva2::first()->tipo;
+
         //inicializamos el objeto factura
         $this->nuevaFactura = new Factura();
 
@@ -170,6 +173,9 @@ class recibosController extends Controller
             //Calculamos la  base total
             $tarifa = Tm_nichos::first();
             $precio = $tarifa->tarifa * ($fin->year - $inicio->year);
+            $this->nuevaFactura->base = $precio;
+            $this->nuevaFactura->iva = $precio * ($iva/100);
+            $this->nuevaFactura->total = $precio + ($precio * ($iva/100));
 
         }else {
             $this->nuevaFactura->idparcela = $nicho->idparcela;
@@ -195,14 +201,11 @@ class recibosController extends Controller
                 //obtenemos el tamanyo de la parcela
                 $tamanyio = Parcela::find($nicho->idparcela)->tamanyo;
                 $precio = ($tamanyio * $tarifa->tarifa) * ($fin->year - $inicio->year);
-
             }
         }
 
-
-        $iva = Iva2::first()->tipo;
-        $this->nuevaFactura->iva = $iva;
         $this->nuevaFactura->base = $precio;
+        $this->nuevaFactura->iva = $precio * ($iva/100);
         $this->nuevaFactura->total = $precio + ($precio * ($iva/100));
         $this->nuevaFactura->save();
 

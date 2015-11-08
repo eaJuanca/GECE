@@ -73,7 +73,9 @@ class PdfFacturasGenerator2 extends Controller
             $tamanyio = Parcela::find($parcela->idparcela)->tamanyo;
         }
 
-        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos'))->render();
+        $iva = Iva2::first()->tipo;
+
+        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo.pdf', array( 'Attachment'=>1 ));

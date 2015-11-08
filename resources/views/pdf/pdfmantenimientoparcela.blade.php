@@ -93,20 +93,16 @@ $fin = new Carbon\Carbon($factura->fin);
     </tr>
 </table>
 
-<?php
-
-$ivaCalculado = $factura->iva * $factura->base/100;
-?>
 
 <br>
 
 <table style="width:90%" border="1">
     <tr>
         <td>
-            <h3 style="text-align: right">IVA {{$factura->iva}}%</h3>
+            <h3 style="text-align: right">IVA {{$iva}}%</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$ivaCalculado}}€</h3>
+            <h3>{{$factura->iva}}€</h3>
         </td>
     </tr>
     <tr>
@@ -114,7 +110,7 @@ $ivaCalculado = $factura->iva * $factura->base/100;
             <h3>TOTAL</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->base + $ivaCalculado}}€</h3>
+            <h3>{{$factura->iva + $factura->base}}€</h3>
         </td>
     </tr>
 </table>
