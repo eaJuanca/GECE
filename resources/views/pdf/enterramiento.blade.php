@@ -110,13 +110,13 @@
                 @if($f->idparcela != null)
                     <span> <br>Parcela: </span> {{$f->nicho_numero}}
                 @endif
-                    <span> <br>Tramada: </span> {{$tramada}}<br><br>
+                    <span> <br>Tramada: </span> {{$tramada}}
                 @if($f->idparcela != null)
                     <span> <br>Número: </span> {{$numero}}
                 @else
                     <span> <br>Número: </span> {{$numero}}
                 @endif
-                {{$f->nom_difunto}}</td>
+                    <br><br>{{$f->nom_difunto}}</td>
             <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nom_facturado}}
                 <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}}
                 <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</td>
