@@ -381,8 +381,14 @@ class NichoController extends Controller
         $nichoU->sintitular = $sintitular;
         $nicho->update($nichoU->attributesToArray());
 
-        $factura = new FacturacionController();
-        $factura->facturaCesion($idtitular,$nicho->id,$nicho->cesion);
+        if($sintitularbox == "on") {
+
+
+        }else{
+            $factura = new FacturacionController();
+            $factura->facturaCesion($idtitular, $nicho->id, $nicho->cesion);
+        }
+
     }
 
     /**
