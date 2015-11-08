@@ -64,6 +64,7 @@ class PdfFacturasGenerator2 extends Controller
 
         //si tiene tramadas está construida por lo tanto tarifa 2
         if(count($tramadas) > 0){
+            $tipo = 2;
             $numNichos = count($tramadas) * $tramadas[0]->nichos;
         }else{
         //Sino la tarifa 1

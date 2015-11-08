@@ -32,8 +32,8 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
-                        <div class="col-lg-10">
+                        <label for="inputFile" class="col-lg-3 ">Tarifa por m2:</label>
+                        <div class="col-lg-9">
                             @if($Tcp_parcelas != null)
                                 <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
                             @else
@@ -147,8 +147,8 @@
                     <br>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa sin construir:</label>
-                        <div class="col-lg-10">
+                        <label for="inputFile" class="col-lg-3 ">Tarifa sin construir (m2):</label>
+                        <div class="col-lg-9">
                             <input type="text" name="m_parcela0" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[0]->tarifa !!}" required>
                         </div>
                     </div>
