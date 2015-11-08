@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\model\InfoNicho;
+use App\model\Iva2;
 use App\model\LineaFactura;
+use App\model\Tcp_nichos;
+use App\model\Tct_nichos;
+use App\model\Tm_nichos;
 use App\model\VFacturas;
 use App\model\Factura;
 use App\model\VLinea;
@@ -202,6 +207,13 @@ class FacturacionController extends Controller
         //fecha de hoy
         $hoy = Carbon::now();
 
+        $iva = Iva2::first();
+        $iva = $iva->tipo;
+        $info = InfoNicho::find($nicho);
+        $precio = Tcp_nichos::find($info->altura)->get()[0];
+        $precio =  $precio->tarifa;
+
+
         //busco si hay una factura de un nicho para la serie D, osea si alguna vez se ha generado una factura
         $aux = Factura::where('idnicho',$nicho)->where('serie','D')->first();
 
@@ -219,6 +231,9 @@ class FacturacionController extends Controller
             $factura->idnicho = $nicho;
             $factura->serie = 'D';
             $factura->idtitular = $titular;
+            $factura->base = $precio;
+            $factura->iva = $precio*(($iva/100));
+            $factura->total = $precio*(1+($iva/100));
             $factura->save();
 
             $this->Mantenimiento5Nicho($nicho, $titular);
@@ -235,15 +250,29 @@ class FacturacionController extends Controller
 
         $hoy = Carbon::now();
         $man = Carbon::now();
+        $man->addYears(5);
+
+        $diff = $hoy->diffInYears($man);
+
+        $iva = Iva2::first();
+        $iva = $iva->tipo;
+        $precio = Tm_nichos::first();
+        $precio =  $precio->tarifa;
+        $precio = $precio*$diff;
+
+
 
         $factura = new Factura();
         $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
         $factura->numero = $numero+1;
         $factura->inicio = $hoy;
-        $factura->fin = $man->addYears(5);
+        $factura->fin = $man;
         $factura->idnicho = $nicho;
         $factura->serie = 'N';
         $factura->idtitular = $titular;
+        $factura->base = $precio;
+        $factura->iva = $precio*(($iva/100));
+        $factura->total = $precio*(1+($iva/100));
         $factura->save();
 
     }
@@ -260,6 +289,11 @@ class FacturacionController extends Controller
         //obtener el numero de factura maximo
         $numero = Factura::where('serie','T')->whereYear('inicio','=',$hoy->year)->max('numero');
 
+        $iva = Iva2::first();
+        $iva = $iva->tipo;
+
+        $precio = Tct_nichos::first();
+        $precio =  $precio->tarifa;
 
         //valores que se establecen solo una vez
         if($aux == null) {
@@ -271,6 +305,10 @@ class FacturacionController extends Controller
             $factura->idnicho = $nicho;
             $factura->serie = 'T';
             $factura->idtitular = $titular;
+            $factura->base = $precio;
+            $factura->iva = $precio*(($iva/100));
+            $factura->total = $precio*(1+($iva/100));
+
             $factura->save();
 
             $this->Mantenimiento5Nicho($nicho, $titular);
