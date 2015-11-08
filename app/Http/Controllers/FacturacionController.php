@@ -31,7 +31,7 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        $facturas = VFacturas::paginate(10);
+        $facturas = VFacturas::orderBy('id','DESC')->paginate(10);
         $search = false;
         return View::make('facturacion',compact('facturas','search'));
     }
@@ -43,7 +43,7 @@ class FacturacionController extends Controller
      */
     public function paginate(){
 
-        $facturas = VFacturas::paginate(10);
+        $facturas = VFacturas::orderBy('id','DESC')->paginate(10);
         return view('renders.facturas',compact('facturas'));
     }
 
@@ -63,7 +63,7 @@ class FacturacionController extends Controller
 
 
         $search = true;
-        $facturas = VFacturas::where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
+        $facturas = VFacturas::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
 
             if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
             if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
