@@ -352,7 +352,7 @@ class FacturacionController extends Controller
             $factura->serie = 'P';
             $factura->idtitular = $titular;
             $factura->base = $precio;
-            $factura->iva = $iva;
+            $factura->iva = $precio * ($iva/100);
             $factura->total = $precio + ($precio * ($iva/100));
             $factura->save();
 

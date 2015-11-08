@@ -48,7 +48,7 @@ class PdfFacturasGenerator extends Controller
 
         $f = VFacturasP::find($id);
         $coste = Tcp_parcelas2::find(0);
-        $iva = Iva2::find(1);
+        $iva = Iva2::first();
 
         $view =  \View::make('pdf.pdfcesionparcela', compact('f','coste','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
