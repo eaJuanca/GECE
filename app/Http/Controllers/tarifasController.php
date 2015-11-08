@@ -38,7 +38,7 @@ class tarifasController extends Controller{
         $iva = Iva::first();
 
 
-        $servicios = TarifaServicios::all();
+        $servicios = TarifaServicios::where('tipo',0)->get();
 
 
         return view("tarifas", compact("Tcp_parcelas","Tcp_nichos","Tct_parcelas","Tct_nichos","Tm_parcelas","Tm_nichos","iva","servicios"));
