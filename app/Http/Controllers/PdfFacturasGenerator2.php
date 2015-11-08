@@ -20,11 +20,12 @@ class PdfFacturasGenerator2 extends Controller
 
         //Buscamos el id de la factura generada mediante el modulo de recibo
         $factura = Factura::find($id);
+        $iva = Iva2::first()->tipo;
 
         //Buscamos el nicho
         $nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
 
-        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho'))->render();
+        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo.pdf', array( 'Attachment'=>1 ));
