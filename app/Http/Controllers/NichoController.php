@@ -36,8 +36,8 @@ class NichoController extends Controller
 
 
 
-        $td = count($Qdisponibles->get()); // total de nichos disponibles
-        $tnd = count($Qnodisponibles->get()); // total de nichos no disponibles
+        $td = InfoNicho::whereNull('GC_TITULAR_id')->where('sintitular',false)->count(); // total de nichos disponibles
+        $tnd = InfoNicho::whereNotNull('GC_TITULAR_id')->oRwhere('sintitular',true)->count(); // total de nichos no disponibles
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
