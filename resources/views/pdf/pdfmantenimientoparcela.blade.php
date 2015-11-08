@@ -88,7 +88,7 @@ $fin = new Carbon\Carbon($factura->fin);
             <h4 style="text-align: center">Mantenimiento {{$inicio->year}} a {{$fin->year}}</h4>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->base}}€</h3>
+            <h3>{{number_format($factura->base,2,",","")}}€</h3>
         </td>
     </tr>
 </table>
@@ -102,7 +102,7 @@ $fin = new Carbon\Carbon($factura->fin);
             <h3 style="text-align: right">IVA {{$iva}}%</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->iva}}€</h3>
+            <h3>{{number_format($factura->iva,2,",","")}}€</h3>
         </td>
     </tr>
     <tr>
@@ -110,7 +110,7 @@ $fin = new Carbon\Carbon($factura->fin);
             <h3>TOTAL</h3>
         </td>
         <td style="text-align: center">
-            <h3>{{$factura->iva + $factura->base}}€</h3>
+            <h3>{{number_format(($factura->iva + $factura->base),2,",","")}}€</h3>
         </td>
     </tr>
 </table>
