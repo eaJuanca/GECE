@@ -132,4 +132,7 @@ class PdfFacturasGenerator extends Controller
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
     }
 
+    /**
+     * Detectar cambios
+     */
 }
