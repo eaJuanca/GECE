@@ -145,7 +145,7 @@ class recibosController extends Controller
         $this->nuevaFactura = new Factura();
 
         //Asignamos atributos a nuevaFactura para ello obtenemos dato de infoRecibos
-        $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
+        $nicho = infoRecibos::find($id);
 
         $this->nuevaFactura->idtitular = $nicho->idtitular;
         $this->nuevaFactura->iddifunto = $nicho->iddifunto;
@@ -160,9 +160,9 @@ class recibosController extends Controller
 
             //Si es de un nicho el recibo que vamos a imprimir.
             $this->nuevaFactura->idnicho = $nicho->idnicho;
-            $this->nuevaFactura->calle = $nicho->nicho_calle;
+            $this->nuevaFactura->calle = $nicho->calle;
             $this->nuevaFactura->tramada = $nicho->altura;
-            $this->nuevaFactura->numero_nicho = $nicho->nicho_numero;
+            $this->nuevaFactura->numero_nicho = $nicho->numero_nicho;
 
             //Obtenemos el titular de este nicho
             $titularinfo= Titular::find($nicho->idtitular);
@@ -186,14 +186,14 @@ class recibosController extends Controller
         }else {
 
             $this->nuevaFactura->idparcela = $nicho->idparcela;
-            $this->nuevaFactura->calle = $nicho->parcela_calle;
-            $this->nuevaFactura->parcela = $nicho->parcela_numero;
+            $this->nuevaFactura->calle = $nicho->calle;
+            $this->nuevaFactura->parcela = $nicho->parcela;
 
             //obtenemos el titular de esta parcela
-            $titularinfo= Titular::find($nicho->idparcela);
+            $titularinfo = Titular::find($nicho->idtitular);
 
             //Obtenemos la parcela
-            $nichoinfo = Nicho::find($nicho->idparcela);
+            $nichoinfo = Parcela::find($nicho->idparcela);
 
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
@@ -203,6 +203,8 @@ class recibosController extends Controller
             //si está construido o no, para saberlo comprobamos si tiene alguna tramada
             $tramadas = Tramada::where('GC_PARCELA_id', '=' , $nicho->idparcela)->get();
 
+            $tamanyo = $nicho->metros_parcela;
+            $this->nuevaFactura->metros_parcela = $tamanyo;
             //si tiene tramadas está construida por lo tanto tarifa 2
             if(count($tramadas) > 0){
                 $tipo = 2;
@@ -214,12 +216,9 @@ class recibosController extends Controller
                 //Sino la tarifa 1
                 $tipo = 1;
                 $tarifa = Tm_parcelas::find(1);
+                dd($tarifa->tarifa);
                 //obtenemos el tamanyo de la parcela
-                //$tamanyo = Parcela::find($nicho->idparcela)->tamanyo;
-                $tamanyo = $nicho->metros_parcela;
                 $precio = ($tamanyo * $tarifa->tarifa) * ($fin->year - $inicio->year);
-
-                $this->nuevaFactura->metros_parcela = $tamanyo;
             }
         }
 

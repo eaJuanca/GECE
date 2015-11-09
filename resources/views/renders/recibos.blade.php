@@ -43,7 +43,7 @@
         @else
             <td style = "width: 100px">
                 <div>
-                    <button onclick="cargar('{!!$nicho->id!!}' ,'P')" style="margin-right: 10px; color:#03A9F4">
+                    <button onclick="cargar('{!!$nicho->id!!}' ,'M')" style="margin-right: 10px; color:#03A9F4">
                         <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
                     </button>
                 </div>

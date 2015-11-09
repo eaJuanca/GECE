@@ -535,6 +535,10 @@ class FacturacionController extends Controller
         $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
         $precio = $tarifa->tarifa * $tamanyo;
 
+        $titularinfo= Titular::find($titular);
+        $infoparcela = Parcela::find($parcela);
+        $infopanteon = VPanteones::where('parcela_id',$parcela)->first();
+
 
         $factura = new Factura();
         $numero = Factura::where('serie','M')->whereYear('inicio','=',$hoy->year)->max('numero');
@@ -547,6 +551,32 @@ class FacturacionController extends Controller
         $factura->base = $precio;
         $factura->iva = $precio * ($iva/100);
         $factura->total = $precio + ($precio * $iva/100);
+
+        //nuevos campos
+
+        $factura->calle = $infopanteon->calle;
+        $factura->parcela = $infopanteon->numero;
+        $factura->metros_parcela = $infopanteon->tamanyo;
+        $factura->cesion = $infopanteon->cesion;
+
+
+        //titular
+        $factura->nombre_titular = $titularinfo->nombre_titular;
+        $factura->dni_titular = $titularinfo->dni_titular;
+        $factura->domicilio_del_titular = $titularinfo->dom_titular;
+        $factura->cp_titular = $titularinfo->cp_titular;
+        $factura->poblacion_titular = $titularinfo->pob_titular;
+        $factura->provincia_titular = $titularinfo->pro_titular;
+
+        //facturado
+        $factura->nombre_facturado = $infoparcela->nom_facturado;
+        $factura->dni_facturado = $infoparcela->nif_facturado;
+        $factura->domicilio_facturado = $infoparcela->dir_facturado;
+        $factura->cp_facturado = $infoparcela->cp_facturado;
+        $factura->poblacion_facturado = $infoparcela->pob_facturado;
+        $factura->provincia_facturado = $infoparcela->pro_facturado;
+
+
         $factura->save();
 
     }
