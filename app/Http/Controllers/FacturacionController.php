@@ -15,6 +15,7 @@ use App\model\Tm_parcelas;
 use App\model\Tramada;
 use App\model\Factura;
 use App\model\VLinea;
+use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -310,9 +311,12 @@ class FacturacionController extends Controller
             $factura->poblacion_facturado = $nichoinfo->pob_facturado;
             $factura->provincia_facturado = $nichoinfo->pro_facturado;
 
+            $factura->cesion = 0;
+
+
             $factura->save();
 
-           $this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
+            $this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
 
         }
     }
@@ -399,6 +403,11 @@ class FacturacionController extends Controller
         //valores que se establecen solo una vez
         if($aux == null) {
 
+            $titularinfo= Titular::find($titular);
+            $nichoinfo = Nicho::find($nicho);
+            $info = InfoNicho::find($nicho);
+
+
             $factura = new Factura();
             $factura->numero = $numero+1;
             $factura->inicio = $hoy;
@@ -410,9 +419,34 @@ class FacturacionController extends Controller
             $factura->iva = $precio*(($iva/100));
             $factura->total = $precio*(1+($iva/100));
 
+            //nuevos campos
+
+            $factura->tipo_adquisicion = 0;
+            $factura->calle = $info->nombre_calle;
+            $factura->tramada = $info->altura;
+            $factura->numero_nicho = $info->numero;
+
+            //titular
+            $factura->nombre_titular = $titularinfo->nombre_titular;
+            $factura->dni_titular = $titularinfo->dni_titular;
+            $factura->domicilio_del_titular = $titularinfo->dom_titular;
+            $factura->cp_titular = $titularinfo->cp_titular;
+            $factura->poblacion_titular = $titularinfo->pob_titular;
+            $factura->provincia_titular = $titularinfo->pro_titular;
+
+            //facturado
+            $factura->nombre_facturado = $nichoinfo->nom_facturado;
+            $factura->dni_facturado = $nichoinfo->dni_facturado;
+            $factura->domicilio_facturado = $nichoinfo->dir_facturado;
+            $factura->dni_facturado = $nichoinfo->nom_facturado;
+            $factura->cp_facturado = $nichoinfo->cp_facturado;
+            $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+            $factura->provincia_facturado = $nichoinfo->pro_facturado;
+            $factura->cesion = 1;
+
             $factura->save();
 
-            $this->Mantenimiento5Nicho($nicho, $titular);
+            $this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
 
         }
     }
@@ -441,6 +475,10 @@ class FacturacionController extends Controller
         //valores que se establecen solo una vez
         if($aux == null) {
 
+            $titularinfo= Titular::find($titular);
+            $infoparcela = Parcela::find($parcela);
+            $infopanteon = VPanteones::where('parcela_id',$parcela)->first();
+
             $factura = new Factura();
             $factura->numero = $numero+1;
             $factura->inicio = $hoy;
@@ -451,6 +489,33 @@ class FacturacionController extends Controller
             $factura->base = $precio;
             $factura->iva = $precio * ($iva/100);
             $factura->total = $precio + ($precio * ($iva/100));
+
+            //nuevos campos
+
+            $factura->tipo_adquisicion = 1;
+            $factura->calle = $infopanteon->calle;
+            $factura->parcela = $infopanteon->numero;
+            $factura->metros_parcela = $infopanteon->tamanyo;
+
+            //titular
+            $factura->nombre_titular = $titularinfo->nombre_titular;
+            $factura->dni_titular = $titularinfo->dni_titular;
+            $factura->domicilio_del_titular = $titularinfo->dom_titular;
+            $factura->cp_titular = $titularinfo->cp_titular;
+            $factura->poblacion_titular = $titularinfo->pob_titular;
+            $factura->provincia_titular = $titularinfo->pro_titular;
+
+            //facturado
+            $factura->nombre_facturado =  $infoparcela->nom_facturado;
+            $factura->dni_facturado =  $infoparcela->dni_facturado;
+            $factura->domicilio_facturado =  $infoparcela->dir_facturado;
+            $factura->dni_facturado =  $infoparcela->nom_facturado;
+            $factura->cp_facturado =  $infoparcela->cp_facturado;
+            $factura->poblacion_facturado =  $infoparcela->pob_facturado;
+            $factura->provincia_facturado =  $infoparcela->pro_facturado;
+            $factura->cesion = 0;
+
+
             $factura->save();
 
             $this->Mantenimiento1Parcela($parcela, $titular);

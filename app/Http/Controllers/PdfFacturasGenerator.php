@@ -93,7 +93,7 @@ class PdfFacturasGenerator extends Controller
 
     public function facturaEnterramiento($id){
 
-        $f = VFacturasnp2::find($id);
+        $f = Factura::find($id);
 
         $tramada = null;
 
@@ -114,7 +114,6 @@ class PdfFacturasGenerator extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
-
     }
 
     public function orden($id){
