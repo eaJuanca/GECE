@@ -387,7 +387,6 @@ class FacturacionController extends Controller
 
     public function facturaCesionTemporal($titular, $nicho){
 
-
         //fecha de hoy
         $hoy = Carbon::now();
 

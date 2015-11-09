@@ -25,7 +25,8 @@ class Titular extends Model{
         'exp_titular',
         'dni_titular',
         'tel_titular',
-        'ema_titular'
+        'ema_titular',
+        'provincia'
 
     ];
 }
