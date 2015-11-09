@@ -241,9 +241,10 @@ class FacturacionController extends Controller
             $factura->numero_nicho = $info->numero;
             $factura->tramada = $tramada;
             $factura->parcela = $info->numero;
+            $nichoinfo = Parcela::find($parcela);
+
         }
 
-        $nichoinfo = Parcela::find($parcela);
 
 
         //titular
