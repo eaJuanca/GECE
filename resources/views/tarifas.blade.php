@@ -91,11 +91,7 @@
                     <div class="form-group nombre">
                         <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
                         <div class="col-lg-10">
-                            @if($Tct_parcelas != null)
-                                <input type="text" name="ct_parcela" class="form-control ct_parcela" placeholder="{!! $Tct_parcelas->tarifa !!}" required>
-                            @else
-                                <input type="text" name="ct_parcela" class="form-control ct_parcela" placeholder="valor tarifa" required>
-                            @endif
+
                         </div>
                     </div>
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>

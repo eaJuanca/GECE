@@ -16,12 +16,13 @@ class Factura extends Model{
     protected $table = 'GC_Factura';
 
     protected $fillable = [
-        'id',
+
         'idtitular',
         'idnicho',
         'idparcela',
         'iddifunto',
         'inicio',
+        'tipo_adquisicion',
         'fin',
         'serie',
         'numero',
@@ -29,6 +30,25 @@ class Factura extends Model{
         'pagada',
         'base',
         'iva',
-        'total'
+        'total',
+        'calle',
+        'parcela',
+        'tramada',
+        'metros_parcela',
+        'numero_nicho',
+        'nombre_titular',
+        'dni_titular',
+        'domicilio_titular',
+        'cp_titular',
+        'poblacion_titular',
+        'provincia_titular',
+        'nombre_difunto',
+        'nombre_facturado',
+        'dni_facturado',
+        'domicilio_facturado',
+        'cp_facturado',
+        'poblacion_facturado',
+        'provincia_facturado'
+
     ];
 }

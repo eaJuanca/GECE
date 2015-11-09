@@ -30,7 +30,6 @@ class tarifasController extends Controller{
 
         $Tcp_parcelas = Tcp_parcelas2::first();
         $Tcp_nichos = Tcp_nichos::all();
-        $Tct_parcelas = Tct_parcelas::first();
         $Tct_nichos = Tct_nichos::first();
         $Tm_parcelas = Tm_parcelas::all();
         $Tm_nichos = Tm_nichos::first();

@@ -9,12 +9,13 @@ use App\model\Parcela;
 use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
+use App\model\Titular;
 use App\model\Tm_nichos;
 use App\model\Tm_parcelas;
 use App\model\Tramada;
 use App\model\VFacturas;
 use App\model\Factura;
-use App\model\VFacturasnp2;
+use App\model\VFacturasnp;
 use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -150,7 +151,7 @@ class FacturacionController extends Controller
     public function edit($id)
     {
 
-        $f = VFacturasnp2::find($id);
+        $f = VFacturasnp::find($id);
         $servicios = TarifaServicios::all();
         $lineas = VLinea::where('factura',$id)->get();
 
@@ -225,7 +226,6 @@ class FacturacionController extends Controller
 
         //fecha de hoy
         $hoy = Carbon::now();
-
         $iva = Iva2::first();
         $iva = $iva->tipo;
         $info = InfoNicho::find($nicho);
@@ -243,6 +243,9 @@ class FacturacionController extends Controller
         //valores que se establecen solo una vez
         if($aux == null) {
 
+            $titularinfo= Titular::find($titular);
+            $nichoinfo = Nicho::find($nicho);
+
             $factura = new Factura();
             $factura->numero = $numero+1;
             $factura->inicio = $hoy;
@@ -253,6 +256,31 @@ class FacturacionController extends Controller
             $factura->base = $precio;
             $factura->iva = $precio*(($iva/100));
             $factura->total = $precio*(1+($iva/100));
+
+            //nuevos campos
+
+            $factura->tipo_adquisicion = 0;
+            $factura->calle = $info->nombre_calle;
+            $factura->tramada = $info->altura;
+            $factura->numero_nicho = $info->numero;
+
+            //titular
+            $factura->nombre_titular = $titularinfo->nombre_titular;
+            $factura->dni_titular = $titularinfo->dni_titular;
+            $factura->domicilio_del_titular = $titularinfo->dom_titular;
+            $factura->cp_titular = $titularinfo->cp_titular;
+            $factura->poblacion_titular = $titularinfo->pob_titular;
+            $factura->provincia_titular = $titularinfo->pro_titular;
+
+            //facturado
+            $factura->nombre_facturado = $nichoinfo->nom_facturado;
+            $factura->dni_facturado = $nichoinfo->dni_facturado;
+            $factura->domicilio_facturado = $nichoinfo->dom_facturado;
+            $factura->dni_facturado = $nichoinfo->nom_facturado;
+            $factura->cp_facturado = $nichoinfo->cp_facturado;
+            $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+            $factura->provincia_facturado = $nichoinfo->pro_facturado;
+
             $factura->save();
 
             $this->Mantenimiento5Nicho($nicho, $titular);
