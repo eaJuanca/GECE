@@ -48,7 +48,27 @@
                     <div class="row">
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"><span>Factura nº: </span> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br> <span>Fecha:</span> {{$f->inicio}} </div>
-                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"><span>Datos del nicho</span> <br> <span>Titular: </span> {{$f->nombre_titular}}<br> <span>Calle: </span> {{$f->calle}}<span> <br>Numero: </span> {{$f->nicho_numero}}<span> <br>Tramada: </span> {{$f->tramada}}<br> <br> <span>Difunto: </span> {{$f->nom_difunto}}</div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+
+                                @if($f->idparcela == null)
+                                    <br>Datos del nicho <br>
+                                @else
+                                    <br>Datos de la parcela</br>
+                                @endif
+                                <br> <span>Titular: </span> {{$f->nom_facturado}} <br>
+
+                                <span>Calle: </span>{{$f->calle}}
+                                @if($f->idparcela != null)
+                                    <span> <br>Parcela: </span> {{$f->nicho_numero}}
+                                @endif
+                                <span> <br>Tramada: </span> {{$tramada}}
+                                @if($f->idparcela != null)
+                                    <span> <br>Número: </span> {{$numero}}
+                                @else
+                                    <span> <br>Número: </span> {{$numero}}
+                                @endif
+                                    <br><br>
+                                    <span>Difunto: </span> {{$f->nom_difunto}}</div>
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"><span>Datos de facturación </span><br><span>Nombre y apellidos: </span> {{$f->nom_facturado}} <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}} <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</div>
                         </div>
 

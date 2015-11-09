@@ -4,14 +4,17 @@ namespace App\Http\Controllers;
 
 use App\model\InfoNicho;
 use App\model\Iva2;
+use App\model\Nicho;
 use App\model\Parcela;
 use App\model\Tcp_parcelas2;
 use App\model\Tcp_nichos;
 use App\model\Tct_nichos;
 use App\model\Tm_nichos;
 use App\model\Tm_parcelas;
+use App\model\Tramada;
 use App\model\VFacturas;
 use App\model\Factura;
+use App\model\VFacturasnp;
 use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -147,12 +150,24 @@ class FacturacionController extends Controller
     public function edit($id)
     {
 
-        $f = VFacturas::find($id);
+        $f = VFacturasnp::find($id);
         $servicios = TarifaServicios::all();
         $lineas = VLinea::where('factura',$id)->get();
 
+        $tramada = null;
+
+        if($f->idparcela != null){
+            //si es una parcela obtenemos el id de la tramada
+            $nicho = Nicho::find($f->idnicho);
+            $numero = $nicho->numero;
+            $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
+        }else{
+            $tramada = $f->tramada;
+            $numero = $f->nicho_numero;
+        }
+
        //crear una vista
-        return view('modificar_factura',compact('f','servicios','lineas'));
+        return view('modificar_factura',compact('f','servicios','lineas','numero','tramada'));
     }
 
     /**

@@ -29,21 +29,14 @@ class NichoController extends Controller
     public function index()
     {
 
-
         $Qdisponibles = InfoNicho::whereNull('GC_TITULAR_id')->where('sintitular',false)->groupby('id');
         $Qnodisponibles = InfoNicho::whereNotNull('GC_TITULAR_id')->oRwhere('sintitular',true)->groupby('id');
-
-
-
 
         $td = InfoNicho::whereNull('GC_TITULAR_id')->where('sintitular',false)->count(); // total de nichos disponibles
         $tnd = InfoNicho::whereNotNull('GC_TITULAR_id')->oRwhere('sintitular',true)->count(); // total de nichos no disponibles
 
         $disponibles = $Qdisponibles->take(10)->get();
         $nodisponibles = $Qnodisponibles->take(10)->get();
-
-
-
 
         $tab = 1; // tab activa
         $search = 0; // busqueda inactica
@@ -128,7 +121,6 @@ class NichoController extends Controller
             echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a></td></tr>";
 
         }
-
 
     }
 
