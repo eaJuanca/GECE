@@ -219,6 +219,7 @@ class FacturacionController extends Controller
         $factura->calle = $info->nombre_calle;
         $factura->tramada = $info->altura;
         $factura->numero_nicho = $info->numero;
+        $factura->cesion = $nichoinfo->cesion;
 
         //titular
         $factura->nombre_titular = $titularinfo->nombre_titular;
@@ -311,7 +312,7 @@ class FacturacionController extends Controller
             $factura->poblacion_facturado = $nichoinfo->pob_facturado;
             $factura->provincia_facturado = $nichoinfo->pro_facturado;
 
-            $factura->cesion = 0;
+            $factura->cesion = $nichoinfo->cesion;
 
 
             $factura->save();
@@ -360,6 +361,8 @@ class FacturacionController extends Controller
         $factura->calle = $info->nombre_calle;
         $factura->tramada = $info->altura;
         $factura->numero_nicho = $info->numero;
+        $factura->cesion = $nichoinfo->cesion;
+
 
         //titular
         $factura->nombre_titular = $titularinfo->nombre_titular;
@@ -425,6 +428,8 @@ class FacturacionController extends Controller
             $factura->calle = $info->nombre_calle;
             $factura->tramada = $info->altura;
             $factura->numero_nicho = $info->numero;
+            $factura->cesion = $nichoinfo->cesion;
+
 
             //titular
             $factura->nombre_titular = $titularinfo->nombre_titular;
@@ -496,6 +501,8 @@ class FacturacionController extends Controller
             $factura->calle = $infopanteon->calle;
             $factura->parcela = $infopanteon->numero;
             $factura->metros_parcela = $infopanteon->tamanyo;
+            $factura->cesion = 0;
+
 
             //titular
             $factura->nombre_titular = $titularinfo->nombre_titular;
