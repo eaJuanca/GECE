@@ -14,7 +14,7 @@ use App\model\Tm_parcelas;
 use App\model\Tramada;
 use App\model\VFacturas;
 use App\model\Factura;
-use App\model\VFacturasnp;
+use App\model\VFacturasnp2;
 use App\model\VLinea;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -150,7 +150,7 @@ class FacturacionController extends Controller
     public function edit($id)
     {
 
-        $f = VFacturasnp::find($id);
+        $f = VFacturasnp2::find($id);
         $servicios = TarifaServicios::all();
         $lineas = VLinea::where('factura',$id)->get();
 

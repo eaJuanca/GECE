@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\model\VFacturasnp;
+use App\model\VFacturasnp2;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -21,7 +21,7 @@ class ExporterController extends Controller
 
         if($s != 1){
 
-            $data = VFacturasnp::take(1000)->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
+            $data = VFacturasnp2::take(1000)->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
 
         }else if($s == 1){
 

@@ -9,7 +9,7 @@ use App\model\Tcp_nichos;
 use App\model\Tcp_parcelas2;
 use App\model\Tct_nichos;
 use App\model\Tramada;
-use App\model\VFacturasnp;
+use App\model\VFacturasnp2;
 use App\model\VLinea;
 use App\Http\Requests;
 use App\model\VFacturas;
@@ -93,7 +93,7 @@ class PdfFacturasGenerator extends Controller
 
     public function facturaEnterramiento($id){
 
-        $f = VFacturasnp::find($id);
+        $f = VFacturasnp2::find($id);
 
         $tramada = null;
 

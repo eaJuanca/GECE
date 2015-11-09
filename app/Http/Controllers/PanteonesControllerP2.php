@@ -6,7 +6,6 @@ use App\model\Parcela;
 use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\model\Titular;
 
 class PanteonesControllerP2 extends Controller

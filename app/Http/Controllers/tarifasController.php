@@ -17,7 +17,6 @@ use App\model\Tct_parcelas;
 use App\model\Iva2 as Iva;
 use App\model\TarifaServicios;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
 
 
 class tarifasController extends Controller{

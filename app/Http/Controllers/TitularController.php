@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\model\Titular;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class TitularController extends Controller
 {
