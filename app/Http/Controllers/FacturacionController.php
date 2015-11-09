@@ -197,6 +197,11 @@ class FacturacionController extends Controller
 
         $hoy = Carbon::now();
 
+        $titularinfo = Titular::find($titular);
+        $nichoinfo = Nicho::find($nicho);
+        $info = InfoNicho::find($nicho);
+
+
         $factura->idtitular = $titular;
         $factura->iddifunto = $difunto;
         $factura->idnicho = $nicho;
@@ -206,6 +211,33 @@ class FacturacionController extends Controller
         $factura->fin = $hoy;
         $numero = Factura::where('serie','E')->whereYear('inicio','=',$hoy->year)->max('numero');
         $factura->numero = $numero+1;
+
+        //nuevos campos
+
+        $factura->tipo_adquisicion = 0;
+        $factura->calle = $info->nombre_calle;
+        $factura->tramada = $info->altura;
+        $factura->numero_nicho = $info->numero;
+
+        //titular
+        $factura->nombre_titular = $titularinfo->nombre_titular;
+        $factura->dni_titular = $titularinfo->dni_titular;
+        $factura->domicilio_del_titular = $titularinfo->dom_titular;
+        $factura->cp_titular = $titularinfo->cp_titular;
+        $factura->poblacion_titular = $titularinfo->pob_titular;
+        $factura->provincia_titular = $titularinfo->pro_titular;
+
+        //facturado
+        $factura->nombre_facturado = $nichoinfo->nom_facturado;
+        $factura->dni_facturado = $nichoinfo->dni_facturado;
+        $factura->domicilio_facturado = $nichoinfo->dir_facturado;
+        $factura->dni_facturado = $nichoinfo->nom_facturado;
+        $factura->cp_facturado = $nichoinfo->cp_facturado;
+        $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+        $factura->provincia_facturado = $nichoinfo->pro_facturado;
+
+        //difunto
+        $factura->nombre_difunto = $info->nom_difunto;
 
         $factura->save();
     }
