@@ -107,7 +107,7 @@ $date = $date->format('j-m-Y');
     <tr>
 
         <td class="left">{{$coste->codigo}}</td>
-        <td class="left">Cesión temporal(5 años)</td>
+        <td class="left">Cesión temporal de {{substr($f->inicio,0,4)}} a {{substr($f->fin,0,4)}}</td>
         <td class="left">1</td>
         <td class="right">{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
     </tr>

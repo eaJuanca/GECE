@@ -116,10 +116,10 @@
                 @else
                     <span> <br>Número: </span> {{$numero}}
                 @endif
-                    <br><br>{{$f->nom_difunto}}</td>
-            <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nom_facturado}}
-                <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}}
-                <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</td>
+                    <br><br>{{$f->nombre_difunto}}</td>
+            <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
+                <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
+                <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>
             </tr>
 
     </table>
@@ -252,12 +252,12 @@
         <tbody>
 
         <tr class="left">
-            <td class="noborder">Difunto: {{$f->nom_difunto}} </td>
+            <td class="noborder">Difunto: {{$f->nombre_difunto}} </td>
             <td></td>
 
         </tr>
         <tr class="left">
-            <td class="noborder">Nicho Nº {{$f->nicho_numero}} Fila {{$f->tramada}} </td>
+            <td class="noborder">Nicho Nº {{$f->numero_nicho}} Fila {{$f->tramada}} </td>
             <td></td>
 
         </tr>

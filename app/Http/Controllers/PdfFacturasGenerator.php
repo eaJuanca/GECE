@@ -79,10 +79,10 @@ class PdfFacturasGenerator extends Controller
     public function facturaTemporal($id){
 
 
-        $f = VFacturas::find($id);
+        $f = Factura::find($id);
 
-        $coste = Tct_nichos::find(0);
-        $iva = Iva2::find(1);
+        $coste = Tct_nichos::first();
+        $iva = Iva2::first();
 
         $view =  \View::make('pdf.temporal', compact('f','coste','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
@@ -107,7 +107,7 @@ class PdfFacturasGenerator extends Controller
             $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
         }else{
             $tramada = $f->tramada;
-            $numero = $f->nicho_numero;
+            $numero = $f->numero_nicho;
         }
 
         $view =  \View::make('pdf.enterramiento', compact('f','lineas','iva','tramada','numero'))->render();
