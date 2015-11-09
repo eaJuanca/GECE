@@ -15,7 +15,7 @@ use App;
 use App\model\Tramada;
 use App\model\Tm_parcelas;
 use App\model\Parcela;
-use App\Http\Controllers\PdfFacturasGenerator2;
+use App\model\Titular;
 
 class recibosController extends Controller
 {
@@ -140,8 +140,9 @@ class recibosController extends Controller
         $tipo = $r->input('tipo');
         $hoy = Carbon::now();
 
-        //Cremos la nueva factura con los datos necesarios que tenemos del nicho que se ha seleccionado
-        $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
+        //obtenemos la fecha inicio y fin de los años que se pretende pagar
+        $inicio = new Carbon($r->input('inicio'));
+        $fin = new Carbon($r->input('fin'));
 
         //obtenemos el iva para calculos
         $iva = Iva2::first()->tipo;
@@ -149,9 +150,11 @@ class recibosController extends Controller
         //inicializamos el objeto factura
         $this->nuevaFactura = new Factura();
 
-        //Asignamos atributos a nuevaFactura;
-        $this->nuevaFactura->idtitular = $nicho->idtitular;
+        //Asignamos atributos a nuevaFactura para ello obtenemos dato de infoRecibos
+        $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
 
+
+        $this->nuevaFactura->idtitular = $nicho->idtitular;
         $this->nuevaFactura->iddifunto = $nicho->iddifunto;
         $this->nuevaFactura->serie = $tipo;
         $this->nuevaFactura->pendiente = 1;//las ponemos así por defecto?
@@ -159,19 +162,29 @@ class recibosController extends Controller
         $this->nuevaFactura->inicio = $r->input('inicio');
         $this->nuevaFactura->fin = $r->input('fin');
 
-        //obtenemos la fecha inicio y fin de los años que se pretende pagar
-        $inicio = new Carbon($r->input('inicio'));
-        $fin = new Carbon($r->input('fin'));
 
         if($tipo == 'N'){
 
             //Si es de un nicho el recibo que vamos a imprimir.
             $this->nuevaFactura->idnicho = $nicho->idnicho;
+            $this->nuevaFactura->calle = $nicho->nicho_calle;
+            $this->nuevaFactura->tramada = $nicho->altura;
+            $this->nuevaFactura->numero_nicho = $nicho->nicho_numero;
+
+            //Obtenemos el titular de este nicho
+            $titularinfo= Titular::find($nicho->idtitular);
+
+            //Obtenemos el nicho
+            $nichoinfo = Nicho::find($nicho->idnicho);
+
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
+
             $this->nuevaFactura->numero = $numero + 1;
-            //Calculamos la  base total
+
+            //Calculamos la  base total para la tarifa de mantenimiento nichos
             $tarifa = Tm_nichos::first();
+
             $precio = $tarifa->tarifa * ($fin->year - $inicio->year);
             $this->nuevaFactura->base = $precio;
             $this->nuevaFactura->iva = $precio * ($iva/100);
@@ -179,6 +192,16 @@ class recibosController extends Controller
 
         }else {
             $this->nuevaFactura->idparcela = $nicho->idparcela;
+            $this->nuevaFactura->calle = $nicho->parcela_calle;
+            //$this->nuevaFactura->tramada = $nicho->altura;
+            $this->nuevaFactura->parcela = $nicho->parcela_numero;
+
+            //obtenemos el titular de esta parcela
+            $titularinfo= Titular::find($nicho->idparcela);
+
+            //Obtenemos la parcela
+            $nichoinfo = Nicho::find($nicho->idparcela);
+
             //Obtenemos el nº de la serie que le corresponde
             $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
             $this->nuevaFactura->numero = $numero + 1;
@@ -204,6 +227,24 @@ class recibosController extends Controller
             }
         }
 
+        //Titular
+        $this->nuevaFactura->nombre_titular = $titularinfo->nombre_titular;
+        $this->nuevaFactura->dni_titular = $titularinfo->dni_titular;
+        $this->nuevaFactura->domicilio_del_titular = $titularinfo->dom_titular;
+        $this->nuevaFactura->cp_titular = $titularinfo->cp_titular;
+        $this->nuevaFactura->poblacion_titular = $titularinfo->pob_titular;
+        $this->nuevaFactura->provincia_titular = $titularinfo->pro_titular;
+
+        //facturado
+        $this->nuevaFactura->nombre_facturado = $nichoinfo->nom_facturado;
+        $this->nuevaFactura->dni_facturado = $nichoinfo->dni_facturado;
+        $this->nuevaFactura->domicilio_facturado = $nichoinfo->dir_facturado;
+        $this->nuevaFactura->dni_facturado = $nichoinfo->nom_facturado;
+        $this->nuevaFactura->cp_facturado = $nichoinfo->cp_facturado;
+        $this->nuevaFactura->poblacion_facturado = $nichoinfo->pob_facturado;
+        $this->nuevaFactura->provincia_facturado = $nichoinfo->pro_facturado;
+
+        //Asiganamos datos monetarios a la factura.
         $this->nuevaFactura->base = $precio;
         $this->nuevaFactura->iva = $precio * ($iva/100);
         $this->nuevaFactura->total = $precio + ($precio * ($iva/100));
