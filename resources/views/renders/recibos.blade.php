@@ -14,43 +14,42 @@
     </thead>
 
     <tbody class="nichos">
-
     @foreach($nichos as $nicho)
 
         <tr id="nicho{!!$nicho->id!!}">
-            @if($nicho->idnicho != null)
-                <td> {{$nicho->nicho_calle}}    </td>
-                <td> {{$nicho->altura}}         </td>
-                <td> {{$nicho->nicho_numero}}   </td>
+                <td> {{$nicho->calle}}          </td>
+        @if($nicho->idnicho != null)
+                <td> {{$nicho->tramada}}        </td>
+                <td> {{$nicho->numero_nicho}}   </td>
                 <td>                            </td>
-                <td> {{$nicho->nicho_titular}} </td>
+        @else
+                <td>                            </td>
+                <td>                            </td>
+                <td> {{$nicho->parcela}}        </td>
+        @endif
+                <td> {{$nicho->nombre_titular}} </td>
                 <td> {{$nicho->domicilio}}      </td>
-                <td> {{$nicho->nicho_dni}}      </td>
-                <td style = "width: 100px">
-                    <div>
-                        <button onclick="cargar('{!!$nicho->id!!}' ,'N')" style="margin-right: 10px; color:#03A9F4">
-                            <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
-                        </button>
-                    </div>
-                </td>
-            </tr>
+                <td> {{$nicho->dni_titular}}    </td>
 
-            @else
-                <td> {{$nicho->parcela_calle}}  </td>
-                <td>                            </td>
-                <td>                            </td>
-                <td> {{$nicho->parcela_numero}} </td>
-                <td> {{$nicho->panteon_titular}}</td>
-                <td> {{$nicho->domicilio}}      </td>
-                <td> {{$nicho->parcela_dni}}    </td>
-                <td style = "width: 100px">
-                    <div>
-                        <button onclick="cargar('{!!$nicho->id!!}' ,'P')" style="margin-right: 10px; color:#03A9F4">
-                            <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
-                        </button>
-                    </div>
-                </td>
-            @endif
+        @if($nicho->idnicho != null)
+            <td style = "width: 100px">
+                <div>
+                    <button onclick="cargar('{!!$nicho->id!!}' ,'N')" style="margin-right: 10px; color:#03A9F4">
+                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
+                    </button>
+                </div>
+            </td>
+        </tr>
+        @else
+            <td style = "width: 100px">
+                <div>
+                    <button onclick="cargar('{!!$nicho->id!!}' ,'P')" style="margin-right: 10px; color:#03A9F4">
+                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
+                    </button>
+                </div>
+            </td>
+        </tr>
+        @endif
     @endforeach
 
     </tbody>

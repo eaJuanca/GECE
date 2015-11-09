@@ -82,40 +82,34 @@ class recibosController extends Controller
             $nichos = infoRecibos::where('fin', '>=', $hoy->year)
                 ->where(function ($nichos) use ($titular,$calle,$dni,$domicilio) {
                     if($titular != '') {
-                        $nichos->where('panteon_titular', 'like', "%$titular%");
-                        $nichos->oRwhere('nicho_titular', 'like', "%$titular%");
+                        $nichos->where('nombre_titular', 'like', "%$titular%");
                     }
                     if($calle != '' ) {
-                        $nichos->where('parcela_calle', 'like', "%$calle%");
-                        $nichos->oRwhere('nicho_calle', 'like', "%$calle%");
+                        $nichos->where('calle', 'like', "%$calle%");
                     }
                     if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
+
                     if($dni != '') {
-                        $nichos->where('nicho_dni', 'like', "%$dni%");
-                        $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
+                        $nichos->where('dni_titular', 'like', "%$dni%");
                     }
                 })->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
         }else {
-
             //buscamos todos los nichos que tengan facturas pendientes es decir fecha fin < al año de hoy.
             $hoy = Carbon::now();
             $nichos = infoRecibos::where('fin', '<', $hoy->year)
                 ->where(function ($nichos) use ($titular, $calle, $dni,$domicilio) {
                     if($titular != '') {
-                        $nichos->where('panteon_titular', 'like', "%$titular%");
-                        $nichos->oRwhere('nicho_titular', 'like', "%$titular%");
+                        $nichos->where('nombre_titular', 'like', "%$titular%");
                     }
                     if ($calle != '') {
-                        $nichos->where('parcela_calle', 'like', "%$calle%");
-                        $nichos->oRwhere('nicho_calle', 'like', "%$calle%");
+                        $nichos->where('calle', 'like', "%$calle%");
                     }
                     if ($dni != '') {
                         $nichos->where('nicho_dni', 'like', "%$dni%");
                         $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
                     }
                     if($dni != '') {
-                        $nichos->where('nicho_dni', 'like', "%$dni%");
-                        $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
+                        $nichos->where('dni_titular', 'like', "%$dni%");
                     }
                     if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
                 })->paginate(10);
@@ -152,7 +146,6 @@ class recibosController extends Controller
 
         //Asignamos atributos a nuevaFactura para ello obtenemos dato de infoRecibos
         $nicho = infoRecibos::where('id' , '=' ,$id)->get()[0];
-
 
         $this->nuevaFactura->idtitular = $nicho->idtitular;
         $this->nuevaFactura->iddifunto = $nicho->iddifunto;
@@ -191,9 +184,9 @@ class recibosController extends Controller
             $this->nuevaFactura->total = $precio + ($precio * ($iva/100));
 
         }else {
+
             $this->nuevaFactura->idparcela = $nicho->idparcela;
             $this->nuevaFactura->calle = $nicho->parcela_calle;
-            //$this->nuevaFactura->tramada = $nicho->altura;
             $this->nuevaFactura->parcela = $nicho->parcela_numero;
 
             //obtenemos el titular de esta parcela
@@ -222,8 +215,11 @@ class recibosController extends Controller
                 $tipo = 1;
                 $tarifa = Tm_parcelas::find(1);
                 //obtenemos el tamanyo de la parcela
-                $tamanyio = Parcela::find($nicho->idparcela)->tamanyo;
-                $precio = ($tamanyio * $tarifa->tarifa) * ($fin->year - $inicio->year);
+                //$tamanyo = Parcela::find($nicho->idparcela)->tamanyo;
+                $tamanyo = $nicho->metros_parcela;
+                $precio = ($tamanyo * $tarifa->tarifa) * ($fin->year - $inicio->year);
+
+                $this->nuevaFactura->metros_parcela = $tamanyo;
             }
         }
 
