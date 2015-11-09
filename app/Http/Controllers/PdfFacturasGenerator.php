@@ -25,11 +25,11 @@ class PdfFacturasGenerator extends Controller
     public function facturaNicho($id){
 
 
-        $f = VFacturas::find($id);
+        $f = Factura::find($id);
 
         $tr = $f->tramada;
         $coste = Tcp_nichos::find($tr);
-        $iva = Iva2::find(1);
+        $iva = Iva2::first();
 
 
         $view =  \View::make('pdf.pdfcesion', compact('f','coste','iva'))->render();

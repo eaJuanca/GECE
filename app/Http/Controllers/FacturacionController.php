@@ -231,9 +231,9 @@ class FacturacionController extends Controller
 
         //facturado
         $factura->nombre_facturado = $nichoinfo->nom_facturado;
-        $factura->dni_facturado = $nichoinfo->dni_facturado;
+        $factura->dni_facturado = $nichoinfo->nif_facturado;
         $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-        $factura->dni_facturado = $nichoinfo->nom_facturado;
+
         $factura->cp_facturado = $nichoinfo->cp_facturado;
         $factura->poblacion_facturado = $nichoinfo->pob_facturado;
         $factura->provincia_facturado = $nichoinfo->pro_facturado;
@@ -305,9 +305,8 @@ class FacturacionController extends Controller
 
             //facturado
             $factura->nombre_facturado = $nichoinfo->nom_facturado;
-            $factura->dni_facturado = $nichoinfo->dni_facturado;
+            $factura->dni_facturado = $nichoinfo->nif_facturado;
             $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-            $factura->dni_facturado = $nichoinfo->nom_facturado;
             $factura->cp_facturado = $nichoinfo->cp_facturado;
             $factura->poblacion_facturado = $nichoinfo->pob_facturado;
             $factura->provincia_facturado = $nichoinfo->pro_facturado;
@@ -374,9 +373,8 @@ class FacturacionController extends Controller
 
         //facturado
         $factura->nombre_facturado = $nichoinfo->nom_facturado;
-        $factura->dni_facturado = $nichoinfo->dni_facturado;
+        $factura->dni_facturado = $nichoinfo->nif_facturado;
         $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-        $factura->dni_facturado = $nichoinfo->nom_facturado;
         $factura->cp_facturado = $nichoinfo->cp_facturado;
         $factura->poblacion_facturado = $nichoinfo->pob_facturado;
         $factura->provincia_facturado = $nichoinfo->pro_facturado;
@@ -442,7 +440,6 @@ class FacturacionController extends Controller
             $factura->nombre_facturado = $nichoinfo->nom_facturado;
             $factura->dni_facturado = $nichoinfo->dni_facturado;
             $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-            $factura->dni_facturado = $nichoinfo->nom_facturado;
             $factura->cp_facturado = $nichoinfo->cp_facturado;
             $factura->poblacion_facturado = $nichoinfo->pob_facturado;
             $factura->provincia_facturado = $nichoinfo->pro_facturado;
@@ -513,9 +510,8 @@ class FacturacionController extends Controller
 
             //facturado
             $factura->nombre_facturado =  $infoparcela->nom_facturado;
-            $factura->dni_facturado =  $infoparcela->dni_facturado;
+            $factura->dni_facturado =  $infoparcela->nif_facturado;
             $factura->domicilio_facturado =  $infoparcela->dir_facturado;
-            $factura->dni_facturado =  $infoparcela->nom_facturado;
             $factura->cp_facturado =  $infoparcela->cp_facturado;
             $factura->poblacion_facturado =  $infoparcela->pob_facturado;
             $factura->provincia_facturado =  $infoparcela->pro_facturado;

@@ -84,11 +84,11 @@ $date = $date->format('j-m-Y');
     <tr>
         <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
         </td>
-        <td valign="top"><br>Datos del nicho <br><br> {{$f->nom_facturado}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->nicho_numero}}
+        <td valign="top"><br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->numero_nicho}}
             <span> <br>Tramada: </span> {{$f->tramada}}<br></td>
-        <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nom_facturado}}
-            <br><span>NIF/CIF: </span> {{$f->nif_facturado}}<br><span>Domicilio: </span> {{$f->dir_facturado}}
-            <br> {{$f->cp_facturado}}<br>{{$f->pob_facturado}}/{{$f->pro_facturado}}</td>
+        <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
+            <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
+            <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>
     </tr>
 
 </table>
