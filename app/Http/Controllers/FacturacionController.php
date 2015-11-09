@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\model\Difunto;
 use App\model\InfoNicho;
 use App\model\Iva2;
 use App\model\Nicho;
@@ -33,9 +34,9 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        $facturas = Factura::orderBy('id','DESC')->paginate(10);
+        $facturas = Factura::orderBy('id', 'DESC')->paginate(10);
         $search = false;
-        return View::make('facturacion',compact('facturas','search'));
+        return View::make('facturacion', compact('facturas', 'search'));
     }
 
 
@@ -43,10 +44,11 @@ class FacturacionController extends Controller
      * Paginacion de facturas
      * @return mixed
      */
-    public function paginate(){
+    public function paginate()
+    {
 
-        $facturas = Factura::orderBy('id','DESC')->paginate(10);
-        return view('renders.facturas',compact('facturas'));
+        $facturas = Factura::orderBy('id', 'DESC')->paginate(10);
+        return view('renders.facturas', compact('facturas'));
     }
 
 
@@ -54,7 +56,8 @@ class FacturacionController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function busqueda(Request $request){
+    public function busqueda(Request $request)
+    {
 
         $titular = $request->input('titular');
         $difunto = $request->input('difunto');
@@ -65,32 +68,31 @@ class FacturacionController extends Controller
 
 
         $search = true;
-        $facturas = Factura::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
+        $facturas = Factura::orderBy('id', 'DESC')->where(function ($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta) {
 
-            if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
-            if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
-            if($dni != "") $facturas->where('dni_titular','like',"%$dni%");
-            if($calle != "") $facturas->where('calle','like',"%$calle%");
+            if ($titular != "") $facturas->where('nombre_titular', 'like', "%$titular%");
+            if ($difunto != "") $facturas->where('nom_difunto', 'like', "%$difunto%");
+            if ($dni != "") $facturas->where('dni_titular', 'like', "%$dni%");
+            if ($calle != "") $facturas->where('calle', 'like', "%$calle%");
 
-            if($desde != "" && $hasta != ""){
+            if ($desde != "" && $hasta != "") {
 
                 $facturas->whereBetween('inicio', array($desde, $hasta));
 
-            }else if($desde != ""){
+            } else if ($desde != "") {
 
-                $facturas->where('inicio','>=',$desde);
-            } else if($hasta != ""){
-                $facturas->where('inicio','<=', $hasta);
+                $facturas->where('inicio', '>=', $desde);
+            } else if ($hasta != "") {
+                $facturas->where('inicio', '<=', $hasta);
             }
 
         })->paginate(10);
 
-        if($request->ajax()){
+        if ($request->ajax()) {
 
-            return view('renders.facturas',compact('facturas'));
-        }
-        else{
-            return View::make('facturacion',compact('facturas','search','titular','difunto','dni','calle','desde','hasta'));
+            return view('renders.facturas', compact('facturas'));
+        } else {
+            return View::make('facturacion', compact('facturas', 'search', 'titular', 'difunto', 'dni', 'calle', 'desde', 'hasta'));
         }
     }
 
@@ -108,7 +110,7 @@ class FacturacionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -121,12 +123,13 @@ class FacturacionController extends Controller
      * @param $idnicho
      * @return \Illuminate\View\View
      */
-    public function show($idnicho) {
+    public function show($idnicho)
+    {
 
-        $factura = Factura::where('idnicho',$idnicho)->where('serie','!=','E')->orderBy('id','ASC')->take(3)->get();
-        $factura2 = Factura::where('idnicho',$idnicho)->where('serie','E')->orderBy('id','DESC')->take(1)->get();
+        $factura = Factura::where('idnicho', $idnicho)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
+        $factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         $factura = $factura->merge($factura2);
-        return view('facturasProcesoNichos',compact('factura'));
+        return view('facturasProcesoNichos', compact('factura'));
     }
 
 
@@ -134,16 +137,17 @@ class FacturacionController extends Controller
      * @param $idnicho
      * @return \Illuminate\View\View
      */
-    public function showParcela($idparcela) {
+    public function showParcela($idparcela)
+    {
 
-        $factura = Factura::where('idparcela',$idparcela)->orderBy('serie')->get();
-        return view('facturasProcesoNichos',compact('factura'));
+        $factura = Factura::where('idparcela', $idparcela)->orderBy('serie')->get();
+        return view('facturasProcesoNichos', compact('factura'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -151,29 +155,29 @@ class FacturacionController extends Controller
 
         $f = Factura::find($id);
         $servicios = TarifaServicios::all();
-        $lineas = VLinea::where('factura',$id)->get();
+        $lineas = VLinea::where('factura', $id)->get();
 
         $tramada = null;
 
-        if($f->idparcela != null){
+        if ($f->idparcela != null) {
             //si es una parcela obtenemos el id de la tramada
             $nicho = Nicho::find($f->idnicho);
             $numero = $nicho->numero;
             $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
-        }else{
+        } else {
             $tramada = $f->tramada;
             $numero = $f->nicho_numero;
         }
 
-       //crear una vista
-        return view('modificar_factura',compact('f','servicios','lineas','numero','tramada'));
+        //crear una vista
+        return view('modificar_factura', compact('f', 'servicios', 'lineas', 'numero', 'tramada'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -184,7 +188,7 @@ class FacturacionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -192,7 +196,7 @@ class FacturacionController extends Controller
         //
     }
 
-    public function facturaEnterramiento($nicho,$difunto,$titular,$parcela)
+    public function facturaEnterramiento($nicho, $difunto, $titular, $parcela)
     {
         $factura = NEW Factura();
 
@@ -200,7 +204,6 @@ class FacturacionController extends Controller
 
         $titularinfo = Titular::find($titular);
         $nichoinfo = Nicho::find($nicho);
-        $info = InfoNicho::find($nicho);
 
 
         $factura->idtitular = $titular;
@@ -210,16 +213,38 @@ class FacturacionController extends Controller
         $factura->serie = 'E';
         $factura->inicio = $hoy;
         $factura->fin = $hoy;
-        $numero = Factura::where('serie','E')->whereYear('inicio','=',$hoy->year)->max('numero');
-        $factura->numero = $numero+1;
+        $numero = Factura::where('serie', 'E')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $factura->numero = $numero + 1;
 
         //nuevos campos
 
         $factura->tipo_adquisicion = 0;
-        $factura->calle = $info->nombre_calle;
-        $factura->tramada = $info->altura;
-        $factura->numero_nicho = $info->numero;
-        $factura->cesion = $nichoinfo->cesion;
+
+
+        if ($parcela == null) {
+
+            $info = InfoNicho::find($nicho);
+            $factura->calle = $info->nombre_calle;
+            $factura->tramada = $info->altura;
+            $factura->numero_nicho = $info->numero;
+            $factura->nombre_difunto = $info->nom_difunto;
+            $factura->cesion = $nichoinfo->cesion;
+
+
+        } else {
+
+            $info = VPanteones::where('parcela_id', $parcela)->first();
+            $tramada = Tramada::find($nichoinfo->GC_Tramada_id)->tramada;
+            $difunto = Difunto::find($difunto);
+            $factura->calle = $info->calle;
+            $factura->nombre_difunto = $difunto->nom_difunto;
+            $factura->numero_nicho = $info->numero;
+            $factura->tramada = $tramada;
+            $factura->parcela = $info->numero;
+        }
+
+        $nichoinfo = Parcela::find($parcela);
+
 
         //titular
         $factura->nombre_titular = $titularinfo->nombre_titular;
@@ -239,20 +264,24 @@ class FacturacionController extends Controller
         $factura->provincia_facturado = $nichoinfo->pro_facturado;
 
         //difunto
-        $factura->nombre_difunto = $info->nom_difunto;
 
         $factura->save();
     }
 
 
-    public function facturaCesion($titular, $nicho, $cesion){
+    public function facturaCesion($titular, $nicho, $cesion)
+    {
 
-        if($cesion == 0){ $this->facturaCesionPerpetua($titular,$nicho);}
-        else if ($cesion==1){ $this->facturaCesionTemporal($titular,$nicho);}
+        if ($cesion == 0) {
+            $this->facturaCesionPerpetua($titular, $nicho);
+        } else if ($cesion == 1) {
+            $this->facturaCesionTemporal($titular, $nicho);
+        }
     }
 
 
-    public function facturaCesionPerpetua($titular, $nicho){
+    public function facturaCesionPerpetua($titular, $nicho)
+    {
 
 
         //fecha de hoy
@@ -261,32 +290,32 @@ class FacturacionController extends Controller
         $iva = $iva->tipo;
         $info = InfoNicho::find($nicho);
         $precio = Tcp_nichos::find($info->altura)->get()[0];
-        $precio =  $precio->tarifa;
+        $precio = $precio->tarifa;
 
 
         //busco si hay una factura de un nicho para la serie D, osea si alguna vez se ha generado una factura
-        $aux = Factura::where('idnicho',$nicho)->where('serie','D')->first();
+        $aux = Factura::where('idnicho', $nicho)->where('serie', 'D')->first();
 
         //obtener el numero de factura maximo
-        $numero = Factura::where('serie','D')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'D')->whereYear('inicio', '=', $hoy->year)->max('numero');
 
 
         //valores que se establecen solo una vez
-        if($aux == null) {
+        if ($aux == null) {
 
-            $titularinfo= Titular::find($titular);
+            $titularinfo = Titular::find($titular);
             $nichoinfo = Nicho::find($nicho);
 
             $factura = new Factura();
-            $factura->numero = $numero+1;
+            $factura->numero = $numero + 1;
             $factura->inicio = $hoy;
             $factura->fin = $hoy;
             $factura->idnicho = $nicho;
             $factura->serie = 'D';
             $factura->idtitular = $titular;
             $factura->base = $precio;
-            $factura->iva = $precio*(($iva/100));
-            $factura->total = $precio*(1+($iva/100));
+            $factura->iva = $precio * (($iva / 100));
+            $factura->total = $precio * (1 + ($iva / 100));
 
             //nuevos campos
 
@@ -326,7 +355,8 @@ class FacturacionController extends Controller
      * Función para generar la factura de cesión de perpetuidad de la parcela comprada.
      */
 
-    public function Mantenimiento1Nicho($nicho, $titular,$nichoinfo, $titularinfo, $info){
+    public function Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info)
+    {
 
         $hoy = Carbon::now();
         $man = Carbon::now();
@@ -338,21 +368,21 @@ class FacturacionController extends Controller
         $iva = Iva2::first();
         $iva = $iva->tipo;
         $precio = Tm_nichos::first();
-        $precio =  $precio->tarifa;
-        $precio = $precio*$diff;
+        $precio = $precio->tarifa;
+        $precio = $precio * $diff;
 
 
         $factura = new Factura();
-        $numero = Factura::where('serie','N')->whereYear('inicio','=',$hoy->year)->max('numero');
-        $factura->numero = $numero+1;
+        $numero = Factura::where('serie', 'N')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $factura->numero = $numero + 1;
         $factura->inicio = $hoy;
         $factura->fin = $man;
         $factura->idnicho = $nicho;
         $factura->serie = 'N';
         $factura->idtitular = $titular;
         $factura->base = $precio;
-        $factura->iva = $precio*(($iva/100));
-        $factura->total = $precio*(1+($iva/100));
+        $factura->iva = $precio * (($iva / 100));
+        $factura->total = $precio * (1 + ($iva / 100));
 
         //nuevos campos
 
@@ -383,41 +413,42 @@ class FacturacionController extends Controller
 
     }
 
-    public function facturaCesionTemporal($titular, $nicho){
+    public function facturaCesionTemporal($titular, $nicho)
+    {
 
         //fecha de hoy
         $hoy = Carbon::now();
 
         //busco si hay una factura de un nicho para la serie D, osea si alguna vez se ha generado una factura
-        $aux = Factura::where('idnicho',$nicho)->where('serie','T')->first();
+        $aux = Factura::where('idnicho', $nicho)->where('serie', 'T')->first();
 
         //obtener el numero de factura maximo
-        $numero = Factura::where('serie','T')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'T')->whereYear('inicio', '=', $hoy->year)->max('numero');
 
         $iva = Iva2::first();
         $iva = $iva->tipo;
 
         $precio = Tct_nichos::first();
-        $precio =  $precio->tarifa;
+        $precio = $precio->tarifa;
 
         //valores que se establecen solo una vez
-        if($aux == null) {
+        if ($aux == null) {
 
-            $titularinfo= Titular::find($titular);
+            $titularinfo = Titular::find($titular);
             $nichoinfo = Nicho::find($nicho);
             $info = InfoNicho::find($nicho);
 
 
             $factura = new Factura();
-            $factura->numero = $numero+1;
+            $factura->numero = $numero + 1;
             $factura->inicio = $hoy;
             $factura->fin = $hoy;
             $factura->idnicho = $nicho;
             $factura->serie = 'T';
             $factura->idtitular = $titular;
             $factura->base = $precio;
-            $factura->iva = $precio*(($iva/100));
-            $factura->total = $precio*(1+($iva/100));
+            $factura->iva = $precio * (($iva / 100));
+            $factura->total = $precio * (1 + ($iva / 100));
 
             //nuevos campos
 
@@ -452,20 +483,21 @@ class FacturacionController extends Controller
         }
     }
 
-    public function fcpP($titular, $parcela){
+    public function fcpP($titular, $parcela)
+    {
 
         //fecha de hoy
         $hoy = Carbon::now();
 
         //busco si hay una factura de una parcela para la serie P, osea si alguna vez se ha generado una factura
-        $aux = Factura::where('idparcela',$parcela)->where('serie','P')->first();
+        $aux = Factura::where('idparcela', $parcela)->where('serie', 'P')->first();
 
         //obtener el numero de factura maximo
         //$numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
-        $numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'P')->whereYear('inicio', '=', $hoy->year)->max('numero');
 
         //Obtener el tamanyo de la parcela
-        $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
+        $tamanyo = Parcela::where('id', $parcela)->get()[0]->tamanyo;
 
         $tarifa = Tcp_parcelas2::first();
 
@@ -474,22 +506,22 @@ class FacturacionController extends Controller
         $precio = $tarifa->tarifa * $tamanyo;
 
         //valores que se establecen solo una vez
-        if($aux == null) {
+        if ($aux == null) {
 
-            $titularinfo= Titular::find($titular);
+            $titularinfo = Titular::find($titular);
             $infoparcela = Parcela::find($parcela);
-            $infopanteon = VPanteones::where('parcela_id',$parcela)->first();
+            $infopanteon = VPanteones::where('parcela_id', $parcela)->first();
 
             $factura = new Factura();
-            $factura->numero = $numero+1;
+            $factura->numero = $numero + 1;
             $factura->inicio = $hoy;
             $factura->fin = $hoy;
             $factura->idparcela = $parcela;
             $factura->serie = 'P';
             $factura->idtitular = $titular;
             $factura->base = $precio;
-            $factura->iva = $precio * ($iva/100);
-            $factura->total = $precio + ($precio * ($iva/100));
+            $factura->iva = $precio * ($iva / 100);
+            $factura->total = $precio + ($precio * ($iva / 100));
 
             //nuevos campos
 
@@ -509,12 +541,12 @@ class FacturacionController extends Controller
             $factura->provincia_titular = $titularinfo->pro_titular;
 
             //facturado
-            $factura->nombre_facturado =  $infoparcela->nom_facturado;
-            $factura->dni_facturado =  $infoparcela->nif_facturado;
-            $factura->domicilio_facturado =  $infoparcela->dir_facturado;
-            $factura->cp_facturado =  $infoparcela->cp_facturado;
-            $factura->poblacion_facturado =  $infoparcela->pob_facturado;
-            $factura->provincia_facturado =  $infoparcela->pro_facturado;
+            $factura->nombre_facturado = $infoparcela->nom_facturado;
+            $factura->dni_facturado = $infoparcela->nif_facturado;
+            $factura->domicilio_facturado = $infoparcela->dir_facturado;
+            $factura->cp_facturado = $infoparcela->cp_facturado;
+            $factura->poblacion_facturado = $infoparcela->pob_facturado;
+            $factura->provincia_facturado = $infoparcela->pro_facturado;
             $factura->cesion = 0;
 
 
@@ -524,7 +556,8 @@ class FacturacionController extends Controller
         }
     }
 
-    public function Mantenimiento1Parcela($parcela, $titular){
+    public function Mantenimiento1Parcela($parcela, $titular)
+    {
 
         $hoy = Carbon::now();
         $man = Carbon::now();
@@ -532,25 +565,25 @@ class FacturacionController extends Controller
         $iva = Iva2::first()->tipo;
         $tarifa = Tm_parcelas::find(1);
         //Obtener el tamanyo de la parcela
-        $tamanyo = Parcela::where('id',$parcela)->get()[0]->tamanyo;
+        $tamanyo = Parcela::where('id', $parcela)->get()[0]->tamanyo;
         $precio = $tarifa->tarifa * $tamanyo;
 
-        $titularinfo= Titular::find($titular);
+        $titularinfo = Titular::find($titular);
         $infoparcela = Parcela::find($parcela);
-        $infopanteon = VPanteones::where('parcela_id',$parcela)->first();
+        $infopanteon = VPanteones::where('parcela_id', $parcela)->first();
 
 
         $factura = new Factura();
-        $numero = Factura::where('serie','M')->whereYear('inicio','=',$hoy->year)->max('numero');
-        $factura->numero = $numero+1;
+        $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $factura->numero = $numero + 1;
         $factura->inicio = $hoy;
         $factura->fin = $man->addYears(1);
         $factura->idparcela = $parcela;
         $factura->serie = 'M';
         $factura->idtitular = $titular;
         $factura->base = $precio;
-        $factura->iva = $precio * ($iva/100);
-        $factura->total = $precio + ($precio * $iva/100);
+        $factura->iva = $precio * ($iva / 100);
+        $factura->total = $precio + ($precio * $iva / 100);
 
         //nuevos campos
 
