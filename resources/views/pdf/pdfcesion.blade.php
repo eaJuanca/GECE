@@ -24,7 +24,7 @@
         font-size: 11px;
     }
 
-    .table1 tr td:last-child {
+    .table1 tr td:first-child {
         width: 1%;
         white-space: nowrap;
     }
@@ -82,10 +82,12 @@ $date = $date->format('j-m-Y');
 
 <table class="table1" style="width:90%" border="0">
     <tr>
-        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
+        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}
+            <br>Fecha: {{$date}}
         </td>
-        <td valign="top"><br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->numero_nicho}}
-            <span> <br>Tramada: </span> {{$f->tramada}}<br></td>
+        <td valign="top"><div style="margin-left: 20px"><br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}
+            <span> <br>Numero: </span> {{$f->numero_nicho}}
+            <span> <br>Tramada: </span> {{$f->tramada}}<br></div></td>
         <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
             <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
             <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>

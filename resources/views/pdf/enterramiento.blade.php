@@ -25,10 +25,11 @@
         font-size: 11px;
     }
 
-    .table1 tr td:last-child {
+    .table1 tr td:first-child {
         width: 1%;
         white-space: nowrap;
     }
+
 
     .left {
         text-align: left;
@@ -94,29 +95,31 @@
     $date = $date->format('j-m-Y');
     ?>
 
-    <table class="table1" style="width:90%; font-size: 13px" border="0">
+    <table class="table1" style="width:90%; font-size: 14px" border="0">
         <tr>
-            <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}
-                <br>Fecha: {{$date}}
+            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}
+                <br><b>Fecha:</b> {{$date}}
             </td>
             <td valign="top">
+                <div style="margin-left: 30px">
                 @if($f->idparcela == null)
-                    <br>Datos del nicho <br>
+                    <br> <b>Datos del nicho</b>
                 @else
-                    <br>Datos de la parcela</br>
+                    <br> <b>Datos de la parcela </b>
                 @endif
                 <br> {{$f->nom_facturado}} <br>
-                <span>Calle: </span>{{$f->calle}}
+                <span> <b>Calle: </b> </span>{{$f->calle}}
                 @if($f->idparcela != null)
-                    <span> <br>Parcela: </span> {{$f->nicho_numero}}
+                    <span> <br> <b>Parcela:</b> </span> {{$f->parcela}}
                 @endif
-                    <span> <br>Tramada: </span> {{$tramada}}
+                    <span> <br> <b>Tramada: </b> </span> {{$tramada}}
                 @if($f->idparcela != null)
-                    <span> <br>Número: </span> {{$numero}}
+                    <span> <br> <b>Número: </b> </span> {{$numero}}
                 @else
-                    <span> <br>Número: </span> {{$numero}}
+                    <span> <br> <b>Número:</b> </span> {{$numero}}
                 @endif
-                    <br><br>{{$f->nombre_difunto}}</td>
+                    <br><br>{{$f->nombre_difunto}}
+                </div></td>
             <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
                 <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
                 <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>
@@ -214,13 +217,12 @@
     $date2 = $date2->format('j-m-Y');
     ?>
 
-    <table class="table1" style="width:90%; font-size: 12px" border="0" width="95%">
+    <table class="table2" style="width:90%; font-size: 12px" border="0" width="95%">
         <tr>
             <td valign="top">
                 <div>Nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</div>
             </td>
             <td class="left"><span style="font-weight: bold; font-size: 18px">Orden de trabajo</span></td>
-    <td></td>
         </tr>
 
 
@@ -256,20 +258,33 @@
             <td></td>
 
         </tr>
+
+        @if($f->parcela == null)
         <tr class="left">
             <td class="noborder">Nicho Nº {{$f->numero_nicho}} Fila {{$f->tramada}} </td>
             <td></td>
 
         </tr>
 
+
+        @else
+
+            <tr class="left">
+                <td class="noborder"> <b>Localización:</b>  Parcela {{$f->parcela}} Nicho Nº {{$numero}} Fila {{$tramada}}  </td>
+                <td></td>
+
+            </tr>
+        @endif
         <tr class="left">
             <td class="noborder">Grupo/Calle: {{$f->calle}} </td>
             <td></td>
 
         </tr>
 
+
+
         <tr class="left">
-            <td class="noborder">Cuyo nicho es:</td>
+            <td class="noborder">Cuyo nicho es: @if($f->cesion == 0) Cesión a perpetuidad @else Cesión temporal @endif</td>
             <td class="left"><span style="text-align: right; font-weight:bold; width: 80%">Yecla {{$date2}}</span></td>
         </tr>
         </tbody>

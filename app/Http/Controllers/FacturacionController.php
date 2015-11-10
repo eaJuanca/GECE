@@ -154,7 +154,7 @@ class FacturacionController extends Controller
     {
 
         $f = Factura::find($id);
-        $servicios = TarifaServicios::all();
+        $servicios = TarifaServicios::where('tipo',0)->get();
         $lineas = VLinea::where('factura', $id)->get();
 
         $tramada = null;
@@ -166,7 +166,7 @@ class FacturacionController extends Controller
             $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
         } else {
             $tramada = $f->tramada;
-            $numero = $f->nicho_numero;
+            $numero = $f->numero_nicho;
         }
 
         //crear una vista
@@ -346,7 +346,7 @@ class FacturacionController extends Controller
 
             $factura->save();
 
-            $this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
+            //$this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
 
         }
     }
@@ -470,7 +470,7 @@ class FacturacionController extends Controller
 
             //facturado
             $factura->nombre_facturado = $nichoinfo->nom_facturado;
-            $factura->dni_facturado = $nichoinfo->dni_facturado;
+            $factura->dni_facturado = $nichoinfo->nif_facturado;
             $factura->domicilio_facturado = $nichoinfo->dir_facturado;
             $factura->cp_facturado = $nichoinfo->cp_facturado;
             $factura->poblacion_facturado = $nichoinfo->pob_facturado;
@@ -479,7 +479,7 @@ class FacturacionController extends Controller
 
             $factura->save();
 
-            $this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
+            //$this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
 
         }
     }
