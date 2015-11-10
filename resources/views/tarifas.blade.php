@@ -9,7 +9,14 @@
 
     <link href="{{ URL::asset('assets/css/nuestros.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" media="screen" href="{{ asset('datepickersandbox/css/bootstrap-datepicker3.min.css') }}">
+    <style>
 
+
+        .labelo{
+
+            margin-top: 13px;
+        }
+    </style>
 
 @endsection
 
@@ -26,7 +33,7 @@
 
             <form id="form_pp">
 
-                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
+                <div class="row col-lg-5 col-md-5 col-sd-12 col-sm-6">
 
                     <h3 class="text-center" style="font-weight: bold">Parcela</h3>
                     <br>
@@ -48,7 +55,7 @@
 
             <form id="form_pn">
 
-                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
+                <div class="col col-lg-6 col-md-6 col-md-12 col-sm-12 col-lg-offset-1 col-md-offset-1">
 
 
                     <h3 class="text-center" style="font-weight: bold">Nicho</h3>
@@ -57,7 +64,7 @@
                     @for($i = 0 ; $i < count($Tcp_nichos); $i++)
                         <div class="row form-group nombre" style="margin-left: 0px">
 
-                            <label class="col col-lg-2 ">Tramada{{$i+1}}:</label>
+                            <label class="col col-lg-2 labelo ">Tramada{{$i+1}}:</label>
                             <div class="col col-lg-10">
                                 <input type="text" name="cp_nicho{!!$i!!}" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos[$i]->tarifa !!}" required>
                             </div>
@@ -82,21 +89,6 @@
 
             <form id="form_tp">
 
-                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
-
-
-                    <h3 class="text-center" style="font-weight: bold">Parcela</h3>
-                    <br>
-
-                    <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
-                        <div class="col-lg-10">
-
-                        </div>
-                    </div>
-                    <button class="btn btn-success btn-raised pull-right">Modificar</button>
-
-                </div>
 
             </form>
 
@@ -109,7 +101,7 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
+                        <label for="inputFile" class="col-lg-2 labelo ">Tarifa:</label>
                         <div class="col-lg-10">
                             @if($Tct_nichos != null)
                                 <input type="text" name="ct_nicho" class="form-control ct_nicho" placeholder="{!! $Tct_nichos->tarifa !!}" required>
@@ -137,7 +129,7 @@
 
             <form id="form_tmp">
 
-                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
+                <div class="row col-lg-5 col-md-5 col-xs-12 col-sm-12">
                     <h3 class="text-center" style="font-weight: bold">Parcela</h3>
 
                     <br>
@@ -150,8 +142,8 @@
                     </div>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa construida:</label>
-                        <div class="col-lg-10">
+                        <label for="inputFile" class="col-lg-3  ">Tarifa construida:</label>
+                        <div class="col-lg-9">
                             <input type="text" name="m_parcela1" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[1]->tarifa !!}" required>
                         </div>
                     </div>
@@ -162,14 +154,14 @@
 
             <form id="from_tmn">
 
-                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6">
+                <div class="row col-lg-6 col-md-6 col-sd-12 col-sm-6 col-lg-offset-1 col-md-offset-1">
 
 
                     <h3 class="text-center" style="font-weight: bold">Nicho</h3>
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">Tarifa:</label>
+                        <label for="inputFile" class="col-lg-2 labelo">Tarifa:</label>
                         <div class="col-lg-10">
                             @if($Tm_nichos != null)
                                 <input type="text" name="m_nicho" class="form-control m_nicho" placeholder="{!! $Tm_nichos->tarifa !!}" required>
@@ -197,7 +189,7 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 ">% IVA:</label>
+                        <label for="inputFile" class="col-lg-2 labelo">% IVA:</label>
                         <div class="col-lg-10">
                             @if($iva != null)
                                 <input type="number" min="0" name="iva" class="form-control m_nicho" value="{!! $iva->tipo !!}" required>

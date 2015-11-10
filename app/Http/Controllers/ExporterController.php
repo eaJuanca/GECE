@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\model\VFacturasnp2;
+use App\model\Factura;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExporterController extends Controller
@@ -21,7 +19,7 @@ class ExporterController extends Controller
 
         if($s != 1){
 
-            $data = VFacturasnp2::take(1000)->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
+            $data = Factura::take(1000)->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado']);
 
         }else if($s == 1){
 
@@ -32,7 +30,7 @@ class ExporterController extends Controller
             $desde = $request->input('desde');
             $hasta = $request->input('hasta');
 
-            $data = VFacturasnp::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
+            $data = Factura::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
 
                 if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
                 if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
@@ -50,7 +48,7 @@ class ExporterController extends Controller
                     $facturas->where('inicio','<=', $hasta);
                 }
 
-            })->get(['inicio','fin','serie','numero','base','iva','total','nom_facturado','nif_facturado']);
+            })->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado']);
 
         }
 
