@@ -56,16 +56,15 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
     <tr>
         <td>
             <h4 style="text-align: center">Grupo/Calle</h4>
-            <h4 style="text-align: center">{{$parcela->parcela_calle}}</h4>
-        </td>
+            <h4 style="text-align: center">{{$factura->calle}}</h4>
         <td>
             <h4 style="text-align: center">Nº</h4>
-            <h4 style="text-align: center">{{$parcela->parcela_numero}}</h4>
+            <h4 style="text-align: center">{{$factura->parcela}}</h4>
         </td>
         <td>
             @if($tipo == 1)
                 <h4 style="text-align: center">Metros pacela</h4>
-                <h4 style="text-align: center">{{$tamanyio}}</h4>
+                <h4 style="text-align: center">{{$factura->metros_parcela}}</h4>
             @else
                 <h4 style="text-align: center">Nichos parcela</h4>
                 <h4 style="text-align: center">{{$numNichos}}</h4>
@@ -118,9 +117,9 @@ $fin = new Carbon\Carbon($factura->fin);
 <br>
 <p>Titular de la pacela efectos informativos</p>
 <hr style="width: 100%; margin-right: 10%">
-<p>{{$parcela->panteon_titular}}</p>
-<p>{{$parcela->parcela_dni}}</p>
-<p>{{$parcela->domicilio}}</p>
+<p>{{$factura->nombre_titular}}</p>
+<p>{{$factura->dni_titular}}</p>
+<p>{{$factura->domicilio_del_titular}}</p>
 <p>30510 Yecla (Murcia)</p>
 <hr style="width: 100%; margin-right: 10%">
 

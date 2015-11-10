@@ -80,19 +80,19 @@ class recibosController extends Controller
             //buscamos todos los nichos que no tengan facturas pendientes incluso estén adelantados  es decir fecha fin => al año de hoy.
             $hoy = Carbon::now();
             $nichos = infoRecibos::where('fin', '>=', $hoy->year)
-                ->where(function ($nichos) use ($titular,$calle,$dni,$domicilio) {
-                    if($titular != '') {
+                ->where(function ($nichos) use ($titular, $calle, $dni, $domicilio) {
+                    if ($titular != '') {
                         $nichos->where('nombre_titular', 'like', "%$titular%");
                     }
-                    if($calle != '' ) {
+                    if ($calle != '') {
                         $nichos->where('calle', 'like', "%$calle%");
                     }
-                    if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
+                    if ($domicilio != '') $nichos->where('domicilio', 'like', "%$domicilio%");
 
-                    if($dni != '') {
+                    if ($dni != '') {
                         $nichos->where('dni_titular', 'like', "%$dni%");
                     }
-                })->paginate(10);//->skip(10 * ($page - 1))->take(10)->get();//->paginate(10)
+                })->paginate(10);
         }else {
             //buscamos todos los nichos que tengan facturas pendientes es decir fecha fin < al año de hoy.
             $hoy = Carbon::now();
@@ -105,8 +105,7 @@ class recibosController extends Controller
                         $nichos->where('calle', 'like', "%$calle%");
                     }
                     if ($dni != '') {
-                        $nichos->where('nicho_dni', 'like', "%$dni%");
-                        $nichos->oRwhere('parcela_dni', 'like', "%$dni%");
+                        $nichos->where('dni_titular', 'like', "%$dni%");
                     }
                     if($dni != '') {
                         $nichos->where('dni_titular', 'like', "%$dni%");
@@ -114,7 +113,6 @@ class recibosController extends Controller
                     if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
                 })->paginate(10);
         }
-
 
         if(count($nichos) != 0 && count($nichos) > 30)
         {
@@ -216,7 +214,6 @@ class recibosController extends Controller
                 //Sino la tarifa 1
                 $tipo = 1;
                 $tarifa = Tm_parcelas::find(1);
-                dd($tarifa->tarifa);
                 //obtenemos el tamanyo de la parcela
                 $precio = ($tamanyo * $tarifa->tarifa) * ($fin->year - $inicio->year);
             }

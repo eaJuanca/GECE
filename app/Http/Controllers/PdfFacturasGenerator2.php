@@ -70,12 +70,12 @@ class PdfFacturasGenerator2 extends Controller
         }else{
         //Sino la tarifa 1
             $tipo = 1;
-            $tamanyio = Parcela::find($parcela->idparcela)->tamanyo;
+            //$tamanyio = Parcela::find($parcela->idparcela)->tamanyo;
         }
 
         $iva = Iva2::first()->tipo;
 
-        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos','iva'))->render();
+        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','tipo','numNichos','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('recibo.pdf', array( 'Attachment'=>1 ));
