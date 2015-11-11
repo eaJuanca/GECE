@@ -4,7 +4,9 @@
 
 @section('title')
     <h2 style="color: white; font-weight: bold; margin-left:10px; ">Nuevo Difunto</h2>
-    @endsection
+    <p class="pull-right"><a href="{{ URL::previous() }}" class="btn btn-md btn-material-orange back fa fa-reply"></a></p>
+
+@endsection
 
 
 @section('css')

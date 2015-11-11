@@ -1,5 +1,11 @@
 @extends('master')
 
+@section('title')
+
+    <h2 style="color: white; font-weight: bold; margin-left:10px; "> Estructura del cementerio </h2>
+    <p class="pull-right"><a href="{{ URL::previous() }}" class="btn btn-md btn-material-orange back fa fa-reply"></a></p>
+
+@endsection
 
 @section('css')
 
@@ -11,7 +17,7 @@
 
 @section('contenido')
 
-    </br>
+    <br>
     <div class="row well" style="margin: 0">
         <div class="col col-xs-2 col-sm-2 col-md-1 col-lg-1">
             <button class="btn btn-default btn-fab mdi-content-add mdi-action-grade" data-toggle="modal" data-target="#altaCalle"></button>
@@ -22,7 +28,7 @@
 
     </div>
 
-    </br>
+    <br>
     <div class="panel panel-primary">
         <div class="panel-heading gc_Pheading">
             <legend>Calles del cementerio</legend>
