@@ -66,9 +66,7 @@
                 @endif
                <form id="nuevo-difunto">
 
-                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-
-               @if(isset($nichoid)) <input type="hidden" name="GC_NICHOS_id" value="{{$nichoid}}">@endif
+               @if(isset($nichoid)) <input type="hidden"  id="GC_NICHOS_id" name="GC_NICHOS_id" value="{{$nichoid}}">@endif
 
                 <div class="row">
                     <section class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -279,8 +277,6 @@
 
     <script type="text/javascript">
 
-
-
         $('.fecha_inh').datepicker({
 
             format: "yyyy-mm-dd",
@@ -290,11 +286,19 @@
             todayHighlight: true
         });
 
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
 
         $(document).ready(function () {
 
 
             var token = "{{ csrf_token()}}";
+
+            var gcnicho = $("#GC_NICHOS_id").val();
 
             $('#nuevo-difunto').submit(function (e) {
 
@@ -315,7 +319,7 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexi�n a internet'
+                            msg: 'Compruebe la conexión a internet'
                         });
                     },
                     success: function (data) {
@@ -328,10 +332,14 @@
                             position: 'bottom left'
                         });
 
+                        $( "input" ).each(function() {
+                            $(this).val('');
+                        });
+
+                        $("#GC_NICHOS_id").val(gcnicho);
+
                         $('.boton21').hide();
                         setTimeout(explode, 2000);
-
-
                     }
                 });
             });
