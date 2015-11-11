@@ -27,7 +27,7 @@
         <tr class="factura{{$f->id}}">
             @if($f->serie=="N")
                 <td>Manteminiento Nicho</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
@@ -37,7 +37,7 @@
             @elseif($f->serie=='D')
 
                 <td>Cesión a perpetuidad Nicho</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>Perpetuidad</td>
                 <td>{{$f->nombre_titular}}</td>
@@ -47,7 +47,7 @@
             @elseif($f->serie=='E')
 
                 <td>Enterramiento</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
@@ -57,7 +57,7 @@
             @elseif($f->serie=='T')
 
                 <td>Cesión Temporal Nicho</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
@@ -67,7 +67,7 @@
             @elseif($f->serie=='M')
 
                 <td>Mantenimiento Panteon</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
@@ -77,7 +77,7 @@
             @elseif($f->serie=='P')
 
                 <td>Cesión perpetuidad Panteón</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td> Perpetuidad </td>
                 <td>{{$f->nombre_titular}}</td>
@@ -87,7 +87,7 @@
             @else
 
                 <td>??</td>
-                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
+                <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
