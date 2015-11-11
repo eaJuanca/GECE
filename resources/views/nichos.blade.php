@@ -167,7 +167,7 @@
                                                  Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
                                                  Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
 
-                                            <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a></td>
+                                            <td> <a href="{{ route('modificar-nichos',[$disponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Adquirir</a></td>
 
                                         </tr>
 
