@@ -56,15 +56,15 @@
     <tr>
             <td>
                 <h3 style="text-align: center">Grupo/Calle</h3>
-                <h3 style="text-align: center">{{$nicho->nicho_calle}}</h3>
+                <h3 style="text-align: center">{{$factura->calle}}</h3>
             </td>
             <td>
                 <h3 style="text-align: center">Nº</h3>
-                <h3 style="text-align: center">{{$nicho->nicho_numero}}</h3>
+                <h3 style="text-align: center">{{$factura->numero_nicho}}</h3>
             </td>
             <td>
                 <h3 style="text-align: center">Fila</h3>
-                <h3 style="text-align: center">{{$nicho->altura}}</h3>
+                <h3 style="text-align: center">{{$factura->tramada}}</h3>
             </td>
     </tr>
 </table>
@@ -113,9 +113,9 @@
 <br>
 <p>Titular del nicho efectos informativos</p>
 <hr style="width: 100%; margin-right: 10%">
-<p>{{$nicho->nombre_titular}}</p>
-<p>{{$nicho->nicho_dni}}</p>
-<p>{{$nicho->domicilio}}</p>
+<p>{{$factura->nombre_titular}}</p>
+<p>{{$factura->dni_titular}}</p>
+<p>{{$factura->domicilio_del_titular}}</p>
 <p>30510 Yecla (Murcia)</p>
 <hr style="width: 100%; margin-right: 10%">
 

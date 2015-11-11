@@ -159,7 +159,7 @@ class recibosController extends Controller
             //Si es de un nicho el recibo que vamos a imprimir.
             $this->nuevaFactura->idnicho = $nicho->idnicho;
             $this->nuevaFactura->calle = $nicho->calle;
-            $this->nuevaFactura->tramada = $nicho->altura;
+            $this->nuevaFactura->tramada = $nicho->tramada;
             $this->nuevaFactura->numero_nicho = $nicho->numero_nicho;
 
             //Obtenemos el titular de este nicho
