@@ -432,28 +432,31 @@ class FacturacionController extends Controller
         }
     }
 
-    public function Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info)
+    public function Mantenimiento5Nicho($nicho, $titular)
     {
 
         $hoy = Carbon::now();
-        $man = Carbon::now();
-        $man->addYears(1);
-
-
-        $diff = $hoy->diffInYears($man);
+        //Cogemos el ultimo año pagado en factura de esta parcela
+        $ultimo = Factura::where('idnicho', '=', $nicho)->groupBy('idparcela')->get(['fin'])[0]->fin;
+        $ultimo = Carbon::parse($ultimo);
+        $fin = new Carbon($ultimo);
+        $diferencia = ($hoy->year - $fin->year) + 5;
 
         $iva = Iva2::first();
         $iva = $iva->tipo;
         $precio = Tm_nichos::first();
         $precio = $precio->tarifa;
-        $precio = $precio * $diff;
+        $precio = $precio * $diferencia;
 
+        $titularinfo = Titular::find($titular);
+        $nichoinfo = Nicho::find($nicho);
+        $info = InfoNicho::find($nicho);
 
         $factura = new Factura();
         $numero = Factura::where('serie', 'N')->whereYear('inicio', '=', $hoy->year)->max('numero');
         $factura->numero = $numero + 1;
-        $factura->inicio = $hoy;
-        $factura->fin = $man;
+        $factura->inicio = $ultimo;
+        $factura->fin = $fin->addYears($diferencia);
         $factura->idnicho = $nicho;
         $factura->serie = 'N';
         $factura->idtitular = $titular;
@@ -492,7 +495,6 @@ class FacturacionController extends Controller
 
     public function fcpP($titular, $parcela)
     {
-
         //fecha de hoy
         $hoy = Carbon::now();
 

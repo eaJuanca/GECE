@@ -28,7 +28,6 @@
 <body>
 
 <?php
-
 $aux = $factura->numero;
 $aux = strlen($aux);
 $aux = 5 - $aux;

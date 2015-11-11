@@ -140,6 +140,8 @@ class DifuntoController extends Controller
 
             }else {
                 $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, null);
+                //Generamos también factura de mantenimimento de los añoas que se deben hasta hoy + 5
+                $fc->Mantenimiento5Nicho($nicho->id,$titular->id);
             }
 
 
