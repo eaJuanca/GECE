@@ -93,11 +93,12 @@
 
     $date = new \Carbon\Carbon($f->inicio);
     $date = $date->format('j-m-Y');
+    $ejercicio = new \Carbon\Carbon($f->created_at);
     ?>
 
     <table class="table1" style="width:90%; font-size: 14px" border="0">
         <tr>
-            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}
+            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->created_at}}
                 <br><b>Fecha:</b> {{$date}}
             </td>
             <td valign="top">

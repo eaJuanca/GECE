@@ -77,11 +77,13 @@ $aux = 5 - $aux;
 
 $date = new \Carbon\Carbon($factura->inicio);
 $date = $date->format('j-m-Y');
+$ejercicio = new \Carbon\Carbon($factura->created_at);
+
 ?>
 
 <table class="table1" style="width:90%" border="0">
     <tr>
-        <td valign="top">Factura nº: {{$factura->serie}}{{str_repeat("0", $aux)}}{{$factura->numero}}-{{substr($factura->inicio,0,4)}} <br>Fecha: {{$date}}
+        <td valign="top">Factura nº: {{$factura->serie}}{{str_repeat("0", $aux)}}{{$factura->numero}}-{{$ejercicio->year}} <br>Fecha: {{$date}}
         </td>
         <td valign="top">
             <div style="margin-left: 20px">

@@ -78,11 +78,13 @@ $aux = 5 - $aux;
 
 $date = new \Carbon\Carbon($f->inicio);
 $date = $date->format('j-m-Y');
+$ejercicio = new \Carbon\Carbon($factura->created_at);
+
 ?>
 
 <table class="table1" style="width:90%" border="0">
     <tr>
-        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}} <br>Fecha: {{$date}}
+        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}} <br>Fecha: {{$date}}
         </td>
         <td valign="top"><div style="margin-left: 20px"><br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->numero_nicho}}
             <span> <br>Tramada: </span> {{$f->tramada}}<br></div></td>
