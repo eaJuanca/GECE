@@ -345,6 +345,8 @@
             });
         });
 
+
+        //esto se calcula en el controlador y se pasa a la vista, en el compact
         function explode(){
             "{!!$a = \App\model\Nicho::where('id',$nichoid)->get()[0]->GC_Tramada_id!!}";
             var b = "{!!\App\model\Tramada::where('id', $a )->get()[0]->GC_PARCELA_id!!}";

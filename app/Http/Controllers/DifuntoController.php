@@ -30,7 +30,7 @@ class DifuntoController extends Controller
     }
 
 
-    //A�adir un difunto desde la vista nicho
+    //Añadir un difunto desde la vista nicho
 
     public function DifuntoNicho($nichoid){
 
@@ -128,6 +128,7 @@ class DifuntoController extends Controller
 
             $difunto = new Difunto($request->all());
             $difunto->save();
+
 
             $fc = new FacturacionController();
 
