@@ -85,7 +85,7 @@ class NichoController extends Controller
                        Altura, <span style = "font-weight: bold" >' . $disponible->altura . '</span >
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i > Adquirir</a ></td ></tr >";
 
         }
         //
@@ -240,7 +240,7 @@ class NichoController extends Controller
                        Numero, <span style = "font-weight: bold" >' . $disponible->numero . '</span > </td >';
 
 
-            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a ></td ></tr >";
+            echo "<td > <a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i > Adquirir</a ></td ></tr >";
 
 
         }
