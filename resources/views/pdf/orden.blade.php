@@ -81,11 +81,13 @@
 
     $date2 = new \Carbon\Carbon(substr($f->created_at,0,10));
     $date2 = $date2->format('j-m-Y');
+
+    $ejercicio = new \Carbon\Carbon($f->created_at);
     ?>
 
     <table class="table1" style="width:90%" border="0" width="95%">
         <tr >
-            <td valign="top"> <div>Nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</div> </td>
+            <td valign="top"> <div>Nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}</div> </td>
         </tr>
 
         <tr>

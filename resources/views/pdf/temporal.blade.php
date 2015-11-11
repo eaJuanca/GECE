@@ -78,7 +78,7 @@ $aux = 5 - $aux;
 
 $date = new \Carbon\Carbon($f->inicio);
 $date = $date->format('j-m-Y');
-$ejercicio = new \Carbon\Carbon($factura->created_at);
+$ejercicio = new \Carbon\Carbon($f->created_at);
 
 ?>
 

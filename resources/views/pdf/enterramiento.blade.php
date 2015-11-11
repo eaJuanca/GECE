@@ -98,7 +98,7 @@
 
     <table class="table1" style="width:90%; font-size: 14px" border="0">
         <tr>
-            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->created_at}}
+            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}
                 <br><b>Fecha:</b> {{$date}}
             </td>
             <td valign="top">
