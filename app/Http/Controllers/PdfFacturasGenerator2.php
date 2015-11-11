@@ -37,7 +37,9 @@ class PdfFacturasGenerator2 extends Controller
         //Buscamos el nicho
         //$nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
 
-        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho'))->render();
+        $iva = Iva2::first()->tipo;
+
+        $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->download('recibo.pdf');
@@ -107,7 +109,7 @@ class PdfFacturasGenerator2 extends Controller
 
         $iva = Iva2::first()->tipo;
 
-        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos'))->render();
+        $view =  \View::make('pdf.pdfmantenimientoparcela', compact('factura','parcela','tamanyio','tipo','numNichos','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->download('recibo.pdf', array( 'Attachment'=>1 ));
