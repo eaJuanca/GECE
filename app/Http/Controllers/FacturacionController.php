@@ -207,6 +207,7 @@ class FacturacionController extends Controller
 
         $titularinfo = Titular::find($titular);
         $nichoinfo = Nicho::find($nicho);
+        $odifunto = Difunto::find($difunto);
 
 
         $factura->idtitular = $titular;
@@ -230,7 +231,7 @@ class FacturacionController extends Controller
             $factura->calle = $info->nombre_calle;
             $factura->tramada = $info->altura;
             $factura->numero_nicho = $info->numero;
-            $factura->nombre_difunto = $info->nom_difunto;
+            $factura->nombre_difunto = $odifunto->nom_difunto;
             $factura->cesion = $nichoinfo->cesion;
 
 
@@ -240,7 +241,7 @@ class FacturacionController extends Controller
             $tramada = Tramada::find($nichoinfo->GC_Tramada_id)->tramada;
             $difunto = Difunto::find($difunto);
             $factura->calle = $info->calle;
-            $factura->nombre_difunto = $difunto->nom_difunto;
+            $factura->nombre_difunto = $odifunto->nom_difunto;
             $factura->numero_nicho = $info->numero;
             $factura->tramada = $tramada;
             $factura->parcela = $info->numero;
