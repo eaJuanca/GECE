@@ -217,7 +217,7 @@ class FacturacionController extends Controller
         $factura->serie = 'E';
         $factura->inicio = $hoy;
         $factura->fin = $hoy;
-        $numero = Factura::where('serie', 'E')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'E')->whereYear('created_at', '=', $hoy->year)->max('numero');
         $factura->numero = $numero + 1;
 
         //nuevos campos
@@ -304,7 +304,7 @@ class FacturacionController extends Controller
         $aux = Factura::where('idnicho', $nicho)->where('serie', 'D')->first();
 
         //obtener el numero de factura maximo
-        $numero = Factura::where('serie', 'D')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'D')->whereYear('created_at', '=', $hoy->year)->max('numero');
 
 
         //valores que se establecen solo una vez
@@ -372,7 +372,7 @@ class FacturacionController extends Controller
         $aux = Factura::where('idnicho', $nicho)->where('serie', 'T')->first();
 
         //obtener el numero de factura maximo
-        $numero = Factura::where('serie', 'T')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'T')->whereYear('created_at', '=', $hoy->year)->max('numero');
 
         $iva = Iva2::first();
         $iva = $iva->tipo;
@@ -453,7 +453,7 @@ class FacturacionController extends Controller
         $info = InfoNicho::find($nicho);
 
         $factura = new Factura();
-        $numero = Factura::where('serie', 'N')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'N')->whereYear('created_at', '=', $hoy->year)->max('numero');
         $factura->numero = $numero + 1;
         $factura->inicio = $ultimo;
         $factura->fin = $fin->addYears($diferencia);
@@ -503,7 +503,7 @@ class FacturacionController extends Controller
 
         //obtener el numero de factura maximo
         //$numero = Factura::where('serie','P')->whereYear('inicio','=',$hoy->year)->max('numero');
-        $numero = Factura::where('serie', 'P')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'P')->whereYear('created_at', '=', $hoy->year)->max('numero');
 
         //Obtener el tamanyo de la parcela
         $tamanyo = Parcela::where('id', $parcela)->get()[0]->tamanyo;
@@ -588,7 +588,7 @@ class FacturacionController extends Controller
 
 
         $factura = new Factura();
-        $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $numero = Factura::where('serie', 'M')->whereYear('created_at', '=', $hoy->year)->max('numero');
         //también hay que poner el idnicho de esta factura porque estamos enterrando en un nicho
         $factura->idnicho = $idnicho;
         $factura->numero = $numero + 1;
