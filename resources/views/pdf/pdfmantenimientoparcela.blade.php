@@ -27,6 +27,13 @@
 </style>
 <body>
 
+<?php
+
+$aux = $factura->numero;
+$aux = strlen($aux);
+$aux = 5 - $aux;
+?>
+
 <img src="{{ URL::asset('assets/cruz.gif') }}" height="42" width="36">
 <br>
 <br>
@@ -48,7 +55,7 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
 ?>
 
 <p>Fecha: {{$hoy}}</p>
-<p style="margin-top: -5px">Factura: {{$factura->serie}}/{{$factura->numero}}/{{$ejercicio->year}} </p>
+    <p style="margin-top: -5px">Factura: {{$factura->serie}}/{{str_repeat("0",$aux) . $factura->numero}}/{{$ejercicio->year}} </p>
 <hr style="width: 100%; margin-right: 10%">
 
 <p>Concepto</p>

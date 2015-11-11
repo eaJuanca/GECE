@@ -223,13 +223,14 @@
         //funcion en la que pasamos un id de parcela o de nicho y el tipo si es parcela o nicho.
         function cargar(id,tip){
 
+
             var cadena = "";
 
             cadena += $("#nicho"+id)[0].children[0].textContent + ", "
-            if( $("#nicho" + id)[0].children[2].textContent != ""){
-                cadena +=  $("#nicho"+id)[0].children[2].textContent + ", "
+            if(tip == 'N'){
+                cadena +=  "nº " + $("#nicho"+id)[0].children[2].textContent + ", "
             }else{
-                cadena +=  $("#nicho"+id)[0].children[3].textContent + ", "
+                cadena += "parcela " + $("#nicho"+id)[0].children[3].textContent + ", "
             }
             cadena += $("#nicho"+id)[0].children[4].textContent + ", "
             cadena += $("#nicho"+id)[0].children[6].textContent;

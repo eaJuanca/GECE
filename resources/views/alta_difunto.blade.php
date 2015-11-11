@@ -252,7 +252,6 @@
 
                     </section>
 
-
                 </div>
 
                 <div class="row">
@@ -303,7 +302,7 @@
 
                 $.ajax({
 
-                    type: "POST",
+                    type: "GET",
                     url: "{{ URL::route('nuevo-difunto') }}",
                     data: $('#nuevo-difunto').serialize(),
                     dataType: "html",
@@ -339,8 +338,15 @@
         });
 
         function explode(){
+            "{!!$a = \App\model\Nicho::where('id',$nichoid)->get()[0]->GC_Tramada_id!!}";
+            var b = "{!!\App\model\Tramada::where('id', $a )->get()[0]->GC_PARCELA_id!!}";
 
-            window.location.href = "{{ route('show-facturas',[$nichoid])}}";
+            if(b == ""){
+                window.location.href = "{{ route('show-facturas',[$nichoid])}}";
+            }else{
+                window.location.href = "{{ route('show-facturasParcela',[$nichoid])}}";
+
+            }
         }
 
         /**

@@ -46,9 +46,6 @@
                 <div class="panel-body">
 
 
-
-
-
                         <div class="table-responsive">
 
                             <table class="table table-bordered table-hover table-condensed">
@@ -81,7 +78,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>{{$f->fin}}</td>
-                                             <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
+                                             <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a></td>
 
                                     @elseif($f->serie=='D')
 
@@ -89,7 +86,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <br></td>
+                                            <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a></td>
 
                                     @elseif($f->serie=='E')
 
@@ -97,7 +94,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <a href="{{ route('pdforden',[$f->id])}}"> <button class="btn btn-warning btn-xs">Orden <i class="fa fa-male fa-lg"></i></button> </a><a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a> <br></td>
+                                            <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a> <a href="{{ route('pdforden',[$f->id])}}"> <button class="btn btn-warning btn-xs">Orden <i class="fa fa-male fa-lg"></i></button> </a><a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a></td>
 
                                         @elseif($f->serie=='T')
 
@@ -105,15 +102,15 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> <a href="{{ route('pdfacturanichotemporal',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><br></td>
+                                            <td> <a href="{{ route('pdfacturanichotemporal',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a></td>
 
                                         @elseif($f->serie=='M')
 
                                             <td>Mantenimiento Panteon</td>
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
-                                            <td>-</td>
-                                            <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a><br></td>
+                                            <td>{{$f->fin}}</td>
+                                            <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a></td>
 
                                         @elseif($f->serie=='P')
 
@@ -121,7 +118,7 @@
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
                                             <td>-</td>
-                                            <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a><br></td>
+                                            <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a></td>
                                     @endif
                                     </tr>
 

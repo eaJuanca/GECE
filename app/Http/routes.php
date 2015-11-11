@@ -102,7 +102,7 @@ Route::post('editar-nicho',  ['as' => 'editar-nicho', 'uses' => 'NichoController
 
 Route::get('editar-parcela', ['as' => 'editar-parcela', 'uses' => 'PanteonesControllerP2@edit']);
 
-Route::post('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
+Route::get('nuevo-difunto' ,  ['as' => 'nuevo-difunto', 'uses' => 'DifuntoController@store']);
 
 Route::get('pdfjuzgado', ['as' => 'pdfjuzgado', 'uses' => 'PdfController@invoice']);
 

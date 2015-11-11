@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\infoRecibos;
 use App\model\Difunto;
 use App\model\InfoNicho;
 use App\model\Iva2;
@@ -125,7 +126,6 @@ class FacturacionController extends Controller
      */
     public function show($idnicho)
     {
-
         $factura = Factura::where('idnicho', $idnicho)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
         $factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         $factura = $factura->merge($factura2);
@@ -139,8 +139,10 @@ class FacturacionController extends Controller
      */
     public function showParcela($idparcela)
     {
+        $factura = Factura::where('idnicho', $idparcela)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
+        $factura2 = Factura::where('idnicho',$idparcela)->where('serie', 'E')->orderBy('id','DESC')->take(1)->get();
+        $factura = $factura->merge($factura2);
 
-        $factura = Factura::where('idparcela', $idparcela)->orderBy('serie')->get();
         return view('facturasProcesoNichos', compact('factura'));
     }
 
@@ -268,6 +270,8 @@ class FacturacionController extends Controller
         //difunto
 
         $factura->save();
+
+        //Generamos también la factura de mantenimiento desde último año que se pago
     }
 
 
@@ -357,64 +361,6 @@ class FacturacionController extends Controller
      * Función para generar la factura de cesión de perpetuidad de la parcela comprada.
      */
 
-    public function Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info)
-    {
-
-        $hoy = Carbon::now();
-        $man = Carbon::now();
-        $man->addYears(1);
-
-
-        $diff = $hoy->diffInYears($man);
-
-        $iva = Iva2::first();
-        $iva = $iva->tipo;
-        $precio = Tm_nichos::first();
-        $precio = $precio->tarifa;
-        $precio = $precio * $diff;
-
-
-        $factura = new Factura();
-        $numero = Factura::where('serie', 'N')->whereYear('inicio', '=', $hoy->year)->max('numero');
-        $factura->numero = $numero + 1;
-        $factura->inicio = $hoy;
-        $factura->fin = $man;
-        $factura->idnicho = $nicho;
-        $factura->serie = 'N';
-        $factura->idtitular = $titular;
-        $factura->base = $precio;
-        $factura->iva = $precio * (($iva / 100));
-        $factura->total = $precio * (1 + ($iva / 100));
-
-        //nuevos campos
-
-        $factura->tipo_adquisicion = 0;
-        $factura->calle = $info->nombre_calle;
-        $factura->tramada = $info->altura;
-        $factura->numero_nicho = $info->numero;
-        $factura->cesion = $nichoinfo->cesion;
-
-
-        //titular
-        $factura->nombre_titular = $titularinfo->nombre_titular;
-        $factura->dni_titular = $titularinfo->dni_titular;
-        $factura->domicilio_del_titular = $titularinfo->dom_titular;
-        $factura->cp_titular = $titularinfo->cp_titular;
-        $factura->poblacion_titular = $titularinfo->pob_titular;
-        $factura->provincia_titular = $titularinfo->pro_titular;
-
-        //facturado
-        $factura->nombre_facturado = $nichoinfo->nom_facturado;
-        $factura->dni_facturado = $nichoinfo->nif_facturado;
-        $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-        $factura->cp_facturado = $nichoinfo->cp_facturado;
-        $factura->poblacion_facturado = $nichoinfo->pob_facturado;
-        $factura->provincia_facturado = $nichoinfo->pro_facturado;
-
-        $factura->save();
-
-    }
-
     public function facturaCesionTemporal($titular, $nicho)
     {
 
@@ -483,6 +429,64 @@ class FacturacionController extends Controller
             //$this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
 
         }
+    }
+
+    public function Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info)
+    {
+
+        $hoy = Carbon::now();
+        $man = Carbon::now();
+        $man->addYears(1);
+
+
+        $diff = $hoy->diffInYears($man);
+
+        $iva = Iva2::first();
+        $iva = $iva->tipo;
+        $precio = Tm_nichos::first();
+        $precio = $precio->tarifa;
+        $precio = $precio * $diff;
+
+
+        $factura = new Factura();
+        $numero = Factura::where('serie', 'N')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        $factura->numero = $numero + 1;
+        $factura->inicio = $hoy;
+        $factura->fin = $man;
+        $factura->idnicho = $nicho;
+        $factura->serie = 'N';
+        $factura->idtitular = $titular;
+        $factura->base = $precio;
+        $factura->iva = $precio * (($iva / 100));
+        $factura->total = $precio * (1 + ($iva / 100));
+
+        //nuevos campos
+
+        $factura->tipo_adquisicion = 0;
+        $factura->calle = $info->nombre_calle;
+        $factura->tramada = $info->altura;
+        $factura->numero_nicho = $info->numero;
+        $factura->cesion = $nichoinfo->cesion;
+
+
+        //titular
+        $factura->nombre_titular = $titularinfo->nombre_titular;
+        $factura->dni_titular = $titularinfo->dni_titular;
+        $factura->domicilio_del_titular = $titularinfo->dom_titular;
+        $factura->cp_titular = $titularinfo->cp_titular;
+        $factura->poblacion_titular = $titularinfo->pob_titular;
+        $factura->provincia_titular = $titularinfo->pro_titular;
+
+        //facturado
+        $factura->nombre_facturado = $nichoinfo->nom_facturado;
+        $factura->dni_facturado = $nichoinfo->nif_facturado;
+        $factura->domicilio_facturado = $nichoinfo->dir_facturado;
+        $factura->cp_facturado = $nichoinfo->cp_facturado;
+        $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+        $factura->provincia_facturado = $nichoinfo->pro_facturado;
+
+        $factura->save();
+
     }
 
     public function fcpP($titular, $parcela)
@@ -554,21 +558,26 @@ class FacturacionController extends Controller
 
             $factura->save();
 
-            $this->Mantenimiento1Parcela($parcela, $titular);
+            //$this->Mantenimiento1Parcela($parcela, $titular);
         }
     }
 
-    public function Mantenimiento1Parcela($parcela, $titular)
+    public function Mantenimiento5Parcela($parcela, $titular, $idnicho)
     {
-
         $hoy = Carbon::now();
-        $man = Carbon::now();
+        //Cogemos el ultimo año pagado en factura de esta parcela
+        $ultimo = Factura::where('idparcela', '=', $parcela)->groupBy('idparcela')->get(['fin'])[0]->fin;
+        $ultimo = Carbon::parse($ultimo);
+        $fin = new Carbon($ultimo);
+        $diferencia = ($hoy->year - $fin->year) + 5;
+
 
         $iva = Iva2::first()->tipo;
-        $tarifa = Tm_parcelas::find(1);
-        //Obtener el tamanyo de la parcela
-        $tamanyo = Parcela::where('id', $parcela)->get()[0]->tamanyo;
-        $precio = $tarifa->tarifa * $tamanyo;
+        $tarifa = Tm_parcelas::find(2);
+        //Obtener el nº de nichos de la parcela, se supone que está construida
+        $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela)->get();
+        $numNichos = count($tramadas) * $tramadas[0]->nichos;
+        $precio = $tarifa->tarifa * $numNichos;
 
         $titularinfo = Titular::find($titular);
         $infoparcela = Parcela::find($parcela);
@@ -577,17 +586,19 @@ class FacturacionController extends Controller
 
         $factura = new Factura();
         $numero = Factura::where('serie', 'M')->whereYear('inicio', '=', $hoy->year)->max('numero');
+        //también hay que poner el idnicho de esta factura porque estamos enterrando en un nicho
+        $factura->idnicho = $idnicho;
         $factura->numero = $numero + 1;
-        $factura->inicio = $hoy;
-        $factura->fin = $man->addYears(1);
+        $factura->inicio = $ultimo;
+        $factura->fin = $fin->addYears($diferencia);
         $factura->idparcela = $parcela;
         $factura->serie = 'M';
         $factura->idtitular = $titular;
-        $factura->base = $precio;
-        $factura->iva = $precio * ($iva / 100);
-        $factura->total = $precio + ($precio * $iva / 100);
+        $factura->base = $precio *  $diferencia;
+        $factura->iva = ($precio  * $diferencia) * ($iva / 100);
+        $factura->total = ($precio * $diferencia) * (1 +( $iva / 100));
 
-        //nuevos campos
+        //nuevos campo
 
         $factura->calle = $infopanteon->calle;
         $factura->parcela = $infopanteon->numero;

@@ -134,8 +134,13 @@ class DifuntoController extends Controller
             if($p){
 
                 $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, $parcela->parcela_id);
+                //Generamos también factura de mantenimiento de los años años que se deben hasta hoy + 5
+                $fc->Mantenimiento5Parcela($parcela->parcela_id,$titular->id,$nicho->id);
 
-            }else $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, null);
+            }else {
+                $fc->facturaEnterramiento($nicho->id,$difunto->id,$titular->id, null);
+            }
+
 
 
     }
