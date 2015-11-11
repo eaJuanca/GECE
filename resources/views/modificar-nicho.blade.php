@@ -576,14 +576,14 @@
                                     position: 'bottom left'
                                 });
 
-                                $('#submit').hide();
+                                $('#submit').remove();
                                 setTimeout(redirectNicho, 2000);
 
 
 
                             } else {
 
-                                $('#submit').hide();
+                                $('#submit').remove();
 
                                 Lobibox.notify('success', {
                                     title: 'Nicho modificado correctamente',
@@ -592,6 +592,7 @@
                                     delayIndicator: false,
                                     position: 'bottom left'
                                 });
+
 
                                 setTimeout(reloadMe, 2000);
 
