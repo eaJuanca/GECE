@@ -183,7 +183,9 @@
                         showClass: 'flipInX',
                         delay: 3000,
                         delayIndicator: false,
-                        position: 'bottom left'
+                        position: 'bottom left',
+                        icon: 'fa fa-thumbs-up'
+
                     });
 
                     location.reload();
@@ -213,7 +215,9 @@
                         showClass: 'flipInX',
                         delay: 3000,
                         delayIndicator: false,
-                        position: 'bottom left'
+                        position: 'bottom left',
+                        icon: 'fa fa-thumbs-up'
+
                     });
 
                     location.reload();

@@ -416,7 +416,9 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexión a internet'
+                            msg: 'Compruebe la conexión a internet',
+                            icon: 'fa fa-thumbs-down'
+
                         });
                     }
                 });

@@ -474,7 +474,9 @@
                                 delayIndicator: false,
 
                                 position: 'bottom left',
-                                msg: 'Compruebe la conexión a internet'
+                                msg: 'Compruebe la conexión a internet',
+                                icon: 'fa fa-thumbs-down'
+
                             });
                         },
                         success: function (data) {
@@ -487,7 +489,9 @@
                                     showClass: 'flipInX',
                                     delay: 3000,
                                     delayIndicator: false,
-                                    position: 'bottom left'
+                                    position: 'bottom left',
+                                    icon: 'fa fa-thumbs-up'
+
                                 });
 
                                 $('#submit').hide();
@@ -501,7 +505,9 @@
                                     showClass: 'flipInX',
                                     delay: 3000,
                                     delayIndicator: false,
-                                    position: 'bottom left'
+                                    position: 'bottom left',
+                                    icon: 'fa fa-thumbs-up'
+
                                 });
 
                                 setTimeout(reloadMe, 2000);

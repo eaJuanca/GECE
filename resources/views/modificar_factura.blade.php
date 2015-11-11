@@ -284,7 +284,8 @@
                             delayIndicator: false,
                             position: 'bottom left',
                             icon: 'fa fa-thumbs-up',
-                            sound: false
+                            sound: false,
+
                         });
 
                         $('.cerrar').hide();

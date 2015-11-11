@@ -317,6 +317,8 @@
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
+                            icon: 'fa fa-thumbs-down',
+
 
                             position: 'bottom left',
                             msg: 'Compruebe la conexión a internet'
@@ -329,7 +331,9 @@
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
-                            position: 'bottom left'
+                            position: 'bottom left',
+                            icon: 'fa fa-thumbs-up'
+
                         });
 
                         $( "input" ).each(function() {

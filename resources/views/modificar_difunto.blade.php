@@ -275,7 +275,9 @@
                             delayIndicator: false,
 
                             position: 'bottom left',
-                            msg: 'Compruebe la conexion a internet'
+                            msg: 'Compruebe la conexion a internet',
+                            icon: 'fa fa-thumbs-up'
+
                         });
                     },
                     success: function (data) {
@@ -285,7 +287,9 @@
                             showClass: 'flipInX',
                             delay: 3000,
                             delayIndicator: false,
-                            position: 'bottom left'
+                            position: 'bottom left',
+                            icon: 'fa fa-thumbs-up'
+
                         });
                     }
                 });
