@@ -242,7 +242,8 @@ class tarifasController extends Controller{
 
         $id = $r->input('id');
         $servicio = TarifaServicios::find($id);
-        $servicio->delete();
+        $servicio->tipo = 1;
+        $servicio->save();
     }
 
 }
