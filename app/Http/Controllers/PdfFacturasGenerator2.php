@@ -22,9 +22,6 @@ class PdfFacturasGenerator2 extends Controller
         $factura = Factura::find($id);
         $iva = Iva2::first()->tipo;
 
-        //Buscamos el nicho
-        //$nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
-
         $view =  \View::make('pdf.pdfmantenimiento', compact('factura','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
@@ -38,7 +35,7 @@ class PdfFacturasGenerator2 extends Controller
         $factura = Factura::find($id);
 
         //Buscamos el nicho
-        $nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
+        //$nicho = infoRecibos::where('idnicho', '=', $factura->idnicho)->get()[0];
 
         $view =  \View::make('pdf.pdfmantenimiento', compact('factura','nicho'))->render();
         $pdf = \App::make('dompdf.wrapper');
