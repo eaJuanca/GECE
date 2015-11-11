@@ -24,7 +24,7 @@
         ?>
 
 
-        <tr>
+        <tr class="factura{{$f->id}}">
             @if($f->serie=="N")
                 <td>Manteminiento Nicho</td>
                 <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
@@ -32,7 +32,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <br></td>
+                <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @elseif($f->serie=='D')
 
@@ -42,7 +42,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <br></td>
+                <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @elseif($f->serie=='E')
 
@@ -52,7 +52,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a><a href="{{ route('pdforden',[$f->id])}}"> <button class="btn btn-warning btn-xs">Orden <i class="fa fa-male fa-lg"></i></button> </a> @if($f->pendiente != 0)<a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a>@endif <br></td>
+                <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> @if($f->pendiente != 0)<a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar</button> </a>@endif <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @elseif($f->serie=='T')
 
@@ -62,7 +62,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfacturanichotemporal',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a><br></td>
+                <td> <a href="{{ route('pdfacturanichotemporal',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a><a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @elseif($f->serie=='M')
 
@@ -72,7 +72,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
+                <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @elseif($f->serie=='P')
 
@@ -82,7 +82,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
+                <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
             @else
 
@@ -92,7 +92,7 @@
                 <td>{{$f->fin}}</td>
                 <td>{{$f->nombre_titular}}</td>
                 <td>{{$f->dni_titular}}</td>
-                <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <br></td>
+                <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a>></td>
             @endif
         </tr>
 

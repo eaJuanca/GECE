@@ -191,9 +191,10 @@ class FacturacionController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->input('id');
+        $factura = Factura::find($id)->delete();
     }
 
     public function facturaEnterramiento($nicho, $difunto, $titular, $parcela)

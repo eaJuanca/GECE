@@ -245,6 +245,10 @@ Route::post('add-lineas',['as' => 'add-lineas', 'uses' => 'LineaController@store
 
 Route::get('exportfacturas',['as' => 'exportfacturas', 'uses' => 'ExporterController@ExportFacturas']);
 
+Route::post('borrarfactura',['as' => 'borrarfactura', 'uses' => 'FacturacionController@destroy']);
+
+
+
 
 
 
