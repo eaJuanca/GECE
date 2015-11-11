@@ -354,12 +354,12 @@ class NichoController extends Controller
 
             if($idtitular==''){
 
-                $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+                $titular = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular','pro_titular'));
                 $idtitular = $titular->insertGetId($titular->attributesToArray());
             }
             else{
 
-                $titularA = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+                $titularA = new Titular($request->only('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular','pro_titular'));
                 $titular = Titular::find($idtitular);
                 $titular->update($titularA->attributesToArray());
                 $idtitular = $request->input('idtitular'); //id titular
@@ -367,7 +367,7 @@ class NichoController extends Controller
             }
         }
 
-        $nichoU = new Nicho($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular'));
+        $nichoU = new Nicho($request->except('nombre_titular','responsable','dom_titular','cp_titular','pob_titular','exp_titular','dni_titular','tel_titular','ema_titular','pro_titular'));
         $nicho = Nicho::find($request->input('idnicho'));
         $nichoU->GC_TITULAR_id = $idtitular;
         $nichoU->sintitular = $sintitular;

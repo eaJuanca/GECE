@@ -140,14 +140,22 @@
                         </div>
 
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="pro_titular">Provincia</label>
+                                    <input type="text" id="pro_titular" class="form-control bloqueable" value="{{$titular->pro_titular}}" name="pro_titular">
+                                </div>
+                            </div>
+
+
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="tel_titular">Teléfono</label>
                                     <input type="text" id="tel_titular" class="form-control bloqueable" value="{{$titular->tel_titular}}" name="tel_titular">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="ema_titular">Email</label>
                                     <input type="text" id="ema_titular" class="form-control bloqueable" value="{{$titular->ema_titular}}" name="ema_titular">
@@ -174,8 +182,6 @@
 
                                 </div>
                             </div>
-
-
                         </div>
 
 
@@ -454,6 +460,7 @@
                     $("#tel_titular").val(data['tel_titular']);
                     $("#ema_titular").val(data['ema_titular']);
                     $("#exp_titular").val(data['exp_titular']);
+                    $("#pro_titular").val(data['pro_titular']);
                     $("#idtitular").val(data['id']);
 
                     $('#infosintitular').css('display','none');
@@ -669,6 +676,7 @@
             //$("input[name='pro_facturado']").val($("input[name='nombre_titular']").val());
             $("input[name='cp_facturado']").val($("input[name='cp_titular']").val());
             $("input[name='tel_facturado']").val($("input[name='tel_titular']").val());
+            $("input[name='pro_facturado']").val($("input[name='pro_titular']").val());
 
         });
 

@@ -26,7 +26,7 @@ class Titular extends Model{
         'dni_titular',
         'tel_titular',
         'ema_titular',
-        'provincia'
+        'pro_titular'
 
     ];
 }
