@@ -247,6 +247,9 @@ Route::get('exportfacturas',['as' => 'exportfacturas', 'uses' => 'ExporterContro
 
 Route::post('borrarfactura',['as' => 'borrarfactura', 'uses' => 'FacturacionController@destroy']);
 
+Route::get('factura-compra-parcela-{parcelaid}', ['as' => 'factura-compra-parcela', 'uses' => 'FacturacionController@compraParcela']);
+
+
 
 
 
