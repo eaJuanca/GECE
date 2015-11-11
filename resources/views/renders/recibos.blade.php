@@ -34,8 +34,8 @@
         @if($nicho->idnicho != null)
             <td style = "width: 100px">
                 <div>
-                    <button onclick="cargar('{!!$nicho->id!!}' ,'N')" style="margin-right: 10px; color:#03A9F4">
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
+                    <button class="btn btn-info btn-xs" onclick="cargar('{!!$nicho->id!!}' ,'N')" style="margin-right: 10px">
+                        <i class="fa fa-check"></i >
                     </button>
                 </div>
             </td>
@@ -43,8 +43,8 @@
         @else
             <td style = "width: 100px">
                 <div>
-                    <button onclick="cargar('{!!$nicho->id!!}' ,'M')" style="margin-right: 10px; color:#03A9F4">
-                        <i class="fa fa-chevron-circle-left  fa-lg fa-border"></i >
+                    <button class="btn btn-info btn-xs"onclick="cargar('{!!$nicho->id!!}' ,'M')" style="margin-right: 10px;">
+                        <i class="fa fa-check"></i >
                     </button>
                 </div>
             </td>

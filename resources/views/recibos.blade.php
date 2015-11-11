@@ -160,13 +160,13 @@
                 <div class="col-md-12">
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning" >Fecha inicio</label>
+                            <label class="control-label" for="inputWarning" >Desde</label>
                             <input type="text" class="form-control fecha_ini" disabled name="fecha_ini" value="2015-11-01">
                         </div>
                     </div>
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning">Fecha fin</label>
+                            <label class="control-label" for="inputWarning">Hasta (No incluido)</label>
                             <input required type="text" class="form-control fecha_fin" name="fecha_fin">
                         </div>
                     </div>

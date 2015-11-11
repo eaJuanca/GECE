@@ -200,7 +200,7 @@ class PanteonesController extends Controller
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Panteon </a>";
+            echo "<td> <a title='Modificar Parcela' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Parcela </a>";
             echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
             echo "</td></tr>";
 
@@ -282,7 +282,7 @@ class PanteonesController extends Controller
             echo '<td> Calle: <span style = "font-weight: bold">' . $Nodisponible->calle . ',</span >
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
-            echo "<td> <a title='Modificar Panteon' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Panteon </a>";
+            echo "<td> <a title='Modificar Parcela' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Parcela </a>";
             echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
             echo "</td></tr>";
 

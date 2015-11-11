@@ -151,7 +151,7 @@
                                             <td> Calle: <span style="font-weight: bold">{{$disponible->calle}}, </span>
                                                  Numero <span style="font-weight: bold">{{$disponible->numero}} </span> </td>
 
-                                            <td> <a href="{{ route('modificar-panteones',[$disponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar Panteon</a> </td>
+                                            <td> <a href="{{ route('modificar-panteones',[$disponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar Parcela</a> </td>
 
                                         </tr>
 
@@ -201,7 +201,7 @@
                                             <td> Calle: <span style="font-weight: bold">{{$nodisponible->calle}}, </span>
                                                 Numero <span style="font-weight: bold">{{$nodisponible->numero}} </span> </td>
 
-                                            <td> <a title="Modificar Panteon" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar panteon</a>
+                                            <td> <a title="Modificar Parcela" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar Parcela</a>
                                                  <a title="Ver Nichos"       href="{{ route('nichos-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-search"></i> Ver nichos</a>
                                             </td>
 

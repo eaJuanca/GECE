@@ -46,11 +46,11 @@ class PdfFacturasGenerator extends Controller
      */
     public function facturaParcela($id){
 
-        $f = VFacturasP::find($id);
+        $factura = Factura::find($id);
         $coste = Tcp_parcelas2::find(0);
         $iva = Iva2::first();
 
-        $view =  \View::make('pdf.pdfcesionparcela', compact('f','coste','iva'))->render();
+        $view =  \View::make('pdf.pdfcesionparcela', compact('factura','coste','iva'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
