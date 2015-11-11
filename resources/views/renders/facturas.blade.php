@@ -36,7 +36,7 @@
 
             @elseif($f->serie=='D')
 
-                <td>Cesión a perpetuidad</td>
+                <td>Cesión a perpetuidad Nicho</td>
                 <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
@@ -56,7 +56,7 @@
 
             @elseif($f->serie=='T')
 
-                <td>Cesión Temporal</td>
+                <td>Cesión Temporal Nicho</td>
                 <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
@@ -76,7 +76,7 @@
 
             @elseif($f->serie=='P')
 
-                <td>Cesión Panteón</td>
+                <td>Cesión perpetuidad Panteón</td>
                 <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                 <td>{{$f->inicio}}</td>
                 <td>{{$f->fin}}</td>
