@@ -4,7 +4,7 @@
 
     <h2 style="color: white; font-weight: bold; margin-left:10px; "> Nichos </h2>
 
-    <p class="pull-right"><a href="{{ URL::previous() }}" class="btn btn-md btn-material-orange back fa fa-reply"></a></p>
+    <p class="pull-right"><a href="{{ URL::route('home') }}" class="btn btn-md btn-material-orange back fa fa-reply"></a></p>
 
 @endsection
 

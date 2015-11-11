@@ -4,7 +4,6 @@
 
 @section('title')
     <h2 style="color: white; font-weight: bold; margin-left:10px; "> Recibos </h2>
-    <p class="pull-right"><a href="{{ URL::previous() }}" class="btn btn-md btn-material-orange back fa fa-reply"></a></p>
 
 @endsection
 
