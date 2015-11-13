@@ -445,7 +445,7 @@
 
         function reloadMe(){
 
-            window.location.href = "{{ route('show-facturasParcela',[$parcela->id])}}";
+            window.location.href = "{{ route('factura-compra-parcela',[$parcela->id])}}";
         }
 
 

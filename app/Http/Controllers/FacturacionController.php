@@ -146,6 +146,16 @@ class FacturacionController extends Controller
         return view('facturasProcesoNichos', compact('factura'));
     }
 
+
+    //Factura rapida cuando compras una parcela
+    public function compraParcela($idparcela){
+
+        $factura = Factura::where('idparcela',$idparcela)->where('serie', 'P')->take(1)->get();
+        return view('facturasProcesoNichos', compact('factura'));
+
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
