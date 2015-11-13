@@ -63,7 +63,7 @@
                                 @if($f->idparcela != null)
                                     <span> <br>Parcela: </span> {{$f->nicho_numero}}
                                 @endif
-                                <span> <br>Tramada: </span> {{$tramada}}
+                                <span> <br>Altura: </span> {{$tramada}}
                                 @if($f->idparcela != null)
                                     <span> <br>Número: </span> {{$numero}}
                                 @else

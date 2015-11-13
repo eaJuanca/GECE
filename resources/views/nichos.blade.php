@@ -96,7 +96,7 @@
 
                                     <div class="col col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Tramada</label>
+                                            <label class="control-label" for="inputWarning">Altura</label>
                                             <input type="text" class="form-control"  name="tramada" value="<?php if(isset($tramada)) echo $tramada; else $tramada=''; ?>">
                                         </div>
                                     </div>

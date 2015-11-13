@@ -76,50 +76,63 @@
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Nombre y apellidos del difunto</label>
-                            <input type="text" class="form-control" name="nom_difunto" required>
+                            <input type="text" class="form-control" name="nom_difunto" tabindex="1" required>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Domicilio habitual</label>
-                            <input type="text" class="form-control" name="dom_difunto">
+                            <input type="text" class="form-control" tabindex="2" name="dom_difunto">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" class="form-control" name="pob_difunto">
+                                    <input type="text" class="form-control" tabindex="3" name="pob_difunto">
                                 </div>
                             </div>
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Sexo</label>
-                                    <select class="form-control" name="sex_difunto">
+                                    <select class="form-control" tabindex="4" name="sex_difunto">
                                         <option value="0">Hombre</option>
                                         <option value="1">Mujer</option>
-
-                                    </select></div>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Edad</label>
-                                    <input type="text" class="form-control" name="eda_difunto">
+                                    <input type="text" class="form-control" tabindex="5" name="eda_difunto">
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" class="form-control" name="dni_difunto">
+                                    <input type="text" class="form-control" tabindex="6" name="dni_difunto">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Parroquia</label>
+                                    <select type="text" class="form-control" tabindex="7" name="parroquia_difunto">
+                                        <option>Purísima</option>
+                                        <option>San José</option>
+                                        <option>Niño Jesús</option>
+                                        <option>San Juan Bautista</option>
+                                        <option>Otra</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Estado civil</label>
-                                    <select type="text" class="form-control" name="est_difunto">
+                                    <select type="text" class="form-control" tabindex="7" name="est_difunto">
                                         <option value="1">Soltero</option>
                                         <option value="2">Casado</option>
                                         <option value="3">Divorciado</option>
@@ -137,29 +150,70 @@
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha</label>
-                                    <input required type="text" class="form-control fecha_inh" name="fec_inh_difunto">
+                                    <input required type="text" class="form-control fecha_inh" tabindex="9" name="fec_inh_difunto">
                                 </div>
                             </div>
 
                             <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Tipo</label>
-                                    <input type="text" class="form-control" name="tip_inh_difunto">
+                                    <select class="form-control" name="tip_inh_difunto" tabindex="10" required>
+                                        <option>Restos cadávéricos</option>
+                                        <option>Restos incinerados</option>
+                                        <option>Restos</option>
+                                        <option>Otros restos</option>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Expediente</label>
-                                    <input type="text" class="form-control" name="exp_inh_difunto">
+                                    <input type="text" class="form-control" tabindex="11" name="exp_inh_difunto">
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputWarning">Empresa funeraria</label>
-                            <input type="text" class="form-control" name="emp_funeraria">
+                        <h3 style="font-weight: bold">Datos funeraria</h3>
+                        <br>
+
+
+                        <div class="row">
+                            <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Nombre</label>
+                                <input type="text" class="form-control" tabindex="12" name="nom_emp_funeraria">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">CIF</label>
+                                <input type="text" class="form-control" tabindex="13" name="cif_emp_funeraria">
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">CP</label>
+                                <input type="numeric" class="form-control" tabindex="14" name="cp_emp_funeraria">
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Provicina</label>
+                                <input type="numeric" class="form-control" tabindex="15" name="pro_emp_funeraria">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col col-lg-4 col-md-6 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Población</label>
+                                <input type="text" class="form-control" tabindex="16" name="pob_emp_funeraria">
+                            </div>
+
+                            <div class="col col-lg-8 col-md-6 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Domicilio</label>
+                                <input type="numeric" class="form-control" tabindex="17" name="dom_emp_funeraria">
+                            </div>
+
                         </div>
 
 
@@ -175,35 +229,35 @@
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Fecha</label>
-                                    <input type="text" class="form-control fecha_inh" name="fec_fall_difunto">
+                                    <input type="text" class="form-control fecha_inh" name="fec_fall_difunto"  tabindex="8" required>
                                 </div>
                             </div>
 
                             <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Lugar</label>
-                                    <input type="text" class="form-control" name="lug_fall_difunto">
+                                    <input type="text" class="form-control" tabindex="18"  name="lug_fall_difunto">
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Causa</label>
-                            <input type="text" class="form-control" name="cau_fall_difunto">
+                            <input type="text" class="form-control" tabindex="19"  name="cau_fall_difunto">
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Medico n�</label>
-                                    <input type="text" class="form-control" name="med_difunto">
+                                    <label class="control-label" for="inputWarning">Medico nº</label>
+                                    <input type="text" class="form-control" tabindex="20"  name="med_difunto">
                                 </div>
                             </div>
 
                             <div class="col col-lg-9 col-md-9 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Localidad</label>
-                                    <input type="text" class="form-control" name="loc_fall_difunto">
+                                    <input type="text" class="form-control" tabindex="21" name="loc_fall_difunto">
                                 </div>
                             </div>
                         </div>
@@ -211,23 +265,30 @@
                         <h3 style="font-weight: bold">Solicitante inhumación</h3>
                         <br>
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputWarning">Apellidos, nombre</label>
-                            <input type="text" class="form-control" name="nom_sol_difunto">
+                        <div class="row">
+                            <div class="col col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Apellidos, nombre</label>
+                                <input type="text" class="form-control"tabindex="22"  name="nom_sol_difunto">
+                            </div>
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <label class="control-label" for="inputWarning">Parentesco con difunto</label>
+                                <input type="text" class="form-control" tabindex="23"  name="par_sol_difunto">
+                            </div>
+
                         </div>
 
                         <div class="row">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Domicilio</label>
-                                    <input type="text" class="form-control" name="dom_sol_difunto">
+                                    <input type="text" class="form-control" tabindex="24"  name="dom_sol_difunto">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Localidad</label>
-                                    <input type="text" class="form-control" name="loc_sol_difunto">
+                                    <input type="text" class="form-control" tabindex="25" name="loc_sol_difunto">
                                 </div>
                             </div>
                         </div>
@@ -236,14 +297,14 @@
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">DNI</label>
-                                    <input type="text" class="form-control" name="dni_sol_difunto">
+                                    <input type="text" class="form-control"tabindex="26" name="dni_sol_difunto">
                                 </div>
                             </div>
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Telefono</label>
-                                    <input type="text" class="form-control" name="tel_sol_difunto">
+                                    <input type="text" class="form-control" tabindex="27"  name="tel_sol_difunto">
                                 </div>
                             </div>
                         </div>
@@ -260,12 +321,12 @@
 
 
                         <div class="form-group">
-                            <textarea class="form-control" name="obs_difunto"></textarea>
+                            <textarea class="form-control"  tabindex="28" name="obs_difunto"></textarea>
                         </div>
                     </section>
                 </div>
 
-                <button class="btn btn-success btn-raised boton21">Añadir nuevo difunto</button>
+                <button class="btn btn-success btn-raised  boton21" tabindex="29" >Añadir nuevo difunto</button>
             </form>
                 @endif
         </div>

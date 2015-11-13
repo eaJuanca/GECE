@@ -24,6 +24,7 @@ class Difunto extends Model{
         'eda_difunto',
         'dni_difunto',
         'est_difunto',
+        'parroquia_difunto',
         'fec_fall_difunto',
         'lug_fall_difunto',
         'cau_fall_difunto',
@@ -39,7 +40,14 @@ class Difunto extends Model{
         'loc_sol_difunto',
         'dni_sol_difunto',
         'tel_sol_difunto',
+        'par_sol_difunto',
         'obs_difunto',
-        'GC_NICHOS_id'
+        'GC_NICHOS_id',
+        'nom_emp_funeraria',
+        'cif_emp_funeraria',
+        'cp_emp_funeraria',
+        'pro_emp_funeraria',
+        'pob_emp_funeraria',
+        'dom_emp_funeraria',
         ];
 }

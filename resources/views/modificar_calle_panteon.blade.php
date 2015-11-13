@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="row">
-                                <label class="col-lg-2 margin">Tramadas</label>
+                                <label class="col-lg-2 margin">altura</label>
                                 <div class="col-lg-9">
 
                                     <select class="form-control select" min="{!!count($tramadas[$indice][1])!!}" id="tramparc_{!!$indice+1!!}" name="tramadas">
@@ -87,7 +87,7 @@
 
 
                                             }else{
-                                               echo " <option>- ¿Cuántas tramadas tiene la parcela? -</option>";
+                                               echo " <option>- ¿Qué altura tiene la parcela? -</option>";
 
                                                 for($i = 1; $i <= 9 ; $i++){
                                                     echo " <option>  " . $i . "</option>";

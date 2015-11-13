@@ -87,7 +87,7 @@ $ejercicio = new \Carbon\Carbon($f->created_at);
         <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}} <br>Fecha: {{$date}}
         </td>
         <td valign="top"><div style="margin-left: 20px"><br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}<span> <br>Numero: </span> {{$f->numero_nicho}}
-            <span> <br>Tramada: </span> {{$f->tramada}}<br></div></td>
+            <span> <br>Altura: </span> {{$f->tramada}}<br></div></td>
         <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
             <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
             <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>

@@ -36,9 +36,11 @@ $aux = 5 - $aux;
 <img src="{{ URL::asset('assets/cruz.gif') }}" height="42" width="36">
 <br>
 <br>
+<br>
 
-<h2 style="font-size: 18px; text-align: center; margin-left: -12.5% "> Cementerio Eclesiástico de la Purísima Concepción</h2>
-<p style="font-size: 15px; text-align: center; margin-left: -12.5% "> Yecla</p>
+<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -45%" width="90%" height="4%">
+<br>
+<br>
 
 <p id="p1">
     CIF: R3000591B <span style="margin-left: 45%">Yecla (Murcia)</span>
@@ -69,7 +71,7 @@ $aux = 5 - $aux;
                 <h3 style="text-align: center">{{$factura->numero_nicho}}</h3>
             </td>
             <td>
-                <h3 style="text-align: center">Fila</h3>
+                <h3 style="text-align: center">Altura</h3>
                 <h3 style="text-align: center">{{$factura->tramada}}</h3>
             </td>
     </tr>

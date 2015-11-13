@@ -141,7 +141,7 @@
 
         <tr class="left">
             <td></td>
-            <td class="noborder">Fila: {{$f->tramada}} </td>
+            <td class="noborder">Altura: {{$f->tramada}} </td>
             <td></td>
 
         </tr>

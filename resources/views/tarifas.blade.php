@@ -66,7 +66,7 @@
                     @for($i = 0 ; $i < count($Tcp_nichos); $i++)
                         <div class="row form-group nombre" style="margin-left: 0px">
 
-                            <label class="col col-lg-2 labelo ">Tramada{{$i+1}}:</label>
+                            <label class="col col-lg-2 labelo ">Altura{{$i+1}}:</label>
                             <div class="col col-lg-10">
                                 <input type="text" name="cp_nicho{!!$i!!}" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos[$i]->tarifa !!}" required>
                             </div>

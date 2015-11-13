@@ -38,7 +38,7 @@
                 <thead>
                 <tr role="row">
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Last name: activate to sort column ascending" style="width: 74px;">Nombre</th>
-                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 171px;">Tramadas</th>
+                    <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 171px;">Alturas</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 79px;">Nichos</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending" style="width: 79px;">Panteones</th>
                     <th class="sorting" tabindex="0" aria-controls="example" rowspan="1" colspan="1" aria-label="Age: activate to sort column ascending" style="width: 28px;">Tipo</th>
@@ -152,7 +152,7 @@
                                     <label for="select" class="col-lg-2">Parcelas</label>
                                     <div class="col-lg-10">
                                         <select class="form-control parcelas" id="parcelas" name="num_parcelas">
-                                            <option>- ¿Cuántas parcelas hay? -</option>
+                                            <option>- ¿Qué parcelas hay? -</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -183,10 +183,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 1</label>
+                                            <label class="col-lg-4 margin">Altura parcela 1</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_1" name="tram_parc_1">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -203,12 +203,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 1</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 1</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p1" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 1</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 1</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p1' id='tramada1_p1' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p1' id='tramada2_p1' placeholder='Tramada 2' required>
@@ -238,10 +238,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 2</label>
+                                            <label class="col-lg-4 margin">Altura parcela 2</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_2" name="tram_parc_2">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -258,12 +258,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 2</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 2</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p2" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 2</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 2</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p2' id='tramada1_p2' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p2' id='tramada2_p2' placeholder='Tramada 2' required>
@@ -293,10 +293,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 3</label>
+                                            <label class="col-lg-4 margin">Altura parcela 3</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_3" name="tram_parc_3">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -313,12 +313,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 3</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 3</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p3" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 3</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 3</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p3' id='tramada1_p3' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p3' id='tramada2_p3' placeholder='Tramada 2' required>
@@ -348,10 +348,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 4</label>
+                                            <label class="col-lg-4 margin">Altura parcela 4</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_4" name="tram_parc_4">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -368,12 +368,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 4</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 4</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p4" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 4</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 4</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p4' id='tramada1_p4' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p4' id='tramada2_p4' placeholder='Tramada 2' required>
@@ -403,10 +403,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 5</label>
+                                            <label class="col-lg-4 margin">Altura parcela 5</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_5" name="tram_parc_5">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -457,10 +457,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 6</label>
+                                            <label class="col-lg-4 margin">Altura parcela 6</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_6" name="tram_parc_6">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -477,12 +477,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 6</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 6</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p6" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 6</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 6</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p6' id='tramada1_p6' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p6' id='tramada2_p6' placeholder='Tramada 2' required>
@@ -512,10 +512,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 7</label>
+                                            <label class="col-lg-4 margin">Altura parcela 7</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_7" name="tram_parc_7">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -532,12 +532,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 7</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 7</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p7" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 7</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 7</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p7' id='tramada1_p7' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p7' id='tramada2_p7' placeholder='Tramada 2' required>
@@ -568,10 +568,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 8</label>
+                                            <label class="col-lg-4 margin">Altura parcela 8</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_8" name="tram_parc_8">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -588,12 +588,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 8</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 8</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p8" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 8</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 8</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p8' id='tramada1_p8' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p8' id='tramada2_p8' placeholder='Tramada 2' required>
@@ -623,10 +623,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 9</label>
+                                            <label class="col-lg-4 margin">Altura parcela 9</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_9" name="tram_parc_9">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -643,12 +643,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 9</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 9</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p9" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 9</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 9</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p9' id='tramada1_p9' placeholder='Tramada1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p9' id='tramada2_p9' placeholder='Tramada 2' required>
@@ -678,10 +678,10 @@
                                         <br>
 
                                         <div class="row">
-                                            <label class="col-lg-4 margin">Tramadas parcela 10</label>
+                                            <label class="col-lg-4 margin">Altura parcela 10</label>
                                             <div class="col-lg-7">
                                                 <select class="form-control" id="tram_parc_10" name="tram_parc_10">
-                                                    <option>- ¿Cuántas tramadas tiene la parcela? -</option>
+                                                    <option>- ¿Qué altura tiene la parcela? -</option>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -698,12 +698,12 @@
                                         <br>
 
                                         <div class="row" hidden>
-                                            <label for="select" class="col-lg-5 margin">Nº nichos tramada parcela 10</label>
+                                            <label for="select" class="col-lg-5 margin">Nº nichos altura parcela 10</label>
                                         </div>
                                     </div>
 
                                     <div class="form-group n_nichos_p10" style="display: none;">
-                                        <label for="select" class="col-lg-4">Nº Nichos tramada parcela 10</label>
+                                        <label for="select" class="col-lg-4">Nº Nichos altura parcela 10</label>
                                         <div class="row col-lg-8 inputs">
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada1_p10' id='tramada1_p10' placeholder='Tramada 1' required>
                                             <input type='hidden' class='col-lg-3 t_margin' name='tramada2_p10' id='tramada2_p10' placeholder='Tramada 2' required>
@@ -728,7 +728,7 @@
                                     <label for="select" class="col-lg-2">Altura</label>
                                     <div class="col-lg-10">
                                         <select class="form-control tramadas" id="tramadas" name="num_tramadas" required>
-                                            <option value="">- Selecciona número de tramadas -</option>
+                                            <option value="">- Selecciona la altura -</option>
                                             <option>1</option>
                                             <option>2</option>
                                             <option>3</option>
@@ -742,7 +742,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group n_nichos" >
-                                    <label for="select" class="col-lg-3">Nº nichos por tramada</label>
+                                    <label for="select" class="col-lg-3">Nº nichos por altura</label>
                                     <div class="row col-lg-9 inputs">
                                         <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada1' id='tramada1' placeholder='Tramada 1' required>
                                         <input type='hidden' class='col-lg-3 t_margin tramadav' name='tramada2' id='tramada2' placeholder='Tramada 2' required>
@@ -767,7 +767,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="select" class="col-lg-2">Tramadas</label>
+                                    <label for="select" class="col-lg-2">Altura</label>
                                     <div class="col-lg-10">
                                         <select class="form-control" id="tramadas_parcela" name="tramadas_parcela">
                                             <option>- Selecciona número de tramadas de la parcela -</option>
@@ -784,7 +784,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group n_nichos_parcela_ind" style="display:none">
-                                    <label for="select" class="col-lg-3">Nº nichos por tramada</label>
+                                    <label for="select" class="col-lg-3">Nº nichos por Altura</label>
                                     <div class="row col-lg-9 inputs">
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada1_ind' id='tramada1_ind' placeholder='Tramada 1' required>
                                         <input type='hidden' class='col-lg-3 t_margin' name='tramada2_ind' id='tramada2_ind' placeholder='Tramada 2' required>
@@ -882,14 +882,14 @@
     $(document).ready(function(){
 
         var idParcelaStatico = 0;
-
+        var primeraN = false;
+        var primeraP = false;
 
         //Obtenemos el valor actual de las tramadas para asignar valor actomáticamente cuando
         //aumentamos o disminuimos el nº de tramadas
         var actualTramdas = $("#tramadas").val();
 
         $(document).ajaxStop($.unblockUI);
-
 
         $.material.init();
 
@@ -1313,15 +1313,19 @@
             }
         }
 
-        //Asociamos el evento onchange para que todos cambien si cambia uno
-        $(".tramadav").on("change",function(e){
-            var numTramdas = parseInt($("#tramadas").val());
-            asignarValores(1,numTramdas,this.value);
-        })
+
+            //Asociamos el evento onchange para que todos cambien si cambia uno
+            $(".tramadav").on("change", function (e) {
+                var numTramdas = parseInt($("#tramadas").val());
+                if(!primeraN) {
+                    asignarValores(1, numTramdas, this.value);
+                    primeraN = true;
+                }
+
+            });
 
         //Asignamos valores cuando cambiamos el valor de un input para las calles.
         function asignarValores(inicio, fin,number){
-
             for(var i = inicio; i <= fin; i++) {
                 $('#tramada' + i).val(number)
             }
@@ -1334,18 +1338,35 @@
             }
         }
 
-        //Asignamo evento on change para cada tramada de la parcela.
-        for(var i = 1; i <= 10; i++) {
+        //Asignamos evento on change para cada tramada de la parcela.
+        for (var i = 1; i <= 10; i++) {
             for (var j = 1; j <= 10; j++) {
                 $('#tramada' + i + '_p' + j).on("change", function (e) {
                     idParcelaStatico = this.getAttribute('id');
-                    idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_")+2,idParcelaStatico.length);
+                    idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_") + 2, idParcelaStatico.length);
                     //obtenemos las tramadas
-                    var numTramdas = parseInt($("#tram_parc_"+idParcelaStatico).val());
-                    asignarValoresParcelas(1,numTramdas,this.value,idParcelaStatico);
+                    var numTramdas = parseInt($("#tram_parc_" + idParcelaStatico).val());
+                    asignarValoresParcelas(1, numTramdas, this.value, idParcelaStatico);
                 });
             }
         }
+
+
+        for (var i = 1; i <= 10; i++) {
+            for (var j = 1; j <= 10; j++) {
+                $('#tramada' + i + '_p' + j).on("change", function (e) {
+                    idParcelaStatico = this.getAttribute('id');
+                    idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_") + 2, idParcelaStatico.length);
+                    //obtenemos las tramadas
+                    var numTramdas = parseInt($("#tram_parc_" + idParcelaStatico).val());
+                    asignarValoresParcelas(1, numTramdas, this.value, idParcelaStatico);
+                });
+            }
+        }
+
+
+
+
     });
 
     /**

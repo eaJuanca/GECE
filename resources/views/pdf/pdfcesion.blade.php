@@ -91,7 +91,7 @@ $date = $date->format('j-m-Y');
             <div style="margin-left: 20px">
                 <br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}
                 <span> <br>Numero: </span> {{$f->numero_nicho}}
-                <span> <br>Tramada: </span> {{$f->tramada}}<br>
+                <span> <br>Altura: </span> {{$f->tramada}}<br>
             </div>
         </td>
         <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}

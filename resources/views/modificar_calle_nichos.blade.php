@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="row">
-                                <label class="col-lg-2 margin">Tramadas</label>
+                                <label class="col-lg-2 margin">Altura</label>
                                 <div class="col-lg-9">
                                     <select class="form-control" id="tramadas" name="tramadas">
                                         <?php
@@ -62,7 +62,7 @@
                             <br>
 
                             <div class="form-group n_nichos" >
-                                <label for="select" class="col-lg-3">Nº nichos por tramada</label>
+                                <label for="select" class="col-lg-3">Nº nichos por altura</label>
                                 <div class="row col-lg-9 inputs">
 
                                     @for($i = 0; $i < count($tramadas); $i++)
