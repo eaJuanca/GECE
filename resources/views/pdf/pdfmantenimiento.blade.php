@@ -111,7 +111,7 @@ $aux = 5 - $aux;
             <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year}}</span>
         </td>
         <td style="text-align: right">
-            <span>{{$factura->base}}€</span>
+            <span>{{number_format($factura->base,2,',','')}}€</span>
         </td>
     </tr>
 </table>

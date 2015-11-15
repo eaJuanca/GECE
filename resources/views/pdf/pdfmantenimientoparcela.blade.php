@@ -63,7 +63,7 @@ $aux = 5 - $aux;
 
 <?php
 $hoy = new Carbon\Carbon();
-$hoy = $hoy->format('j-m-Y');
+$hoy = $hoy->format('j/m/Y');
 
 $ejercicio = new \Carbon\Carbon($factura->created_at);
 ?>
