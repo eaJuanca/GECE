@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Factura cesion perpetuidad</title>
-
+    <title>Factura cesión perpetuidad</title>
 </head>
 
 <style>
@@ -20,8 +19,23 @@
         margin-left: -16px;
     }
 
-    #p1{
+    .p1{
         font-size: 11px;
+    }
+    .p2{
+        font-size: 13px;
+    }
+
+    table {
+        background: #ccc;
+        border-spacing: 1px;
+    }
+    td {
+        background: #fff;
+    }
+    .mia{
+        font-size: 17px;
+        font-weight: bold;
     }
 
 </style>
@@ -38,41 +52,44 @@ $aux = 5 - $aux;
 <br>
 <br>
 
-<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -45%" width="90%" height="4%">
-<br>
+<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -45%" width="90%" height="2%">
 <br>
 
-<p id="p1">
-    CIF: R3000591B <span style="margin-left: 45%">Yecla (Murcia)</span>
+<p class="p1">
+    CIF: R3000591B <span style="margin-left: 35%">30510 YECLA (Murcia)</span>
 </p>
 <hr style="width: 100%; margin-right: 10%">
-<h3 style="margin-left: 20%; margin-top: -3%">FACTURA SIMPLIFICADA</h3>
+<h5 style="margin-left: 40%; margin-top: -3%; margin-bottom: 0.5%">FACTURA SIMPLIFICADA</h5>
 
 <?php
     $hoy = new Carbon\Carbon();
-    $hoy = $hoy->format('j-m-Y');
+    $hoy = $hoy->format('j/m/Y');
 
     $ejercicio = new \Carbon\Carbon($factura->created_at);
 ?>
 
-<p>Fecha: {{$hoy}}</p>
-<p style="margin-top: -5px">Factura: {{$factura->serie}}/{{str_repeat("0",$aux) . $factura->numero}}/{{$ejercicio->year}} </p>
+<span class="p2">Fecha: {{$hoy}} </span>
+<br>
+<span class="p2" style="margin-top: -10px">Factura: {{$factura->serie}}/{{str_repeat("0",$aux) . $factura->numero}}/{{$ejercicio->year}} </span>
 <hr style="width: 100%; margin-right: 10%">
 
-<p>Concepto</p>
-<table style="width:90%" border="1">
+<span class="p2"> <strong>Concepto</strong></span>
+<table style="width:90%; margin-bottom: 0.5%">
     <tr>
-            <td>
-                <h3 style="text-align: center">Grupo/Calle</h3>
-                <h3 style="text-align: center">{{$factura->calle}}</h3>
+            <td style="text-align: center">
+                <span class="p2">Grupo/Calle</span>
+                <br>
+                <span class="mia">{{$factura->calle}}</span>
             </td>
-            <td>
-                <h3 style="text-align: center">Nº</h3>
-                <h3 style="text-align: center">{{$factura->numero_nicho}}</h3>
+            <td style="text-align: center">
+                <span class="p2">Nº</span>
+                <br>
+                <span class="mia">{{$factura->numero_nicho}}</span>
             </td>
-            <td>
-                <h3 style="text-align: center">Altura</h3>
-                <h3 style="text-align: center">{{$factura->tramada}}</h3>
+            <td style="text-align: center">
+                <span class="p2">Altura</span>
+                <br>
+                <span class="mia">{{$factura->tramada}}</span>
             </td>
     </tr>
 </table>
@@ -85,46 +102,52 @@ $aux = 5 - $aux;
 ?>
 
 <br>
+<br>
 
-<table style="width:90%" border="1">
+<table style="width:90%">
     <tr>
-        <td>
-            <h3 style="text-align: center">Mantenimiento {{$inicio->year}} a {{$fin->year}}</h3>
-        </td>
+
         <td style="text-align: center">
-            <h3>{{$factura->base}}€</h3>
+            <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year}}</span>
+        </td>
+        <td style="text-align: right">
+            <span>{{$factura->base}}€</span>
         </td>
     </tr>
 </table>
 
 <br>
 
-<table style="width:90%" border="1">
+<table style="width:90%">
     <tr>
-        <td>
-            <h3 style="text-align: right">IVA {{$iva}}%</h3>
+        <td style="text-align: right">
+            <span style="font-size: 12.5px">IVA {{$iva}}%</span>
         </td>
-        <td style="text-align: center">
-            <h3>{{number_format($factura->iva,2,',','')}}€</h3>
+        <td style="text-align: right">
+            <span style="font-size: 12.5px">{{number_format($factura->iva,2,',','')}}€</span>
         </td>
     </tr>
     <tr>
         <td style="text-align: right">
-            <h3>TOTAL</h3>
+            <span class="mia">TOTAL</span>
         </td>
-        <td style="text-align: center">
-            <h3>{{ number_format($factura->base + $factura->iva,2,',','')}}€</h3>
+        <td style="text-align: right">
+            <span class="mia">{{ number_format($factura->base + $factura->iva,2,',','')}}€</span>
         </td>
     </tr>
 </table>
 
 <br>
-<p>Titular del nicho efectos informativos</p>
+<span class="p2">Titular del nicho efectos informativos</span   >
 <hr style="width: 100%; margin-right: 10%">
-<p>{{$factura->nombre_titular}}</p>
-<p>{{$factura->dni_titular}}</p>
-<p>{{$factura->domicilio_del_titular}}</p>
-<p>30510 Yecla (Murcia)</p>
+<span style="font-size: 13px; font-weight: bold">{{$factura->nombre_titular}}</span>
+<br>
+<span style="font-size: 13px">{{$factura->dni_titular}}</span>
+<br>
+<span style="font-size: 13px">{{$factura->domicilio_del_titular}}</span>
+<br>
+<span style="font-size: 13px">30510 Yecla (Murcia)</span>
+<br>
 <hr style="width: 100%; margin-right: 10%">
 
 

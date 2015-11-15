@@ -91,8 +91,29 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="nombrebuscar">Nombre y apellidos</label>
+                                    <label class="control-label" for="nombrebuscar">Nombre y apellidos del titular</label>
                                     <input type="text" id="nombrebuscar" class="form-control" name="nombrebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="dnibuscar">DNI</label>
+                                    <input type="text" id="dnibuscar" class="form-control" name="dnibuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="callebuscar">Calle del cementerio</label>
+                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="nombrebuscar">Nº</label>
+                                    <input type="text" id="numbuscar" class="form-control" name="numbuscar">
                                 </div>
                             </div>
 
@@ -105,27 +126,6 @@
                                             </label>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="dnibuscar">DNI</label>
-                                    <input type="text" id="dnibuscar" class="form-control" name="dnibuscar">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="callebuscar">Calle</label>
-                                    <input type="text" id="callebuscar" class="form-control" name="callebuscar">
-                                </div>
-                            </div>
-
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="nombrebuscar">Domicilio titular</label>
-                                    <input type="text" id="domiciliobuscar" class="form-control" name="domiciliobuscar">
                                 </div>
                             </div>
 
@@ -161,8 +161,8 @@
                 <div class="col-md-12">
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning" >Desde</label>
-                            <input type="text" class="form-control fecha_ini" disabled name="fecha_ini" value="2015-11-01">
+                            <label class="control-label" for="inputWarning">Desde</label>
+                            <input type="number" class="form-control fecha_ini" disabled name="fecha_ini">
                         </div>
                     </div>
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -213,6 +213,7 @@
     <script type="text/javascript">
 
         var fechaInicio = null;
+        var fechaFin = null;
         var idNicho = null;
         var tipo = null;
 
@@ -295,24 +296,6 @@
             });
         }
 
-        $('.fecha_ini').datepicker({
-            format: "yyyy-mm-dd",
-            language: "es",
-            multidate: false,
-            viewMode: "years",
-            autoclose: true,
-            todayHighlight: true
-        });
-
-        $('.fecha_fin').datepicker({
-            format: "yyyy-mm-dd",
-            language: "es",
-            multidate: false,
-            viewMode: "years",
-            autoclose: true,
-            todayHighlight: true
-        });
-
         $(document).ready(function () {
 
 
@@ -354,15 +337,20 @@
                                 isValid = true;
                                 $(".resultados")[0].setAttribute("hidden","");
                                 //Al ir al siguiente paso ponemos la fecha que corresponde al la ultima pagada
-                                $('.fecha_ini').datepicker('update', new Date(fechaInicio, 0, 1));
-                                fechaInicio = parseInt(fechaInicio)+1;
-                                $('.fecha_fin').datepicker('update', new Date(fechaInicio, 0, 1));
+                                //$('.fecha_ini').datepicker('update', new Date(fechaInicio, 0, 1));
+                                $('.fecha_ini').val(fechaInicio.substring(0,4));
+                                fechaFin = parseInt(fechaInicio.substring(0,4))+1;
+                                //$('.fecha_fin').datepicker('update', new Date(fechaInicio, 0, 1));
+                                $('.fecha_fin').val(fechaFin);
                             }
                         }
 
                         //si vamos a pasar al paso 3 hacemos peticion ajax para actualizar la fecha fin de la factura
                         if(curStepBtn == 'step-2'){
-                            actualizar(idNicho,tipo,$(".fecha_ini").val(),$(".fecha_fin").val());
+                            //Creamos nuevos tipo fecha con fecha inicio y fin para poder guardar tipo date en BD.
+                            fechaInicio = $(".fecha_ini").val() + "-01-01";
+                            fechaFin = $(".fecha_fin").val() + "-01-01";
+                            actualizar(idNicho,tipo,fechaInicio,fechaFin);
                         }
 
                 $(".form-group").removeClass("has-error");

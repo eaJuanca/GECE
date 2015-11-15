@@ -71,7 +71,7 @@ class recibosController extends Controller
         $titular = $r->input('nombrebuscar');
         $calle = $r->input('callebuscar');
         $dni = $r->input('dnibuscar');
-        $domicilio = $r->input('domiciliobuscar');
+        $numero = $r->input('numbuscar');
         $page = $r->input('page');
 
         //tenemos que sacar una lista de nichos en función a los parámetros de la petición,
@@ -79,38 +79,35 @@ class recibosController extends Controller
         if($r->input('corriente') != null) {
             //buscamos todos los nichos que no tengan facturas pendientes incluso estén adelantados  es decir fecha fin => al año de hoy.
             $hoy = Carbon::now();
-            $nichos = infoRecibos::where('fin', '>=', $hoy->year)
-                ->where(function ($nichos) use ($titular, $calle, $dni, $domicilio) {
-                    if ($titular != '') {
-                        $nichos->where('nombre_titular', 'like', "%$titular%");
-                    }
-                    if ($calle != '') {
-                        $nichos->where('calle', 'like', "%$calle%");
-                    }
-                    if ($domicilio != '') $nichos->where('domicilio', 'like', "%$domicilio%");
+            $nichos = infoRecibos::where('fin', '>', $hoy->year)
+                ->where(function ($nichos) use ($titular, $calle, $dni, $numero) {
+                    if ($titular != '') $nichos->where('nombre_titular', 'like', "%$titular%");
 
-                    if ($dni != '') {
-                        $nichos->where('dni_titular', 'like', "%$dni%");
+                    if ($calle != '') $nichos->where('calle', 'like', "%$calle%");
+
+                    if ($numero != '') {
+                            $nichos->where('numero_nicho', 'like', "%$numero%");
+                            $nichos->orWhere('parcela', 'like', "%$numero%");
                     }
+
+                    if ($dni != '') $nichos->where('dni_titular', 'like', "%$dni%");
+
                 })->paginate(10);
         }else {
             //buscamos todos los nichos que tengan facturas pendientes es decir fecha fin < al año de hoy.
             $hoy = Carbon::now();
-            $nichos = infoRecibos::where('fin', '<', $hoy->year)
-                ->where(function ($nichos) use ($titular, $calle, $dni,$domicilio) {
-                    if($titular != '') {
-                        $nichos->where('nombre_titular', 'like', "%$titular%");
+            $nichos = infoRecibos::where('fin', '<=', $hoy->year)
+                ->where(function ($nichos) use ($titular, $calle, $dni,$numero) {
+                    if($titular != '') $nichos->where('nombre_titular', 'like', "%$titular%");
+
+                    if ($calle != '') $nichos->where('calle', 'like', "%$calle%");
+
+                    if ($numero != '') {
+                        $nichos->where('numero_nicho', 'like', "%$numero%");
+                        $nichos->orWhere('parcela', 'like', "%$numero%");
                     }
-                    if ($calle != '') {
-                        $nichos->where('calle', 'like', "%$calle%");
-                    }
-                    if ($dni != '') {
-                        $nichos->where('dni_titular', 'like', "%$dni%");
-                    }
-                    if($dni != '') {
-                        $nichos->where('dni_titular', 'like', "%$dni%");
-                    }
-                    if($domicilio != '') $nichos->where('domicilio' , 'like', "%$domicilio%");
+                    if($dni != '') $nichos->where('dni_titular', 'like', "%$dni%");
+
                 })->paginate(10);
         }
 

@@ -232,7 +232,7 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Nif</label>
+                                    <label class="control-label" for="inputWarning">NIF/CIF</label>
                                     <input type="text" class="form-control" value="{{$nicho->nif_facturado}}" name="nif_facturado">
                                 </div>
                             </div>
