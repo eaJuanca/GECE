@@ -184,6 +184,7 @@
                             </div>
                         </div>
 
+                        <hr>
 
                         <h3 style="font-weight: bold">Situacion del nicho</h3>
                         <br>
@@ -209,17 +210,27 @@
                         <h3 style="font-weight: bold">Facturado a</h3>
                         <br>
 
-                        <div class="row">
+                        <div class="row" style="margin-top: -0.6%;">
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <button style="font-size: 11px!important;" type="button" id="copiartitular" class="btn btn-warning button-xs"><i class="fa fa-files-o"></i> Copiar desde Titular</button>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Nombre</label>
+                                    <input type="text" class="form-control" value="{{$nicho->nom_facturado}}" name="nom_facturado">
+                                </div>
                             </div>
 
-                        <div class="form-group">
-                            <label class="control-label" for="inputWarning">Nombre</label>
-                            <input type="text" class="form-control" value="{{$nicho->nom_facturado}}" name="nom_facturado">
+                            <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">NIF/CIF</label>
+                                    <input type="text" class="form-control" value="{{$nicho->nif_facturado}}" name="nif_facturado">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
@@ -232,22 +243,16 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">NIF/CIF</label>
-                                    <input type="text" class="form-control" value="{{$nicho->nif_facturado}}" name="nif_facturado">
+                                    <label class="control-label" for="inputWarning">Poblacion</label>
+                                    <input type="text" class="form-control" value="{{$nicho->pob_facturado}}" name="pob_facturado">
                                 </div>
                             </div>
 
                         </div>
 
                         <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Poblacion</label>
-                                    <input type="text" class="form-control" value="{{$nicho->pob_facturado}}" name="pob_facturado">
-                                </div>
-                            </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Provincia</label>
                                     <input type="text" class="form-control" value="{{$nicho->pro_facturado}}" name="pro_facturado">
@@ -255,17 +260,15 @@
                                 </div>
                             </div>
 
-                        </div>
 
-                        <div class="row">
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Código postal</label>
                                     <input type="text" class="form-control" value="{{$nicho->cp_facturado}}" name="cp_facturado">
                                 </div>
                             </div>
 
-                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Teléfono</label>
                                     <input type="text" class="form-control" value="{{$nicho->tel_facturado}}" name="tel_facturado">
@@ -274,7 +277,14 @@
 
                         </div>
 
-                        <h3 style="font-weight: bold">Datos bancarios</h3>
+                        <div class="row">
+
+
+
+
+                        </div>
+
+                        <h3 style="font-weight: bold; margin-top: 3.3%">Datos bancarios</h3>
                         <br>
 
                         <div class="row">
@@ -332,6 +342,9 @@
                             </div>
 
                         </div>
+
+                        <hr>
+                        <br>
 
                         <div class="row">
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">

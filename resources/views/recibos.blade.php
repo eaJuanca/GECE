@@ -168,7 +168,7 @@
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
                             <label class="control-label" for="inputWarning">Hasta (No incluido)</label>
-                            <input required type="text" class="form-control fecha_fin" name="fecha_fin">
+                            <input required type="text" class="form-control fecha_fin" name="fecha_fin" maxlength="4">
                         </div>
                     </div>
                     <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >
@@ -185,9 +185,9 @@
                 </div>
             </div>
         </div>
-    </form>
+        </form>
 
-    <div hidden class="row resultados">
+        <div hidden class="row resultados">
         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="panel panel-default" style="font-family: serif">
                 <div class="panel-heading"><span style="font-weight: bold">Resultados</span>
@@ -203,6 +203,8 @@
                 </div>
             </div>
         </div>
+
+    </div>
 
     </div>
 
