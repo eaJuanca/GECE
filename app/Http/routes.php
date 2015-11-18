@@ -185,6 +185,7 @@ Route::get('login', ['as' => 'login', function()
 
 //Apartados nichos
 Route::get('panteones', ['as' => 'panteones', 'uses' => 'PanteonesController@index']);
+Route::post('difuntosNichos', ['as' => 'difuntosNichos', 'uses' => 'PanteonesController@infoDifuntos']);
 
 
 // Validamos los datos de inicio de sesión PARA LA ADMINISTRACION

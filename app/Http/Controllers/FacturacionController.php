@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\infoRecibos;
+use App\model\infoRecibos;
 use App\model\Difunto;
 use App\model\InfoNicho;
 use App\model\Iva2;
@@ -577,66 +577,75 @@ class FacturacionController extends Controller
 
     public function Mantenimiento5Parcela($parcela, $titular, $idnicho)
     {
+
         $hoy = Carbon::now();
         //Cogemos el ultimo año pagado en factura de esta parcela
-        $ultimo = Factura::where('idparcela', '=', $parcela)->groupBy('idparcela')->get(['fin'])[0]->fin;
-        $ultimo = Carbon::parse($ultimo);
+        $ultimo = infoRecibos::where('idparcela', '=', $parcela)->groupBy('idparcela')->get(['fin'])[0]->fin;
+        $ultimo = Carbon::create($ultimo,1,1,0,0);
         $fin = new Carbon($ultimo);
-        $diferencia = ($hoy->year - $fin->year) + 5;
+
+        //En la parcela si enterramos en 2015 y luego en 2016 no se puede generar 5 años más debería
+        //calcularse si la diferencia es menor que 5 y si es así incrementar hasta 5
+        if($fin->year > $hoy->year)
+        {
+            $diferencia = (5 - ($fin->year - $hoy->year));
+        }else {
+            $diferencia = (5 + ($hoy->year - $fin->year));
+        }
+
+        if($diferencia > 0) {
+
+            $iva = Iva2::first()->tipo;
+            $tarifa = Tm_parcelas::find(2);
+            //Obtener el nº de nichos de la parcela, se supone que está construida
+            $tramadas = Tramada::where('GC_PARCELA_id', '=', $parcela)->get();
+            $numNichos = count($tramadas) * $tramadas[0]->nichos;
+            $precio = $tarifa->tarifa * $numNichos;
+
+            $titularinfo = Titular::find($titular);
+            $infoparcela = Parcela::find($parcela);
+            $infopanteon = VPanteones::where('parcela_id', $parcela)->first();
 
 
-        $iva = Iva2::first()->tipo;
-        $tarifa = Tm_parcelas::find(2);
-        //Obtener el nº de nichos de la parcela, se supone que está construida
-        $tramadas = Tramada::where('GC_PARCELA_id', '=' , $parcela)->get();
-        $numNichos = count($tramadas) * $tramadas[0]->nichos;
-        $precio = $tarifa->tarifa * $numNichos;
+            $factura = new Factura();
+            $numero = Factura::where('serie', 'M')->whereYear('created_at', '=', $hoy->year)->max('numero');
+            //también hay que poner el idnicho de esta factura porque estamos enterrando en un nicho
+            $factura->idnicho = $idnicho;
+            $factura->numero = $numero + 1;
+            $factura->inicio = $ultimo;
+            $factura->fin = $fin->addYears($diferencia);
+            $factura->idparcela = $parcela;
+            $factura->serie = 'M';
+            $factura->idtitular = $titular;
+            $factura->base = $precio * $diferencia;
+            $factura->iva = ($precio * $diferencia) * ($iva / 100);
+            $factura->total = ($precio * $diferencia) * (1 + ($iva / 100));
 
-        $titularinfo = Titular::find($titular);
-        $infoparcela = Parcela::find($parcela);
-        $infopanteon = VPanteones::where('parcela_id', $parcela)->first();
+            //nuevos campo
 
-
-        $factura = new Factura();
-        $numero = Factura::where('serie', 'M')->whereYear('created_at', '=', $hoy->year)->max('numero');
-        //también hay que poner el idnicho de esta factura porque estamos enterrando en un nicho
-        $factura->idnicho = $idnicho;
-        $factura->numero = $numero + 1;
-        $factura->inicio = $ultimo;
-        $factura->fin = $fin->addYears($diferencia);
-        $factura->idparcela = $parcela;
-        $factura->serie = 'M';
-        $factura->idtitular = $titular;
-        $factura->base = $precio *  $diferencia;
-        $factura->iva = ($precio  * $diferencia) * ($iva / 100);
-        $factura->total = ($precio * $diferencia) * (1 +( $iva / 100));
-
-        //nuevos campo
-
-        $factura->calle = $infopanteon->calle;
-        $factura->parcela = $infopanteon->numero;
-        $factura->metros_parcela = $infopanteon->tamanyo;
-        $factura->cesion = $infopanteon->cesion;
+            $factura->calle = $infopanteon->calle;
+            $factura->parcela = $infopanteon->numero;
+            $factura->metros_parcela = $infopanteon->tamanyo;
+            $factura->cesion = $infopanteon->cesion;
 
 
-        //titular
-        $factura->nombre_titular = $titularinfo->nombre_titular;
-        $factura->dni_titular = $titularinfo->dni_titular;
-        $factura->domicilio_del_titular = $titularinfo->dom_titular;
-        $factura->cp_titular = $titularinfo->cp_titular;
-        $factura->poblacion_titular = $titularinfo->pob_titular;
-        $factura->provincia_titular = $titularinfo->pro_titular;
+            //titular
+            $factura->nombre_titular = $titularinfo->nombre_titular;
+            $factura->dni_titular = $titularinfo->dni_titular;
+            $factura->domicilio_del_titular = $titularinfo->dom_titular;
+            $factura->cp_titular = $titularinfo->cp_titular;
+            $factura->poblacion_titular = $titularinfo->pob_titular;
+            $factura->provincia_titular = $titularinfo->pro_titular;
 
-        //facturado
-        $factura->nombre_facturado = $infoparcela->nom_facturado;
-        $factura->dni_facturado = $infoparcela->nif_facturado;
-        $factura->domicilio_facturado = $infoparcela->dir_facturado;
-        $factura->cp_facturado = $infoparcela->cp_facturado;
-        $factura->poblacion_facturado = $infoparcela->pob_facturado;
-        $factura->provincia_facturado = $infoparcela->pro_facturado;
+            //facturado
+            $factura->nombre_facturado = $infoparcela->nom_facturado;
+            $factura->dni_facturado = $infoparcela->nif_facturado;
+            $factura->domicilio_facturado = $infoparcela->dir_facturado;
+            $factura->cp_facturado = $infoparcela->cp_facturado;
+            $factura->poblacion_facturado = $infoparcela->pob_facturado;
+            $factura->provincia_facturado = $infoparcela->pro_facturado;
 
-
-        $factura->save();
-
+            $factura->save();
+        }
     }
 }

@@ -38,7 +38,6 @@
 
             </form>
         </div>
-
         <div class="row">
 
             <?php
@@ -49,10 +48,22 @@
 
                 <?php
                   if($indice%3 == 0)
-                        echo "<div class='row'>";
+                        echo "<div>";
                 ?>
 
-                <div class="col-xs-12 col-md-12 col-lg-4 text-center">
+                <div class="col-xs-12 col-md-12 col-lg-4 text-center pborder">
+                        @for($i = 0; $i < count($titulares); $i++)
+                            @if($parcela->id == $titulares[$i][0])
+                                <div class="row ptitular" style="margin-bottom: 5px">
+                                    <label >
+                                        <p style="margin-top: 8px">Titular</p>
+                                        <p class="pull-left">{{$titulares[$i][1]->nombre_titular}}</p>
+                                        <p style="margin-bottom: 5px">{{$titulares[$i][1]->dni_titular}}</p>
+                                    </label >
+
+                                </div>
+                            @endif
+                        @endfor
                     <form id="{!!$parcela->id!!}" class="parcela">
 
                         <div class="form-group">

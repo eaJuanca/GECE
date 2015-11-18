@@ -62,7 +62,7 @@
                                     @foreach($disponibles as $disponible)
 
                                         <tr>
-                                            <td>
+                                            <td id="{!!$disponible->nicho!!}" >
                                                 Altura, <span style="font-weight: bold">{{$disponible->altura}} </span>
                                                 Numero <span style="font-weight: bold">{{$disponible->numero_nicho}} </span> </td>
 
@@ -80,6 +80,24 @@
                         </div>
                     </div>
                     <div class="paginacion" style="float: right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="difunto-dialog" class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>E dolore commodo, id anim aute sint cupidatat eu est anim tamen ad possumus,
+                        legam officia firmissimum. Eram deserunt domesticarum, iis ita praetermissum,
+                        nam aliquip quo probant, incididunt et occaecat an nam enim exquisitaque a
+                        nescius velit admodum, non ad cohaerescant, probant o nulla tempor. Aute aut te
+                        quis arbitror ubi ne aliqua consequat aliquip. Ad sunt laborum senserit, de do
+                        quem possumus. Sint tractavissent cupidatat aute possumus ita elit ad cupidatat.
+                        Arbitror ab fabulas o eu e veniam pariatur. Non voluptate comprehenderit ad nisi
+                        id voluptate. Quis distinguantur quibusdam quae mentitum o si minim illum nisi
+                        mandaremus.</p>
                 </div>
             </div>
         </div>
@@ -159,7 +177,7 @@
                         httpR = data2;
                     },
                     error: function () {
-                        alert("Error en la petici�n");
+                        alert("Error en la petición");
                     },
                     success: function (data) {
 
@@ -169,6 +187,32 @@
                     }
                 });
             });
+
+            //Evento para cada tr de la tabla cuando pasamos por encima
+            $(".table td").dblclick(function(e)
+            {
+                var id = this.getAttribute('id');
+                //peticion ajax para ver los difuntos
+
+                if(id != null) {
+                    $.ajax({
+
+                        type: 'post',
+                        url: "{{ URL::route('difuntosNichos') }}",
+                        data: {id: id},
+                        dataType: "html",
+                        error: function () {
+                            alert("Error en la petición");
+                        },
+                        success: function (data) {
+
+                            $(".modal-body").html(data);
+                            $('#difunto-dialog').modal('show');
+                        }
+                    });
+                }
+
+            })
 
         });
 

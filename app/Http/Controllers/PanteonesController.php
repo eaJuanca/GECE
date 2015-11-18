@@ -7,7 +7,7 @@ use App\model\NichosPanteones;
 use App\model\VPanteones;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-
+use Carbon\Carbon;
 class PanteonesController extends Controller
 {
     /**
@@ -331,4 +331,36 @@ class PanteonesController extends Controller
         return view('difunto-nicho-panteon',compact('disponibles','id'));
 
     }
+
+    public function infoDifuntos(Request $r){
+
+        $difuntos = Difunto::where('GC_NICHOS_id', '=', $r->input('id'))->get();
+
+
+        if(!$difuntos->isEmpty()) {
+            echo '<div>';
+                echo '<table class="table table-striped table-hover ">';
+                    echo '<thead>';
+                        echo '<tr>';
+                            echo '<th>Difunto</th>';
+                            echo '<th>fecha inhumación</th>';
+                        echo '</tr>';
+                    echo '<tbody>';
+                        foreach ($difuntos as $difunto) {
+                            $date = new Carbon($difunto->fec_inh_difunto);
+                            echo '<tr>';
+                                echo '<td>' . $difunto->nom_difunto .'</td>';
+                                echo '<td>' . $date->format('j-m-Y') .'</td>';
+                            echo '</tr>';
+
+                        }
+                    echo '</tbody>';
+                echo '</table>';
+            echo '</div>';
+        }else{
+            echo '<h4 class="text-center">Ningún difunto en este nicho </h4>';
+        }
+
+    }
+
 }
