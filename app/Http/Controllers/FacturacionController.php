@@ -16,6 +16,7 @@ use App\model\Tm_nichos;
 use App\model\Tm_parcelas;
 use App\model\Tramada;
 use App\model\Factura;
+use App\model\VFacturasLineas;
 use App\model\VLinea;
 use App\model\VPanteones;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        $facturas = Factura::orderBy('id', 'DESC')->paginate(10);
+        $facturas = VFacturasLineas::orderBy('id', 'DESC')->groupby('id')->paginate(10);
         $search = false;
         return View::make('facturacion', compact('facturas', 'search'));
     }
@@ -48,7 +49,7 @@ class FacturacionController extends Controller
     public function paginate()
     {
 
-        $facturas = Factura::orderBy('id', 'DESC')->paginate(10);
+        $facturas = VFacturasLineas::orderBy('id', 'DESC')->groupby('id')->paginate(10);
         return view('renders.facturas', compact('facturas'));
     }
 
@@ -66,15 +67,17 @@ class FacturacionController extends Controller
         $calle = $request->input('calle');
         $desde = $request->input('desde');
         $hasta = $request->input('hasta');
+        $concepto = $request->input('concepto');
 
 
         $search = true;
-        $facturas = Factura::orderBy('id', 'DESC')->where(function ($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta) {
+        $facturas = VFacturasLineas::orderBy('id', 'DESC')->where(function ($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta, $concepto) {
 
             if ($titular != "") $facturas->where('nombre_titular', 'like', "%$titular%");
             if ($difunto != "") $facturas->where('nom_difunto', 'like', "%$difunto%");
             if ($dni != "") $facturas->where('dni_titular', 'like', "%$dni%");
             if ($calle != "") $facturas->where('calle', 'like', "%$calle%");
+            if ($concepto != "") $facturas->where('concepto', 'like', "%$concepto%");
 
             if ($desde != "" && $hasta != "") {
 
@@ -87,13 +90,13 @@ class FacturacionController extends Controller
                 $facturas->where('inicio', '<=', $hasta);
             }
 
-        })->paginate(10);
+        })->groupby('id')->paginate(10);
 
         if ($request->ajax()) {
 
             return view('renders.facturas', compact('facturas'));
         } else {
-            return View::make('facturacion', compact('facturas', 'search', 'titular', 'difunto', 'dni', 'calle', 'desde', 'hasta'));
+            return View::make('facturacion', compact('facturas', 'search', 'titular', 'difunto', 'dni', 'calle', 'desde', 'hasta','concepto'));
         }
     }
 

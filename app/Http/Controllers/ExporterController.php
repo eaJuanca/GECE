@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\Factura;
+use App\model\VFacturasLineas;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Maatwebsite\Excel\Facades\Excel;
@@ -19,7 +20,7 @@ class ExporterController extends Controller
 
         if($s != 1){
 
-            $data = Factura::take(1000)->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado']);
+            $data = VFacturasLineas::take(1000)->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado','concepto','cantidad','precio_unitario','importe_linea']);
 
         }else if($s == 1){
 
@@ -29,13 +30,17 @@ class ExporterController extends Controller
             $calle = $request->input('calle');
             $desde = $request->input('desde');
             $hasta = $request->input('hasta');
+            $concepto = $request->input('concepto');
 
-            $data = Factura::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta){
+
+            $data = VFacturasLineas::orderBy('id','DESC')->where(function($facturas) use ($titular, $difunto, $dni, $calle, $desde, $hasta, $concepto){
 
                 if($titular != "") $facturas->where('nombre_titular','like',"%$titular%");
                 if($difunto != "") $facturas->where('nom_difunto','like',"%$difunto%");
                 if($dni != "") $facturas->where('dni_titular','like',"%$dni%");
                 if($calle != "") $facturas->where('calle','like',"%$calle%");
+                if ($concepto != "") $facturas->where('concepto', 'like', "%$concepto%");
+
 
                 if($desde != "" && $hasta != ""){
 
@@ -48,7 +53,7 @@ class ExporterController extends Controller
                     $facturas->where('inicio','<=', $hasta);
                 }
 
-            })->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado']);
+            })->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado','concepto','cantidad','precio_unitario','importe_linea']);
 
         }
 

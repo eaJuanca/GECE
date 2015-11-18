@@ -52,10 +52,17 @@
 
                         <div class="row">
 
-                            <div  id="dnibuscar" class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <div  id="dnibuscar" class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label" for="inputWarning">Dni</label>
                                     <input type="text" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Concepto Linea</label>
+                                    <input type="text" class="form-control" name="concepto" value="<?php if(isset($concepto)) echo $concepto; else $concepto=''; ?>">
                                 </div>
                             </div>
 
@@ -248,9 +255,10 @@
                                     <input type="hidden" class="form-control"  name="difunto" value="<?php if(isset($difunto)) echo $difunto; else $difunto=''; ?>">
                                     <input type="hidden" class="form-control" name="dni" value="<?php if(isset($dni)) echo $dni; else $dni=''; ?>">
                                     <input type="hidden" class="form-control" name="calle" value="<?php if(isset($calle)) echo $calle;  else $calle='';?>">
-                                    <input type="hidden" class="form-control fecha" name="desde" value="<?php if(isset($desde)) echo $desde; else $desde=''; ?>">
-                                    <input type="hidden" class="form-control fecha"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
-                                    <input type="hidden" class="form-control fecha"  name="search" value="{{ (isset($search))?$search:0 }}">
+                                    <input type="hidden" class="form-control " name="desde" value="<?php if(isset($desde)) echo $desde; else $desde=''; ?>">
+                                    <input type="hidden" class="form-control"  name="hasta" value="<?php if(isset($hasta)) echo $hasta; else $hasta=''; ?>">
+                                    <input type="hidden" class="form-control"  name="search" value="{{ (isset($search))?$search:0 }}">
+                                    <input type="hidden" class="form-control"  name="concepto" value="<?php if(isset($concepto)) echo $concepto;  else $concepto='';?>">
                         <button type="submit" class="btn btn-success exportar"> Exportar  <i class="fa fa-file-excel-o"></i></button>
 
                     </form>
@@ -338,6 +346,8 @@
             var calle = "{{ $calle }}";
             var desde = "{{ $desde }}";
             var hasta = "{{ $hasta }}";
+            var concepto = "{{ $concepto }}";
+
             var search = "{{ (isset($search))?$search:0 }}";
 
             $(document).on('click','.pagination a', function(e){
@@ -351,7 +361,7 @@
                 if(search == 1){
 
                     url = "{{ URL::route('busquedaFacturas') }}";
-                    data = {page: page, titular: titular, difunto:difunto, dni:dni, calle:calle, desde:desde, hasta:hasta};
+                    data = {page: page, titular: titular, difunto:difunto, dni:dni, calle:calle, desde:desde, hasta:hasta, concepto:concepto};
                 } else{
                     url = '/ajax/facturas';
                     data ={page :page};
