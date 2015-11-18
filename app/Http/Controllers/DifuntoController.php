@@ -154,7 +154,7 @@ class DifuntoController extends Controller
     public function paginateDifunto(Request $request)
     {
         $page = $request->input('page');
-        $difuntos = Difunto::skip(10 * ($page - 1))->take(10)->get();
+        $difuntos = VDifuntos::skip(10 * ($page - 1))->take(10)->get();
 
         foreach ($difuntos as $difunto){
 
