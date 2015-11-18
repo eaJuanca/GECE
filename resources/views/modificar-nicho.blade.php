@@ -177,7 +177,7 @@
                                     <label class="control-label" for="select">Tipo de cesión</label>
                                     <select class="form-control bloqueable" id="select" name="cesion">
                                         <option value="0" @if($nicho->cesion==0) selected @endif  >Cesión a perpetuidad</option>
-                                        <option value="1" @if($nicho->cesion==1) selected @endif  >Cesión temporal</option>
+                                        @if($info->altura == 4)<option value="1" @if($nicho->cesion==1) selected @endif  >Cesión temporal</option>@endif
                                     </select>
 
                                 </div>
