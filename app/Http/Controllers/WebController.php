@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\model\Difunto;
+use App\model\VDifuntos;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use App\Http\Requests;
@@ -32,8 +33,8 @@ class WebController extends Controller
     public function DifuntoIndex()
     {
 
-        $total = Difunto::count();
-        $difuntos = Difunto::take(10)->get();
+        $total = VDifuntos::count();
+        $difuntos = VDifuntos::take(10)->get();
         $search = 0;
 
         return view('difunto', compact('difuntos','total','search'));

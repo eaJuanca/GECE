@@ -49,28 +49,32 @@
                                     </div>
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Sexo</label>
-                                            <select class="form-control" name="sexo">
-                                                <?php  if(!isset($sexo)) $sexo = 2 ?>
-                                                <option value="2">Cualquiera</option>
-                                                <option value="0"  <?php if($sexo==0) echo 'selected' ?> >Hombre</option>
-                                                <option value="1"  <?php if($sexo==1) echo 'selected' ?>>Mujer</option>
+                                            <label class="control-label" for="inputWarning">Parroquia</label>
+                                            <select type="text" class="form-control"  name="parroquia">
 
-                                            </select></div>
+                                                <?php  if (isset($parroquia)) {} else  $parroquia='' ?>
+                                                <option></option>
+                                                <option @if($parroquia == "Purísima") selected @endif>Purísima</option>
+                                                <option @if($parroquia == "San José") selected @endif>San José</option>
+                                                <option @if($parroquia == "Niño Jesús") selected @endif>Niño Jesús</option>
+                                                <option @if($parroquia == "San Juan Bautista") selected @endif>San Juan Bautista</option>
+                                                <option @if($parroquia == "Otra") selected @endif>Otra</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Codigo</label>
-                                            <input type="text" class="form-control" name="codigo" value="<?php  if(isset($codigo)) echo $codigo; else $codigo='' ?>">
+                                            <label class="control-label" for="inputWarning">Fecha inhumacion</label>
+                                            <input type="text" class="form-control fecha" name="inhumacion" value="<?php  if(isset($inhumacion)) echo $inhumacion; else $inhumacion='' ?>">
                                         </div>
                                     </div>
 
                                     <div class="col col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                         <div class="form-group">
-                                            <label class="control-label" for="inputWarning">Fecha</label>
+                                            <label class="control-label" for="inputWarning">Fecha defunción</label>
                                             <input type="text" class="form-control fecha" name="fecha" value="<?php  if(isset($fecha)) echo $fecha ; else $fecha=''?>">
                                         </div>
                                     </div>
@@ -100,9 +104,9 @@
 
                     <script>
                         var difunto = "{{ $difunto }}";
-                        var sexo = "{{ $sexo }}";
                         var fecha = "{{ $fecha }}";
-                        var codigo = "{{ $codigo }}";
+                        var parroquia = "{{ $parroquia }}";
+                        var inhumacion = "{{ $inhumacion }}";
                     </script>
                 </div>
             </div>
@@ -128,12 +132,14 @@
                         <table class="table table-bordered table-hover table-condensed" cellspacing="0" cellpadding="0">
                             <thead>
                             <tr>
-                                <th>Cod</th>
                                 <th>Difunto</th>
                                 <th>Fecha defunción</th>
-                                <th>Localidad</th>
-                                <th>Sexo</th>
+                                <th>Fecha inhumación</th>
+                                <th>Edad</th>
+                                <th>Domicilio</th>
                                 <th>Nicho</th>
+                                <th>Calle</th>
+                                <th>Parroquia</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -143,17 +149,15 @@
 
                                 <tr class="difunto{{$difunto->id}} ">
 
-                                    <td>{{$difunto->id}}</td>
-                                    <td>{{$difunto->nom_difunto}}</td>
-                                    <td style="width: 100px">{{$difunto->fec_fall_difunto}}</td>
-                                    <td>{{$difunto->pob_difunto}}</td>
-                                    <td style="width: 100px; text-align: center"><span>@if($difunto->sex_difunto == 1)
-                                                Mujer
-                                            @else
-                                                Hombre
-                                            @endif</span></td>
+                                    <td>{{$difunto->nombre}}</td>
+                                    <td>{{$difunto->fallecimiento}}</td>
+                                    <td>{{$difunto->inhumacion}}</td>
+                                    <td>{{$difunto->edad}}</td>
+                                    <td>{{$difunto->domicilio}}</td>
+                                    <td>{{$difunto->numero}}</td>
+                                    <td>{{$difunto->calle}}</td>
+                                    <td>{{$difunto->parroquia_difunto}}</td>
 
-                                    <td>{{$difunto->GC_NICHOS_id}}</td>
                                     <td style="width: 100px">
                                         <div style="float: right">
                                             <a data-toggle="tooltip" title="Editar" href="{{ route('modificar-difunto',[$difunto->id])}}" style="margin-right: 10px; color:#03A9F4;"><i
@@ -242,7 +246,7 @@
                 } else{
 
                     ruta = "{{ URL::route('paginateBusquedaDifunto') }}";
-                    data = {page: num, difunto: difunto, sexo: sexo, fecha: fecha, codigo: codigo};
+                    data = {page: num, difunto: difunto, fecha: fecha, parrquia: parroquia, inhumacion:inhumacion};
                 }
 
 
