@@ -69,18 +69,13 @@
                                 @else
                                     <span> <br>Número: </span> {{$numero}}
                                 @endif
-                                    <br><br>
-                                    @if($libre == 0)<span>Difunto: </span> @endif {{$f->nombre_difunto}}</div>
+                                <br><br>
+                                <span>Difunto: </span> {{$f->nombre_difunto}}</div>
                             <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12"><span>Datos de facturación </span><br><span>Nombre y apellidos: </span> {{$f->nombre_facturado}} <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}} <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</div>
                         </div>
 
 
-                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                            @if($libre == 1)Se ha creado la factura con los datos que se muestran <button onclick="dfactura('{{$f->id}}')" class="btn btn-danger btn-xs">Ha sido un error, borrar factura</button>
-
-                            @endif
-                        </div>
+                        <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                         <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
                     </div>
@@ -177,8 +172,8 @@
                             </div>
 
                         </div>
-                      </div>
-                      </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -328,41 +323,6 @@
         function deleterow(row){
 
             $('#row'+row).remove();
-        }
-
-        function dfactura(id) {
-
-            Lobibox.confirm({
-                title: "Borrando factura",
-                msg: "¿Seguro que desea eliminar esta factura?",
-                iconClass: "fa fa-warning",
-                callback: function ($this, type, ev) {
-
-                    if (type == "yes") {
-
-                        $.ajax({
-
-                            type: "POST",
-                            url: "{{URL::route('borrarfactura')}}",
-                            data: {id: id},
-                            success: function (data) {
-
-                                Lobibox.notify('success', {
-                                    title: 'Factura borrada correctamente',
-                                    showClass: 'flipInX',
-                                    delay: 3000,
-                                    delayIndicator: false,
-                                    position: 'bottom left',
-                                    icon: 'fa fa-thumbs-up'
-
-                                });
-
-                                window.location.href = "{{URL::previous()}}"
-                            }
-                        });
-                    }
-                }
-            });
         }
 
     </script>

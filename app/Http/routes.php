@@ -250,7 +250,7 @@ Route::post('borrarfactura',['as' => 'borrarfactura', 'uses' => 'FacturacionCont
 
 Route::get('factura-compra-parcela-{parcelaid}', ['as' => 'factura-compra-parcela', 'uses' => 'FacturacionController@compraParcela']);
 
-
+Route::get('factura-libre-{id}', ['as' => 'factura-libre', 'uses' => 'FacturacionController@facturalibre']);
 
 
 

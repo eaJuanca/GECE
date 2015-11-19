@@ -96,7 +96,7 @@ class FacturacionController extends Controller
 
             return view('renders.facturas', compact('facturas'));
         } else {
-            return View::make('facturacion', compact('facturas', 'search', 'titular', 'difunto', 'dni', 'calle', 'desde', 'hasta','concepto'));
+            return View::make('facturacion', compact('facturas', 'search', 'titular', 'difunto', 'dni', 'calle', 'desde', 'hasta', 'concepto'));
         }
     }
 
@@ -132,7 +132,7 @@ class FacturacionController extends Controller
         $factura = Factura::where('idnicho', $idnicho)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
         $factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         $factura = $factura->merge($factura2);
-        return view('facturasProcesoNichos', compact('factura'));
+        return view('facturasProcesoNichos', compact('factura', 'idnicho'));
     }
 
 
@@ -143,7 +143,7 @@ class FacturacionController extends Controller
     public function showParcela($idparcela)
     {
         $factura = Factura::where('idnicho', $idparcela)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
-        $factura2 = Factura::where('idnicho',$idparcela)->where('serie', 'E')->orderBy('id','DESC')->take(1)->get();
+        $factura2 = Factura::where('idnicho', $idparcela)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         $factura = $factura->merge($factura2);
 
         return view('facturasProcesoNichos', compact('factura'));
@@ -151,12 +151,102 @@ class FacturacionController extends Controller
 
 
     //Factura rapida cuando compras una parcela
-    public function compraParcela($idparcela){
+    public function compraParcela($idparcela)
+    {
 
-        $factura = Factura::where('idparcela',$idparcela)->where('serie', 'P')->take(1)->get();
+        $factura = Factura::where('idparcela', $idparcela)->where('serie', 'P')->take(1)->get();
         return view('facturasProcesoNichos', compact('factura'));
 
 
+    }
+
+
+    /**
+     * facturas de libre creacion L
+     * @param $id
+     */
+    public function facturalibre($nicho)
+    {
+
+        $titular = Nicho::find($nicho)->first()->GC_TITULAR_id;
+
+
+        //fecha de hoy
+        $hoy = Carbon::now();
+        $iva = Iva2::first();
+        $iva = $iva->tipo;
+        $info = InfoNicho::find($nicho);
+        $precio = Tcp_nichos::find($info->altura)->get()[0];
+        $precio = $precio->tarifa;
+
+
+        //obtener el numero de factura maximo
+        $numero = Factura::where('serie', 'L')->whereYear('created_at', '=', $hoy->year)->max('numero');
+
+
+        $titularinfo = Titular::find($titular);
+        $nichoinfo = Nicho::find($nicho);
+
+        $factura = new Factura();
+        $factura->numero = $numero + 1;
+        $factura->inicio = $hoy;
+        $factura->fin = $hoy;
+        $factura->idnicho = $nicho;
+        $factura->serie = 'L';
+        $factura->idtitular = $titular;
+        $factura->base = $precio;
+        $factura->iva = $precio * (($iva / 100));
+        $factura->total = $precio * (1 + ($iva / 100));
+
+        //nuevos campos
+
+        $factura->tipo_adquisicion = 0;
+        $factura->calle = $info->nombre_calle;
+        $factura->tramada = $info->altura;
+        $factura->numero_nicho = $info->numero;
+
+        //titular
+        $factura->nombre_titular = $titularinfo->nombre_titular;
+        $factura->dni_titular = $titularinfo->dni_titular;
+        $factura->domicilio_del_titular = $titularinfo->dom_titular;
+        $factura->cp_titular = $titularinfo->cp_titular;
+        $factura->poblacion_titular = $titularinfo->pob_titular;
+        $factura->provincia_titular = $titularinfo->pro_titular;
+
+        //facturado
+        $factura->nombre_facturado = $nichoinfo->nom_facturado;
+        $factura->dni_facturado = $nichoinfo->nif_facturado;
+        $factura->domicilio_facturado = $nichoinfo->dir_facturado;
+        $factura->cp_facturado = $nichoinfo->cp_facturado;
+        $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+        $factura->provincia_facturado = $nichoinfo->pro_facturado;
+
+        $factura->cesion = $nichoinfo->cesion;
+
+
+        $factura->save();
+
+        //$this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
+
+        $f = Factura::find($factura->id);
+        $servicios = TarifaServicios::where('tipo', 0)->get();
+        $lineas = VLinea::where('factura', $factura->id)->get();
+
+        $tramada = null;
+
+        if ($f->idparcela != null) {
+            //si es una parcela obtenemos el id de la tramada
+            $nicho = Nicho::find($f->idnicho);
+            $numero = $nicho->numero;
+            $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
+        } else {
+            $tramada = $f->tramada;
+            $numero = $f->numero_nicho;
+        }
+
+        $libre = 1;
+        //crear una vista
+        return view('modificar_factura', compact('f', 'servicios', 'lineas', 'numero', 'tramada','libre'));
     }
 
     /**
@@ -169,7 +259,7 @@ class FacturacionController extends Controller
     {
 
         $f = Factura::find($id);
-        $servicios = TarifaServicios::where('tipo',0)->get();
+        $servicios = TarifaServicios::where('tipo', 0)->get();
         $lineas = VLinea::where('factura', $id)->get();
 
         $tramada = null;
@@ -184,8 +274,9 @@ class FacturacionController extends Controller
             $numero = $f->numero_nicho;
         }
 
+        $libre = 0;
         //crear una vista
-        return view('modificar_factura', compact('f', 'servicios', 'lineas', 'numero', 'tramada'));
+        return view('modificar_factura', compact('f', 'servicios', 'lineas', 'numero', 'tramada','libre'));
     }
 
     /**
@@ -263,7 +354,6 @@ class FacturacionController extends Controller
         }
 
 
-
         //titular
         $factura->nombre_titular = $titularinfo->nombre_titular;
         $factura->dni_titular = $titularinfo->dni_titular;
@@ -302,7 +392,6 @@ class FacturacionController extends Controller
 
     public function facturaCesionPerpetua($titular, $nicho)
     {
-
 
         //fecha de hoy
         $hoy = Carbon::now();
@@ -584,19 +673,18 @@ class FacturacionController extends Controller
         $hoy = Carbon::now();
         //Cogemos el ultimo año pagado en factura de esta parcela
         $ultimo = infoRecibos::where('idparcela', '=', $parcela)->groupBy('idparcela')->get(['fin'])[0]->fin;
-        $ultimo = Carbon::create($ultimo,1,1,0,0);
+        $ultimo = Carbon::create($ultimo, 1, 1, 0, 0);
         $fin = new Carbon($ultimo);
 
         //En la parcela si enterramos en 2015 y luego en 2016 no se puede generar 5 años más debería
         //calcularse si la diferencia es menor que 5 y si es así incrementar hasta 5
-        if($fin->year > $hoy->year)
-        {
+        if ($fin->year > $hoy->year) {
             $diferencia = (5 - ($fin->year - $hoy->year));
-        }else {
+        } else {
             $diferencia = (5 + ($hoy->year - $fin->year));
         }
 
-        if($diferencia > 0) {
+        if ($diferencia > 0) {
 
             $iva = Iva2::first()->tipo;
             $tarifa = Tm_parcelas::find(2);

@@ -226,6 +226,7 @@
                                             <td> @if(\Illuminate\Support\Facades\Auth::user()->rol == 0)<a title="Modificar Nicho" href="{{ route('modificar-nichos',[$nodisponible->id])}}"><i class="fa fa-lg fa-pencil-square-o"></i></a>@endif
                                                  <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search"></i></a>
                                                  <a title="Añadir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus"></i></a>
+                                                <a title="Crear factura" href="{{ route('factura-libre',[$nodisponible->id])}}"><i class="fa fa-lg fa-euro"></i></a>
                                             </td>
 
                                         </tr>
