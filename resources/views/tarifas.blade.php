@@ -41,13 +41,13 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-3 ">Tarifa por m2:</label>
-                        <div class="col-lg-9">
-                            @if($Tcp_parcelas != null)
-                                <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
-                            @else
-                                <input type="text" name="cp_parcela" class="form-control cp_parcela" placeholder="valor tarifa" required>
-                            @endif
+                        <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Tarifa por m2:</label>
+                            <input type="number" name="cp_parcela" class="form-control cp_parcela" placeholder="{!! $Tcp_parcelas->tarifa !!}" required>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Código:</label>
+                            <input type="text" name="cp_parcela_cod" class="form-control cp_parcela_cod" placeholder="{!! $Tcp_parcelas->codigo !!}" required>
                         </div>
                     </div>
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
@@ -65,10 +65,13 @@
 
                     @for($i = 0 ; $i < count($Tcp_nichos); $i++)
                         <div class="row form-group nombre" style="margin-left: 0px">
-
                             <label class="col col-lg-2 labelo ">Altura{{$i+1}}:</label>
-                            <div class="col col-lg-10">
-                                <input type="text" name="cp_nicho{!!$i!!}" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos[$i]->tarifa !!}" required>
+                            <div class="col col-lg-4">
+                                <input type="number" name="cp_nicho{!!$i!!}" class="form-control cp_nicho" placeholder="{!! $Tcp_nichos[$i]->tarifa !!}" required>
+                            </div>
+                            <label class="col col-lg-2 labelo ">Código:</label>
+                            <div class="col col-lg-4">
+                                <input type="text" name="cp_nicho{!!$i!!}_cod" class="form-control cp_nicho_cod" placeholder="{!! $Tcp_nichos[$i]->codigo !!}" required>
                             </div>
                         </div>
                     @endfor
@@ -89,10 +92,6 @@
         </div>
         <div class="panel-body">
 
-            <form id="form_tp">
-
-
-            </form>
 
             <form id="from_tn">
 
@@ -103,13 +102,13 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 labelo ">Tarifa:</label>
-                        <div class="col-lg-10">
-                            @if($Tct_nichos != null)
-                                <input type="text" name="ct_nicho" class="form-control ct_nicho" placeholder="{!! $Tct_nichos->tarifa !!}" required>
-                            @else
-                                <input type="text" name="ct_nicho" class="form-control ct_nicho" placeholder="valor tarifa" required>
-                            @endif
+                        <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Tarifa:</label>
+                            <input type="number" name="ct_nicho" class="form-control ct_nicho" placeholder="{!! $Tct_nichos->tarifa !!}" required>
+                        </div>
+                        <div class="col col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Código:</label>
+                            <input type="text" name="ct_nicho_cod" class="form-control cp_parcela_cod" placeholder="{!! $Tct_nichos->codigo !!}" required>
                         </div>
                     </div>
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
@@ -137,16 +136,24 @@
                     <br>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-3 ">Tarifa sin construir (m2):</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="m_parcela0" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[0]->tarifa !!}" required>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Tarifa sin construir (m2):</label>
+                            <input type="number" name="m_parcela0" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[0]->tarifa !!}" required>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Código:</label>
+                            <input type="text" name="m_parcela0_cod" class="form-control m_parcela_cod" placeholder="{!! $Tm_parcelas[0]->codigo !!}" required>
                         </div>
                     </div>
 
                     <div class="row form-group nombre">
-                        <label for="inputFile" class="col-lg-3  ">Tarifa construida:</label>
-                        <div class="col-lg-9">
-                            <input type="text" name="m_parcela1" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[1]->tarifa !!}" required>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Tarifa construida:</label>
+                            <input type="number" name="m_parcela1" class="form-control m_parcela" placeholder="{!! $Tm_parcelas[1]->tarifa !!}" required>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Código:</label>
+                            <input type="text" name="m_parcela1_cod" class="form-control m_parcela_cod" placeholder="{!! $Tm_parcelas[1]->codigo !!}" required>
                         </div>
                     </div>
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
@@ -163,15 +170,16 @@
                     <br>
 
                     <div class="form-group nombre">
-                        <label for="inputFile" class="col-lg-2 labelo">Tarifa:</label>
-                        <div class="col-lg-10">
-                            @if($Tm_nichos != null)
-                                <input type="text" name="m_nicho" class="form-control m_nicho" placeholder="{!! $Tm_nichos->tarifa !!}" required>
-                            @else
-                                <input type="text" name="m_nicho" class="form-control m_nicho" placeholder="valor tarifa" required>
-                            @endif
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Tarifa:</label>
+                            <input type="number" name="m_nicho" class="form-control m_nicho" placeholder="{!! $Tm_nichos->tarifa !!}" required>
+                        </div>
+                        <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                            <label class="control-label" for="inputWarning">Código:</label>
+                            <input type="text" name="m_nicho_cod" class="form-control m_nicho_cod" placeholder="{!! $Tm_nichos->codigo !!}" required>
                         </div>
                     </div>
+
                     <button class="btn btn-success btn-raised pull-right">Modificar</button>
 
                 </div>
@@ -400,37 +408,6 @@
                 });
 
             });
-
-            $("#form_tp").submit(function (e) {
-
-                    e.preventDefault();
-
-                    $.ajax({
-                        type: "GET",
-                        url: "{{ URL::route('ct_parcelas') }}",
-                        data: $("#form_tp").serialize(),
-                        dataType: "html",
-                        error: function () {
-                            alert("entra en error");
-                        },
-                        success: function (data) {
-
-                            Lobibox.notify('success', {
-                                title: 'Tarifa modificada',
-                                showClass: 'flipInX',
-                                delay: 3000,
-                                delayIndicator: false,
-                                position: 'bottom left',
-                                icon: 'fa fa-thumbs-up'
-
-
-                            });
-
-                            //location.reload();
-                        }
-                    });
-
-                });
 
             $("#from_tn").submit(function (e) {
 

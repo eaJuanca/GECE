@@ -46,24 +46,12 @@ class tarifasController extends Controller{
      */
     function cp_parcelas(Request $r){
 
-
-        $countTarifa =  Tcp_parcelas2::count();
-
-
         //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
+        $tarifa = Tcp_parcelas2::firstOrFail();
+        $tarifa->tarifa = $r->input("cp_parcela");
+        $tarifa->codigo = $r->input("cp_parcela_cod");
+        $tarifa->save();
 
-            $tarifa = Tcp_parcelas2::firstOrFail();
-            $tarifa->tarifa = $r->input("cp_parcela");
-            $tarifa->save();
-
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tcp_parcelas2();
-            $tarifa->tarifa = $r->input("cp_parcela");
-            $tarifa->save();
-        }
     }
 
     /*
@@ -76,33 +64,10 @@ class tarifasController extends Controller{
         for ($i = 0 ; $i < $countTarifa; $i++) {
             $tarifa = Tcp_nichos::find($i+1);
             $tarifa->tarifa = $r->input("cp_nicho" . $i);
+            $tarifa->codigo = $r->input("cp_nicho" . $i . "_cod");
             $tarifa->save();
         }
     }
-
-    /*
-     * Funcion para dar de alta la tarifa cesion temporal de las parcelas
-     */
-    function ct_parcelas(Request $r)
-    {
-        $countTarifa =  Tct_parcelas::count();
-
-        //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
-
-            $tarifa = Tct_parcelas::firstOrFail();
-            $tarifa->tarifa = $r->input("ct_parcela");
-            $tarifa->save();
-
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tct_parcelas();
-            $tarifa->tarifa = $r->input("ct_parcela");
-            $tarifa->save();
-        }
-    }
-
     /*
     * Funcion para obtener el valor de la tarifa de cesion temporal de las parcelas
     */
@@ -119,20 +84,13 @@ class tarifasController extends Controller{
     {
         $countTarifa =  Tct_nichos::count();
 
-        //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
+        //ya esta la tarifa dada de alta la actualizamos.
 
-            $tarifa = Tct_nichos::firstOrFail();
-            $tarifa->tarifa = $r->input("ct_nicho");
-            $tarifa->save();
+        $tarifa = Tct_nichos::firstOrFail();
+        $tarifa->tarifa = $r->input("ct_nicho");
+        $tarifa->codigo = $r->input("ct_nicho_cod");
+        $tarifa->save();
 
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tct_nichos();
-            $tarifa->tarifa = $r->input("ct_nicho");
-            $tarifa->save();
-        }
     }
 
     /*
@@ -157,7 +115,8 @@ class tarifasController extends Controller{
         for($i = 0; $i < $countTarifa; $i++)
         {
             $tarifa = Tm_parcelas::find($i+1);
-            $tarifa->tarifa = $r->input("m_parcela".$i);
+            $tarifa->tarifa = $r->input("m_parcela". $i);
+            $tarifa->codigo = $r->input("m_parcela". $i . "_cod");
             $tarifa->save();
         }
     }
@@ -179,20 +138,12 @@ class tarifasController extends Controller{
     {
         $countTarifa =  Tm_nichos::count();
 
-        //Si ya esta la tarifa dada de alta la actualizamos.
-        if($countTarifa == 1){
+        //ya esta la tarifa dada de alta la actualizamos.
 
-            $tarifa = Tm_nichos::firstOrFail();
-            $tarifa->tarifa = $r->input("m_nicho");
-            $tarifa->save();
-
-        }else{
-
-            //sino la creamos
-            $tarifa = new Tm_nichos();
-            $tarifa->tarifa = $r->input("m_nicho");
-            $tarifa->save();
-        }
+        $tarifa = Tm_nichos::firstOrFail();
+        $tarifa->tarifa = $r->input("m_nicho");
+        $tarifa->codigo = $r->input("m_nicho_cod");
+        $tarifa->save();
     }
 
 

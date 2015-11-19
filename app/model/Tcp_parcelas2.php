@@ -17,7 +17,8 @@ class Tcp_parcelas2 extends Model{
 
     protected $fillable = [
         'id',
-        'tarifa'
+        'tarifa',
+        'codigo'
     ];
 
 }

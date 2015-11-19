@@ -275,7 +275,6 @@ class PanteonesController extends Controller
             $ruta = route('modificar-panteones', [$Nodisponible->parcela_id]);
             $ruta2 = route('nichos-panteones',[$Nodisponible->parcela_id]);
 
-
             echo '<tr>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
             echo '<td>' . $Nodisponible->dni_titular . '</td>';
