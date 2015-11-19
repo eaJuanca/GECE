@@ -262,6 +262,10 @@
                     <span id="modalfras3" style="font-weight: bold; color: red ; display: none" > Se ha llegado al total de difuntos por nicho</span> <br>
 
                     <span  id="modalfras4" style="font-weight: bold;  color: red; display: none"> No han pasado 5 años desde la última inhumación</span>
+
+                    <br>
+                    <br>
+                    <div class="row" id="modaldifuntos">Cargando difuntos...</div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-primary" data-dismiss="modal">Cerrar</button>
@@ -530,6 +534,31 @@
                     if(!cumpletotal){ $('#modalfras3').css('display','block'); }
                     if(!cumplefecha){ $('#modalfras4').css('display','block'); }
 
+                    $.ajax({
+
+                        type: "post",
+                        url: "{{ URL::route('difuntosNichos') }}",
+                        data: {id: id},
+                        dataType: "html",
+
+                        beforeSend: function(data2){
+                            /*httpR es la variable global donde guardamos la conexion*/
+                            if(httpR){
+                                /*Si habia alguna conexion anterior, la cancelamos*/
+                                httpR.abort();
+                            }
+                            /*Guardamos la nueva conexion*/
+                            httpR = data2;
+                        },
+                        error: function () {
+                            alert("Error en la petición");
+                        },
+                        success: function (data) {
+
+                            $('#modaldifuntos').html(data);
+                        }
+                    });
+
                 }
             });
         }
@@ -540,9 +569,10 @@
             $('#modalfras2').css('display','none');
             $('#modalfras3').css('display','none');
             $('#modalfras4').css('display','none');
+            $('#modaldifuntos').html('Cargando difuntos...');
             $('#cargando').show();
 
-        })
+        });
 
         /**
          * Comentario cambios
