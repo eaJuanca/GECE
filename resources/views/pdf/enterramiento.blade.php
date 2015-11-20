@@ -64,7 +64,7 @@
 
 <div class="parte1">
 
-    <img src="{{ URL::asset('assets/cruz.gif') }}" height="38" width="32">
+    <img src="{{ URL::asset('assets/cruz.gif') }}" height="34" width="28">
     <br>
     <br>
 
@@ -72,8 +72,6 @@
     <br>
     <br>
     <br>
-
-
 
     <p id="p1" style="margin-top: 2px">
         CIF: R3000591B <br>
@@ -98,11 +96,14 @@
 
     <table class="table1" style="width:90%; font-size: 14px" border="0">
         <tr>
-            <td valign="top"><b>Factura nº:</b> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}
-                <br><b>Fecha:</b> {{$date}}
+            <td valign="top">
+                <span>Factura nº: </span> <span style="margin-left: 1%"> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}</span>
+                </span>
+                <br>
+                <span>Fecha: </span><span style="margin-left: 20%">{{$date}}</span>
             </td>
             <td valign="top">
-                <div style="margin-left: 30px">
+                <div style="margin-left: 20px">
                 @if($f->idparcela == null)
                     <br> <b>Datos del nicho</b>
                 @else
@@ -121,19 +122,28 @@
                 @endif
                     <br><br>{{$f->nombre_difunto}}
                 </div></td>
-            <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
-                <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
-                <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>
-            </tr>
+            <td valign="top">
+                <span style="margin-left: -10%">Datos de facturación:</span>
+                <br>
+                <span style="font-weight: bold; margin-left: 10%">{{$f->nombre_facturado}}</span>
+                <br>
+                <span style="margin-left: 10%">{{$f->dni_facturado}}</span>
+                <br>
+                <span style="margin-left: 10%">{{$f->domicilio_facturado}}</span>
+                <br>
+                <span style="margin-left: 10%">{{$f->cp_facturado}}-{{$f->poblacion_facturado}}-{{$f->provincia_facturado}}</span>
+            </td>
 
     </table>
 
     <br>
     <br>
-    <table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center"
+
+    <div style="margin-left: 10%">
+        <table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center"
            cellspacing="0" cellpadding="0">
         <thead>
-        <tr style="font-size: 13px; background-color: #00BCD4">
+        <tr style="font-size: 13px; text-align: left">
             <th>Código</th>
             <th>Concepto</th>
             <th>Cantidad</th>
@@ -149,7 +159,7 @@
                 <td class="left">{{$linea->codigo}}</td>
                 <td class="left">{{$linea->concepto}}</td>
                 <td class="left">{{$linea->cantidad}}</td>
-                <td class="right">{{ number_format($linea->importe * $linea->cantidad,2)}}{{" € "}}</td>
+                <td class="right">{{ number_format($linea->importe * $linea->cantidad,2,",","")}}{{" € "}}</td>
                 <?php $total += $linea->importe * $linea->cantidad ?>
             </tr>
         @endforeach
@@ -160,7 +170,7 @@
             <td class="noborder"></td>
             <td class="noborder"></td>
             <td class="noborder">Base</td>
-            <td>{{ number_format($total,2)}}{{" € "}}</td>
+            <td style="font-weight: bold">{{ number_format($total,2,",","")}}{{" € "}}</td>
         </tr>
 
         <tr class="right">
@@ -168,7 +178,7 @@
             <td class="noborder"></td>
             <td class="noborder"></td>
             <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-            <td>{{ number_format($total * ($iva->tipo/100),2)}}{{" € "}}</td>
+            <td>{{ number_format($total * ($iva->tipo/100),2,",","")}}{{" € "}}</td>
         </tr>
 
         <tr class="right">
@@ -176,13 +186,13 @@
             <td class="noborder"></td>
             <td class="noborder"></td>
             <td class="noborder">TOTAL FACTURA</td>
-            <td>{{ number_format($total + ($total * ($iva->tipo/100)),2)}}{{" €"}}</td>
+            <td style="font-weight: bold">{{ number_format($total + ($total * ($iva->tipo/100)),2,",","")}}{{" €"}}</td>
         </tr>
 
 
         </thead>
     </table>
-
+    </div>
 </div>
 
 <div class="parte2">
@@ -229,10 +239,9 @@
 
     </table>
 
-    <table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center"
-           cellspacing="0" cellpadding="0">
+    <table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center" cellspacing="0" cellpadding="0">
         <thead>
-        <tr style="font-size: 14px; background-color: #00BCD4">
+        <tr style="font-size: 14px;">
             <th>Código</th>
             <th>Concepto</th>
         </tr>

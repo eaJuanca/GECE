@@ -51,14 +51,14 @@
 </style>
 <body>
 
-<img src="{{ URL::asset('assets/cruz.gif') }}" height="38" width="32">
+<img src="{{ URL::asset('assets/cruz.gif') }}" height="40" width="34">
+<br>
+<br>
+<br>
+<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -42%" width="83%" height="3.5%">
 <br>
 <br>
 
-<img src="{{ URL::asset('harrington.jpg') }}" style="margin-bottom: 10px; margin-left: -44%">
-<br>
-<br>
-<br>
 
 <p id="p1">
     CIF: R3000591B <br>
@@ -82,42 +82,60 @@ $date = new \Carbon\Carbon($f->inicio);
 $date = $date->format('j-m-Y');
 ?>
 
-<table class="table1" style="width:90%" border="0">
+<table class="table1" style="width:90%; font-size: 15px" border="0">
     <tr>
-        <td valign="top">Factura nº: {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}
-            <br>Fecha: {{$date}}
-        </td>
         <td valign="top">
-            <div style="margin-left: 20px">
-                <br>Datos del nicho <br><br> {{$f->nombre_titular}} <br> <span>Calle: </span>{{$f->calle}}
-                <span> <br>Numero: </span> {{$f->numero_nicho}}
-                <span> <br>Altura: </span> {{$f->tramada}}<br>
+            <span>Factura nº: </span> <span style="margin-left: 1%"> {{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{$ejercicio->year}}</span>
+            </span>
+            <br>
+            <span>Fecha: </span><span style="margin-left: 20%">{{$date}}</span>
+        </td>
+        <td>
+            <div style="margin-left: 20px; margin-top: 4%">
+                <span style="margin-left: -20%">Datos de la parcela:</span>
+                <br>
+                <span>{{$f->nombre_titular}}</span>
+                <br>
+                <span>Calle: </span>{{$f->calle}}
+                <br>
+                <span>Numero: </span> {{$f->numero_nicho}}
+                <br>
+                <span> Altura: {{$f->tramada}}</span>
+                <br>
             </div>
         </td>
-        <td valign="top">Datos de facturación<br> <br><span>Nombre: </span> {{$f->nombre_facturado}}
-            <br><span>NIF/CIF: </span> {{$f->dni_facturado}}<br><span>Domicilio: </span> {{$f->domicilio_facturado}}
-            <br> {{$f->cp_facturado}}<br>{{$f->poblacion_facturado}}/{{$f->provincia_facturado}}</td>
+        <td valign="top">
+            <span style="margin-left: -10%">Datos de facturación:</span>
+            <br>
+            <span style="font-weight: bold; margin-left: 10%">{{$f->nombre_facturado}}</span>
+            <br>
+            <span style="margin-left: 10%">{{$f->dni_facturado}}</span>
+            <br>
+            <span style="margin-left: 10%">{{$f->domicilio_facturado}}</span>
+            <br>
+            <span style="margin-left: 10%">{{$f->cp_facturado}}-{{$f->poblacion_facturado}}-{{$f->provincia_facturado}}</span>
+        </td>
     </tr>
 
 </table>
 
 <br>
 <br>
+<div style="margin-left: 10%">
 <table class="table2" width="90%" border="1" style="border-collapse: collapse; border: none;  text-align: center" cellspacing="0" cellpadding="0">
     <thead>
-    <tr style="font-size: 18px; background-color: #00BCD4">
+    <tr style="font-size: 14px; text-align: left">
         <th>Código</th>
         <th>Concepto</th>
         <th>Cantidad</th>
         <th>Precio</th>
     </tr>
 
-    <tr>
-
+    <tr class="right">
         <td class="left">{{$coste->codigo}}</td>
         <td class="left">Cesión a perpetuidad</td>
         <td class="left">1</td>
-        <td class="right">{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td class="right">{{ number_format($coste->tarifa,2,",","")}}{{" € "}}</td>
     </tr>
 
 
@@ -126,7 +144,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder" ></td>
         <td class="noborder">Base</td>
-        <td>{{ number_format($coste->tarifa,2)}}{{" € "}}</td>
+        <td style="font-weight: bold">{{ number_format($coste->tarifa,2,",","")}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -134,7 +152,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2)}}{{" € "}}</td>
+        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2,",",""}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -142,11 +160,11 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">TOTAL FACTURA</td>
-        <td>{{ number_format($coste->tarifa + ($coste->tarifa * ($iva->tipo/100)),2)}}{{" €"}}</td>
+        <td style="font-weight: bold">{{ number_format($coste->tarifa + ($coste->tarifa * ($iva->tipo/100)),2,",","")}}{{" €"}}</td>
     </tr>
     </thead>
 </table>
-
+</div>
 
 </body>
 </html>

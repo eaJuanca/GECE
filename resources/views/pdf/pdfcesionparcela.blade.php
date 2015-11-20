@@ -6,7 +6,6 @@
 
 </head>
 
-
 <style>
 
     html, body {
@@ -47,8 +46,6 @@
     .table2 td, .table2 th{
         padding: 2px 5px 2px 5px;
     }
-
-
 
 </style>
 <body>
@@ -128,20 +125,20 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
         <th class="left ">Precio</th>
     </tr>
 
-    <tr>
-        <td class="left"></td>
+    <tr class="right">
+        <td class="left">{{$coste->codigo}}</td>
         <td class="left">Cesión a perpetuidad</td>
         <td class="left"> {{$factura->metros_parcela}} m2 x {{$coste->tarifa}}€</td>
-        <td class="right">{{ number_format($factura->base,2)}}{{" € "}}</td>
+        <td class="right">{{ number_format($factura->base,2,",","")}}{{" € "}}</td>
     </tr>
 
 
     <tr class="right">
 
         <td class="noborder"></td>
-        <td class="noborder" ></td>
+        <td class="noborder"></td>
         <td class="noborder">Base</td>
-        <td style="font-weight: bold">{{ number_format($factura->base,2)}}{{" € "}}</td>
+        <td style="font-weight: bold">{{ number_format($factura->base,2,",","")}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -149,7 +146,7 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-        <td style="font-size: 14px">{{ number_format($factura->iva,2)}}{{" € "}}</td>
+            <td style="font-size: 14px">{{ number_format($factura->iva,2,",","") }}{{" € "}}</td>
     </tr>
 
     <tr class="right">
@@ -157,7 +154,7 @@ $ejercicio = new \Carbon\Carbon($factura->created_at);
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">TOTAL FACTURA</td>
-        <td style="font-weight: bold">{{ number_format(($factura->base + $factura->iva) ,2)}}{{" €"}}</td>
+        <td style="font-weight: bold">{{ number_format(($factura->base + $factura->iva) ,2,",","")}}{{" €"}}</td>
     </tr>
     </thead>
 </table>
