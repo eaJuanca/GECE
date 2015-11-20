@@ -1269,7 +1269,6 @@
         //Tramadas para la parcela individual
         $('#tramadas_parcela').on("change",function(){
 
-
             if($.isNumeric(this.value)){
 
                 //Al cambiar ocultamos todas
@@ -1286,7 +1285,19 @@
                     $('#tramada'+ i + "_ind")[0].setAttribute("type", "text");
                 }
 
-                //$(".inputs").html(imprimir);
+                //Asignamos evento on change para cada tramada de la parcela.
+                for (var i = 1; i <= 10; i++) {
+                    $('#tramada' + i + '_ind').on("change", function (e) {
+                        //idParcelaStatico = this.getAttribute('id');
+                        //idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_") + 2, idParcelaStatico.length);
+                        //obtenemos las tramadas
+                        var numTramdas = parseInt($("#tramadas_parcela").val());
+                        asignarValoresParcelasIndividual(1, numTramdas, this.value, 0);
+                        //Hacemos el unbind para las tramadas de esta parcela.
+                        unbidEventIndividual(1, numTramdas);
+                    });
+                }
+
             }else{
 
                 $(".n_nichos_parcela_ind").css("display",'none');
@@ -1302,7 +1313,6 @@
 
         //Ocultar parcelas por si se han quedado desplegadas.
         function ocultarParcelas(){
-
             for(var i = 1; i <= 10; i++)
             {
                 $('#parcela'+i).css("display", "none");
@@ -1313,16 +1323,15 @@
             }
         }
 
+        //Asociamos el evento onchange para que todos cambien si cambia uno
+        $(".tramadav").on("change", function (e) {
+            var numTramdas = parseInt($("#tramadas").val());
+            if(!primeraN) {
+                asignarValores(1, numTramdas, this.value);
+                primeraN = true;
+            }
 
-            //Asociamos el evento onchange para que todos cambien si cambia uno
-            $(".tramadav").on("change", function (e) {
-                var numTramdas = parseInt($("#tramadas").val());
-                if(!primeraN) {
-                    asignarValores(1, numTramdas, this.value);
-                    primeraN = true;
-                }
-
-            });
+        });
 
         //Asignamos valores cuando cambiamos el valor de un input para las calles.
         function asignarValores(inicio, fin,number){
@@ -1338,6 +1347,13 @@
             }
         }
 
+        //Asignamos valores cuando cambiamos el valor de un input para las calles.
+        function asignarValoresParcelasIndividual(inicio, fin,number){
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i + '_ind').val(number);
+            }
+        }
+
         //Asignamos evento on change para cada tramada de la parcela.
         for (var i = 1; i <= 10; i++) {
             for (var j = 1; j <= 10; j++) {
@@ -1347,23 +1363,23 @@
                     //obtenemos las tramadas
                     var numTramdas = parseInt($("#tram_parc_" + idParcelaStatico).val());
                     asignarValoresParcelas(1, numTramdas, this.value, idParcelaStatico);
+                    //Hacemos el unbind para las tramadas de esta parcela.
+                    unbidEvent(1, numTramdas, idParcelaStatico);
                 });
             }
         }
 
-        //Falta para la paste
-        for (var i = 1; i <= 10; i++) {
-            for (var j = 1; j <= 10; j++) {
-                $('#tramada' + i + '_p' + j).on("change", function (e) {
-                    idParcelaStatico = this.getAttribute('id');
-                    idParcelaStatico = idParcelaStatico.substring(idParcelaStatico.indexOf("_") + 2, idParcelaStatico.length);
-                    //obtenemos las tramadas
-                    var numTramdas = parseInt($("#tram_parc_" + idParcelaStatico).val());
-                    asignarValoresParcelas(1, numTramdas, this.value, idParcelaStatico);
-                });
+        function unbidEvent(inicio, fin, parcela){
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i + '_p'+ parcela).unbind("change");
             }
         }
 
+        function unbidEventIndividual(inicio, fin){
+            for(var i = inicio; i <= fin; i++) {
+                $('#tramada' + i + '_ind').unbind("change");
+            }
+        }
 
 
 
