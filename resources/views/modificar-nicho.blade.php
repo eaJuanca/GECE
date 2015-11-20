@@ -327,8 +327,14 @@
 
                             <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label" for="inputWarning">Plaza</label>
-                                    <input type="text" class="form-control" value="{{$nicho->plaza}}" name="plaza">
+                                    <label class="control-label" for="inputWarning">Forma de pago</label>
+                                    <select class="form-control bloqueable" id="select" name="formapago">
+                                        <option value="0" @if($nicho->formapago == 0) selected @endif> Al contado</option>
+                                        <option value="1" @if($nicho->formapago == 1) selected @endif> Transferencia</option>
+                                        <option value="2" @if($nicho->formapago == 2) selected @endif>Cheque</option>
+                                        <option value="3" @if($nicho->formapago == 3) selected @endif>Pagaré</option>
+                                        <option value="4" @if($nicho->formapago == 4) selected @endif>Tarjeta</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
