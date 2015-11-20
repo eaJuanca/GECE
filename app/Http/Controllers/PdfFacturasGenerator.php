@@ -131,6 +131,31 @@ class PdfFacturasGenerator extends Controller
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
     }
 
+    public function facturaPersonalizada($id){
+
+        $f = Factura::find($id);
+
+        $tramada = null;
+
+        $lineas = VLinea::where('factura',$id)->get();
+        $iva = Iva2::first();
+
+        if($f->idparcela != null){
+            //si es una parcela obtenemos el id de la tramada
+            $nicho = Nicho::find($f->idnicho);
+            $numero = $nicho->numero;
+            $tramada = Tramada::find($nicho->GC_Tramada_id)->tramada;
+        }else{
+            $tramada = $f->tramada;
+            $numero = $f->numero_nicho;
+        }
+
+        $view =  \View::make('pdf.personalizada', compact('f','lineas','iva','tramada','numero'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
+    }
+
     /**
      * Detectar cambios
      */

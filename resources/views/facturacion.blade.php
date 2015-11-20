@@ -233,7 +233,7 @@
                                         <td>-</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
-                                        <td> <a href="{{ route('pdfacturaParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
+                                        <td> <a href="{{ route('pdfacturalibre',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
 
                                     @else
 

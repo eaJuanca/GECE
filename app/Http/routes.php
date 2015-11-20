@@ -252,6 +252,9 @@ Route::get('factura-compra-parcela-{parcelaid}', ['as' => 'factura-compra-parcel
 
 Route::get('factura-libre-{id}', ['as' => 'factura-libre', 'uses' => 'FacturacionController@facturalibre']);
 
+Route::get('pdfacturalibre-{id}', ['as' => 'pdfacturalibre', 'uses' => 'PdfFacturasGenerator@facturaPersonalizada']);
+
+
 
 
 
