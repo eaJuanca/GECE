@@ -79,7 +79,6 @@ class callesController extends Controller {
 
                     //Guardamos los x nichos de la tramada $i
                     $this->guardarNichos($numTramadas * $numNichos,$tramada->id,$i,$numTramadas,1);
-
                 }
 
 
@@ -92,13 +91,8 @@ class callesController extends Controller {
         }else{
             //Sino guardamos las parcelas/panteones
 
-            $panteon = new Panteon();
-
             if($r->input('iexistente') != ""){
                 //Si se ha seleccionado una calle existente entramos aquí.
-                /*$parcela = new Parcela(); //creamos 1 objeto parcela porque sólo vamos a dar de alta 1
-                $parcela->GC_CALLE_id = $r->input('iexistente');
-                $parcela->save();*/
 
                 //Obtenemos el id de la calle existente
                 $updateCalle = Calle::find($r->input('iexistente'));

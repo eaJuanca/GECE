@@ -913,9 +913,6 @@
             //Si añadimos una parcela a una existente comprobamos que este campo tenga algun valor para que no entre en el else del ajax
             var numero = $("#inputNumero").val();
 
-
-
-
             if(parseInt(tramadas) > 0 && parseInt(tramadas) <= 9 || parseInt(parcelas) > 0 && parseInt(parcelas)
                     || parseInt(tramadas_parcela) > 0 && parseInt(tramadas_parcela) || numero != "") {
 
@@ -1098,8 +1095,6 @@
              }
 
          });
-
-
 
         /*
         *   Función para imprimir los tamaños de las parcelas.
