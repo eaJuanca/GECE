@@ -129,9 +129,14 @@ class FacturacionController extends Controller
      */
     public function show($idnicho)
     {
-        $factura = Factura::where('idnicho', $idnicho)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
-        $factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
-        $factura = $factura->merge($factura2);
+        //$factura = Factura::where('idnicho', $idnicho)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
+        //$factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
+        //$factura = $factura->merge($factura2);
+
+        $hoy = Carbon::now();
+
+        $factura = Factura::where('idnicho', $idnicho)->where('created_at',substr($hoy,0,10))->orderBy('id', 'ASC')->get();
+
         return view('facturasProcesoNichos', compact('factura', 'idnicho'));
     }
 
@@ -539,59 +544,69 @@ class FacturacionController extends Controller
 
         $hoy = Carbon::now();
         //Cogemos el ultimo año pagado en factura de esta parcela
-        $ultimo = Factura::where('idnicho', '=', $nicho)->groupBy('idparcela')->get(['fin'])[0]->fin;
-        $ultimo = Carbon::parse($ultimo);
+        $ultimo = infoRecibos::where('idnicho', '=', $nicho)->groupBy('idparcela')->get(['fin'])[0]->fin;
+        $ultimo = Carbon::create($ultimo, 1, 1, 0, 0);
         $fin = new Carbon($ultimo);
-        $diferencia = ($hoy->year - $fin->year) + 5;
 
-        $iva = Iva2::first();
-        $iva = $iva->tipo;
-        $precio = Tm_nichos::first();
-        $precio = $precio->tarifa;
-        $precio = $precio * $diferencia;
+        //En la parcela si enterramos en 2015 y luego en 2016 no se puede generar 5 años más debería
+        //calcularse si la diferencia es menor que 5 y si es así incrementar hasta 5
+        if ($fin->year > $hoy->year) {
+            $diferencia = (5 - ($fin->year - $hoy->year));
+        } else {
+            $diferencia = (5 + ($hoy->year - $fin->year));
+        }
 
-        $titularinfo = Titular::find($titular);
-        $nichoinfo = Nicho::find($nicho);
-        $info = InfoNicho::find($nicho);
+        if ($diferencia > 0) {
 
-        $factura = new Factura();
-        $numero = Factura::where('serie', 'N')->whereYear('created_at', '=', $hoy->year)->max('numero');
-        $factura->numero = $numero + 1;
-        $factura->inicio = $ultimo;
-        $factura->fin = $fin->addYears($diferencia);
-        $factura->idnicho = $nicho;
-        $factura->serie = 'N';
-        $factura->idtitular = $titular;
-        $factura->base = $precio;
-        $factura->iva = $precio * (($iva / 100));
-        $factura->total = $precio * (1 + ($iva / 100));
+            $iva = Iva2::first();
+            $iva = $iva->tipo;
+            $precio = Tm_nichos::first();
+            $precio = $precio->tarifa;
+            $precio = $precio * $diferencia;
 
-        //nuevos campos
+            $titularinfo = Titular::find($titular);
+            $nichoinfo = Nicho::find($nicho);
+            $info = InfoNicho::find($nicho);
 
-        $factura->tipo_adquisicion = 0;
-        $factura->calle = $info->nombre_calle;
-        $factura->tramada = $info->altura;
-        $factura->numero_nicho = $info->numero;
-        $factura->cesion = $nichoinfo->cesion;
+            $factura = new Factura();
+            $numero = Factura::where('serie', 'N')->whereYear('created_at', '=', $hoy->year)->max('numero');
+            $factura->numero = $numero + 1;
+            $factura->inicio = $ultimo;
+            $factura->fin = $fin->addYears($diferencia);
+            $factura->idnicho = $nicho;
+            $factura->serie = 'N';
+            $factura->idtitular = $titular;
+            $factura->base = $precio;
+            $factura->iva = $precio * (($iva / 100));
+            $factura->total = $precio * (1 + ($iva / 100));
+
+            //nuevos campos
+
+            $factura->tipo_adquisicion = 0;
+            $factura->calle = $info->nombre_calle;
+            $factura->tramada = $info->altura;
+            $factura->numero_nicho = $info->numero;
+            $factura->cesion = $nichoinfo->cesion;
 
 
-        //titular
-        $factura->nombre_titular = $titularinfo->nombre_titular;
-        $factura->dni_titular = $titularinfo->dni_titular;
-        $factura->domicilio_del_titular = $titularinfo->dom_titular;
-        $factura->cp_titular = $titularinfo->cp_titular;
-        $factura->poblacion_titular = $titularinfo->pob_titular;
-        $factura->provincia_titular = $titularinfo->pro_titular;
+            //titular
+            $factura->nombre_titular = $titularinfo->nombre_titular;
+            $factura->dni_titular = $titularinfo->dni_titular;
+            $factura->domicilio_del_titular = $titularinfo->dom_titular;
+            $factura->cp_titular = $titularinfo->cp_titular;
+            $factura->poblacion_titular = $titularinfo->pob_titular;
+            $factura->provincia_titular = $titularinfo->pro_titular;
 
-        //facturado
-        $factura->nombre_facturado = $nichoinfo->nom_facturado;
-        $factura->dni_facturado = $nichoinfo->nif_facturado;
-        $factura->domicilio_facturado = $nichoinfo->dir_facturado;
-        $factura->cp_facturado = $nichoinfo->cp_facturado;
-        $factura->poblacion_facturado = $nichoinfo->pob_facturado;
-        $factura->provincia_facturado = $nichoinfo->pro_facturado;
+            //facturado
+            $factura->nombre_facturado = $nichoinfo->nom_facturado;
+            $factura->dni_facturado = $nichoinfo->nif_facturado;
+            $factura->domicilio_facturado = $nichoinfo->dir_facturado;
+            $factura->cp_facturado = $nichoinfo->cp_facturado;
+            $factura->poblacion_facturado = $nichoinfo->pob_facturado;
+            $factura->provincia_facturado = $nichoinfo->pro_facturado;
 
-        $factura->save();
+            $factura->save();
+        }
 
     }
 
