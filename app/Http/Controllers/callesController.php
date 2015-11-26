@@ -91,6 +91,8 @@ class callesController extends Controller {
         }else{
             //Sino guardamos las parcelas/panteones
 
+            //$panteon = new Panteon();
+
             if($r->input('iexistente') != ""){
                 //Si se ha seleccionado una calle existente entramos aquí.
 

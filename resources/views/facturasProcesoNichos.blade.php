@@ -77,7 +77,7 @@
                                             <td>Manteminiento Nicho</td>
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
-                                            <td>{{$f->fin}}</td>
+                                            <td>{{$f->fin - 1}}</td>
                                              <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button> </a></td>
 
                                     @elseif($f->serie=='D')
@@ -109,7 +109,7 @@
                                             <td>Mantenimiento Panteon</td>
                                             <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->inicio,0,4)}}</td>
                                             <td>{{$f->inicio}}</td>
-                                            <td>{{$f->fin}}</td>
+                                            <td>{{$f->fin - 1}}</td>
                                             <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">Descargar</button></a></td>
 
                                         @elseif($f->serie=='P')

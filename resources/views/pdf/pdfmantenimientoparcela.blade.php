@@ -111,7 +111,7 @@ $fin = new Carbon\Carbon($factura->fin);
 <table style="width:90%">
     <tr>
         <td style="text-align: center">
-            <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year}}</span>
+            <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year - 1}}</span>
         </td>
         <td style="text-align: right">
             <span style="font-size: 16px">{{number_format($factura->base,2,",","")}}€</span>
