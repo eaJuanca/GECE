@@ -152,7 +152,7 @@ $date = $date->format('j-m-Y');
         <td class="noborder"></td>
         <td class="noborder"></td>
         <td class="noborder">IVA {{$iva->tipo}} {{" %"}}</td>
-        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2,",",""}}{{" € "}}</td>
+        <td>{{ number_format($coste->tarifa * ($iva->tipo/100),2,",","")}}{{" € "}}</td>
     </tr>
 
     <tr class="right">
