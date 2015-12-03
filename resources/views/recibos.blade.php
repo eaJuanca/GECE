@@ -167,7 +167,7 @@
                     </div>
                     <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <label class="control-label" for="inputWarning">Hasta (No incluido)</label>
+                            <label class="control-label" for="inputWarning">Hasta (incluido)</label>
                             <input required type="text" class="form-control fecha_fin" name="fecha_fin" maxlength="4">
                         </div>
                     </div>
@@ -341,7 +341,7 @@
                                 //Al ir al siguiente paso ponemos la fecha que corresponde al la ultima pagada
                                 //$('.fecha_ini').datepicker('update', new Date(fechaInicio, 0, 1));
                                 $('.fecha_ini').val(fechaInicio.substring(0,4));
-                                fechaFin = parseInt(fechaInicio.substring(0,4))+1;
+                                fechaFin = parseInt(fechaInicio.substring(0,4));//+1;
                                 //$('.fecha_fin').datepicker('update', new Date(fechaInicio, 0, 1));
                                 $('.fecha_fin').val(fechaFin);
                             }
@@ -351,7 +351,7 @@
                         if(curStepBtn == 'step-2'){
                             //Creamos nuevos tipo fecha con fecha inicio y fin para poder guardar tipo date en BD.
                             fechaInicio = $(".fecha_ini").val() + "-01-01";
-                            fechaFin = $(".fecha_fin").val() + "-01-01";
+                            fechaFin = (parseInt($(".fecha_fin").val()) + 1) + "-01-01";
                             actualizar(idNicho,tipo,fechaInicio,fechaFin);
                         }
 
