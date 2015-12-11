@@ -156,6 +156,12 @@ class PdfFacturasGenerator extends Controller
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
     }
 
+    public function escritura ($id){
+
+
+        dd("hola loco");
+    }
+
     /**
      * Detectar cambios
      */

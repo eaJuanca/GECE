@@ -106,6 +106,7 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
             $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
             $ruta3 = route('factura-libre',[$Nodisponible->id]);
+            $ruta4 = route('pdfescritura',[$Nodisponible->id]);
 
 
             echo '<tr>';
@@ -118,10 +119,12 @@ class NichoController extends Controller
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
             echo "<td> ";
-            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
-            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a>";
-            echo "<a title='Crear factura' href='$ruta3'><i class='fa fa-lg fa-euro'></i></a></td></tr>";
+            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o m5' ></i ></a >";
+            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search m5'></i></a>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus m5'></i></a>";
+            echo "<a title='Crear factura' href='$ruta3'><i class='fa fa-lg fa-euro m5'></i></a>";
+            echo "<a title='Escritura' href='$ruta4'><i class='fa fa-lg fa-map-o m5'></i></a></td></tr>";
+
 
         }
 
@@ -284,6 +287,7 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
             $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
             $ruta3 = route('factura-libre',[$Nodisponible->id]);
+            $ruta4 = route('pdfescritura',[$Nodisponible->id]);
 
 
             echo '<tr>';
@@ -296,10 +300,11 @@ class NichoController extends Controller
                        Numero, <span style = "font-weight: bold" >' . $Nodisponible->numero . '</span > </td >';
 
             echo "<td> ";
-            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o' ></i ></a >";
-            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
-            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus'></i></a>";
-            echo "<a title='Crear factura' href='$ruta3'><i class='fa fa-lg fa-euro'></i></a></td></tr>";
+            if(Auth::user()->rol == 0) echo "<a href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o m5' ></i ></a >";
+            echo "<a title='Ver Nicho' data-toggle='modal' data-target='#complete-dialog m5' onclick='modal($Nodisponible->id)'><i class='fa fa-lg fa-search'></i></a>";
+            echo "<a title='Añadir Difunto' href='$ruta2'><i class='fa fa-lg fa-user-plus m5'></i></a>";
+            echo "<a title='Crear factura' href='$ruta3'><i class='fa fa-lg fa-euro m5'></i></a>";
+            echo "<a title='Escritura' href='$ruta4'><i class='fa fa-lg fa-map-o m5'></i></a></td></tr>";
 
         }
 

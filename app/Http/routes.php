@@ -254,6 +254,10 @@ Route::get('factura-libre-{id}', ['as' => 'factura-libre', 'uses' => 'Facturacio
 
 Route::get('pdfacturalibre-{id}', ['as' => 'pdfacturalibre', 'uses' => 'PdfFacturasGenerator@facturaPersonalizada']);
 
+Route::get('pdfescritura-{id}', ['as' => 'pdfescritura', 'uses' => 'PdfFacturasGenerator@escritura']);
+
+
+
 
 
 
