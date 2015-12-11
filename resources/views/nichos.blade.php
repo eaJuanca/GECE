@@ -231,7 +231,7 @@
                                                  <a title="Ver Nicho" data-toggle="modal" data-target="#complete-dialog" onclick='modal({{$nodisponible->id}})'><i class="fa fa-lg fa-search m5"></i></a>
                                                  <a title="Añadir Difunto" href="{{ route('alta-difunto-nicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-user-plus m5"></i></a>
                                                 <a title="Crear factura" href="{{ route('factura-libre',[$nodisponible->id])}}"><i class="fa fa-lg fa-euro m5"></i></a>
-                                                <a title="Escritura" href="{{ route('pdfescritura',[$nodisponible->id])}}"><i class="fa fa-lg fa-map-o m5"></i></a>
+                                                <a title="Escritura" href="{{ route('pdfescrituraNicho',[$nodisponible->id])}}"><i class="fa fa-lg fa-map-o m5"></i></a>
                                             </td>
 
                                         </tr>

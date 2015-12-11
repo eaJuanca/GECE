@@ -192,6 +192,7 @@ class PanteonesController extends Controller
 
             $ruta = route('modificar-panteones', [$Nodisponible->parcela_id]);
             $ruta2 = route('nichos-panteones',[$Nodisponible->parcela_id]);
+            $ruta3 = route('pdfescrituraParcela',[$Nodisponible->parcela_id]);
 
 
             echo '<tr>';
@@ -202,6 +203,8 @@ class PanteonesController extends Controller
 
             echo "<td> <a title='Modificar Parcela' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Parcela </a>";
             echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
+            echo "<a title='Escritura' href ='$ruta3'><i class='fa fa-lg fa-map-o'></i> Escritura</a>";
+
             echo "</td></tr>";
 
         }
@@ -274,6 +277,8 @@ class PanteonesController extends Controller
 
             $ruta = route('modificar-panteones', [$Nodisponible->parcela_id]);
             $ruta2 = route('nichos-panteones',[$Nodisponible->parcela_id]);
+            $ruta3 = route('pdfescrituraParcela',[$Nodisponible->parcela_id]);
+
 
             echo '<tr>';
             echo '<td>' . $Nodisponible->nombre_titular . '</td>';
@@ -283,6 +288,7 @@ class PanteonesController extends Controller
 
             echo "<td> <a title='Modificar Parcela' href ='$ruta' ><i class='fa fa-lg fa-pencil-square-o'></i>  Modificar Parcela </a>";
             echo "<a title='Ver Nicho' href ='$ruta2'><i class='fa fa-lg fa-search'></i> Ver nichos</a>";
+            echo "<a title='Escritura' href ='$ruta3'><i class='fa fa-lg fa-map-o'></i> Escritura</a>";
             echo "</td></tr>";
 
         }

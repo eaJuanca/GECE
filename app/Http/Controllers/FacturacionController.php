@@ -133,11 +133,12 @@ class FacturacionController extends Controller
         //$factura2 = Factura::where('idnicho', $idnicho)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         //$factura = $factura->merge($factura2);
 
+        $escritura = true;
         $hoy = Carbon::now();
 
         $factura = Factura::where('idnicho', $idnicho)->where('created_at',substr($hoy,0,10))->orderBy('id', 'ASC')->get();
 
-        return view('facturasProcesoNichos', compact('factura', 'idnicho'));
+        return view('facturasProcesoNichos', compact('factura', 'idnicho','escritura'));
     }
 
 
@@ -147,11 +148,13 @@ class FacturacionController extends Controller
      */
     public function showParcela($idparcela)
     {
+
+        $escritura = false;
         $factura = Factura::where('idnicho', $idparcela)->where('serie', '!=', 'E')->orderBy('id', 'ASC')->take(3)->get();
         $factura2 = Factura::where('idnicho', $idparcela)->where('serie', 'E')->orderBy('id', 'DESC')->take(1)->get();
         $factura = $factura->merge($factura2);
 
-        return view('facturasProcesoNichos', compact('factura'));
+        return view('facturasProcesoNichos', compact('factura','idparcela','escritura'));
     }
 
 
@@ -159,8 +162,9 @@ class FacturacionController extends Controller
     public function compraParcela($idparcela)
     {
 
+        $escritura = true;
         $factura = Factura::where('idparcela', $idparcela)->where('serie', 'P')->take(1)->get();
-        return view('facturasProcesoNichos', compact('factura'));
+        return view('facturasProcesoNichos', compact('factura','idparcela','escritura'));
 
 
     }

@@ -106,7 +106,7 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
             $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
             $ruta3 = route('factura-libre',[$Nodisponible->id]);
-            $ruta4 = route('pdfescritura',[$Nodisponible->id]);
+            $ruta4 = route('pdfescrituraNicho',[$Nodisponible->id]);
 
 
             echo '<tr>';
@@ -287,7 +287,7 @@ class NichoController extends Controller
             $ruta = route('modificar-nichos', [$Nodisponible->id]);
             $ruta2 = route('alta-difunto-nicho',[$Nodisponible->id]);
             $ruta3 = route('factura-libre',[$Nodisponible->id]);
-            $ruta4 = route('pdfescritura',[$Nodisponible->id]);
+            $ruta4 = route('pdfescrituraNicho',[$Nodisponible->id]);
 
 
             echo '<tr>';

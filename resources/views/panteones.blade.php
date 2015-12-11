@@ -204,6 +204,7 @@
                                             <td>
                                                  <a title="Adquirir Parcela" href="{{ route('modificar-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-pencil-square-o"></i> Modificar Parcela</a>
                                                  <a title="Ver Nichos"       href="{{ route('nichos-panteones',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-search"></i> Ver nichos</a>
+                                                 <a title="Escritura"       href="{{ route('pdfescrituraParcela',[$nodisponible->parcela_id])}}"><i class="fa fa-lg fa-map-o"></i> Escritura</a>
                                             </td>
 
                                         </tr>

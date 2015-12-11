@@ -137,17 +137,27 @@
                 </div>
             </div>
 
+            @if($escritura)
             <div class="panel panel-info" style="margin-top: 20px">
                 <div class="panel-heading">
                     <h3 class="panel-title" style="color: white"> Escritura </h3>
                 </div>
                 <div class="panel-body">
 
-                    <a href="{{ route('pdfescritura',[$f->idnicho])}}"><button class="btn btn-warning"> <i class="fa fa-map-o"></i>
-                            Descargar Escritura </button></a>
+                    @if(isset($idnicho))
+                    <a href="{{ route('pdfescrituraNicho',[$idnicho])}}"><button class="btn btn-warning"> <i class="fa fa-map-o"></i>
+                            Descargar Escritura Nicho </button></a>
+                        @endif
+
+                    @if(isset($idparcela))
+                    <a href="{{ route('pdfescrituraParcela',[$idparcela])}}"><button class="btn btn-warning"> <i class="fa fa-map-o"></i>
+                            Descargar Escritura Parcela </button></a>
+                        @endif
 
                 </div>
             </div>
+
+                @endif
 
 
         </div>

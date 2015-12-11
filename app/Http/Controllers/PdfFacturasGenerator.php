@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\model\Factura;
+use App\model\InfoNicho;
 use App\model\Iva2;
 use App\model\Nicho;
 use App\model\Tcp_nichos;
 use App\model\Tcp_parcelas2;
 use App\model\Tct_nichos;
+use App\model\Titular;
 use App\model\Tramada;
 use App\model\VFacturasnp2;
 use App\model\VLinea;
@@ -156,10 +158,26 @@ class PdfFacturasGenerator extends Controller
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
     }
 
-    public function escritura ($id){
+    public function escrituraNicho ($id){
 
+        $nicho = Nicho::find($id); //voluntades y otras cosas
+        $info = InfoNicho::find($id); // nombre calle, numero, altura
+        $titular = Titular::find($nicho->GC_TITULAR_id); //datos del titular
 
-        dd("hola loco");
+        $view =  \View::make('pdf.escritura', compact('nicho','titular','info'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
+    }
+
+    public function escrituraParcela ($id){
+
+        //hay que obtener los datos de la parcela como arriba pero en vez de nicho
+
+        $view =  \View::make('pdf.escritura', compact('nicho','titular','info'))->render();
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($view);
+        return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
     }
 
     /**

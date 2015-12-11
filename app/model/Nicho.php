@@ -38,6 +38,8 @@ class Nicho extends Model{
         'tipo',
         'GC_TITULAR_id',
         'sintitular',
-        'formapago'
+        'formapago',
+        'hijode1',
+        'hijode2'
     ];
 }
