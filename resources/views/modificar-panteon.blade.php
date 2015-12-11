@@ -296,6 +296,25 @@
 
                         </div>
 
+                        <h3 style="font-weight: bold; margin-top: 3.3%">Escritura</h3><br>
+
+
+                        <div class="row">
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">Hijo de</label>
+                                    <input type="text" class="form-control" value="{{$parcela->hijode1}}" name="hijode1">
+                                </div>
+                            </div>
+
+                            <div class="col col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputWarning">y de</label>
+                                    <input type="text" class="form-control" value="{{$parcela->hijode2}}" name="hijode2">
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="row">
                             <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="form-group">
@@ -310,6 +329,7 @@
 
 
                 </div>
+                <br>
                 <button type="submit" class="btn btn-success btn-raised" id="submit"><i class="fa fa-pencil-square-o"></i> Modificar parcela</button>
             </form>
         </div>

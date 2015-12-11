@@ -37,6 +37,8 @@ class Parcela extends Model{
         'titular',
         'tafifa',
         'observaciones',
-        'voluntades'
+        'voluntades',
+        'hijode1',
+        'hijode2'
     ];
 }
