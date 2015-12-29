@@ -57,7 +57,7 @@
                                 @else
                                     <br>Datos de la parcela</br>
                                 @endif
-                                <br> <span>Titular: </span> {{$f->nombre_facturado}} <br>
+                                <br> <span>Titular: </span> {{$f->nombre_titular}} <br>
 
                                 <span>Calle: </span>{{$f->calle}}
                                 @if($f->idparcela != null)
