@@ -101,13 +101,11 @@ $aux = 5 - $aux;
     //calculamos el precio
 ?>
 
-<br>
-<br>
 
-<table style="width:90%">
+<table style="width:90%;margin-bottom: 0.5%">
     <tr>
 
-        <td style="text-align: center">
+        <td style="text-align: center;">
             <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year - 1 }}</span>
         </td>
         <td style="text-align: right">
@@ -116,9 +114,7 @@ $aux = 5 - $aux;
     </tr>
 </table>
 
-<br>
-
-<table style="width:90%">
+<table style="width:90%;">
     <tr>
         <td style="text-align: right">
             <span style="font-size: 12.5px">IVA {{$iva}}%</span>
