@@ -177,7 +177,7 @@ class FacturacionController extends Controller
     public function facturalibre($nicho)
     {
 
-        $titular = Nicho::find($nicho)->first()->GC_TITULAR_id;
+        $titular = Nicho::find($nicho)->GC_TITULAR_id;
 
 
         //fecha de hoy
