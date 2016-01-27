@@ -20,7 +20,7 @@ class ExporterController extends Controller
 
         if($s != 1){
 
-            $data = VFacturasLineas::take(1000)->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado','concepto','cantidad','precio_unitario','importe_linea']);
+            $data = VFacturasLineas::take(1000)->groupby('id')->get(['Fecha factura','serie','Nº','Nombre','DNI','Domicilio','Localidad','CP','Base Imponible','IVA','Total factura']);
 
         }else if($s == 1){
 
@@ -53,7 +53,7 @@ class ExporterController extends Controller
                     $facturas->where('inicio','<=', $hasta);
                 }
 
-            })->get(['created_at','serie','numero','base','iva','total','nombre_facturado','dni_facturado','concepto','cantidad','precio_unitario','importe_linea']);
+            })->groupby('id')->get(['Fecha factura','serie','Nº','Nombre','DNI','Domicilio','Localidad','CP','Base Imponible','IVA','Total factura']);
 
         }
 
