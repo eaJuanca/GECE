@@ -54,6 +54,8 @@
 <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/material.js') }}"></script>
 <script src="{{ URL::asset('assets/js/ripples.js') }}"></script>
+<script src="{{ URL::asset('assets/js/jquery.validate.min.js') }}"></script>
+
 
 <!-- <script type="text/javascript" src=" {{ URL::asset('DataTables/datatables.min.js')}}"></script> -->
 

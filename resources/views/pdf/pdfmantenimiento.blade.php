@@ -74,7 +74,7 @@ $aux = 5 - $aux;
 <hr style="width: 100%; margin-right: 10%">
 
 <span class="p2"> <strong>Concepto</strong></span>
-<table style="width:90%; margin-bottom: 0.5%">
+<table style="width:90%;margin-bottom: 0.5%">
     <tr>
             <td style="text-align: center">
                 <span class="p2">Grupo/Calle</span>
@@ -114,7 +114,7 @@ $aux = 5 - $aux;
     </tr>
 </table>
 
-<table style="width:90%;">
+<table style="width:90%;margin-bottom: 1.3%">
     <tr>
         <td style="text-align: right">
             <span style="font-size: 12.5px">IVA {{$iva}}%</span>
@@ -133,7 +133,6 @@ $aux = 5 - $aux;
     </tr>
 </table>
 
-<br>
 <span class="p2">Titular del nicho efectos informativos</span   >
 <hr style="width: 100%; margin-right: 10%">
 <span style="font-size: 13px; font-weight: bold">{{$factura->nombre_titular}}</span>

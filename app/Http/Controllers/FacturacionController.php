@@ -179,7 +179,6 @@ class FacturacionController extends Controller
 
         $titular = Nicho::find($nicho)->GC_TITULAR_id;
 
-
         //fecha de hoy
         $hoy = Carbon::now();
         $iva = Iva2::first();
@@ -309,7 +308,7 @@ class FacturacionController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->input('id');
-        $factura = Factura::find($id)->delete();
+        Factura::find($id)->delete();
     }
 
     public function facturaEnterramiento($nicho, $difunto, $titular, $parcela)
@@ -464,7 +463,6 @@ class FacturacionController extends Controller
             $factura->save();
 
             //$this->Mantenimiento1Nicho($nicho, $titular, $nichoinfo, $titularinfo, $info);
-
         }
     }
 

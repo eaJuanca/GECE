@@ -147,11 +147,17 @@
 
                             @foreach($difuntos as $difunto)
 
+                                <?php
+                                    //formateamos las fechas inhumacion y fallecimiento
+                                    $finh = new \Carbon\Carbon($difunto->inhumacion);
+                                    $ffall = new \Carbon\Carbon($difunto->fallecimiento);
+                                ?>
+
                                 <tr class="difunto{{$difunto->id}} ">
 
                                     <td>{{$difunto->nombre}}</td>
-                                    <td>{{$difunto->fallecimiento}}</td>
-                                    <td>{{$difunto->inhumacion}}</td>
+                                    <td>{{$ffall->format('j-m-Y')}}</td>
+                                    <td>{{$finh->format('j-m-Y')}}</td>
                                     <td>{{$difunto->edad}}</td>
                                     <td>{{$difunto->domicilio}}</td>
                                     <td>{{$difunto->numero}}</td>
@@ -196,8 +202,6 @@
 
         var search = "{{$search}}";
         if(search == 1){ $('#search').css('visibility','visible');$('#nota').css('display','block'); }
-
-
 
 
         $.ajaxSetup({

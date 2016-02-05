@@ -158,11 +158,15 @@ class DifuntoController extends Controller
 
         foreach ($difuntos as $difunto){
 
+            //Formateamos las fechas inhumacion y fallecimiento
+            $finh = new \Carbon\Carbon($difunto->inhumacion);
+            $ffall = new \Carbon\Carbon($difunto->fallecimiento);
+
             echo'  <tr class="difunto'.$difunto->id.'">';
 
             echo"<td>{{$difunto->nombre}}</td>
-                <td>{{$difunto->fallecimiento}}</td>
-                <td>{{$difunto->inhumacion}}</td>
+                <td>{{$ffall->format('j-m-Y')}}</td>
+                <td>{{$finh->format('j-m-Y')}}</td>
                 <td>{{$difunto->edad}}</td>
                 <td>{{$difunto->domicilio}}</td>
                 <td>{{$difunto->numero}}</td>
@@ -206,11 +210,15 @@ class DifuntoController extends Controller
 
         foreach ($difuntos as $difunto){
 
+            //Formateamos las fechas inhumacion y fallecimiento
+            $finh = new \Carbon\Carbon($difunto->inhumacion);
+            $ffall = new \Carbon\Carbon($difunto->fallecimiento);
+
             echo'  <tr class="difunto'.$difunto->id.'">';
 
             echo"<td>{{$difunto->nombre}}</td>
-                <td>{{$difunto->fallecimiento}}</td>
-                <td>{{$difunto->inhumacion}}</td>
+                <td>{{$ffall->format('j-m-Y')}}</td>
+                <td>{{$finh->format('j-m-Y')}}</td>
                 <td>{{$difunto->edad}}</td>
                 <td>{{$difunto->domicilio}}</td>
                 <td>{{$difunto->numero}}</td>

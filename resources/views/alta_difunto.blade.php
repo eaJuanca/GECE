@@ -339,8 +339,7 @@
     <script type="text/javascript">
 
         $('.fecha_inh').datepicker({
-
-            format: "yyyy-mm-dd",
+            format: "dd-mm-yyyy",
             language: "es",
             multidate: false,
             autoclose: true,
@@ -362,6 +361,11 @@
             var gcnicho = $("#GC_NICHOS_id").val();
 
             $('#nuevo-difunto').submit(function (e) {
+
+                //Formateamos la fechas de fallecimiento e inhumacion para que
+                //se guarden correctamente en la BD
+                $(".fecha_inh")[0].value = $(".fecha_inh")[0].value.substring(6,10)+"-"+$(".fecha_inh")[0].value.substring(3,5)+"-"+$(".fecha_inh")[0].value.substring(0,2);
+                $(".fecha_inh")[1].value = $(".fecha_inh")[1].value.substring(6,10)+"-"+$(".fecha_inh")[1].value.substring(3,5)+"-"+$(".fecha_inh")[1].value.substring(0,2);
 
                 e.preventDefault();
 

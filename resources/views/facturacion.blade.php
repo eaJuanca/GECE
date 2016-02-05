@@ -164,7 +164,13 @@
                                 $aux = 5- $aux;
 
                                 $ffin = new \Carbon\Carbon($f->fin);
+                                //Formateamos la fecha fin
+                                $fechaFin = $ffin->format('j-m-Y');
                                 $ffin->subYears(1);
+
+                                //Formateamos la fecha Inicio
+                                $fechaInicio = new \Carbon\Carbon($f->inicio);
+                                $fechaInicio = $fechaInicio->format('j-m-Y');
                                 ?>
 
 
@@ -172,8 +178,8 @@
                                     @if($f->serie == "N")
                                         <td>Manteminiento Nicho</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
-                                        <td>{{ substr($ffin,0,10)}}</td>
+                                        <td>{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{substr($ffin,0,4)}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
                                         <td> <a href="{{ route('pdfmantenimientoNicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
@@ -182,7 +188,7 @@
 
                                         <td>Cesión a perpetuidad Nicho</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$fechaInicio}}</td>
                                         <td>Perpetuidad</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
@@ -192,8 +198,8 @@
 
                                         <td>Enterramiento</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
-                                        <td>{{$f->fin}}</td>
+                                        <td>{{$fechaInicio}}</td>
+                                        <td>{{$fechaFin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
                                         <td> <a href="{{ route('pdfacturaenterramiento',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> @if($f->pendiente != 0)<a href="{{ route('modificar-factura',[$f->id])}}"> <button class="btn btn-success btn-xs">Modificar <i class="fa fa-sticky-note"></i></button> </a>@endif <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs"> Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
@@ -202,8 +208,8 @@
 
                                         <td>Cesión Temporal Nicho</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
-                                        <td>{{$f->fin}}</td>
+                                        <td>{{$fechaInicio}}</td>
+                                        <td>{{$fechaFin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
                                         <td> <a href="{{ route('pdfacturanichotemporal',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button> </a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
@@ -212,8 +218,8 @@
 
                                         <td>Mantenimiento Panteon</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
-                                        <td>{{substr($ffin,0,10)}}</td>
+                                        <td>{{substr($f->inicio,0,4)}}</td>
+                                        <td>{{substr($ffin,0,4)}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
                                         <td> <a href="{{ route('pdfmantenimientoParcela',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a> <a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>
@@ -222,7 +228,7 @@
 
                                         <td>Cesión perpetuidad Panteón</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$fechaInicio}}</td>
                                         <td>Perpetuidad</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
@@ -232,7 +238,7 @@
 
                                         <td>Factura Personalizada</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
+                                        <td>{{$fechaInicio}}</td>
                                         <td>-</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
@@ -242,8 +248,8 @@
 
                                         <td>??</td>
                                         <td>{{$f->serie}}{{str_repeat("0", $aux)}}{{$f->numero}}-{{substr($f->created_at,0,4)}}</td>
-                                        <td>{{$f->inicio}}</td>
-                                        <td>{{$f->fin}}</td>
+                                        <td>{{$fechaInicio}}</td>
+                                        <td>{{$fechaFin}}</td>
                                         <td>{{$f->nombre_titular}}</td>
                                         <td>{{$f->dni_titular}}</td>
                                         <td> <a href="{{ route('pdfacturanicho',[$f->id])}}"> <button class="btn btn-danger btn-xs">ver <i class="fa fa-eye fa-lg"></i></button></a><a onclick="dfactura({{$f->id}})"> <button class="btn btn-warning btn-xs">Eliminar <i class="fa fa-trash fa-lg"></i></button> </a></td>

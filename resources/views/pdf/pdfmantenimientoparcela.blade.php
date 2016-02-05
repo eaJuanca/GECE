@@ -105,10 +105,8 @@ $inicio = new Carbon\Carbon($factura->inicio);
 $fin = new Carbon\Carbon($factura->fin);
 ?>
 
-<br>
-<br>
 
-<table style="width:90%">
+<table style="width:90%;margin-bottom: 0.5%">
     <tr>
         <td style="text-align: center">
             <span style="font-size: 16px">Mantenimiento {{$inicio->year}} a {{$fin->year - 1}}</span>
@@ -120,9 +118,7 @@ $fin = new Carbon\Carbon($factura->fin);
 </table>
 
 
-<br>
-
-<table style="width:90%">
+<table style="width:90%;margin-bottom: 1.3%">
     <tr>
         <td style="text-align: right">
             <span style="font-size: 12.5px">IVA {{$iva}}%</span>
@@ -141,7 +137,6 @@ $fin = new Carbon\Carbon($factura->fin);
     </tr>
 </table>
 
-<br>
 <span class="p2">Titular del nicho efectos informativos</span   >
 <hr style="width: 100%; margin-right: 10%">
 <span style="font-size: 13px; font-weight: bold">{{$factura->nombre_titular}}</span>
