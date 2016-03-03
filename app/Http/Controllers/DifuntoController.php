@@ -32,7 +32,6 @@ class DifuntoController extends Controller
 
 
     //Añadir un difunto desde la vista nicho
-
     public function DifuntoNicho($nichoid){
 
         $TN = TotalNicho::where('GC_NICHOS_id',$nichoid)->get();

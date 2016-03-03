@@ -11,11 +11,11 @@ use App\model\Tcp_parcelas2;
 use App\model\Tct_nichos;
 use App\model\Titular;
 use App\model\Tramada;
-use App\model\VFacturasnp2;
 use App\model\VLinea;
 use App\Http\Requests;
 use App\model\VFacturas;
 use App\model\VFacturasP;
+use DOMPDF;
 
 class PdfFacturasGenerator extends Controller
 {
@@ -164,16 +164,24 @@ class PdfFacturasGenerator extends Controller
         $info = InfoNicho::find($id); // nombre calle, numero, altura
         $titular = Titular::find($nicho->GC_TITULAR_id); //datos del titular
 
+        //require_once("dompdf/dompdf_config.inc.php");
         $view =  \View::make('pdf.escritura', compact('nicho','titular','info'))->render();
         $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
+        $pdf->loadHTML($view)->setPaper('a3','landscape')->setWarnings(false)->save('myfile.pdf');
+
+        //$pdf->loadHTML($view);
         return $pdf->stream('invoice.pdf', array( 'Attachment'=>1 ));
+
+        /*$dompdf = new DOMPDF();
+        $dompdf->load_html($view);
+        $dompdf->set_paper("a3");
+        $dompdf->render();
+        $dompdf->stream('escritura' . ".pdf");*/
     }
 
     public function escrituraParcela ($id){
 
         //hay que obtener los datos de la parcela como arriba pero en vez de nicho
-
         $view =  \View::make('pdf.escritura', compact('nicho','titular','info'))->render();
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
